@@ -13,9 +13,9 @@ export default {
           image: null,
           link: '/porduct',
           excerpt: '3123123123',
-          stimulation: null,
-          relaxation: null,
-          euphoria: null,
+          stimulation: 3,
+          relaxation: 4,
+          euphoria: 5,
           modifications: [
             {
               id: 1,
@@ -38,9 +38,9 @@ export default {
           image: null,
           link: '/porduct',
           excerpt: '3123123123',
-          stimulation: null,
-          relaxation: null,
-          euphoria: null,
+          stimulation: 2,
+          relaxation: 3,
+          euphoria: 2,
           modifications: [
             {
               id: 1,

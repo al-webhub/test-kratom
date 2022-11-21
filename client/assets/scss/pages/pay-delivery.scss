@@ -1,0 +1,230 @@
+/* Pay-delivery */
+.pay-deliver__wrapper {
+  position: relative;
+}
+.pay-deliver__wrapper .general-decor-figure {
+  width: 406px;
+  height: 406px;
+  transform: rotate(132.27deg);
+  right: -20px;
+  top: -160px;
+}
+.pay-deliver__wrapper .general-decor-text {
+  white-space: nowrap;
+  left: -40px;
+  bottom: -65px;
+  transform: none;
+}
+.pay-delivery__list {
+  display: flex;
+  margin-right: -30px;
+  margin-top: 50px;
+}
+.pay-delivery__item {
+  width: calc(33.33% - 30px);
+  margin-right: 30px;
+  background-color: #333333;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+  padding: 40px 30px 30px;
+  font-size: 14px;
+  line-height: 150%;
+}
+.pay-delivery__item p {
+  margin-bottom: 20px;
+}
+.pay-delivery__item p:last-child {
+  margin-bottom: 0px;
+}
+.pay-delivery__item .general-decor-caption {
+  margin: 0px auto;
+}
+.pay-delivery__item .main-caption-l {
+  text-align: center;
+  margin-top: 30px;
+}
+.pay-delivery__item .delivery__list {
+  margin: 30px 0px;
+}
+.pay-delivery__item .delivery__list-payment .delivery__item:last-child {
+  margin-top: 15px;
+}
+.pay-delivery__item .delivery__item__img {
+  height: 30px;
+}
+.pay-delivery__item .delivery__list-option {
+  flex-direction: column;
+}
+/* //Pay-delivery */
+
+@media screen and (max-width: 1024px) {
+      /* Pay-delivery */
+  .pay-deliver__wrapper .general-decor-figure {
+    width: 245px;
+    height: 245px;
+    transform: rotate(-42.48deg);
+    right: -40px;
+    top: -100px;
+  }
+  .pay-delivery__list {
+    margin-top: 50px;
+  }
+  .pay-delivery__item {
+    padding: 20px;
+  }
+  .pay-delivery__item .main-caption-l {
+    margin-top: 25px;
+  }
+  .pay-delivery__item .delivery__item {
+    padding-left: 15px;
+  }
+  .pay-delivery__item .delivery__item__img {
+    flex-shrink: 0;
+    margin-right: 6px;
+  }
+  .pay-delivery__item .delivery__list-option .delivery__item {
+    margin-right: 0px;
+  }
+  /* /Pay-delivery */
+}
+
+@media screen and (max-width: 767px) {
+    /* Pay-delivery */
+  .pay-deliver__wrapper .general-decor-figure {
+    display: none;
+  }
+  .pay-deliver__wrapper .general-decor-text {
+    display: none;
+  }
+  .pay-delivery__list {
+    margin-top: 30px;
+    margin-right: 0px;
+    flex-direction: column;
+  }
+  .pay-delivery__item {
+    width: 100%;
+    margin-right: 0px;
+    margin-bottom: 20px;
+  }
+  .pay-delivery__item:last-child {
+    margin-bottom: 0px;
+  }
+  /* /Pay-delivery */
+}
+
+
+
+
+
+
+
+
+
+/* General delivery */
+.delivery__list-payment .delivery__item {
+  font-size: 10px;
+  line-height: 12px;
+  text-transform: uppercase;
+}
+.delivery__item {
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+  font-size: 14px;
+  line-height: 150%;
+  font-weight: 700;
+  position: relative;
+  margin-bottom: 10px;
+}
+.delivery__item:last-child {
+  margin-bottom: 0px;
+}
+.delivery__item::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.delivery__item__img {
+  width: 60px;
+  height: 40px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-right: 10px;
+  background-color: #FFFFFF;
+}
+.delivery__list-option {
+  display: flex;
+  align-items: flex-start;
+  margin-right: -30px;
+}
+.delivery__list-option .delivery__item {
+  margin-right: 30px;
+  color: #E0E0E0;
+}
+.delivery__list-option .delivery__item::before {
+  top: 7px;
+  transform: none;
+}
+.delivery__list-option .delivery__item span {
+  font-size: 12px;
+}
+
+.general-decor-caption {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.general-decor-caption::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #4F4F4F;
+  transform: rotate(-45deg);
+}
+.general-decor-caption .img {
+    width: 22px; 
+    height: 20px;
+    background-position: -15px -72px;
+}
+.img.delivery-times-img {
+    width: 21px; 
+    height: 27px;
+    background-position: -15px -15px;
+}
+.img.delivery-method-img {
+    width: 26px; 
+    height: 20px;
+    background-position: -66px -15px;
+}
+.img.orders {
+    width: 22px; 
+    height: 20px;
+    background-position: -69px -15px;
+}
+.img.discounts {
+    width: 24px; 
+    height: 24px;
+    background-position: -15px -15px;
+}
+.img.money {
+    width: 22px;
+    height: 20px;
+    background-position: -15px -69px;
+}
+
+/* //General delivery */
