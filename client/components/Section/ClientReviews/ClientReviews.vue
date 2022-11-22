@@ -52,7 +52,7 @@ export default {
               :class="{show: index == 0}"
               class="js-slider-item-infinity clients-say__item js-item" 
             >
-                <review-card :review="review"></review-card>
+                <review-home-card :review="review"></review-home-card>
             </li>
         </ul>
 
