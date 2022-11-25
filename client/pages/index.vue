@@ -106,6 +106,13 @@ export default {
           short_desc: 'Everyone evaluates the comfort and convenience of the environments we spend our lives. It is the feature we expect to meet in all the things we deal with, be it various supplements',
           image: null,
           link: '/'
+        },
+        {
+          id: 4,
+          title: 'ALL ABOUT KRATOM',
+          short_desc: 'Everyone evaluates the comfort and convenience of the environments we spend our lives. It is the feature we expect to meet in all the things we deal with, be it various supplements',
+          image: null,
+          link: '/'
         }
       ],
       reviews: [
@@ -154,21 +161,41 @@ White Maeng Da - is the result of combining the best qualities of natural and ar
 <style src="assets/scss/pages/home.scss" lang="sass" scoped />
 
 <template>
-  <section-main-slider :banners="banners"></section-main-slider>
+
+  <!-- MAIN SLIDER -->
+  <simple-decorator
+    :settings="{title: {pos: 'right'}, figure: {pos: 'right', showTill: 'desktop'}}"
+    :is-figure="true"
+  >
+    <section-main-slider :banners="banners"></section-main-slider>
+  </simple-decorator> 
+
   <section-products-slider :products="products"></section-products-slider>
-  <section-about-us></section-about-us>
+  
+  <!-- ABOUT US -->
+  <simple-decorator 
+    :settings="{title: {pos: 'left'}, figure: {pos: 'right', showTill: 'mobile'}}"
+    class="section"
+  >
+    <section-about-us></section-about-us>
+  </simple-decorator>
+
   <section-choose-kratom></section-choose-kratom>
-  <section-our-advantages></section-our-advantages>
-  <section-articles :articles="articles"></section-articles>
+  
+  <!-- OUR ADVANTAGES -->
+  <simple-decorator
+    :settings="{title: {pos: 'right'}, figure: {pos: 'right', showTill: 'mobile'}}"
+    :is-figure="true"
+    class="section"
+  >
+    <section-our-advantages></section-our-advantages>
+  </simple-decorator>
+  
+  <section-articles :articles="articles" class="section"></section-articles>
+
   <section-client-reviews :reviews="reviews"></section-client-reviews>
 
-  <section class="seo-block seo-block-main">
-    <div class="seo-block__wrapper container">
-        <h1 class="main-caption">{{ page.h1 }}</h1>
-        <div class="seo-block__container" v-html="page.seo_text">
-        </div>
-    </div>
-  </section>
+  <section-seo :title="page.h1" :text="page.seo_text" class="section"></section-seo>
 
   <section-write-us></section-write-us>
 

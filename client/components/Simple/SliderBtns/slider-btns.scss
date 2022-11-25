@@ -1,0 +1,152 @@
+.slider-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 53px;
+  height: 53px;
+  border-radius: 50%;
+  border: 1px solid #4F4F4F;
+  background-color: #242424;
+  color: #E0E0E0;
+  overflow: hidden;
+  position: relative;
+  transition: opacity 0.2s;
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &.next {
+    .icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  span {
+    font-size: 8px;
+    position: relative;
+    z-index: 2;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -75%;
+    right: 0px;
+    width: 100%;
+    height: 250%;
+    background-color: #333333;
+    z-index: 0;
+    transform: rotate(45deg);
+    transition: transform 0.4s;
+  }
+
+  &.slider-button-small {
+    width: 30px;
+    height: 30px;
+
+    &:hover {
+      &:before {
+        transform: rotate(45deg) translate(0px, -35px);
+      }
+    }
+
+    span {
+      font-size: 4px;
+    }
+  }
+
+  &:hover {
+    &:before {
+      transform: rotate(45deg) translate(0px, -65px);
+    }
+  }
+}
+
+
+.general-slider__buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+
+  &.hide {
+    .slider-button {
+      visibility: hidden;
+    }
+  }
+
+  .main-button {
+    margin: 0px 30px;
+  }
+
+  .dots__list {
+    display: none;
+  }
+
+  &-product-page {
+    .slider-button:first-of-type {
+      margin-right: 30px;
+    }
+  }
+}
+
+.dots__list {
+  display: flex;
+  margin: 0px 20px;
+}
+
+.dots__item {
+  width: 5px;
+  height: 5px;
+  background-color: #4F4F4F;
+  border-radius: 50%;
+  margin-right: 10px;
+  transition: transform 0.4s, background-color 0.4s;
+
+  &:last-child {
+    margin-right: 0px;
+  }
+
+  &.active {
+    background-color: #E0E0E0;
+    transform: scale(1.5);
+  }
+}
+
+
+@media screen and (max-width: 1024px) {
+  .general-slider__buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .general-slider__buttons .dots__list {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  .slider-button {
+    display: none;
+  }
+    
+  /* Dots */
+  .dots__item {
+    width: 6px;
+    height: 6px;
+  }
+  
+  /* //Dots */
+}
+
+@media screen and (max-width: 576px) {
+  .general-slider__buttons .main-button {
+    margin: 0px;
+  }
+  .general-slider__buttons {
+    margin-top: 20px;
+  }
+}

@@ -1,0 +1,84 @@
+@import 'assets/scss/global/mixins';
+
+.wrapper {
+  position: relative;
+  max-width: 1440px;
+  margin: 0px auto;
+}
+
+.text {
+  display: none;
+
+  @include _tablet {
+    display: block;
+    position: absolute;
+    transform: none;
+    font-family: "Impact", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #2D2C2C;
+    z-index: -1;
+    line-height: 100%;
+    font-size: 72px;
+
+    &.center {
+      left: 50%;
+      transform: translateX(-50%) translateY(-20%);
+    }
+
+    &.left {
+      left: 0;
+      transform: translateX(10%) translateY(-20%);
+    }
+
+    &.right {
+      right: 0;
+      transform: translateX(-10%) translateY(-20%);
+    }
+  }
+
+  @include _desktop {
+    font-size: 144px;
+  }
+}
+
+.figure {
+  position: absolute;
+  width: 152px;
+  height: 152px;
+  border: 1px solid #ACDA53;
+  z-index: -1;
+
+  &.center {
+    left: 50%;
+    transform: translateX(-50%) rotate(-45deg);
+  }
+
+  &.left {
+    left: 0;
+    transform: translateX(10%) rotate(-45deg);
+  }
+
+  &.right {
+    right: 0;
+    transform: translateX(-10%) rotate(-45deg);
+  }
+
+  @include _tablet {
+    width: 245px;
+    height: 245px;
+
+    &.mobile {
+      display: none;
+    }
+  }
+
+  @include _desktop {
+    width: 340px;
+    height: 340px;
+    &.tablet {
+      display: none;
+    }
+  }
+}

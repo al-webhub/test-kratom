@@ -46,22 +46,27 @@ export default {
         
         <!-- <infinity-slider :data-items="reviews" data-type="reviewCard" data-link="/reviews" data-button="read all reviews" data-class-list="clients-say__list" data-class-item="clients-say__item js-item"></infinity-slider> -->
         <ul class="clients-say__list js-infinity-slider-list">
-            <li
-              v-for="(review, index) in reviews"
-              :key="review.id"
-              :class="{show: index == 0}"
-              class="js-slider-item-infinity clients-say__item js-item" 
-            >
-                <review-home-card :review="review"></review-home-card>
-            </li>
+          <li
+            v-for="(review, index) in reviews"
+            :key="review.id"
+            :class="{show: index == 0}"
+            class="js-slider-item-infinity clients-say__item js-item" 
+          >
+            <review-home-card :review="review"></review-home-card>
+          </li>
         </ul>
 
-        <div class="general-slider__buttons js-arrow-infinity">
+        <simple-slider-btns
+          :title="$t('text.read_all_reviews')"
+          :items="reviews.length"
+          link="reviews"
+        >
+        </simple-slider-btns>
+
+        <!-- <div class="general-slider__buttons js-arrow-infinity">
             <button class="slider-button prev">
-                <span class="icon-arrow-left"></span>
+              <img src="~assets/svg-icons/arrow.svg" class="icon" />
             </button>
-            
-            <!-- Точки нужно выводить если они кратны 3 -->
             
             <div class="dots__list">
                 <div
@@ -74,16 +79,16 @@ export default {
                 </div>
             </div>
             
-            <!-- //Точки нужно выводить если они кратны 3 -->
             <a href="reviews" class="main-button">
                 <span class="text">{{ $t('text.read_all_reviews') }}</span>
             </a>
 
             <button class="slider-button next">
-                <span class="icon-arrow-right"></span>
+              <img src="~assets/svg-icons/arrow.svg" class="icon" />
             </button>
 
-        </div>
+        </div> -->
+        
       </div>
   </section>
 </template>

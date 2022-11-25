@@ -14,6 +14,25 @@ export default {
 
   },
 
+  computed: {
+    effects() {
+      return [
+        {
+          uid: 'stimulation',
+          title: this.$t('text.stimulation'),
+        },
+        {
+          uid: 'relaxation',
+          title: this.$t('text.relaxation'),
+        },
+        {
+          uid: 'euphoria',
+          title: this.$t('text.euphoria'),
+        }
+      ]
+    }
+  },
+
   methods: {
 
 	  loadCalcItems: function(){
@@ -50,124 +69,80 @@ export default {
       <div class="choose-kratom__wrapper container">
           
         <div class="choose-kratom__info">
-              <h2 class="main-caption">{{ $t('text.choose_kratom_for_yourself') }}</h2>
-              <span>{{ $t('text.What_would_you_like?') }}</span>
-          </div>
+          <h2 class="main-caption">{{ $t('text.choose_kratom_for_yourself') }}</h2>
+          <span>{{ $t('text.What_would_you_like?') }}</span>
+        </div>
 
           <div class="choose-kratom__container">
               <div class="choose-kratom__filter">
 
-                  <div class="choose-kratom__filter__item">
-                      
-                    <p class="caption">{{ $t('text.stimulation') }}</p>
+                <div
+                  v-for="effect in effects"
+                  :key="effect.uid"
+                  class="choose-kratom__filter__item"
+                >
+                    
+                  <p class="caption">{{ effect.title }}</p>
 
-                    <div class="choose-kratom__filter__select">
-                      <button @click="calcMinus('stimulation')" class="choose-kratom__filter__button">
-                          <span class="icon-minus"></span>
-                      </button>
-                      
-                      <div
-                        v-for="circle in 5"
-                        :key="circle"
-                        :class="{
-                          active: calc.stimulation > (circle - 0.5),
-                          'active-half': calc.stimulation == (circle - 0.5)
-                        }"
-                        class="choose-kratom__point" 
-                      >
-                          <span class="point-decor__wrapper">
-                              <span class="point-decor__inner"></span>
-                          </span>
-                      </div>
-                      
-                      <button @click="calcPlus('stimulation')" class="choose-kratom__filter__button">
-                        <span class="icon-plus"></span>
-                      </button>
+                  <div class="choose-kratom__filter__select">
+                    <button @click="calcMinus(effect.uid)" class="choose-kratom__filter__button minus">
+                      -
+                    </button>
+                    
+                    <div
+                      v-for="circle in 5"
+                      :key="circle"
+                      :class="{
+                        active: calc[effect.uid] > (circle - 0.5),
+                        'active-half': calc[effect.uid] == (circle - 0.5)
+                      }"
+                      class="choose-kratom__point" 
+                    >
+                      <span class="point-decor__wrapper">
+                        <span class="point-decor__inner"></span>
+                      </span>
                     </div>
-
+                    
+                    <button @click="calcPlus(effect.uid)" class="choose-kratom__filter__button plus">
+                      +
+                    </button>
                   </div>
 
-                  <div class="choose-kratom__filter__item">
-                      <p class="caption">{{ $t('text.relaxation') }}</p>
-                      <div class="choose-kratom__filter__select">
-                          <button class="choose-kratom__filter__button" @click="calcMinus('relaxation')">
-                              <span class="icon-minus"></span>
-                          </button>
-                          
-                          <div
-                            v-for="circle in 5"
-                            :key="circle"
-                            :class="{
-                              active: calc.relaxation > (circle - 0.5),
-                              'active-half': calc.relaxation == (circle - 0.5)
-                            }"
-                            class="choose-kratom__point"
-                          >
-                              <span class="point-decor__wrapper">
-                                  <span class="point-decor__inner"></span>
-                              </span>
-                          </div>
-                          
-                          <button class="choose-kratom__filter__button" @click="calcPlus('relaxation')">
-                              <span class="icon-plus"></span>
-                          </button>
-                      </div>
-                  </div>
-
-                  <div class="choose-kratom__filter__item">
-                      <p class="caption">{{ $t('text.euphoria') }}</p>
-                      <div class="choose-kratom__filter__select">
-                          <button class="choose-kratom__filter__button" @click="calcMinus('euphoria')">
-                              <span class="icon-minus"></span>
-                          </button>
-                          <div
-                            v-for="circle in 5" 
-                            :key="circle"
-                            :class="{
-                              active: calc.euphoria > (circle - 0.5),
-                              'active-half': calc.euphoria == (circle - 0.5)
-                            }"
-                            class="choose-kratom__point"
-                            >
-                              <span class="point-decor__wrapper">
-                                  <span class="point-decor__inner"></span>
-                              </span>
-                          </div>
-                          <button class="choose-kratom__filter__button" @click="calcPlus('euphoria')">
-                              <span class="icon-plus"></span>
-                          </button>
-                      </div>
-                  </div>
-                  
-                  <button class="main-button-color js-button" data-target="result-calc" @click="loadCalcItems()">
-                      <span class="text">{{ $t('text.choose_kratom') }}</span>
-                  </button>
+                </div>
+                
+                <button @click="loadCalcItems()" class="main-button-color js-button">
+                  <span class="text">{{ $t('text.choose_kratom') }}</span>
+                </button>
 
               </div>
 
               <div class="choose-kratom__table__wrapper">
-                  <div class="choose-kratom__table">
-                      <div class="choose-kratom__table__grid"></div>
-                      <div class="choose-kratom__table__grid"></div>
-                      <div class="choose-kratom__table__grid"></div>
-                      <div class="choose-kratom__table__grid"></div>
-                      <div class="choose-kratom__table__grid"></div>
-                      <div :style="{height: (calc.stimulation * 20) + '%'}"  class="choose-kratom__table__point stimulation" >
-                          <div class="point"></div>
-                      </div>
-                      <div :style="{height: (calc.relaxation * 20) + '%'}" class="choose-kratom__table__point relaxation">
-                          <div class="point"></div>
-                      </div>
-                      <div :style="{height: (calc.euphoria * 20) + '%'}" class="choose-kratom__table__point euphoria">
-                          <div class="point"></div>
-                      </div>
-                  </div>
+                <div class="choose-kratom__table">
+                    <div class="choose-kratom__table__grid"></div>
+                    <div class="choose-kratom__table__grid"></div>
+                    <div class="choose-kratom__table__grid"></div>
+                    <div class="choose-kratom__table__grid"></div>
+                    <div class="choose-kratom__table__grid"></div>
+                    <div :style="{height: (calc.stimulation * 20) + '%'}"  class="choose-kratom__table__point stimulation" >
+                        <div class="point"></div>
+                    </div>
+                    <div :style="{height: (calc.relaxation * 20) + '%'}" class="choose-kratom__table__point relaxation">
+                        <div class="point"></div>
+                    </div>
+                    <div :style="{height: (calc.euphoria * 20) + '%'}" class="choose-kratom__table__point euphoria">
+                        <div class="point"></div>
+                    </div>
+                </div>
 
-                  <ul class="choose-kratom__table__list">
-                      <li class="choose-kratom__table__item">{{ $t('text.stimulation') }}</li>
-                      <li class="choose-kratom__table__item">{{ $t('text.relaxation') }}</li>
-                      <li class="choose-kratom__table__item">{{ $t('text.euphoria') }}</li>
-                  </ul>
+                <ul class="choose-kratom__table__list">
+                  <li
+                    v-for="effect in effects"
+                    :key="effect.uid"
+                    class="choose-kratom__table__item"
+                  >
+                    {{ effect.title }}
+                  </li>
+                </ul>
 
               </div>
 

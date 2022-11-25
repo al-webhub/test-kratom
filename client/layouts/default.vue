@@ -2,6 +2,8 @@
   <div>
     <the-header></the-header>
 
+    <the-breadcrumbs></the-breadcrumbs>
+
     <main>
       <slot />
     </main>

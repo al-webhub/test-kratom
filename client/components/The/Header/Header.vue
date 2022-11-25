@@ -17,9 +17,24 @@ export default {
           name: 'Kratom'
         }
       ],
-      search_list: [],
+      search_list: [
+        {
+          name: 'Kratom 1',
+          link: '/'
+        },{
+          name: 'Kratom 2',
+          link: '/'
+        }
+      ],
       search_filter: null,
-      user: null
+      user: null,
+      isSearchActive: false
+    }
+  },
+
+  methods: {
+    openSearchHandler() {
+      this.isSearchActive = true
     }
   }
 }
@@ -29,20 +44,23 @@ export default {
 
 <template>
   <header class="header">
-    <a href="/" class="header__logo">
-        <img src="~assets/images/logo.png" alt="Kratom">
+    
+    <a href="/" class="logo">
+      <img src="~assets/images/logo.png" alt="Kratom">
     </a>
-    <nav class="header__nav">
+
+    <nav class="nav">
         <span class="general-decor-elem"></span>
-        <ul class="header__list">
+
+        <ul class="list">
             <li
               v-for="(item, index) in menu"
               :key="item.id"
-              class="header__item">
+              class="item">
                 <a
                   :href="item.link"
                   :class="{active: false}"
-                  class="header__link"
+                  class="link"
                 >
                   {{ item.name }}
                 </a>
@@ -68,61 +86,66 @@ export default {
             <span class="icon-close"></span>
         </button>
     </nav>
-    <div class="header__nav-profile">
-        <div class="header__search js-drop-item">
+
+    <div class="btns-set">
+        <div :class="{active: isSearchActive}" class="search">
             
-            <div class="header__search-form">
+            <div class="search__form">
                 
                 <input 
                   :placeholder="$t('text.search')"
                   v-model="search_filter"
                   @blur="search_filter = null"
                   type="text"
-                  class="header__search__input" 
+                  class="search__input" 
                   autocomplete="off"
                 />
 
-                <button class="header__search__button">
-                    <span class="icon-search"></span>
+                <button class="search__button">
+                  <img src="~assets/svg-icons/search.svg" class="icon"  />
                 </button>
 
             </div>
 
-            <div class="header__livesearch" :class="{active: search_list.length}">
-                <ul class="header__livesearch-list">
-                    <li class="header__livesearch-item" v-for="(item, index) in search_list" :key="index">
-                        <a
-                          :href="item.link"
-                          :title="item.name"
-                          class="header__livesearch-link"
-                        >
-                          {{ item.name }}
-                        </a>
-                    </li>
-                </ul>
+            <div :class="{active: search_list.length && isSearchActive}" class="livesearch">
+              <ul class="livesearch__list">
+                <li v-for="(item, index) in search_list" :key="index" class="livesearch__item">
+                  <a
+                    :href="item.link"
+                    :title="item.name"
+                    class="livesearch__link"
+                  >
+                    {{ item.name }}
+                  </a>
+                </li>
+              </ul>
             </div>
 
-            <button class="header__search__button js-drop-button">
-                <span class="icon-search"></span>
+            <button @click="openSearchHandler" class="header__search__button">
+              <img src="~assets/svg-icons/search.svg" class="icon"  />
             </button>
 
         </div>
+
         <div class="header__nav-lang__item js-drop-item">
 	        <div class="footer__lang_popup">
-	           <!-- @include('includes.languages') -->
-            </div>
+	          <!-- @include('includes.languages') -->
+          </div>
 	        
 	        <button class="js-button js-drop-button">
-                <span class="icon-globe"></span>
-            </button>
+            <!-- <span class="icon-globe"></span> -->
+            <img src="~assets/svg-icons/globe.svg" class="icon" />
+          </button>
         </div>
+
         <div class="header__nav-profile__item">
             
             <button v-if="!user" class="js-button" data-target="registration-social">
-                <span class="icon-profile"></span>
+                <!-- <span class="icon-profile"></span> -->
+              <img src="~assets/svg-icons/user.svg" class="icon" />
             </button>
 
-            <a v-else href="{{ url_locale('account/order-history')}}">
+            <a v-else href="account/order-history">
               <div 
                 v-if="user.usermeta && user.usermeta.photo"
                 :style="{backgroundImage: 'url(' + user.usermeta.photo + ')'}"
@@ -138,16 +161,19 @@ export default {
               </div>
             </a>
         </div>
+        
         <div class="header__nav-profile__item header__nav-profile__item-cart">
             <button class="js-button" data-target="noty-cart">
-                <span class="icon-cart"></span>
+                <!-- <span class="icon-cart"></span> -->
+                <img src="~assets/svg-icons/cart.svg" class="icon"  />
             </button>
             <span class="decor-cart" v-if="cartLength"></span>
         </div>
+
         <div class="header__nav-profile__item header__nav-profile__item-burger">
-            <button class="header__burger">
-                <span class="decor"></span>
-            </button>
+          <button class="header__burger">
+            <span class="decor"></span>
+          </button>
         </div>
     </div>
   </header>

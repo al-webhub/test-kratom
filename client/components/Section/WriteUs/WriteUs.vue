@@ -19,41 +19,44 @@ export default {
 <style src="./write-us.scss" lang="sass" scoped />
 
 <template>
-  <section :style="{backgroundImage: bgImage}" class="question-block js-img-bg">
-    <div class="question-block__wrapper container">
-        <div class="question-block__container">
+  <section :style="{backgroundImage: bgImage}" class="qb">
+    <div class="wrapper container">
+        <div class="inner">
             <p class="main-caption">{{ $t('text.have_any_questions?') }}</p>
+            
             <p class="sub">{{ $t('text.Write_to_us') }}</p>
-            <ul class="question-block__list">
-                <li class="question-block__item question-block__item-message">
-                    <a href="mailto: {{ config('settings.contact_email') }}" class="question-block__link">
-                        <span class="icon-message"></span>
+
+            <ul class="list">
+                <li class="item message">
+                    <a href="mailto: {{ config('settings.contact_email') }}" class="link">
+                        <img src="~assets/svg-icons/mail.svg" class="icon" />
                     </a>
                 </li>
-                <li class="question-block__item question-block__item-teleg">
-                    <a href="tg://resolve?domain={{ config('settings.tg') }}" class="question-block__link">
-                        <span class="icon-teleg"></span>
+                <li class="item telegram">
+                    <a href="tg://resolve?domain={{ config('settings.tg') }}" class="link">
+                        <img src="~assets/svg-icons/telegram.svg" class="icon" />
                     </a>
                 </li>
-                <li class="question-block__item question-block__item-whatsapp">
-                    <a href="https://wa.me/{{ config('settings.whatsapp') }}" class="question-block__link">
-                        <span class="icon-whatsapp"></span>
+                <li class="item whatsapp">
+                    <a href="https://wa.me/{{ config('settings.whatsapp') }}" class="link">
+                        <img src="~assets/svg-icons/whatsapp.svg" class="icon" />
                     </a>
                 </li>
-                <li class="question-block__item question-block__item-skype">
-                    <a href="skype:{{ config('settings.skype') }}?chat" class="question-block__link">
-                        <span class="icon-skype"></span>
+                <li class="item skype">
+                    <a href="skype:{{ config('settings.skype') }}?chat" class="link">
+                        <img src="~assets/svg-icons/skype.svg" class="icon" />
                     </a>
                 </li>
-                <li class="question-block__item question-block__item-viber">
-                    <a href="viber://chat?number=+{{ config('settings.viber') }}" class="question-block__link hide-desktop">
-                        <span class="icon-viber"></span>
+                <li class="item viber">
+                    <a href="viber://chat?number=+{{ config('settings.viber') }}" class="link hide-desktop">
+                        <img src="~assets/svg-icons/viber.svg" class="icon" />
                     </a>
-                    <a href="viber://chat?number={{ config('settings.viber') }}" class="question-block__link hide-mobile">
-                        <span class="icon-viber"></span>
+                    <a href="viber://chat?number={{ config('settings.viber') }}" class="link hide-mobile">
+                        <img src="~assets/svg-icons/viber.svg" class="icon" />
                     </a>
                 </li>
             </ul>
+
         </div>
     </div>
   </section>

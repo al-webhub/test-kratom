@@ -2,14 +2,7 @@
 .about-us-block__wrapper {
   position: relative;
 }
-.about-us-block__wrapper .general-decor-text {
-  left: 85px;
-  top: -40px;
-  transform: none;
-}
-.about-us-block__wrapper .general-decor-figure {
-  display: none;
-}
+
 .about-us-block__container {
   display: flex;
   justify-content: space-between;
@@ -92,10 +85,6 @@
   .about-us-block {
     margin-bottom: 0px;
   }
-  .about-us-block__wrapper .general-decor-text {
-    left: 50px;
-    top: 30px;
-  }
   .about-us-block__container {
     margin-top: 50px;
   }
@@ -142,17 +131,6 @@
 
 @media screen and (max-width: 767px) {
    /* About us */
-  .about-us-block__wrapper .general-decor-text {
-    display: none;
-  }
-  .about-us-block__wrapper .general-decor-figure {
-    display: block;
-    width: 190px;
-    height: 190px;
-    left: -40px;
-    top: -100px;
-    transform: rotate(55deg);
-  }
   .about-us-block__container {
     flex-direction: column;
     margin-top: 20px;
