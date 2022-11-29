@@ -1,9 +1,18 @@
 <script>
-import clientsSayBg from 'assets/images/clients-say-bg.png';
+import clientsSayBg from 'assets/images/clients-say-bg.png'; 
 
 export default {
   data() {
-    return {}
+    return {
+      items: [],
+      arrayLength: 0,
+      startIndex: 0,
+      direction: 'next',
+      touch: {
+        from: null,
+        to: null
+      }
+    }
   },
 
   props: {
@@ -17,78 +26,124 @@ export default {
     bgImage() {
       return 'url(' + clientsSayBg + ')';
     }
+  },
+
+  methods: {
+    prevHandler(){
+      this.direction = 'prev'
+      let index = this.arrayLength - 1
+
+      let item = this.items.splice(index, 1)
+      this.items.unshift(item[0])
+    },
+
+    nextHandler() {
+      //this.startIndex = 1
+      // this.isReverse = true
+
+      // setTimeout(() => {
+      //   this.isReverse = false
+      // }, 10000)
+
+      this.direction = 'next'
+      let index = 0
+      let item = this.items.splice(index, 1)
+      this.items.push(item[0])
+    },
+
+    touchHandler(event) {
+      console.log('TOUCH', event)
+    },
+
+    touchStartHandler(event) {
+      // console.log('TOUCH-START', event)
+      this.touch.from = event.changedTouches[0].screenX
+    },
+
+    touchEndHandler(event) {
+      // console.log('TOUCH-END', event)
+      this.touch.to = event.changedTouches[0].screenX
+
+      if(this.touch.from < this.touch.to) {
+        this.prevHandler()
+      }else
+        {
+          this.nextHandler()
+        }
+    }
+  },
+
+  mounted() {
+    // this.startIndex = this.reviews.length
+    // this.items = this.reviews.concat(this.reviews, this.reviews);
+
+    this.startIndex = 0
+    this.arrayLength = this.reviews.length
+    this.items = this.reviews
   }
 }
 </script>
 
 <style src="./client-reviews.scss" lang="sass" scoped />
 
+<style>
+  .list-ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
 <template>
   <section class="clients-say">
       
-    <div class="clients-say__img js-img-bg" :style="{backgroundImage: bgImage}"></div>
+    <div class="bg-image" :style="{backgroundImage: bgImage}"></div>
       
-      <div class="clients-say__wrapper container slider-infinity">
-          
-        <h2 class="main-caption">{{ $t('text.What_our_clients_say') }}</h2>
-          
-        <div class="clients-say__header">
-            <p class="clients-say__caption">{{ $t('text.leave_feedback_and_earn') }}</p>
-            <div class="clients-say__buttons">
-                <a href="reviews#feedback" class="main-button-color">
-                    <span class="text">{{ $t('text.leave_feedback') }}</span>
-                </a>
-                <a href="rewards" class="main-button-color clients-say__button">
-                    <span class="text">{{ $t('text.learn_more') }}</span>
-                </a>
-            </div>
-        </div>
+    <div class="wrapper container">
         
-        <!-- <infinity-slider :data-items="reviews" data-type="reviewCard" data-link="/reviews" data-button="read all reviews" data-class-list="clients-say__list" data-class-item="clients-say__item js-item"></infinity-slider> -->
-        <ul class="clients-say__list js-infinity-slider-list">
+      <h2 class="main-caption">{{ $t('text.What_our_clients_say') }}</h2>
+        
+      <div class="header">
+        <p class="caption">{{ $t('text.leave_feedback_and_earn') }}</p>
+
+        <div class="buttons">
+          <a href="reviews#feedback" class="main-button-color">
+            <span class="text">{{ $t('text.leave_feedback') }}</span>
+          </a>
+          <a href="rewards" class="main-button-color clients-say__button">
+            <span class="text">{{ $t('text.learn_more') }}</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="list" 
+        @touchmove="touchHandler"
+        @touchstart="touchStartHandler"
+        @touchend="touchEndHandler"
+      >
+        <TransitionGroup name="list" tag="ul" class="list-ul"  mode="in-out" appear>
           <li
-            v-for="(review, index) in reviews"
+            v-for="(review, index) in items"
             :key="review.id"
-            :class="{show: index == 0}"
-            class="js-slider-item-infinity clients-say__item js-item" 
+            :class="[{show:  index === startIndex }, direction, 'item-' + index]"
+            class="item" 
           >
             <review-home-card :review="review"></review-home-card>
           </li>
-        </ul>
-
-        <simple-slider-btns
-          :title="$t('text.read_all_reviews')"
-          :items="reviews.length"
-          link="reviews"
-        >
-        </simple-slider-btns>
-
-        <!-- <div class="general-slider__buttons js-arrow-infinity">
-            <button class="slider-button prev">
-              <img src="~assets/svg-icons/arrow.svg" class="icon" />
-            </button>
-            
-            <div class="dots__list">
-                <div
-                  v-for="(item, key) in reviews"
-                  :key="item.id"
-                  v-if="(key + 1) % 3 == 0"
-                  :class="{active: (key + 1) == 3}"
-                  class="dots__item js-dot" 
-                >
-                </div>
-            </div>
-            
-            <a href="reviews" class="main-button">
-                <span class="text">{{ $t('text.read_all_reviews') }}</span>
-            </a>
-
-            <button class="slider-button next">
-              <img src="~assets/svg-icons/arrow.svg" class="icon" />
-            </button>
-
-        </div> -->
-        
+        </TransitionGroup>
       </div>
+
+      <simple-slider-btns
+        :title="$t('text.read_all_reviews')"
+        :items="reviews.length"
+        @prev="prevHandler"
+        @next="nextHandler"
+        link="reviews"
+      >
+      </simple-slider-btns>
+      
+    </div>
   </section>
 </template>

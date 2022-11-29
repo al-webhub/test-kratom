@@ -59,57 +59,57 @@ export default {
 
 <template>
   <div class="product__item__container" :class="{active: isInfoOpen}">
+      
+      <!-- PRODUCT INFO -->
       <div class="product__item__info-block">
-          <button class="product__item__info-block--close-btn" @click="closeInfoHandler">+</button>
-          <div class="wrapper" v-html="product.excerpt">
-          </div>
+        <button @click="closeInfoHandler" class="product__item__info-block--close-btn">+</button>
+        <div class="wrapper" v-html="product.excerpt"></div>
       </div>
-      <a :href="product.link" class="product__item__img">
-          <img :alt="product.name" :title="product.name" :src="product.image">
+
+      <!-- PRODUCT IMAGE -->
+      <a :href="product.link" class="image">
+        <!-- <img :alt="product.name" :title="product.name" :src="product.image"> -->
+
+        <nuxt-picture
+          :src = "product.image"
+          sizes = "mobile:100vw tablet:230px desktop:240px"
+          format = "webp"
+          quality = "80"
+          loading = "lazy"
+        >
+        </nuxt-picture> 
       </a>
-      <a :href="product.link" class="product__item__link">{{ product.name }}</a>
-      <button class="product__item__button" @click="openInfoHandler">
+
+      <!-- PRODUCT NAME -->
+      <a :href="product.link" class="link">{{ product.name }}</a>
+      
+      <!-- PRODUCT SHOW INFO BUTTON -->
+      <button @click="openInfoHandler" class="info-btn">
           <span class="text">{{ $t('text.info') }}</span>
-          <span class="icon-info"></span>
+          <img src="~assets/svg-icons/arrow-45deg.svg" class="icon" />
       </button>
-      <ul class="product__item__info-list" v-if="product.stimulation != null && product.relaxation != null && product.euphoria != null">
+
+      <!-- PRODUCT PROPERTIES -->
+      <ul 
+        v-if="product.stimulation !== null && product.relaxation !== null && product.euphoria !== null"
+        class="product__item__info-list"
+      >
+          
           <li class="product__item__info-item">
               <p class="name">{{ $t('text.stimulation') }}</p>
-              <ul class="product__item__info-poins__list" :title="product.stimulation">
-                  <li
-                    v-for="point in 5"
-                    :key="point + 'index'"
-                    :class="{active: product.stimulation <= point * 20 }"
-                    class="product__item__info-poins__item"
-                  >
-                  </li>
-              </ul>
+              <simple-five-dots v-model="product.stimulation" size="small" is-static></simple-five-dots>
           </li>
           <li class="product__item__info-item">
               <p class="name">{{ $t('text.relaxation') }}</p>
-              <ul class="product__item__info-poins__list" :title="product.relaxation">
-                  <li
-                    :key="point + 'index'"
-                    v-for="point in 5"
-                    :class="{active: product.relaxation <= point * 20 }"
-                    class="product__item__info-poins__item" 
-                  >
-                  </li>
-              </ul>
+              <simple-five-dots v-model="product.relaxation" size="small" is-static></simple-five-dots>
           </li>
           <li class="product__item__info-item">
               <p class="name">{{ $t('text.euphoria') }}</p>
-              <ul class="product__item__info-poins__list" :title="product.euphoria">
-                  <li
-                    :key="point + 'index'"
-                    v-for="point in 5"
-                    :class="{active: product.euphoria <= point * 20 }"
-                    class="product__item__info-poins__item" 
-                  >
-                  </li>
-              </ul>
+              <simple-five-dots v-model="product.euphoria" size="small" is-static></simple-five-dots>
           </li>
       </ul>
+
+      <!-- PRODUCT MODIFICATIONS -->
       <div class="product__item__weight">
           <ul class="product__weight-list">
               <li
@@ -123,11 +123,14 @@ export default {
               </li>
           </ul>
       </div>
+
+      <!-- PRODUCT FOOTER -->
       <div class="product__item__footer">
-          <p class="product__item__price">USD <span>{{ selectedModification.price }}</span></p>
-          <button class="main-button-color" @click="addToCart(product.id, selectedModification)">
-              <span class="text">{{ $t('text.add_to_cart') }}</span>
-          </button>
+        <p class="product__item__price">USD <span>{{ selectedModification.price }}</span></p>
+        <button @click="addToCart(product.id, selectedModification)" class="main-button-color">
+            <span class="text">{{ $t('text.add_to_cart') }}</span>
+        </button>
       </div>
+
   </div>
 </template>

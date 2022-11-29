@@ -3,18 +3,21 @@ import bannerImg1 from 'assets/images/main-banner-img-1.png';
 import bannerImg2 from 'assets/images/main-banner-img-2.png';
 import bannerImg3 from 'assets/images/main-banner-3.png';
 
+import product_img_1 from 'assets/images/mgd-green-50.jpg';
+import product_img_2 from 'assets/images/mgd-red-50.jpg';
+
 export default {
   data() {
     return {
       products: [
         {
           id: 1,
-          name: '123123',
-          image: null,
+          name: 'GREEN THAI KRATOM',
+          image: '/images/mgd-green-50.jpg',
           link: '/porduct',
           excerpt: '3123123123',
-          stimulation: 3,
-          relaxation: 4,
+          stimulation: 3.5,
+          relaxation: 4.5,
           euphoria: 5,
           modifications: [
             {
@@ -34,8 +37,8 @@ export default {
         },
         {
           id: 2,
-          name: '123123',
-          image: null,
+          name: 'WHITE ELEPHANT KRATOM',
+          image: '/images/mgd-red-50.jpg',
           link: '/porduct',
           excerpt: '3123123123',
           stimulation: 2,
@@ -118,28 +121,40 @@ export default {
       reviews: [
         {
           id: 1,
-          photo: null,
+          photo: '/images/ava1.jpg',
           name: 'Petep Pan',
-          text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого'
+          text: 'В первую очередь отдельная благодарность.'
         },
         {
           id: 2,
-          photo: null,
+          photo: '/images/ava2.jpg',
           name: 'Petep Pan',
-          text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого'
+          text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого. И тут опять пишем текст длинный для еще строк.'
         },
         {
           id: 3,
-          photo: null,
+          photo: '/images/ava3.jpg',
           name: 'Petep Pan',
           text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого'
         },
         {
           id: 4,
-          photo: null,
+          photo: '/images/ava4.jpg',
           name: 'Petep Pan',
           text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого'
-        }
+        },
+        {
+          id: 5,
+          photo: '/images/ava5.jpg',
+          name: 'Petep Pan',
+          text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого'
+        },
+        {
+          id: 6,
+          photo: '/images/ava6.jpg',
+          name: 'Petep Pan',
+          text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого'
+        },
       ],
       page: {
         h1: 'KRATOM TEA FOR SALE',

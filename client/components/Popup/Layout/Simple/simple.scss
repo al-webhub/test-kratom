@@ -1,0 +1,46 @@
+@import 'assets/scss/global/vars';
+
+.popup-caption {
+  font-family: "Impact", sans-serif;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+
+.close__popup {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 2;
+
+  img {
+    width: 26px;
+    height: 26px;
+    filter: $filter-color-gray;
+    transition: filter .3s, transform .3s;
+  }
+
+  &:hover {
+    img {
+      filter: $filter-color-white;
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.content {
+  font-size: 14px;
+  line-height: 130%;
+  color: #E0E0E0;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 40px;
+}

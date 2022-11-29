@@ -6,7 +6,24 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxtjs/device',
-    '@nuxt/image-edge',
+    [
+      '@nuxt/image-edge',
+      {
+        screens: {
+          mobile: 320,
+          tablet: 768,
+          desktop: 1024,
+          large: 1440,
+        },
+        presets: {
+          base: {
+            modifiers: {
+              format: 'webp',
+            }
+          }
+        }
+      }
+    ],
     [
       '@pinia/nuxt',
       {

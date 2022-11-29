@@ -31,9 +31,6 @@
   .main-button-small:hover::before {
     transform: rotate(45deg) translate(0px, -65px);
   }
-  .delete-button:hover {
-    color: #EB5757;
-  }
   .button-to-top .to-top:hover {
     color: #ACDA53;
   }
@@ -45,9 +42,6 @@
   }
   .button-only-text:hover {
     color: #d9d9d9;
-  }
-  .general-drop__item:hover {
-    background-color: #4F4F4F;
   }
   .input__wrapper-radio:hover .custome-radio {
     border-color: #ACDA53;
@@ -82,9 +76,6 @@
   
     /* Popup */
   .close__popup:hover {
-    color: #ffffff;
-  }
-  .show-password:hover {
     color: #ffffff;
   }
   .button-nav:hover {
@@ -454,45 +445,7 @@ main {
   padding: 0px 75px;
   margin: 0px auto;
 }
-.input__wrapper {
-  display: block;
-  width: 100%;
-  position: relative;
-  font-size: 14px;
-  line-height: 17px;
-  margin-bottom: 20px;
-}
-.input__wrapper.disabled {
-    pointer-events: none;
-}
-.input__wrapper.disabled .custome-placeholder__before,
-.input__wrapper.disabled .custome-placeholder__text,
-.input__wrapper.disabled .custome-placeholder__after{
-    border-color: #828282;
-    color: #828282;
-}
-.input__wrapper:last-child {
-  margin-bottom: 0px;
-}
-.input__wrapper.active-input .custome-placeholder__text {
-  border-top: none;
-}
-.input__wrapper.active-input .custome-placeholder__text .inner-text {
-  color: #FFFFFF;
-  transform: translateY(-28px) scale(0.8);
-}
-.input__wrapper.error .input-error-text {
-  display: block;
-}
-.input-error-text {
-  display: none;
-  position: absolute;
-  top: calc(100% + 3px);
-  left: 20px;
-  font-size: 10px;
-  line-height: 12px;
-  color: #EB5757;
-}
+
 .textarea__wrapper {
   display: block;
   width: 100%;
@@ -522,78 +475,6 @@ main {
   background-color: transparent;
   resize: none;
 }
-.general-drop .main-input {
-  cursor: pointer;
-}
-.general-drop .icon-drop {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 4px;
-  transform: rotate(-180deg);
-  transition: transform 0.4s;
-}
-.general-drop.active .general-drop__list {
-  visibility: visible;
-  opacity: 1;
-  transition: visibility 0s 0s, opacity 0.4s;
-}
-.general-drop.active .icon-drop {
-  transform: rotate(0deg);
-}
-.general-drop__list {
-  position: absolute;
-  left: 0px;
-  top: calc(100% + 5px);
-  width: 100%;
-  max-height: 280px;
-  background-color: #333333;
-  border: 1px solid #FFFFFF;
-  border-radius: 30px;
-  z-index: 4;
-  overflow: auto;
-  padding: 10px 0px;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 0.4s, opacity 0.4s;
-  scrollbar-color: rgba(79, 79, 79, 0.5) white;
-  scrollbar-width: 5px;
-  -ms-overflow-style: none;
-}
-
-.general-drop__list::-webkit-scrollbar {
-    width: 5px;
-}
-
-.general-drop__list::-webkit-scrollbar-thumb {
-    background: rgba(79, 79, 79, 0.5);
-    border-radius: 2px;
-} 
-
-.general-drop__item {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  position: relative;
-  cursor: pointer;
-  transition: background-color 0.4s;
-}
-.general-drop__item .icon-active {
-  position: absolute;
-  left: 7px;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0;
-  font-size: 6px;
-  transition: opacity 0.4s;
-}
-.general-drop__item.active .icon-active {
-  opacity: 1;
-}
-.general-drop__item-select {
-  pointer-events: none;
-}
 .main-input {
   width: 100%;
   height: 40px;
@@ -612,48 +493,7 @@ main {
 .main-input:disabled + .custome-placeholder__wrapper {
   opacity: 0.6;
 }
-.custome-placeholder__wrapper {
-  display: flex;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  border-radius: 30px;
-  pointer-events: none;
-}
-.custome-placeholder__text {
-  height: 100%;
-  width: auto;
-  border: 1px solid #FFFFFF;
-  border-left: none;
-  border-right: none;
-  color: #828282;
-}
-.custome-placeholder__text .inner-text {
-  display: inline-block;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: transform 0.2s;
-}
-.custome-placeholder__text .inner-text span {
-  color: #ACDA53;
-}
-.custome-placeholder__before {
-  width: 20px;
-  border: 1px solid #FFFFFF;
-  border-right: none;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-}
-.custome-placeholder__after {
-  flex-grow: 1;
-  border: 1px solid #FFFFFF;
-  border-left: none;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
-}
+
 .general-decor-elem {
   display: block;
   width: 21px;
@@ -862,11 +702,6 @@ display: none;
   display: block;
   transform: rotate(-90deg);
   font-size: 8px;
-}
-.delete-button {
-  color: #828282;
-  font-size: 14px;
-  transition: color 0.4s;
 }
 
 .general-tabs__list {

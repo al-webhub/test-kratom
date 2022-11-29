@@ -1,96 +1,84 @@
-@media screen and (min-width: 1201px) {
-  /* Clients say */
-  .clients-say__info__more:hover {
-    color: #ACDA53;
-  }
-  /* //Clients say */
-}
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
 
-.clients-say__info {
+.info {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  height: 195px;
   width: 100%;
-  font-size: 14px;
-  line-height: 150%;
+  height: 190px;
+  margin-bottom: 10px;
   padding: 20px;
-  margin-bottom: 20px;
-  background-color: #333333;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-.clients-say__info__text {
-  margin-top: 20px;
-  margin-bottom: 5px;
-  max-height: 84px;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
   font-size: 14px;
   line-height: 150%;
-  text-align: center;
-  text-overflow: ellipsis;
-}
-.clients-say__info__more {
-  display: none;
-  color: #828282;
-  transition: color 0.4s;
-}
-.clients-say__info__more.show {
-  display: block;
-}
+  background-color: $color-dark-2;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
 
-.clients-say__item__img {
+  @include _tablet {
+    margin-bottom: 20px;
+  }
+
+  &__text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    max-height: 90px;
+    margin: 20px 0 10px 0;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: center;
+    text-overflow: ellipsis;
+
+
+    @include _tablet {
+      margin: 10px 0;
+      line-height: 130%;
+      -webkit-line-clamp: 5;
+    }
+
+    @include _desktop {
+      margin: 20px 0 5px 0;
+      -webkit-line-clamp: 4;
+      line-height: 150%;
+    }
+  }
+
+  &__more {
+    color: $color-gray;
+    text-transform: capitalize;
+    transition: color 0.4s;
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    &.show {
+      display: block;
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo {
   width: 70px;
   height: 70px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  margin-bottom: 10px;
   border-radius: 50%;
   overflow: hidden;
-  margin-bottom: 10px;
 }
-.clients-say__item__name {
+
+.name {
   font-weight: 700;
   font-size: 12px;
   line-height: 15px;
   color: #E0E0E0;
   text-align: center;
-}
-.clients-say__item__footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-
-@media screen and (max-width: 1024px) {
-  .clients-say__info {
-    padding: 20px;
-    height: 190px;
-  }
-  .clients-say__info__text {
-    line-height: 130%;
-    margin-top: 10px;
-    max-height: 90px;
-    -webkit-line-clamp: 5;
-  }
-}
-
-@media screen and (max-width: 576px) {
-  .clients-say__info {
-    height: 199px;
-    margin-bottom: 10px;
-  }
-  .clients-say__info__text {
-    line-height: 150%;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    max-height: 84px;
-    -webkit-line-clamp: 4;
-  }
-
 }

@@ -12,17 +12,17 @@ export default {
           id: 1,
           title: this.$t('text.Green_strain'),
           text: this.$t('text.Green_strain_1'),
-          image: type_1_img
+          image: '/images/about-us-img-1.png'
         },{
           id: 2,
           title: this.$t('text.Red_strain'),
           text: this.$t('text.Red_strain_1'),
-          image: type_2_img
+          image: '/images/about-us-img-2.png'
         },{
           id: 3,
           title: this.$t('text.White_strain'),
           text: this.$t('text.White_strain_1'),
-          image: type_3_img
+          image: '/images/about-us-img-3.png'
         }
       ]
     }
@@ -41,7 +41,14 @@ export default {
         <div class="about-us-block__container">
             
           <div class="about-us-block__img">
-              <img src="~assets/images/about-us-block-img-1.png" alt="Фото">
+              <nuxt-picture
+                src = "/images/about-us-block-img-1.png"
+                sizes = "mobile:100vw tablet:360px desktop:580px"
+                quality = "25"
+                fit="cover"
+                class="cover"
+              >
+              </nuxt-picture> 
           </div>
           
           <div class="about-us-block__text">
@@ -69,7 +76,14 @@ export default {
                 :key="type.id"
                 class="about-us-block__description__item">
                   <div class="img">
-                      <img :src="type.image" alt="Kratom">
+                    <nuxt-picture
+                      :src = "type.image"
+                      sizes = "mobile:100px"
+                      quality = "40"
+                      loading = "lazy"
+                      :alt="type.title"
+                    >
+                    </nuxt-picture> 
                   </div>
                   <h3 class="main-caption-xs">{{ type.title }}</h3>
                   <p class="info">{{ type.text  }}</p>

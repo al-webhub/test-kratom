@@ -1,0 +1,24 @@
+
+.checkout__item__footer {
+  display: flex;
+  align-items: center;
+}
+.checkout__item__footer .main-button-color {
+  max-width: 203px;
+  margin-left: 20px;
+}
+
+
+.checkout__item .checkout__item__footer {
+  pointer-events: none;
+}
+
+
+.checkout__item.active .checkout__item__footer {
+  pointer-events: painted;
+}
+
+
+.checkout__item:not(.active) .checkout__item__footer .main-button-color {
+  filter: grayscale(1);
+}

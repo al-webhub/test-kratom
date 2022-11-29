@@ -22,22 +22,29 @@ export default {
 
 <template>
 	<div>
-
-	    <div class="clients-say__info">
+	    <div class="info">
         <span class="general-decor-elem"></span>
 
-        <div class="clients-say__info__text">
-            <div class="content js-content">
-                <p>{{ review.text }}</p>
-            </div>
+        <div class="info__text">
+          <div class="content">
+            <p>{{ review.text }}</p>
+          </div>
         </div>
         
-        <button class="clients-say__info__more js-more js-button" data-target="reviews">Read more</button>
+        <button class="info__more">{{ $t('text.read_more') }}</button>
 	    </div>
 
-	    <div class="clients-say__item__footer">
-        <div class="clients-say__item__img" :style="{backgroundImage: review.photo}" ></div>
-	      <p class="clients-say__item__name">{{ review.name }}</p>
+	    <div class="footer">
+        <nuxt-picture
+          :src = "review.photo"
+          sizes = "mobile:70px"
+          format = "webp"
+          quality = "80"
+          loading = "lazy"
+          class="photo cover"
+        >
+        </nuxt-picture> 
+	      <p class="name">{{ review.name }}</p>
 	    </div>
 	</div>
 </template>

@@ -1,287 +1,207 @@
+@import 'assets/scss/global/mixins';
 
-.choose-kratom__wrapper {
+.wrapper {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include _desktop {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 }
-.choose-kratom__info {
-  max-width: 410px;
+
+
+.info {
   width: 100%;
-  margin-right: 30px;
-  margin-top: 50px;
-}
-.choose-kratom__info .main-caption {
-  text-align: left;
-}
-.choose-kratom__info span {
-  display: block;
-  color: #E0E0E0;
-  font-size: 18px;
-  line-height: 22px;
-  font-weight: 700;
-  margin-top: 50px;
-}
-.choose-kratom__container {
-  max-width: 850px;
-  width: 100%;
-  display: flex;
-  background-color: #333333;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
-  padding: 50px;
-}
-.choose-kratom__filter__item {
   margin-bottom: 20px;
-}
-.choose-kratom__filter__select {
-  display: flex;
-  align-items: center;
-}
-.choose-kratom__filter .main-button-color {
-  margin-top: 30px;
-  max-width: 160px;
-  height: 48px;
-}
-.choose-kratom__point,
-.choose-kratom__filter__button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid #4F4F4F;
-  flex-shrink: 0;
-}
-.choose-kratom__point {
-  margin-right: 20px;
-  position: relative;
-}
-.choose-kratom__point .point-decor__wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 12px;
-  height: 12px;
-  border: 1px solid #ACDA53;
-  border-radius: 50%;
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-.choose-kratom__point .point-decor__inner {
-  display: flex;
-  width: 11px;
-  height: 11px;
-  flex-shrink: 0;
-}
-.choose-kratom__point .point-decor__inner::before,
-.choose-kratom__point .point-decor__inner::after {
-  content: "";
-  height: 11px;
-  width: 6px;
-  background-color: #ACDA53;
-}
-.choose-kratom__point .point-decor__inner::before {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-.choose-kratom__point .point-decor__inner::after {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  transition: opacity 0.4s;
-}
-.choose-kratom__point.active-half:not(.active) .point-decor__wrapper {
-  opacity: 1;
-}
-.choose-kratom__point.active-half:not(.active) .point-decor__inner::after {
-  opacity: 0;
-}
-.choose-kratom__point.active.active-half .point-decor__inner::after {
-  opacity: 1;
-}
-.choose-kratom__point.active .point-decor__wrapper {
-  opacity: 1;
-}
-.choose-kratom__filter__button {
-  padding-bottom: 3px;
-  color: #E0E0E0;
-  transition: color 0.4s;
-  line-height: 0;
+  text-align: center;
 
+  @include _tablet {
+  }
+
+  @include _desktop {
+    max-width: 410px;
+    margin: 50px 30px 0 0;
+    text-align: left;
+  }
+
+  .main-caption {
+    @include _desktop {
+      text-align: left;
+    }
+  }
+
+  span {
+    display: block;
+    margin-top: 20px;
+    color: #E0E0E0;
+    line-height: 22px;
+    font-weight: 700;
+    font-size: 16px;
+
+    @include _tablet {
+      font-size: 18px;
+    }
+
+    @include _desktop {
+      margin-top: 50px;
+    }
+  }
 }
-.choose-kratom__filter__button:first-child {
-  margin-right: 20px;
+
+.box {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border-radius: 30px;
+
+  @include _tablet {
+    position: relative;
+    max-width: 850px;
+    padding: 30px 30px 90px;
+    background-color: #333333;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  @include _desktop {
+    padding: 50px;
+  }
 }
-.choose-kratom__filter__item .caption {
+
+.controls {
+  max-width: 320px;
+  width: 100%;
+
+  @include _tablet {
+    max-width: 280px;
+    margin-right: 40px;
+  }
+}
+
+.controls__item {
+  justify-content: center;
+  margin-bottom: 20px;
+
+  @include _tablet {
+
+  }
+
+  @include _desktop {
+
+  }
+}
+
+.main-button-color {
+  position: static;
+  transform: none;
+  max-width: 320px;
+  height: 48px;
+  margin-top: 30px;
+
+  @include _tablet {
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+  }
+
+  @include _desktop {
+    position: relative;
+    left: initial;
+    bottom: initial;
+    transform: initial;
+    max-width: 160px;
+  }
+}
+
+.caption {
   font-size: 14px;
   font-weight: 700;
   line-height: 150%;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
-.choose-kratom__table__wrapper {
-  margin-left: auto;
-}
-.choose-kratom__table {
+
+
+
+
+.graph {
   width: 328px;
   height: 205px;
   border-left: 1px solid #4F4F4F;
   border-bottom: 1px solid #4F4F4F;
   position: relative;
   margin-top: 41px;
-}
-.choose-kratom__table::before {
-  content: "";
-  position: absolute;
-  left: -1px;
-  top: -41px;
-  height: 41px;
-  width: 1px;
-  background-color: #4F4F4F;
-}
-.choose-kratom__table__point {
-  position: absolute;
-  left: 47px;
-  bottom: 0px;
-  width: 40px;
-  height: 100%;
-  background: linear-gradient(169.01deg, #ACDA53 0%, rgba(172, 218, 83, 0) 100%);
-  transition: height 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-.choose-kratom__table__point .point {
-  width: calc(100% - 2px);
-  height: calc(100% - 1px);
-  position: relative;
-  left: 1px;
-  top: 1px;
-  background: linear-gradient(169.01deg, #3D4234 0%, #333333 100%);
-}
-.choose-kratom__table__point.relaxation {
-  left: 149px;
-}
-.choose-kratom__table__point.euphoria {
-  left: auto;
-  right: 36px;
-}
-.choose-kratom__table__grid {
-  width: 100%;
-  height: 41px;
-  border-top: 1px solid rgba(79, 79, 79, 0.5);
-  border-bottom: 1px solid rgba(79, 79, 79, 0.5);
-}
-.choose-kratom__table__list {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 150%;
-  text-transform: uppercase;
-  color: #828282;
-  padding: 8px 25px 0px 30px;
-}
-.choose-kratom__table__item:nth-child(2) {
-  margin: 0px 40px 0px 30px;
-}
-/* //Choose kratom */
 
-@media screen and (max-width: 1200px) {
-  .choose-kratom__wrapper {
-    flex-direction: column;
-    align-items: center;
-  }
-  .choose-kratom__info {
-    margin: 0px;
-    margin-bottom: 20px;
-    max-width: 100%;
-    text-align: center;
-  }
-  .choose-kratom__info span {
-    text-align: left;
-  }
-  /* //Choose kratom */
-}
-
-@media screen and (max-width: 1024px) {
-  /* Choose kratom */
-  .choose-kratom__container {
-    padding: 30px 30px 90px;
-    position: relative;
-  }
-  .choose-kratom__filter .main-button-color {
-    position: absolute;
-    left: 50%;
-    bottom: 30px;
-    transform: translateX(-50%);
-  }
-  .choose-kratom__filter__item {
-    margin-bottom: 15px;
-  }
-  .choose-kratom__filter__button {
-    width: 48px;
-    height: 48px;
-  }
-  .choose-kratom__filter__button:first-child {
-      margin-right: 20px;
-  }
-  .choose-kratom__filter__button .icon-plus {
-    font-size: 12px;
-  }
-  .choose-kratom__filter__button .icon-minus {
-    font-size: 3px;
-  }
-  .choose-kratom__filter__button:last-of-type {
-    margin-left: 10px;
-  }
-  .choose-kratom__point {
-    margin-right: 10px;
-  }
-  /* //Choose kratom */
-}
-
-@media screen and (max-width: 767px) {
-  .choose-kratom__info span {
-    font-size: 16px;
-    margin-top: 20px;
-  }
-  .choose-kratom__container {
-    justify-content: center;
-    padding: 0px;
-    background-color: transparent;
-    box-shadow: none;
-  }
-  .choose-kratom__info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .choose-kratom__filter {
-    max-width: 280px;
-    width: 100%;
-  }
-  .choose-kratom__filter .main-button-color {
-    position: static;
-    transform: none;
-    max-width: 320px;
-  }
-  .choose-kratom__filter__item {
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  .choose-kratom__filter__select {
-      justify-content: space-between;
-  }
-  .choose-kratom__table__wrapper {
+  &__wrapper {
     display: none;
-  }
-  /* //Choose kratom */
-}
 
-@media screen and (max-width: 380px) {
-  /* Choose kratom */
-  .choose-kratom__info {
-    align-items: flex-start;
+    @include _tablet {
+      display: block;
+      margin-left: auto;
+    }
   }
-  /* /Choose kratom */
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: -41px;
+    height: 41px;
+    width: 1px;
+    background-color: #4F4F4F;
+  }
+
+  &__point {
+    position: absolute;
+    left: 47px;
+    bottom: 0px;
+    width: 40px;
+    height: 100%;
+    background: linear-gradient(169.01deg, #ACDA53 0%, rgba(172, 218, 83, 0) 100%);
+    transition: height 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+    .point {
+      width: calc(100% - 2px);
+      height: calc(100% - 1px);
+      position: relative;
+      left: 1px;
+      top: 1px;
+      background: linear-gradient(169.01deg, #3D4234 0%, #333333 100%);
+    }
+
+    &.relaxation {
+      left: 149px;
+    }
+
+    &.euphoria {
+      left: auto;
+      right: 36px;
+    }
+  }
+
+  &__grid {
+    width: 100%;
+    height: 41px;
+    border-top: 1px solid rgba(79, 79, 79, 0.5);
+    border-bottom: 1px solid rgba(79, 79, 79, 0.5);
+  }
+
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 150%;
+    text-transform: uppercase;
+    color: #828282;
+    padding: 8px 25px 0px 30px;
+  }
+
+  &__item {
+    &:nth-child(2) {
+      margin: 0px 40px 0px 30px;
+    }
+  }
 }
