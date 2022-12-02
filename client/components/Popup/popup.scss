@@ -41,108 +41,7 @@ margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
-.main-button-social-popup {
-max-width: 100%;
-margin-bottom: 10px;
-border-width: 2px;
-}
-.main-button-social-popup:last-child {
-margin-bottom: 0px;
-}
-.main-button-social-popup .text {
-margin-left: 10px;
-}
-.main-button-social-popup .icon {
-width: 17px;
-height: 17px;
-background-position: center;
-background-repeat: no-repeat;
-background-size: contain;
-position: relative;
-}
-.main-button-social-popup .icon-message {
-width: initial;
-height: initial;
-}
-.main-button-color-popup {
-max-width: 100%;
-height: 39px;
-margin-top: 20px;
-}
-.popup__footer {
-margin-top: 20px;
-font-size: 12px;
-line-height: 15px;
-}
-.popup__footer__sing-up {
-display: flex;
-justify-content: flex-end;
-color: #E0E0E0;
-}
-.popup__footer__sing-up .button-enter {
-margin-left: 2px;
-}
-.show-password {
-position: absolute;
-font-size: 13px;
-color: #828282;
-right: 20px;
-top: 50%;
-transform: translateY(-50%);
-transition: color 0.4s;
-}
-.popup__footer__navigation {
-display: flex;
-justify-content: space-between;
-}
-.button-nav {
-font-size: 12px;
-line-height: 15px;
-text-decoration: underline;
-transition: color 0.4s;
-}
-.popup-login .popup__body,
-.popup-password .popup__body {
-margin-top: 30px;
-}
-.popup__header .email {
-margin-top: -10px;
-margin-bottom: 20px;
-}
-.popup-check__list {
-margin-bottom: 20px;
-}
-.popup-check__item {
-display: flex;
-align-items: center;
-margin-bottom: 10px;
-font-size: 12px;
-line-height: 15px;
-color: #E0E0E0;
-transition: color 0.4s;
-}
-.popup-check__item.active {
-color: #ACDA53;
-}
-.popup-check__item.active .decor {
-color: #ACDA53;
-border-color: #ACDA53;
-}
-.popup-check__item:last-child {
-margin-bottom: 0px;
-}
-.popup-check__item .decor {
-display: flex;
-justify-content: center;
-align-items: center;
-width: 17px;
-height: 17px;
-border-radius: 50%;
-font-size: 5px;
-color: #4F4F4F;
-border: 1px solid #4F4F4F;
-margin-right: 10px;
-}
+
 .popup-check-email {
 display: flex;
 flex-direction: column;
@@ -159,9 +58,6 @@ align-items: center;
   line-height: 15px;
   margin-top: 30px;
   color: #E0E0E0;
-}
-.popup-check-email__info .button-nav {
-  margin-left: 20px;
 }
 
 @media screen and (max-width: 576px) {

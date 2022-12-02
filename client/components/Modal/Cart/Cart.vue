@@ -1,9 +1,18 @@
 <script>
+import { useCartStore } from '~/store/cart';
+
 export default {
+  setup() {
+    const cartStore = useCartStore()
+
+    return {
+      cartStore,
+    }
+  },
+
   data() {
     return {
       total: 453.43,
-      isActive: true,
       cart: [
         [
           {
@@ -38,6 +47,10 @@ export default {
   // },
 
   computed: {
+    isActive() {
+      return this.cartStore?.show
+    },
+
     cartLength() {
       return Object.keys(this.cart).length
     }
@@ -50,6 +63,10 @@ export default {
 
     checkIfCartEmpty(event) {
 
+    },
+
+    closeHandler() {
+      this.cartStore.close()
     }
   }
 }
@@ -62,7 +79,7 @@ export default {
   <section :class="{active: isActive}" class="popup popup-noty-cart">
       
     <div class="popup-noty-cart__header">
-      <simple-more-btn :text="$t('text.Back')" is-reverse></simple-more-btn>
+      <simple-more-btn :text="$t('text.Back')" @click="closeHandler" is-reverse></simple-more-btn>
       <p class="main-caption">{{ $t('text.cart') }}</p>
     </div>
 

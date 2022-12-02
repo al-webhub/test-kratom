@@ -1,15 +1,21 @@
 <script>
 
+
+
 export default {
   data() {
     return {
       product: {
         id: 1,
-        name: '123123',
+        name: 'WHITE MAENG DA KRATOM',
         image: null,
-        images: [],
+        images: [
+          '/images/mgd-red-50.jpg',
+          '/images/mgd-green-50.jpg'
+        ],
         link: '/porduct',
         excerpt: '3123123123',
+        description: `White Maeng Da Kratom has much common with Maeng Da Green, but in spite of the resemblance, it has a number of features that make it unique. This kind of kratom gives an incredible feeling of euphoria, without an obvious calming effect. To the opposite, it empowers you and courses stimulating effect. White vein maeng da contains a high rate of alkaloids, which are responsible for the feeling of euphoria. This species comes from Thailand, but the leaf processing is conducted in Borneo.`,
         stimulation: 3,
         relaxation: 4,
         euphoria: 5,
@@ -36,8 +42,8 @@ export default {
       recently_viewed: [
         {
           id: 1,
-          name: '123123',
-          image: null,
+          name: 'WHITE MAENG DA KRATOM',
+          image: '/images/mgd-red-50.jpg',
           link: '/porduct',
           excerpt: '3123123123',
           stimulation: 3,
@@ -61,8 +67,8 @@ export default {
         },
         {
           id: 2,
-          name: '123123',
-          image: null,
+          name: 'WHITE MAENG DA KRATOM',
+          image: '/images/mgd-green-50.jpg',
           link: '/porduct',
           excerpt: '3123123123',
           stimulation: 2,
@@ -88,8 +94,8 @@ export default {
       popular_products: [
         {
           id: 1,
-          name: '123123',
-          image: null,
+          name: 'WHITE MAENG DA KRATOM',
+          image: '/images/mgd-red-50.jpg',
           link: '/porduct',
           excerpt: '3123123123',
           stimulation: 3,
@@ -113,8 +119,8 @@ export default {
         },
         {
           id: 2,
-          name: '123123',
-          image: null,
+          name: 'WHITE MAENG DA KRATOM',
+          image: '/images/mgd-green-50.jpg',
           link: '/porduct',
           excerpt: '3123123123',
           stimulation: 2,
@@ -137,9 +143,32 @@ export default {
           ]
         }
       ],
-      reviews: [],
+      reviews: [
+        {
+          id: 1,
+          name: 'Vasia',
+          photo: '/images/ava2.jpg',
+          text: 'The best store on the Internet Thank you very much for what you are!',
+          likes: 1,
+          dislikes: 2,
+          created_at: '18.19.2020',
+          children: []
+        },
+        {
+          id: 2,
+          name: 'Vasia',
+          photo: '/images/ava3.jpg',
+          text: 'The best store on the Internet Thank you very much for what you are!',
+          likes: 1,
+          dislikes: 2,
+          created_at: '18.19.2020',
+          children: []
+        }
+      ],
       currentTab: 'description',
-      user: null,
+      user: {
+        photo: '/images/ava1.jpg',
+      },
       //storage: JSON.parse(localStorage.getItem('kratom')),
       storage: {}
     }
@@ -184,51 +213,6 @@ export default {
   },
 
   computed: {
-
-		saleWeights: function(){
-			let saleModifications = this.product.modifications.slice(1, this.product.modifications.length + 1);
-			
-			return saleModifications.reduce(function(previous, current){
-				let weight = current.weight || +current.name
-				return (previous !== null? previous + '/': '') + weight;
-			}, null) + 'g';
-		},
-
-		currentDiscount: function(){
-			let baseModification = this.product.modifications[0];
-			let selectedModificationWeight = this.selectedModification.weight || +this.selectedModification.name
-			let baseModificationWeight = baseModification.weight || +baseModification.name
-			
-			let basePrice = baseModification.price * selectedModificationWeight / baseModificationWeight;
-			
-      //console.log('basePrice', Math.round(100 - this.selectedModification.price * 100 / basePrice) );
-
-	 		return Math.round(100 - this.selectedModification.price * 100 / basePrice);
-		},
-
-		discounts: function(){
-			let saleModifications = this.product.modifications.slice(1, this.product.modifications.length + 1);
-			
-			//console.log(modifications, this.product.modifications);
-			
-			let baseModification = this.product.modifications[0];
-			let baseModificationWeight = baseModification.weight || +baseModification.name
-			let values = [];
-			
-			saleModifications.forEach(function(item){
-				let itemWeight = item.weight || +item.name
-				let basePrice = baseModification.price * itemWeight / baseModificationWeight;
-	 			values.push(Math.round(100 - item.price * 100 / basePrice));
-			});
-			
-			return values;
-		},
-
-		discountsString: function(){
-			return this.discounts.reduce(function(previous, current){
-				return (previous !== null? previous + '/': '') + current;
-			}, null) + '%';
-		}
   },
 
   created: function() {
@@ -243,320 +227,79 @@ export default {
 
 <template>
   <section class="product-page">
-      <div class="product-page__wrapper container">
+    <div class="product-page__wrapper container">
 
-          <h1 class="main-caption main-caption-align">{{ product.name }}</h1>
+      <h1 class="main-caption main-caption-align">{{ product.name }}</h1>
 
-          <div class="product-page__header">
+      <div class="product-page__header">
 
-              <!-- update -->
-              <div class="product-page__img slider">
-                  <ul class="product-page__img-list">
-                      <li class="product-page__img-item js-slider-item show">
-                          <img 
-                            :src="product.image"
-                            :title="product.name"
-                            :alt="product.name"
-                          />
-                      </li>
-                      <li 
-                        v-for="(image, index) in product.images"
-                        :key="index"
-                        class="product-page__img-item js-slider-item"
-                      >
-                        <img
-                          :src="image"
-                          :title="product.name"
-                          :alt="product.name"
-                        />
-                      </li>
-                  </ul>
-                  
-                  <div
-                    v-if="Object.keys(product.images).length"
-                    class="product-page__img-arrows js-arrows"
-                  >
-                      <button class="slider-button prev">
-                          <span class="icon-arrow-left"></span>
-                      </button>
-                      <button class="slider-button next">
-                          <span class="icon-arrow-right"></span>
-                      </button>
-                  </div>
+          <!-- IMAGE SLIDER -->
+          <product-slider :images="product.images"></product-slider>
 
-                  <div v-if="Object.keys(product.images).length" class="dots__list">
-                      <div class="dots__item active js-dot"></div>
-                      <div
-                        v-for="index in Object.keys(product.images).length"
-                        :key="index"
-                        class="dots__item js-dot"
-                      >
-                      </div>
-                  </div>
-              </div>
-              <!-- /update -->
+          <div class="product-page__info">
 
+              <!-- HEADER -->
+              <div class="product-page__info-header">
+                
+                <!-- ADD TO CART -->
+                <product-cart
+                  :product="product"
+                  v-model:selected-modification="selectedModification"
+                >
+                </product-cart>
+                
+                <!-- DISCOUNT  -->
+                <product-sale
+                  v-if="product.modifications[1]"
+                  :product="product"
+                  :selected-modification="selectedModification"
+                >
+                </product-sale>
 
-              <div class="product-page__info">
-                  <div class="product-page__info-header">
-                      <div class="product-page__info-choose">
-                          
-                        <ul class="product__weight-list">
-                          <li
-                            v-for="(modification, key) in product.modifications"
-                            :key="modification.id"
-                            @click="changeModification(modification)"
-                            :class="{active: modification.id === selectedModification.id}"
-                            class="product__weight-item"
-                          >
-                            {{ modification.name }}
-                          </li>
-                        </ul>
-
-                        <div class="product-page__price-wrapper">
-                          <div class="wrapper">
-                              <p class="product-page__price">USD <span>@{{ selectedModification.price * selectedModification.amount }}</span></p>
-                              <div class="product__calc">
-                                  <button class="calc_button" @click="(selectedModification.amount > 1)? selectedModification.amount-- : false">
-                                      <span class="text">-</span>
-                                  </button>
-                                  <input type="text" class="calc-input" v-model="selectedModification.amount">
-                                  <button class="calc_button" @click="selectedModification.amount++">
-                                      <span class="text">+</span>
-                                  </button>
-                              </div>
-                          </div>
-
-                          <div v-if="product.modifications[1]" class="product-page__info-sale product-page__info-sale-mobile">
-                              <p class="current-dis">
-                                {{ $t('text.current_DISCOUNT') }}: 
-                                <span>{{ currentDiscount }}%</span>
-                              </p>
-                              <p class="sale">
-                                {{ $t('text.save') }} {{ discounts.slice(-1)[0] }}%
-                              </p>
-                              <p class="offer">
-                                {{ $t('text.Order') }} {{ saleWeights }} 
-                                <br>
-                                {{ $t('text.and') }} 
-                                <span>{{ $t('text.get_a_discount') }}</span> 
-                                {{ discountsString }}
-                              </p>
-                          </div>
-
-                          <button @click="addToCart(product.id, selectedModification)" class="main-button-color">
-                              <span class="text">{{ $t('text.add_to_cart') }}</span>
-                          </button>
-
-                        </div>
-                      </div>
-                      
-                      <div v-if="product.modifications[1]" class="product-page__info-sale">
-                          <p class="current-dis">{{ $t('text.current_DISCOUNT') }}: <span>{{ currentDiscount }}%</span></p>
-                          <p class="sale">{{ $t('text.save') }} {{ discounts.slice(-1)[0] }}%</p>
-                          <p class="offer">
-                            {{ $t('text.Order') }} {{ saleWeights }} 
-                            <br>
-                            {{ $t('text.and') }} 
-                            <span>{{ $t('text.get_a_discount') }}</span> 
-                            {{ discountsString }}
-                          </p>
-                      </div>
-
-                  </div>
-                  
-                  <div class="product-page__info-footer">
-                      <div 
-                        v-if="product.stimulation != null && product.relaxation != null && product.euphoria != null" 
-                        class="choose-kratom__filter"
-                      >
-                          <div class="choose-kratom__filter__item">
-                              
-                            <p class="caption">{{ $t('text.stimulation') }}</p>
-
-                              <div class="choose-kratom__filter__select">
-                                  
-                                  <button
-                                    class="choose-kratom__filter__button"
-                                    @click="changeAttr('stimulation', -1)"
-                                    :class="{disabled: storage && storage[product.id] && storage[product.id]['stimulation'] == -1 || product.stimulation == '0%'}"
-                                  >
-                                    <span class="icon-minus"></span>
-                                  </button>
-                                  
-                                  <div class="choose-kratom__point" 
-                                    v-for="point in 5"
-                                    :key="point"
-                                    :class="{
-                                      active: product.stimulation > (point * 20 - 10), 
-                                      'active-half': (product.stimulation <= (point * 20 - 10) && product.stimulation > (point * 20 - 20))
-                                    }"
-                                  >
-                                    <span class="point-decor__wrapper">
-                                      <span class="point-decor__inner"></span>
-                                    </span>
-                                  </div>
-                                  
-                                  <button
-                                    @click="changeAttr('stimulation', 1)"
-                                    :class="{disabled: storage && storage[product.id] && storage[product.id]['stimulation'] == 1 || product.stimulation == '100%'}"
-                                    class="choose-kratom__filter__button"
-                                  >
-                                    <span class="icon-plus"></span>
-                                  </button>
-                              </div>
-                          </div>
-                          
-                          <div class="choose-kratom__filter__item">
-                              
-                              <p class="caption">{{ $t('text.relaxation') }}</p>
-                              
-                              <div class="choose-kratom__filter__select">
-                                  
-                                  <button
-                                    class="choose-kratom__filter__button"
-                                    @click="changeAttr('relaxation', -1)"
-                                    :class="{disabled: storage && storage[product.id] && storage[product.id]['relaxation'] == -1 || product.relaxation == '0%'}"
-                                  >
-                                    <span class="icon-minus"></span>
-                                  </button>
-                                  
-                                  <div class="choose-kratom__point" 
-                                    v-for="point in 5"
-                                    :key="point"
-                                    :class="{
-                                      active: product.relaxation > (point * 20 - 10), 
-                                    'active-half': (product.relaxation <= (point * 20 - 10) && product.relaxation > (point * 20 - 20))
-                                    }"
-                                  >
-                                    <span class="point-decor__wrapper">
-                                      <span class="point-decor__inner"></span>
-                                    </span>
-                                  </div>
-                                  
-                                  <button
-                                    class="choose-kratom__filter__button"
-                                    @click="changeAttr('relaxation', 1)"
-                                    :class="{disabled: storage && storage[product.id] && storage[product.id]['relaxation'] == 1 || product.relaxation == '100%'}"
-                                  >
-                                      <span class="icon-plus"></span>
-                                  </button>
-                              </div>
-                          </div>
-
-                          <div class="choose-kratom__filter__item">
-                              <p class="caption">{{ $t('text.euphoria') }}</p>
-                              
-                              <div class="choose-kratom__filter__select">
-                                  <button
-                                    class="choose-kratom__filter__button"
-                                    @click="changeAttr('euphoria', -1)"
-                                    :class="{disabled: storage && storage[product.id] && storage[product.id]['euphoria'] == -1 || product.euphoria == '0%'}"
-                                  >
-                                    <span class="icon-minus"></span>
-                                  </button>
-                                  
-                                  <div class="choose-kratom__point" 
-                                    v-for="point in 5"
-                                    :key="point"
-                                    :class="{
-                                      active: product.euphoria > (point * 20 - 10), 
-                                      'active-half': (product.euphoria <= (point * 20 - 10) && product.euphoria > (point * 20 - 20))
-                                    }"
-                                  >
-                                    <span class="point-decor__wrapper">
-                                      <span class="point-decor__inner"></span>
-                                    </span>
-                                  </div>
-                                  
-                                  <button
-                                    class="choose-kratom__filter__button"
-                                    @click="changeAttr('euphoria', 1)"
-                                    :class="{disabled: storage && storage[product.id] && storage[product.id]['euphoria'] == 1 || product.euphoria == '100%'}"
-                                  >
-                                    <span class="icon-plus"></span>
-                                  </button>
-                              </div>
-                          </div>
-                      </div>
-                      
-                      <div
-                        class="product-page__info-text"
-                        v-if="product.stimulation != null && product.relaxation != null && product.euphoria != null"
-                      >
-                        <p>{{ $t('text.Users_take') }}</p>
-                        <p>{{ $t('text.As_soon_as') }}</p>
-                      </div>
-
-                      <button class="general-more js-button" data-target="delivery">
-                        <span class="text">{{ $t('text.pay_delivery') }}</span>
-                        <span class="icon-arrow-right"></span>
-                      </button>
-                  </div>
-              </div>
-          </div>
-
-          <div class="product-page__body">
-              
-            <ul class="general-tabs__list">
-                  <li class="general-tabs__item js-product-tab active" data-target="description">{{ $t('text.description') }}</li>
-                  <li class="general-tabs__item js-product-tab" data-target="reviews">{{ $t('text.reviews') }}</li>
-              </ul>
-
-              <div class="product-page__description js-product-item" data-target="description">
-                  <p class="product-page__caption">{{ $t('text.description') }}</p>
-                  <div v-html="product.description"></div>
               </div>
               
-              
-              <!-- REVIEWS -->
-              <!-- <reviews :data-reviews="reviews" :data-user="user" :data-product-id="product.id"></reviews> -->
-              <!-- REVIEWS -->
+              <!-- FOOTER -->
+              <div class="product-page__info-footer">
+                
+                <product-qualities
+                  v-model:stimulation="product.stimulation"
+                  v-model:relaxation="product.relaxation"
+                  v-model:euphoria="product.euphoria"
+                >
+                </product-qualities>
+                
+                <simple-more-btn :text="$t('text.pay_delivery')"></simple-more-btn>
+              </div>
               
           </div>
       </div>
-  </section>
 
-  <section class="container">
-    <div class="product__wrapper_header">
-      <p class="main-caption">{{ $t('text.related_products') }}</p>
-      <a href="shop" class="general-more">
-        <span class="text">{{ $t('text.shop') }}</span>
-        <span class="icon-arrow-right"></span>
-      </a>
-    </div>
-    <div class="grid">
-      <product-card 
-        v-for="(product, key) in popular_products"
-        :key="product.id"
-        :product="product"
-      ></product-card>
-    </div>
-  </section>
+      <!-- CONTENT -->
+      <div class="product-page__body">
+          
+          <ul class="general-tabs__list">
+            <li class="general-tabs__item active">{{ $t('text.description') }}</li>
+            <li class="general-tabs__item">{{ $t('text.reviews') }}</li>
+          </ul>
 
-  <!-- <section class="product slider-infinity">
-    <div class="product__wrapper container">
-      
-      <div class="product__wrapper_header">
-          <p class="main-caption">{{ $t('text.related_products') }}</p>
-          <a href="shop" class="general-more">
-              <span class="text">{{ $t('text.shop') }}</span>
-              <span class="icon-arrow-right"></span>
-          </a>
+          <div class="product-page__description">
+            <p class="product-page__caption">{{ $t('text.description') }}</p>
+            <div v-html="product.description"></div>
+          </div>
+          
+          
+          <!-- REVIEWS -->
+          <div class="product-page__reviews">
+            <p class="product-page__caption">{{ $t('text.reviews') }}</p>
+            <product-review-block :reviews="reviews"></product-review-block>
+          </div>
+          
       </div>
-
-      <ul class="product__list product-slider__list js-infinity-slider-list">
-          <li
-            v-for="(product, key) in popular_products"
-            :key="product.id"
-            :data-index="key + 1"
-            class="product__item product-slider__item show js-slider-item-infinity"
-          >
-            <product-card :product="product"></product-card>
-          </li>
-      </ul>
     </div>
-  </section> -->
+  </section>
+
+  <product-grid :products="popular_products" :title="$t('text.related_products')" class="section"></product-grid>
+  <product-grid :products="recently_viewed" :title="$t('text.recently_viewed')" class="section"></product-grid>
 
   <aside></aside>
 

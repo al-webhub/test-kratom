@@ -85,8 +85,8 @@ export default {
       
       <!-- PRODUCT SHOW INFO BUTTON -->
       <button @click="openInfoHandler" class="info-btn">
-          <span class="text">{{ $t('text.info') }}</span>
-          <img src="~assets/svg-icons/arrow-45deg.svg" class="icon" />
+        <span class="text">{{ $t('text.info') }}</span>
+        <img src="~assets/svg-icons/arrow-45deg.svg" class="icon" />
       </button>
 
       <!-- PRODUCT PROPERTIES -->
@@ -111,17 +111,7 @@ export default {
 
       <!-- PRODUCT MODIFICATIONS -->
       <div class="product__item__weight">
-          <ul class="product__weight-list">
-              <li
-                v-for="(modification, key) in product.modifications"
-                :key="modification.id"
-                :class="{active: selectedModification.id === modification.id}"
-                @click="changeModification(modification)"
-                class="product__weight-item" 
-              >
-                {{ modification.name }}
-              </li>
-          </ul>
+        <product-variants-list v-model="selectedModification" :values="product.modifications"></product-variants-list>
       </div>
 
       <!-- PRODUCT FOOTER -->

@@ -1,0 +1,120 @@
+@import 'assets/scss/global/vars';
+
+.nav-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid $color-dark-3;
+  background-color: #242424;
+  overflow: hidden;
+  position: relative;
+  transition: border 0.3s;
+
+  &:hover {
+    &:before {
+      transform: rotate(45deg) translate(0px, -50px);
+    }
+
+    .icon {
+      filter: $filter-color-white;
+    }
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    filter: $filter-color-gray-3;
+  }
+
+  &.next {
+    .icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -75%;
+    right: 0px;
+    width: 100%;
+    height: 250%;
+    background-color: #333333;
+    z-index: 0;
+    transform: rotate(45deg);
+    transition: transform 0.4s;
+  }
+}
+
+
+.product-page__img {
+max-width: calc(42% - 25px);
+width: 100%;
+position: relative;
+}
+.product-page__img .dots__list {
+justify-content: center;
+margin: 0px;
+}
+.product-page__img-arrows {
+display: flex;
+justify-content: space-between;
+position: absolute;
+left: 20px;
+top: 50%;
+transform: translateY(-50%);
+width: calc(100% - 40px);
+z-index: 2;
+}
+
+.product-page__img-list {
+width: 100%;
+height: 385px;
+position: relative;
+background-color: #333333;
+margin-bottom: 20px;
+}
+.product-page__img-item {
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+left: 0px;
+top: 0px;
+width: 100%;
+height: 100%;
+padding: 37px 95px;
+opacity: 0;
+transition: opacity 0.4s;
+}
+.product-page__img-item.show {
+opacity: 1;
+}
+
+
+@media screen and (max-width: 1330px) {
+  .product-page__img {
+    max-width: calc(38% - 10px);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .product-page__img {
+    max-width: calc(50% - 10px);
+  }
+  .product-page__img-list {
+    height: 276px;
+  }
+  .product-page__img-item {
+    padding: 10px 40px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .product-page__img {
+    max-width: 100%;
+  }
+}

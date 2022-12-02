@@ -356,7 +356,30 @@
   display: none;
 }
 
-/* Header */
+
+
+
+
+.lang-popup {
+
+	overflow: hidden;
+	position: absolute;
+	top: 50px;
+	right: 0;
+	width: 300px;
+	border-radius: 20px;
+	background: #333333;
+	opacity: 0;
+  transition: opacity .1s,top .1s;
+  filter: drop-shadow(0 -4px 8px rgba(0, 0, 0, .1));
+
+  &.active{
+    top: 55px;
+    bottom: initial;
+    opacity: 1;
+    transition: opacity .2s .15s,top .3s;
+  }
+}
 
 @media screen and (max-width: 992px) {
   .header__item:nth-child(2),

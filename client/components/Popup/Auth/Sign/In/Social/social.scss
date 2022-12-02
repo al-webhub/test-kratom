@@ -1,0 +1,23 @@
+.main-button-social-popup {
+  max-width: 100%;
+  margin-bottom: 10px;
+  border-width: 2px;
+}
+.main-button-social-popup:last-child {
+  margin-bottom: 0px;
+}
+.main-button-social-popup .text {
+  margin-left: 10px;
+}
+.main-button-social-popup .google-icon {
+  width: 17px;
+  height: 17px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+}
+.main-button-social-popup .icon-message {
+  width: 20px;
+  height: 20px;
+}

@@ -1,5 +1,15 @@
 <script>
+import { useCartStore } from '~/store/cart';
+
 export default {
+  setup() {
+    const cartStore = useCartStore()
+
+    return {
+      cartStore,
+    }
+  },
+
   data() {
     return {
       menu: [
@@ -28,13 +38,26 @@ export default {
       ],
       search_filter: null,
       user: null,
-      isSearchActive: false
+      isSearchActive: false,
+      isLanguagesActive: false
     }
   },
 
   methods: {
     openSearchHandler() {
       this.isSearchActive = true
+    },
+
+    toggleLanguagesHandler() {
+      this.isLanguagesActive = !this.isLanguagesActive
+    },
+
+    languageSelectHandler() {
+      this.isLanguagesActive = false
+    },
+
+    openCartHandler() {
+      this.cartStore.open()
     }
   }
 }
@@ -127,13 +150,12 @@ export default {
 
         </div>
 
-        <div class="header__nav-lang__item js-drop-item">
-	        <div class="footer__lang_popup">
-	          <!-- @include('includes.languages') -->
+        <div class="header__nav-lang__item">
+	        <div :class="{active: isLanguagesActive}" class="lang-popup">
+            <modal-lang-switcher @select="languageSelectHandler"></modal-lang-switcher>
           </div>
 	        
-	        <button class="js-button js-drop-button">
-            <!-- <span class="icon-globe"></span> -->
+	        <button class="js-button js-drop-button" @click="toggleLanguagesHandler">
             <img src="~assets/svg-icons/globe.svg" class="icon" />
           </button>
         </div>
@@ -163,8 +185,7 @@ export default {
         </div>
         
         <div class="header__nav-profile__item header__nav-profile__item-cart">
-            <button class="js-button" data-target="noty-cart">
-                <!-- <span class="icon-cart"></span> -->
+            <button class="js-button" @click="openCartHandler">
                 <img src="~assets/svg-icons/cart.svg" class="icon"  />
             </button>
             <span class="decor-cart" v-if="cartLength"></span>

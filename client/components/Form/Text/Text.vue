@@ -2,7 +2,7 @@
 export default {
   data() {
     return {
-      isActive: false
+      onFocus: false
     }
   },
 
@@ -24,18 +24,28 @@ export default {
     isDisabled: {
       type: Boolean,
       default: false
+    },
+    readonly: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  computed: {
+    isActive() {
+      return this.onFocus || this.modelValue?.length
     }
   },
 
   methods: {
     focusHandler() {
-      this.isActive = true
+      this.onFocus = true
     },
 
     blurHandler() {
-      this.isActive = false
+      this.onFocus = false
     }
-  }
+  },
 }
 </script>
 
@@ -49,6 +59,7 @@ export default {
       @blur="blurHandler"
       type="text"
       class="main-input"
+      :readonly="readonly"
     >
     
     <form-placeholder

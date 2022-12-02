@@ -1,0 +1,54 @@
+
+@media screen and (min-width: 1068px) {
+  .referral-history-position-1-lvl {
+    width: calc(23% - 5px);
+  }
+  .referral-history-position-2-lvl {
+    width: calc(24% - 5px);
+  }
+  .referral-history-position-3-lvl {
+    width: calc(24% - 5px);
+  }
+  .referral-history-position-data {
+    width: calc(23% - 5px);
+  }
+  .referral-history-position-last {
+    width: calc(6% - 5px);
+  }
+  .referral-history-position-data {
+    width: calc(20% - 5px);
+  }
+  .referral-history-position-descrip {
+    width: calc(40% - 5px);
+  }
+  .referral-history-position-amount {
+    width: calc(10% - 5px);
+    text-align: right;
+  }
+  .referral-history-position-balance {
+    width: calc(20% - 5px);
+    text-align: right;
+  }
+  .referral-history__list-transactions {
+    pointer-events: none;
+  }
+}
+
+.referral-history {
+margin-top: 25px;
+}
+.referral-history__header {
+display: flex;
+justify-content: space-between;
+padding-bottom: 10px;
+border-bottom: 1px solid #4F4F4F;
+font-size: 12px;
+line-height: 15px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+font-weight: 700;
+}
+.referra-empty {
+  user-select: none;
+  margin-top: 20px;
+}

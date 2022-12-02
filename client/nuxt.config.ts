@@ -38,17 +38,20 @@ export default defineNuxtConfig({
     [
       '@nuxtjs/i18n',
       {
+        baseUrl: 'https://kratomhelper.com',
         defaultLocale: 'en',
         lazy: true,
         langDir: 'lang/',
         locales: [
           {
+            iso: 'ru-RU',
             code: 'ru',
             file: 'ru.json',
             name: 'Русский',
             shortName: 'RU',
           }, 
           {
+            iso: 'en-US',
             code: 'en',
             file: 'en.json',
             name: 'English',

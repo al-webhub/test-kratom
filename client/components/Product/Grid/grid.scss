@@ -1,0 +1,28 @@
+@import 'assets/scss/global/mixins';
+
+.header {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+
+  @include _tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include _desktop {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -1,8 +1,8 @@
-<svg width="22" height="27" viewBox="0 0 22 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="10.333" y="6.99951" width="1" height="7" fill="black"/>
-<rect x="10.333" y="13.9246" width="1" height="5" transform="rotate(-67.6705 10.333 13.9246)" fill="black"/>
-<rect x="6.83301" y="0.499512" width="8" height="3" stroke="black"/>
-<rect x="6.83301" y="23.4995" width="8" height="3" stroke="black"/>
-<circle cx="10.833" cy="13.4995" r="10" stroke="black"/>
-<path d="M3.83301 13.9995C4.34232 17.4842 5.83612 18.7394 9.33301 20.4995" stroke="black"/>
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="14.4072" y="10.1853" width="0.740741" height="5.18518" fill="black"/>
+<rect x="14.4072" y="15.3149" width="0.740741" height="3.7037" transform="rotate(-67.6705 14.4072 15.3149)" fill="black"/>
+<rect x="11.7943" y="5.35" width="5.96667" height="2.26296" stroke="black" stroke-width="0.7"/>
+<rect x="11.7943" y="22.3871" width="5.96667" height="2.26296" stroke="black" stroke-width="0.7"/>
+<circle cx="14.7778" cy="14.9999" r="7.27778" stroke="black"/>
+<path d="M9.59277 15.3704C9.97004 17.9516 11.0766 18.8814 13.6668 20.1852" stroke="black"/>
 </svg>

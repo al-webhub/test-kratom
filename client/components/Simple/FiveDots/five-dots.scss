@@ -37,6 +37,24 @@
       margin-right: 10px;
     }
   }
+
+  &.medium {
+    .point,
+    .button {
+      width: 18px;
+      height: 18px;
+    }
+
+    .point {
+      margin-right: 10px;
+    }
+
+    .button {
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
 }
 
 .point,

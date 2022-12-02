@@ -1,0 +1,56 @@
+@media screen and (min-width: 1201px) {
+  .general-tabs__item:hover::before {
+    width: 100%;
+  }
+}
+
+// GENERAL TABS
+.general-tabs__list {
+  display: flex;
+  font-size: 12px;
+  line-height: 15px;
+  color: #E0E0E0;
+  text-transform: uppercase;
+}
+.general-tabs__item {
+  padding-bottom: 5px;
+  position: relative;
+  margin-right: 50px;
+  cursor: pointer;
+  transition: color 0.4s, text-shadow 0.4s;
+}
+.general-tabs__item:last-child {
+  margin-right: 0px;
+}
+.general-tabs__item::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 0px;
+  height: 2px;
+  background-color: #E0E0E0;
+  transition: width 0.4s;
+}
+.general-tabs__item.active {
+  text-shadow: 0px 0px 2px #FFFFFF;
+  color: #FFFFFF;
+}
+.general-tabs__item.active::before {
+  width: 100%;
+  background-color: #FFFFFF;
+}
+.general-tabs__item.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .general-tabs__list {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .general-tabs__item {
+    margin-right: 30px;
+  }
+}

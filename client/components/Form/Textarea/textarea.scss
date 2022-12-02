@@ -1,0 +1,34 @@
+.input__wrapper {
+  position: relative;
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.input__wrapper.disabled {
+    pointer-events: none;
+}
+
+.input__wrapper.error .input-error-text {
+  display: block;
+}
+.input-error-text {
+  display: none;
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 20px;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EB5757;
+}
+
+
+.main-textarea {
+  width: 100%;
+  padding-left: 20px;
+  padding-top: 12px;
+  border: none;
+  background-color: transparent;
+  resize: none;
+}
