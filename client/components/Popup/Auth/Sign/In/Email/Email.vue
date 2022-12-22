@@ -1,8 +1,17 @@
 <script>
+import { useAuthStore } from '~/store/auth';
+
 export default {
+  setup() {
+    const authStore = useAuthStore()
+
+    return {
+      authStore
+    }
+  },
+
   data() {
     return {
-      isActive: false,
       new_user: {
         firstname: '',
         lastname: '',
@@ -26,9 +35,19 @@ export default {
     }
   },
 
+  computed: {
+    isActive() {
+      return this.authStore.showSignInEmail
+    }
+  },
+
   methods: {
     closeHandler() {
-      this.isActive = false
+      return this.authStore.close('signInEmail')
+    },
+
+    openLogInEmailHandler() {
+      return this.authStore.open('logInEmail')
     }
   }
 }
@@ -127,7 +146,7 @@ export default {
         <div class="popup__footer">
             <div class="popup__footer__sing-up">
                 <p>{{ $t('text.Already_have_account') }}</p>
-                <button type="button" class="button-enter">{{ $t('text.Log_In') }}</button>
+                <button @click="openLogInEmailHandler" type="button" class="button-enter">{{ $t('text.Log_In') }}</button>
             </div>
         </div>
 

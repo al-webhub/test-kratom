@@ -18,11 +18,13 @@ export default {
       default: () => {
         return {
           title: {
-            pos: 'center',
+            posX: 'center',
+            posY: 'top',
             showTill: 'mobile'
           },
           figure: {
-            pos: 'left',
+            posX: 'left',
+            posY: 'top',
             showTill: 'mobile'
           }
         }
@@ -36,8 +38,8 @@ export default {
 
 <template>
   <div class="wrapper">
-    <div v-if="isTitle" :class="settings.title.pos" class="text">{{ title }}</div>      
-    <div v-if="isFigure" :class="[settings.figure.pos, settings.figure.showTill]" class="figure"></div>
+    <div v-if="isTitle" :class="[settings.title.posX, settings.title.posY]" class="text">{{ title }}</div>      
+    <div v-if="isFigure" :class="[settings.figure.posX, settings.figure.posY, settings.figure.showTill]" class="figure"></div>
 
     <slot />
   </div>

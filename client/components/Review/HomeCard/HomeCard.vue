@@ -15,6 +15,36 @@ export default {
     }
   },
 
+  methods: {
+    emitHeightHandler() {
+      if (process.client){
+        if(window.innerWidth >= 1024)
+          this.$emit('height', '305px')
+        else
+          this.$emit('height', 'auto')
+      }else{
+        if(this.$device.isDesktop)
+          this.$emit('height', '305px')
+        else
+          this.$emit('height', 'auto')        
+      }
+    }
+  },
+
+  created: function(){
+    this.emitHeightHandler()
+
+    if (process.client){
+      window.addEventListener("resize", this.emitHeightHandler);
+    }
+  },
+
+  destroyed: function() {
+    if (process.client){
+      window.removeEventListener("resize", this.emitHeightHandler);
+    }
+  },
+
 }
 </script>
 
@@ -36,7 +66,7 @@ export default {
 
 	    <div class="footer">
         <nuxt-picture
-          :src = "review.photo"
+          :src = "review.owner.photo"
           sizes = "mobile:70px"
           format = "webp"
           quality = "80"
@@ -44,7 +74,7 @@ export default {
           class="photo cover"
         >
         </nuxt-picture> 
-	      <p class="name">{{ review.name }}</p>
+	      <p class="name">{{ review.owner.name }}</p>
 	    </div>
 	</div>
 </template>

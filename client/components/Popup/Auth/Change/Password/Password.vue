@@ -1,8 +1,17 @@
 <script>
+import { useAuthStore } from '~/store/auth';
+
 export default {
+  setup() {
+    const authStore = useAuthStore()
+
+    return {
+      authStore
+    }
+  },
+
   data() {
     return {
-      isActive: false,
       password: '',
       password_confirmation: '',
       user: {
@@ -32,12 +41,16 @@ export default {
           validated: false
         }
       ]
+    },
+
+    isActive() {
+      return this.authStore.showChangePassword
     }
   },
 
   methods: {
     closeHandler() {
-      this.isActive = false
+      return this.authStore.close('changePassword')
     }
   }
 }

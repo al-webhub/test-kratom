@@ -23,9 +23,9 @@ export default {
     
     <p class="caption">{{ article.title }}</p>
 
-    <div class="text" v-html="article.short_desc"></div>
+    <div class="text" v-html="article.excerpt"></div>
     
-    <simple-more-btn :link="article.link"></simple-more-btn>
+    <simple-more-btn :link="'/guidebook/' + article.slug"></simple-more-btn>
     
   </li>
 </template>

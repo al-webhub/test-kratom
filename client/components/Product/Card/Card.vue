@@ -1,5 +1,14 @@
 <script>
+import { useCartStore } from '~/store/cart';
 export default {
+  setup() {
+    const cartStore = useCartStore()
+
+    return {
+      cartStore
+    }
+  },
+
   data() {
     return {
       selectedModification: {},
@@ -28,8 +37,22 @@ export default {
       this.isInfoOpen = true
     },
 
-    addToCart(arg1, arg2) {
-      
+    toCartHandler(arg1, arg2) {
+      this.cartStore.add(this.selectedModification)
+    },
+
+    emitHeightHandler() {
+      if (process.client){
+        if(window.innerWidth >= 1024)
+          this.$emit('height', '451px')
+        else
+          this.$emit('height', 'auto')
+      }else{
+        if(this.$device.isDesktop)
+          this.$emit('height', '451px')
+        else
+          this.$emit('height', 'auto')        
+      }
     }
   },
 
@@ -51,37 +74,49 @@ export default {
 
   created: function(){
     this.selectedModification = Object.assign({}, this.product.modifications[0]);
-  }
+
+    this.emitHeightHandler()
+
+    if (process.client){
+      window.addEventListener("resize", this.emitHeightHandler);
+    }
+  },
+
+  destroyed: function() {
+    if (process.client){
+      window.removeEventListener("resize", this.emitHeightHandler);
+    }
+  },
 }
 </script>
 
 <style src="./card.scss" lang="sass" scoped />
 
 <template>
-  <div class="product__item__container" :class="{active: isInfoOpen}">
+  <div class="box" :class="{active: isInfoOpen}">
       
       <!-- PRODUCT INFO -->
-      <div class="product__item__info-block">
-        <button @click="closeInfoHandler" class="product__item__info-block--close-btn">+</button>
+      <div class="info">
+        <button @click="closeInfoHandler" class="info--close-btn">+</button>
         <div class="wrapper" v-html="product.excerpt"></div>
       </div>
 
       <!-- PRODUCT IMAGE -->
-      <a :href="product.link" class="image">
-        <!-- <img :alt="product.name" :title="product.name" :src="product.image"> -->
-
+      <NuxtLink :to="localePath('/' + product.slug)" class="image">
         <nuxt-picture
-          :src = "product.image"
+          :src = "product.image.src"
+          :alt = "product.image.alt"
+          :title = "product.image.title"
           sizes = "mobile:100vw tablet:230px desktop:240px"
           format = "webp"
           quality = "80"
           loading = "lazy"
         >
         </nuxt-picture> 
-      </a>
+      </NuxtLink>
 
       <!-- PRODUCT NAME -->
-      <a :href="product.link" class="link">{{ product.name }}</a>
+      <NuxtLink :to="localePath('/' + product.slug)" class="link">{{ product.name }}</NuxtLink>
       
       <!-- PRODUCT SHOW INFO BUTTON -->
       <button @click="openInfoHandler" class="info-btn">
@@ -92,32 +127,31 @@ export default {
       <!-- PRODUCT PROPERTIES -->
       <ul 
         v-if="product.stimulation !== null && product.relaxation !== null && product.euphoria !== null"
-        class="product__item__info-list"
+        class="qualities"
       >
-          
-          <li class="product__item__info-item">
+          <li class="quality">
               <p class="name">{{ $t('text.stimulation') }}</p>
               <simple-five-dots v-model="product.stimulation" size="small" is-static></simple-five-dots>
           </li>
-          <li class="product__item__info-item">
+          <li class="quality">
               <p class="name">{{ $t('text.relaxation') }}</p>
               <simple-five-dots v-model="product.relaxation" size="small" is-static></simple-five-dots>
           </li>
-          <li class="product__item__info-item">
+          <li class="quality">
               <p class="name">{{ $t('text.euphoria') }}</p>
               <simple-five-dots v-model="product.euphoria" size="small" is-static></simple-five-dots>
           </li>
       </ul>
 
       <!-- PRODUCT MODIFICATIONS -->
-      <div class="product__item__weight">
+      <div class="weight">
         <product-variants-list v-model="selectedModification" :values="product.modifications"></product-variants-list>
       </div>
 
       <!-- PRODUCT FOOTER -->
-      <div class="product__item__footer">
-        <p class="product__item__price">USD <span>{{ selectedModification.price }}</span></p>
-        <button @click="addToCart(product.id, selectedModification)" class="main-button-color">
+      <div class="footer">
+        <p class="price">USD <span>{{ selectedModification.price }}</span></p>
+        <button @click="toCartHandler" class="main-button-color">
             <span class="text">{{ $t('text.add_to_cart') }}</span>
         </button>
       </div>

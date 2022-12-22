@@ -1,12 +1,22 @@
-<script setup>
-const route = useRoute()
-const { t } = useI18n()
-const head = useLocaleHead({
-  addDirAttribute: true,
-  identifierAttribute: 'id',
-  addSeoAttributes: true
-})
-const title = computed(() => t('layouts.title', { title: t(route.meta.title ?? 'TBD') }))
+<script>
+export default {
+  setup() {
+    const route = useRoute()
+    const { t } = useI18n()
+    const head = useLocaleHead({
+      addDirAttribute: true,
+      identifierAttribute: 'id',
+      addSeoAttributes: true
+    })
+    const title = computed(() => t('layouts.title', { title: t(route.meta.title ?? 'TBD') }))
+    
+    return {
+      head,
+      title,
+      breadcrumbsIsActive: route.meta.breadcrumbsIsActive
+    }
+  }
+}
 </script>
 
 <template>
@@ -24,7 +34,7 @@ const title = computed(() => t('layouts.title', { title: t(route.meta.title ?? '
       <Body>
         <the-header></the-header>
 
-        <the-breadcrumbs></the-breadcrumbs>
+        <the-breadcrumbs v-if="(breadcrumbsIsActive !== false)"></the-breadcrumbs>
 
         <main>
           <slot />

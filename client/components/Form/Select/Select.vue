@@ -27,6 +27,12 @@ export default {
     }
   },
 
+  computed: {
+    placeholderIsActive() {
+      return this.isActive || this.modelValue?.length
+    }
+  },
+
   methods: {
     selectHandler(val) {
       this.$emit('update:modelValue', val)
@@ -44,18 +50,18 @@ export default {
 <style src="./select.scss" lang="sass" scoped />
 
 <template>
-  <div :class="{active: isActive}" class="input__wrapper js-input-wrapper js-drop-item general-drop">
+  <div :class="{active: isActive}" class="input__wrapper general-drop">
       <input
         :value="modelValue"
         @focus="focusHandler"
         @blur="blurHandler" 
         type="text"
-        class="main-input js-input js-drop-input js-drop-button"
+        class="main-input"
         readonly 
         required
       > 
       
-      <form-placeholder v-if="placeholder" :is-active="isActive" :placeholder="placeholder" :is-required="required"></form-placeholder>
+      <form-placeholder v-if="placeholder" :is-active="placeholderIsActive" :placeholder="placeholder" :is-required="required"></form-placeholder>
 
       <span class="icon-drop"></span>
 

@@ -1,4 +1,29 @@
 {
+  "faqs": {
+    "q_1": "How to use kratom?",
+    "a_1": "There are lots of ways. Kratom is a natural plant ingredient, which may be used in different ways: it may be intaken as a dietary additive, it may be brewed like tea, it may be used in the form of powder or tablets in order to provide the body with energy and alleviate the pain.",
+    "q_2": "What is kratom?",
+    "a_2": "<p>Kratom (its scientific name is Mitragyna speciosa) is a plant in the coffee family native to Southeast Asia. The local people have been using kratom leaves both as a food additive and as a natural remedy. In its correct dosages, kratom is able to provide additional strength and energy, and to alleviate not acute pain.</p> <p>A great number of people use kratom to manage several mental and physical deceases. Kratom is neither a drug, nor an opiate or a <em>synthetic</em><em> matter. Native kratom is a safe natural additive like tea or coffee. A</em><em>ctive</em>&nbsp;substances of <em>kratom</em><em></em>produce partial&nbsp;<em>stimulant</em>&nbsp;effect at <em>mu</em>-<em>opioid</em>&nbsp;receptors. The plant is used to manage pain, energy, anxiety and even depression.</p> <p>Kratom contains no opiates, but it effects the same brain <em>receptor sites</em><em>. Several countries, being strongly influenced by the local pharmaceutical companies, have included kratom into their drug lists. The reason is that kratom is a very tough competitor to modern antidepressants as far as it is a natural and a rather cheap way to manage a lot of </em>mental and physical problems.</p>",
+    "q_3": "Is there any kratom addiction?",
+    "a_3": "If kratom is not used in high doses for a long time, it does not cause any addiction. In the other case, the addiction is rather similar to the caffeine one. If kratom is daily used and then suddenly withdrawn, it may lead to a certain discomfort.",
+    "q_4": "Which kratom type is considered to be the best one?",
+    "a_4": "<p>Each kratom type effects differently on a person, so a proper kratom type choosing is a very individual process. Although the kratom types possess a great variety of names, in fact there are just 3 of them: red, white and green.</p> <p>The red types are considered to have the most relaxing effect, the green types – the most stimulating effect and the white types are supposed to be the compromise between the red and the green kratom types. But all these types must not be so strictly differentiated by their effects. In many cases the red kratom types may be characterized by the stimulating effect, but the green types – by the relaxing effect. Here are several recommendations for you to choose your favourite types:</p>",
+    "q_5": "Do you conduct any laboratory researches?",
+    "a_5": "We do. The local laboratories examine our kratom for the presence of salmonella or any other toxic harmful matters. Neither of them have ever been found in our kratom.",
+    "q_6": "How much does a delivery cost?",
+    "a_6": "It depends. If you are a European and prefer the most expensive delivery way, you may receive your order in 2 days; if you are an Australian and choose the slowest delivery way, you may receive your order in about 3 weeks. Contact us, and we choose the best delivery way for your separate case."
+  },
+  "menu": {
+    "item_1": "Buy kratom",
+    "item_2": "Other products",
+    "item_3": "Earn with us",
+    "item_4": "Pay/delivery",
+    "item_5": "Reviews",
+    "item_6": "Guidebook",
+    "item_7": "About us",
+    "item_8": "Faq",
+    "item_9": "Contacts"
+  },
   "text": {
     "featured" : "featured",
     "view_all_products" : "view all products",

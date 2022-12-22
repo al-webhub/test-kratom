@@ -1,180 +1,52 @@
 <script>
 
-
+import { useProductStore } from '~/store/product';
+import { useReviewStore } from '~/store/review';
 
 export default {
+  setup() {
+    const productStore = useProductStore()
+    const reviewStore = useReviewStore()
+
+    productStore.$reset()
+    reviewStore.$reset()
+
+    return {
+      productStore,
+      reviewStore
+    }
+  },
+  
   data() {
     return {
-      product: {
-        id: 1,
-        name: 'WHITE MAENG DA KRATOM',
-        image: null,
-        images: [
-          '/images/mgd-red-50.jpg',
-          '/images/mgd-green-50.jpg'
-        ],
-        link: '/porduct',
-        excerpt: '3123123123',
-        description: `White Maeng Da Kratom has much common with Maeng Da Green, but in spite of the resemblance, it has a number of features that make it unique. This kind of kratom gives an incredible feeling of euphoria, without an obvious calming effect. To the opposite, it empowers you and courses stimulating effect. White vein maeng da contains a high rate of alkaloids, which are responsible for the feeling of euphoria. This species comes from Thailand, but the leaf processing is conducted in Borneo.`,
-        stimulation: 3,
-        relaxation: 4,
-        euphoria: 5,
-        modifications: [
-          {
-            id: 1,
-            name: '50',
-            price: 10,
-            amount: 1,
-          },{
-            id: 2,
-            name: '100',
-            price: 15,
-            amount: 1,
-          },{
-            id: 3,
-            name: '150',
-            price: 20,
-            amount: 1,
-          }
-        ]
-      },
       selectedModification: {},
-      recently_viewed: [
-        {
-          id: 1,
-          name: 'WHITE MAENG DA KRATOM',
-          image: '/images/mgd-red-50.jpg',
-          link: '/porduct',
-          excerpt: '3123123123',
-          stimulation: 3,
-          relaxation: 4,
-          euphoria: 5,
-          modifications: [
-            {
-              id: 1,
-              name: '50',
-              price: 10
-            },{
-              id: 2,
-              name: '100',
-              price: 15
-            },{
-              id: 3,
-              name: '150',
-              price: 20
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: 'WHITE MAENG DA KRATOM',
-          image: '/images/mgd-green-50.jpg',
-          link: '/porduct',
-          excerpt: '3123123123',
-          stimulation: 2,
-          relaxation: 3,
-          euphoria: 2,
-          modifications: [
-            {
-              id: 1,
-              name: '50',
-              price: 10
-            },{
-              id: 2,
-              name: '100',
-              price: 15
-            },{
-              id: 3,
-              name: '150',
-              price: 20
-            }
-          ]
-        }
-      ],
-      popular_products: [
-        {
-          id: 1,
-          name: 'WHITE MAENG DA KRATOM',
-          image: '/images/mgd-red-50.jpg',
-          link: '/porduct',
-          excerpt: '3123123123',
-          stimulation: 3,
-          relaxation: 4,
-          euphoria: 5,
-          modifications: [
-            {
-              id: 1,
-              name: '50',
-              price: 10
-            },{
-              id: 2,
-              name: '100',
-              price: 15
-            },{
-              id: 3,
-              name: '150',
-              price: 20
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: 'WHITE MAENG DA KRATOM',
-          image: '/images/mgd-green-50.jpg',
-          link: '/porduct',
-          excerpt: '3123123123',
-          stimulation: 2,
-          relaxation: 3,
-          euphoria: 2,
-          modifications: [
-            {
-              id: 1,
-              name: '50',
-              price: 10
-            },{
-              id: 2,
-              name: '100',
-              price: 15
-            },{
-              id: 3,
-              name: '150',
-              price: 20
-            }
-          ]
-        }
-      ],
-      reviews: [
-        {
-          id: 1,
-          name: 'Vasia',
-          photo: '/images/ava2.jpg',
-          text: 'The best store on the Internet Thank you very much for what you are!',
-          likes: 1,
-          dislikes: 2,
-          created_at: '18.19.2020',
-          children: []
-        },
-        {
-          id: 2,
-          name: 'Vasia',
-          photo: '/images/ava3.jpg',
-          text: 'The best store on the Internet Thank you very much for what you are!',
-          likes: 1,
-          dislikes: 2,
-          created_at: '18.19.2020',
-          children: []
-        }
-      ],
-      currentTab: 'description',
+      activeTab: 'description',
       user: {
         photo: '/images/ava1.jpg',
       },
-      //storage: JSON.parse(localStorage.getItem('kratom')),
-      storage: {}
     }
   },
 
   methods: {
+    async getProducts() {
+      await this.productStore?.getAll({per_page: 4})
+    },
+
+    async getProduct() {
+      return await this.productStore?.getOne(this.slug)
+    },
+
+    async getReviews() {
+      const type = String.raw`Backpack\Store\app\Models\Product`;
+      const slug = this.slug
+
+      return await this.reviewStore.getAll({
+        per_page: 3,
+        reviewable_slug: slug,
+        reviewable_type: type
+      })
+    },
+
     changeAttr: function(attrName, value) {
       let attr = this.product[attrName];
       let component = this;
@@ -200,7 +72,8 @@ export default {
       let amount = this.selectedModification.amount;
       this.selectedModification = Object.assign({}, modification);
       this.selectedModification.amount = amount;
-    }
+    },
+
   },
 
   watch: {
@@ -210,15 +83,45 @@ export default {
       },
       deep: true
     },
+    product: {
+      handler(value) {
+        if(value) {
+          this.selectedModification = Object.assign({}, value.modifications[0])
+        }
+      },
+      immediate: true
+    }
   },
 
   computed: {
+    slug() {
+      return this.$route.params.product
+    },
+
+    popularProducts() {
+      return this.productStore?.all;
+    },
+
+    product() {
+      return this.productStore?.product;
+    },
+
+    reviews() {
+      return this.reviewStore?.all;
+    },
+
+    tabs() { 
+      return {
+        description: this.$t('text.description'),
+        reviews: this.$t('text.reviews')
+      }
+    }
   },
 
-  created: function() {
-
-    this.selectedModification = Object.assign({}, this.product.modifications[0]);
-
+  async created() {
+    await useAsyncData('product', () => this.getProduct())
+    await useAsyncData('product_reviews', () => this.getReviews())
+    await useAsyncData('products', () => this.getProducts())
   }
 }
 </script>
@@ -226,81 +129,69 @@ export default {
 <style src="assets/scss/pages/product.scss" lang="sass" scoped />
 
 <template>
-  <section class="product-page">
-    <div class="product-page__wrapper container">
+<div>
+  <section class="wrapper" v-if="product">
+    <div class="container">
 
       <h1 class="main-caption main-caption-align">{{ product.name }}</h1>
 
-      <div class="product-page__header">
-
+      <div class="header">
           <!-- IMAGE SLIDER -->
           <product-slider :images="product.images"></product-slider>
 
-          <div class="product-page__info">
-
-              <!-- HEADER -->
-              <div class="product-page__info-header">
-                
-                <!-- ADD TO CART -->
-                <product-cart
-                  :product="product"
-                  v-model:selected-modification="selectedModification"
-                >
-                </product-cart>
-                
-                <!-- DISCOUNT  -->
-                <product-sale
-                  v-if="product.modifications[1]"
-                  :product="product"
-                  :selected-modification="selectedModification"
-                >
-                </product-sale>
-
-              </div>
+          <div class="meta">
+            <!-- HEADER -->
+            <div class="cart">
               
-              <!-- FOOTER -->
-              <div class="product-page__info-footer">
-                
-                <product-qualities
-                  v-model:stimulation="product.stimulation"
-                  v-model:relaxation="product.relaxation"
-                  v-model:euphoria="product.euphoria"
-                >
-                </product-qualities>
-                
-                <simple-more-btn :text="$t('text.pay_delivery')"></simple-more-btn>
-              </div>
-              
+              <!-- ADD TO CART -->
+              <product-cart
+                :product="product"
+                v-model:selected-modification="selectedModification"
+              >
+              </product-cart>
+
+            </div>
+            
+            <!-- FOOTER -->
+            <div class="qualities">
+              <product-qualities
+                v-model:stimulation="product.stimulation"
+                v-model:relaxation="product.relaxation"
+                v-model:euphoria="product.euphoria"
+              >
+              </product-qualities>
+            </div> 
           </div>
       </div>
 
       <!-- CONTENT -->
-      <div class="product-page__body">
-          
-          <ul class="general-tabs__list">
-            <li class="general-tabs__item active">{{ $t('text.description') }}</li>
-            <li class="general-tabs__item">{{ $t('text.reviews') }}</li>
-          </ul>
+      <div class="body">
+          <simple-tabs v-model:activeTab="activeTab" :values="tabs" class="tabs"></simple-tabs>
 
-          <div class="product-page__description">
+          <!-- DESCRIPTION -->
+          <div v-if="(activeTab === 'description' || $device.isDesktop)" class="description">
             <p class="product-page__caption">{{ $t('text.description') }}</p>
-            <div v-html="product.description"></div>
+            <div v-html="product.content"></div>
           </div>
-          
           
           <!-- REVIEWS -->
-          <div class="product-page__reviews">
+          <div v-if="(activeTab === 'reviews' || $device.isDesktop)" class="reviews">
             <p class="product-page__caption">{{ $t('text.reviews') }}</p>
-            <product-review-block :reviews="reviews"></product-review-block>
+            <product-review-block v-if="reviews && reviews.length" :reviews="reviews"></product-review-block>
           </div>
-          
       </div>
+
     </div>
   </section>
 
-  <product-grid :products="popular_products" :title="$t('text.related_products')" class="section"></product-grid>
-  <product-grid :products="recently_viewed" :title="$t('text.recently_viewed')" class="section"></product-grid>
+  <product-grid
+    v-if="popularProducts && popularProducts.length"
+    :products="popularProducts"
+    :title="$t('text.related_products')"
+    class="section"
+  >
+  </product-grid>
+  <!-- <product-grid :products="recently_viewed" :title="$t('text.recently_viewed')" class="section"></product-grid> -->
 
-  <aside></aside>
-
+</div>
 </template>

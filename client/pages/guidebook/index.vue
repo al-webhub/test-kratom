@@ -1,43 +1,57 @@
 <script>
+import { useArticleStore } from '~/store/article';
+
 export default {
+  setup() {
+    const articleStore = useArticleStore()
+
+    articleStore.$reset()
+
+    return {
+      articleStore
+    }
+  },
+
   data() {
     return {
       page: {
         h1: 'Guidebook',
         seo_text: 'SEO TEXT'
       },
+    }
+  },
 
-      articles: {
-        data: [
-          {
-            id: 1,
-            title: 'BUY KRATOM IN SOUTH CAROLIN',
-            image: null,
-            short_desc: 'There is so much disinformation regarding Kratom products and their legality over the USA. It might be caused generally by the undefined status of the plant. Some believe',
-            link: '/'
-          },{
-            id: 2,
-            title: 'BUY KRATOM IN SOUTH CAROLIN',
-            image: null,
-            short_desc: 'There is so much disinformation regarding Kratom products and their legality over the USA. It might be caused generally by the undefined status of the plant. Some believe',
-            link: '/'
-          },{
-            id: 3,
-            title: 'BUY KRATOM IN SOUTH CAROLIN',
-            image: null,
-            short_desc: 'There is so much disinformation regarding Kratom products and their legality over the USA. It might be caused generally by the undefined status of the plant. Some believe',
-            link: '/'
-          }
-        ],
-        current_page: 1
-      }
+  computed: {
+    articles() {
+      return this.articleStore?.all;
+    },
+    
+    meta() {
+      return this.articleStore?.meta;
+    },
+
+    lang() {
+      return this.$i18n.locale;
     }
   },
 
   methods: {
-    loadmore() {
+    async getArticles(data) {
+      const query = data? data : {
+        per_page: 12, 
+        lang: this.lang
+      };
 
+      await this.articleStore?.getAll(query)
+    },
+
+    async loadmoreHandler() {
+      await this.getArticles({per_page: 12, lang: this.lang, page: this.meta.current_page + 1})
     }
+  },
+
+  async created() {
+    await useAsyncData('articles', () => this.getArticles())
   }
 }
 </script>
@@ -45,32 +59,36 @@ export default {
 <style src="assets/scss/pages/guidebook.scss" lang="sass" scoped />
 
 <template>
-<section class="gidebook">
-    <div class="gidebook__wrapper container">
-        <div class="general-decor-figure"></div>
-        
+  <div>
+    <section class="wrapper">
+      <div class="container">
+          
         <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
 
-        <div class="article__position">
-            <ul class="article__list article__list-gidebook">
-                <guidebook-card
-                  v-for="(article, index) in articles.data"
-                  :key="article.id"
-                  :article="article"
-                >
-                </guidebook-card>
-            </ul>
-        </div>
+        <ul v-if="articles && articles.length" class="article__list">
+          <guidebook-card
+            v-for="(article, index) in articles"
+            :key="article.id"
+            :article="article"
+          >
+          </guidebook-card>
+        </ul>
 
-        <button class="main-button" @click="loadmore()" v-if="articles.current_page != articles.last_page">
-            <span class="text">{{ $t('text.show_more') }}</span>
+        <button class="main-button" @click="loadmoreHandler()" v-if="meta && meta.current_page !== meta.last_page">
+          <span class="text">{{ $t('text.show_more') }}</span>
         </button>
         
-        <div v-if="page.seo_text" class="gidebook__text" v-html="page.seo_text"></div>
+        <section-seo
+          v-if="page.seo_text"
+          :text="page.seo_text"
+          class="seo"
+        >
+        </section-seo>
 
-    </div>
-</section>
+      </div>
+    </section>
 
-<section-write-us></section-write-us>
+    <section-write-us></section-write-us>
+  </div>
 
 </template>

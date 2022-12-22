@@ -1,91 +1,47 @@
 @import 'assets/scss/global/mixins';
 @import 'assets/scss/global/vars';
 
-.wrapper {
-  @include _576 {
-    margin-top: -20px;
-  }
-}
-
 .inner {
   position: relative;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 
-  @include _1024 {
+  @include _tablet {
     margin-bottom: 80px;
   }
 
-  @include _576 {
-    margin-bottom: 50px;
-  }
-
-  .general-decor-figure {
-    top: 390px;
-    right: -150px;
-    width: 405px;
-    height: 405px;
-    transform: rotate(126.53deg);
-
-    @include _1024 {
-      width: 245px;
-      height: 245px;
-      transform: rotate(-58.95deg);
-      right: -75px;
-      top: auto;
-      bottom: -150px;
-    }
-
-    @include _576 {
-      width: 188px;
-      height: 188px;
-      transform: rotate(124.8deg);
-      bottom: -170px;
-    }
-
-    &:nth-child(2) {
-      right: auto;
-      left: -130px;
-      top: auto;
-      bottom: 0px;
-      width: 315px;
-      height: 315px;
-      transform: rotate(147.77deg);
-
-      @include _1024 {
-        display: none;
-      }
-    }
-    
-  }
-
-  .general-decor-text {
-    top: auto;
-    bottom: -100px;
-    white-space: nowrap;
-
-    @include _1024 {
-      display: none;
-    }
+  @include _desktop {
+    margin-bottom: 100px;
   }
 }
 
 .hero-img {
   img {
-    width: 100%;
-    height: 400px;
-    margin-bottom: 30px;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    height: 100px;
+    margin-bottom: 20px;
     object-fit: cover;
 
-    @include _1024 {
+    @include _tablet {
       height: 224px;
-      margin-bottom: 20px;
     }
 
-    @include _576 {
-      width: calc(100% + 40px);
-      margin-left: -20px;
-      height: 100px;
+    @include _desktop {
+      width: 100%;
+      height: 400px;
+      margin-left: 0;
+      margin-bottom: 30px;
     }
+  }
+}
+
+
+.main-caption {
+  color: $color-text-bright;
+  margin-bottom: 10px;
+
+  @include _desktop {
+    margin-bottom: 20px;
   }
 }
 
@@ -93,19 +49,6 @@
   font-size: 14px;
   line-height: 150%;
   color: $color-text;
-
-  @include _1024 {
-    max-width: 100%;
-  }
-
-  .main-caption {
-    color: $color-text-bright;
-    margin-bottom: 20px;
-
-    @include _1024 {
-      margin-bottom: 10px;
-    }
-  }
 
   & > h6 {
     font-size: 14px;
@@ -188,39 +131,47 @@
 }
 
 .similar {
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 
-  @include _1024 {
+  @include _tablet {
     margin-bottom: 80px;
   }
 
-  @include _576 {
-    margin-bottom: 50px;
+  @include _desktop {
+    margin-bottom: 100px;
   }
 }
 
 .caption {
   font-family: "Impact", sans-serif;
   font-weight: 400;
-  font-size: 30px;
-  line-height: 37px;
+  font-size: 20px;
+  line-height: 24px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 
-  @include _1024 {
+  @include _tablet {
     font-size: 24px;
     line-height: 29px;
   }
 
-  @include _576 {
-    font-size: 20px;
-    line-height: 24px;
+  @include _desktop {
+    font-size: 30px;
+    line-height: 37px;
   }
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1;
   grid-gap: 30px;
   margin-top: 30px;
+
+  @include _tablet {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @include _desktop {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }

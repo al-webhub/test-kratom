@@ -1,5 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      apiBase: 'http://localhost:8888/api'
+    }
+  },
+
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
+
   css: [
     '@/assets/scss/global/main.scss'
   ],
@@ -35,6 +45,7 @@ export default defineNuxtConfig({
         ],
       },
     ],
+    '@pinia-plugin-persistedstate/nuxt',
     [
       '@nuxtjs/i18n',
       {
@@ -63,5 +74,5 @@ export default defineNuxtConfig({
         }
       }
     ]
-  ]
+  ],
 })

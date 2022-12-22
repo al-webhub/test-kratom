@@ -1,9 +1,13 @@
 <script>
 export default {
+
   data() {
     return {
       comment: {
-        text: ''
+        text: '',
+        extras: {
+          method: 'common'
+        }
       },
       product: {
         id: 1
@@ -14,6 +18,13 @@ export default {
   props: {
     user: {
       type: Object
+    }
+  },
+
+  methods: {
+    createHandler(method = 'common') {
+      this.comment.extras.method = method
+      this.$emit('create', this.comment)
     }
   }
 }
@@ -53,24 +64,18 @@ export default {
     <div v-if="user" class="add-reviews__form">
 
       <!-- COMMENT FORM -->
-      <div class="wrapper">
-        <div :style="{backgroundImage: 'url(' + user.photo + ')'}" class="reviews-img"></div>
-        
-        <!-- textarea -->
-        <form-textarea
-          v-model="comment.text"
-          :placeholder="$t('text.your_reviews')"
-        >
-        </form-textarea>
-
-      </div>
+      <review-input
+        v-model:newComment="comment.text"
+        :user="user"
+      >
+      </review-input>
 
       <!-- COMMENT BUTTONS -->
       <div class="add-reviews__buttons">
-        <button class="main-button main-button-small" @click="add(product.id, true)">
+        <button class="main-button main-button-small" @click="createHandler('incognito')">
           <span class="text">{{ $t('text.post_incognito') }}</span>
         </button>
-        <button class="main-button main-button-small main-button-confirm" @click="add(product.id)">
+        <button class="main-button main-button-small main-button-confirm" @click="createHandler('common')">
           <span class="text">{{ $t('text.post') }}</span>
         </button>
       </div>

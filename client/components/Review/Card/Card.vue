@@ -1,8 +1,20 @@
 <script>
+import { useLikesStore } from '~/store/likes';
+
 export default {
+  setup() {
+    const likesStore = useLikesStore()
+
+    return {
+      likesStore
+    }
+  },
+
   data() {
     return {
-      isReplyActive: false 
+      isReplyActive: false,
+      repliesIsActive: false,
+      like: ''
     }
   },
   
@@ -13,6 +25,13 @@ export default {
     },
     user: {
       type: Object,
+    },
+    isReplyAllowed: {
+      type: Boolean,
+      default: true
+    },
+    bodyClass: {
+      type: String
     }
   },
 
@@ -24,113 +43,66 @@ export default {
         return this.user.usermeta.photo? this.user.usermeta.photo: noAvatar;
       else
         return noAvatar;
-    }  
+    },
+
+    isLiked() {
+      return this.likesStore.likes.includes(this.review.id)
+    },
+
+    isDisliked() {
+      return this.likesStore.dislikes.includes(this.review.id)
+    },
   },
 
   methods: {
-    replyHandler() {
+    toggleReplyFormHandler() {
       this.isReplyActive = !this.isReplyActive
     },
+    
+    closeReplyHandler() {
+      this.isReplyActive = false
+    },
+    
+    sendReplyHandler() {
 
-	    reply: function(parentId, baseIndex){
-		    var component = this;
-		    
-		    let params = {
-			    parent_id: parentId,
-			    product_id: this.productId,
-			    text: this.comment.text,
-			    name: this.user.usermeta.fullname,
-			    likes: 0,
-			    dislikes: 0,
-			    photo: this.photo
-		    };
-		    
-		    this.reviews.data[baseIndex].children.push(params);
-		    
-		    axios.post('/reviews/reply/create', params).then(function(response) {
-			    console.log(response);
-			   component.comment.text = '';
-		    });
-	    },
+    },
+    
+    toggleRepliesHandler() {
+      this.repliesIsActive = !this.repliesIsActive
+    },
 
-	    cancel: function(){
-		    this.comment.text = '';
-	    },
+    likeHandler() {
+      this.likesStore.toggleLike(this.review.id)
+    },
 
-	    like: function(id, baseIndex, subIndex, type){
-		    var component = this;
-		    var params = {};
-		    var reverseType = type == 'like'? 'dislike': 'like';
-		    
-		    if(this.check(id, type))
-		    {
-			    params[type] = -1;
-			    
-			    if(subIndex !== null)
-			    	this.reviews.data[baseIndex].children[subIndex][type+'s']--;
-			    else
-		    		this.reviews.data[baseIndex][type+'s']--;
-		    	
-		    	component.toStorage(id, null);
-				axios.post('/reviews/like/' + id, params);
-		    }else if(this.check(id, reverseType)){
-			    params[type] = 1;
-			    params[reverseType] = -1;
-			    
-			    if(subIndex  !== null){
-			    	this.reviews.data[baseIndex].children[subIndex][type+'s']++;
-			    	this.reviews.data[baseIndex].children[subIndex][reverseType+'s']--;
-			    }else{
-		    		this.reviews.data[baseIndex][type+'s']++;
-		    		this.reviews.data[baseIndex][reverseType+'s']--;
-		    	}
-		    		
-			    component.toStorage(id, type);
-			    axios.post('/reviews/like/' + id, params);
-		    }else {
-			    params[type] = 1;
-			    
-			    if(subIndex  !== null)
-			    	this.reviews.data[baseIndex].children[subIndex][type+'s']++;
-			    else
-		    		this.reviews.data[baseIndex][type+'s']++;
-		    	
-		    	
-		    	component.toStorage(id, type);
-				axios.post('/reviews/like/' + id, params);
-		    }
-		    
-	    },
+    dislikeHandler() {
+      this.likesStore.toggleDislike(this.review.id)
+    },
 
-	    dislike: function(id, baseIndex, subIndex){
-		    var component = this;
-		    
-		    if(subIndex  !== null){
-			    this.reviews.data[baseIndex].children[subIndex].dislikes++;
-		    }else{
-			    this.reviews.data[baseIndex].dislikes++;
-		    }	    
-	    },
+    reply: function(parentId, baseIndex){
+      var component = this;
+      
+      let params = {
+        parent_id: parentId,
+        product_id: this.productId,
+        text: this.comment.text,
+        name: this.user.usermeta.fullname,
+        likes: 0,
+        dislikes: 0,
+        photo: this.photo
+      };
+      
+      this.reviews.data[baseIndex].children.push(params);
+      
+      axios.post('/reviews/reply/create', params).then(function(response) {
+        console.log(response);
+        component.comment.text = '';
+      });
+    },
 
-	    toStorage: function(id, type){
-		    if(!this.likes) {
-			    this.likes = {};
-		    }
-		    
-		    if(!this.likes[this.productId])
-		    	this.likes[this.productId] = {};
-		    	
-		    this.likes[this.productId][id] = type;
-		    
-		    localStorage.likes = JSON.stringify(this.likes);
-	    },
-
-	    check: function(id, type){
-		    if(this.likes && this.likes[this.productId] && this.likes[this.productId][id] && this.likes[this.productId][id] == type)
-		    	return true;
-		    else
-		    	return false;
-	    }
+    cancel: function(){
+      this.comment.text = '';
+    },
   }
 }
 </script>
@@ -138,44 +110,47 @@ export default {
 <style src="./card.scss" lang="sass" scoped />
 
 <template>
-<li class="reviews__item">
-    <div :style="{backgroundImage: 'url(' + review.photo + ')'}" :title="review.name" class="reviews-img"></div>
+<li class="box">
+    <div :style="{backgroundImage: 'url(' + review.owner.photo + ')'}" :title="review.owner.fullname" class="avatar"></div>
 
-    <div class="reviews__item-info">
+    <div :class="bodyClass" class="body">
 
-        <div class="reviews__item-info__header">
-            <p class="name">{{ review.name }}</p>
-            <p class="date">{{ review.created_at }}</p>
+        <div class="header">
+          <p class="name">{{ review.owner.fullname }}</p>
+          <p class="date">{{ review.created_at }}</p>
         </div>
         
-        <div class="reviews__item-info__body" v-html="review.text">
+        <div class="content" v-html="review.text">
         </div>
 
-        <div class="reviews__item-info__footer js-drop-item">
-            <div class="reviews__interaction">
+        <div class="footer">
+            <div class="controls">
               
+              <!-- LIKE BUTTON -->
               <button
-                @click="like(review.id, baseIndex, null, 'like')"
-                :class="{active: check(review.id, 'like')}" 
-                class="reviews__interaction__button"
+                @click="likeHandler"
+                :class="{active: isLiked}" 
+                class="controls__button"
               >
                 <img src="~assets/svg-icons/like.svg" class="icon" />
                 <span class="text">{{ review.likes }}</span>
               </button>
               
+              <!-- DISLIKE BUTTON -->
               <button
-                @click="like(review.id, baseIndex, null, 'dislike')"
-                :class="{active: check(review.id, 'dislike')}"
-                class="reviews__interaction__button"
+                @click="dislikeHandler"
+                :class="{active: isDisliked}"
+                class="controls__button"
               >
                 <img src="~assets/svg-icons/dislike.svg" class="icon" />
                 <span class="text">{{ review.dislikes }}</span>
               </button>
               
+              <!-- REPLY BUTTON -->
               <button
-                v-if="user"
-                @click="replyHandler"
-                class="reviews__interaction__button reviews__interaction__button-reply"
+                v-if="(user && isReplyAllowed)"
+                @click="toggleReplyFormHandler"
+                class="controls__button controls__button-reply"
               >
                 <img src="~assets/svg-icons/reply.svg" class="icon" />
                 <span class="text">{{ $t('text.reply') }}</span>
@@ -183,75 +158,45 @@ export default {
 
             </div>
 
-            <form action="#" class="add-reviews__form">
-                <div class="wrapper">
-                  <div class="reviews-img" :style="{backgroundImage: 'url(' + photo + ')'}"></div>
-                  <label class="input__wrapper js-input-wrapper">
-                    <input type="text" class="main-input js-input">
-                    <span class="custome-placeholder__wrapper">
-                      <span class="custome-placeholder__before"></span>
-                      <span class="custome-placeholder__text">
-                        <span class="inner-text">{{ $t('text.your_reviews') }}</span>
-                      </span>
-                      <span class="custome-placeholder__after"></span>
-                    </span>
-                  </label>
-                </div>
-                <div class="add-reviews__buttons">
-                  <button type="button" class="button-only-text js-reviews-button">
-                    <span class="text">{{ $t('text.cancel') }}</span>
-                  </button>
-                  <button class="main-button main-button-small main-button-confirm">
-                    <span class="text">{{ $t('text.reply') }}</span>
-                  </button>
-                </div>
-            </form>
+            <!-- REPLY FORM -->
+            <review-reply-form
+              v-if="isReplyAllowed"
+              :user="user"
+              @reply="sendReplyHandler"
+              @close="closeReplyHandler"
+              :class="{active: isReplyActive}"
+              class="reply-form"
+            >
+            </review-reply-form>
 
         </div>
         
         
-        <div class="reviews-reply js-drop-item" v-if="review.children.length">
+        <div
+          v-if="review.children.length"
+          :class="{active: repliesIsActive}"
+          class="reply"
+        >
           
-          <button class="more-reviews-text js-drop-button">
+          <button
+            @click="toggleRepliesHandler"
+            class="more-btn"
+          >
             <span class="text">Show {{ review.children.length }} replies</span>
-            <span class="icon-drop"></span>
+            <img src="~assets/svg-icons/arrow-simple.svg" class="icon" />
           </button>
 
-          <ul class="reviews__list">
-            <li
-              v-for="(subReview, subIndex) in review.children"
+          <ul class="replies">
+            <review-card
+              v-for="subReview in review.children"
               :key="subReview.id"
-              class="reviews__item"
+              :review="subReview"
+              :user="user"
+              :is-reply-allowed="false"
             >
-              <div class="reviews-img" :style="{backgroundImage: 'url(' + subReview.photo + ')'}"></div>
-
-              <div class="reviews__item-info">
-                <div class="reviews__item-info__header">
-                  <p class="name">{{ subReview.name }}</p>
-                  <p class="date">{{ subReview.created_at }}</p>
-                </div>
-                
-                <div class="reviews__item-info__body">
-                  <p>{{ subReview.text }}</p>
-                </div>
-
-                <div class="reviews__item-info__footer js-drop-item">
-                  <div class="reviews__interaction">
-                    <button @click="like(review.id, baseIndex, subIndex, 'like')" class="reviews__interaction__button">
-                      <span class="icon-like-up"></span>
-                      <span class="text">{{ subReview.likes }}</span>
-                    </button>
-                    <button @click="like(review.id, baseIndex, subIndex, 'dislike')" class="reviews__interaction__button">
-                      <span class="icon-like-down"></span>
-                      <span class="text">{{ subReview.dislikes }}</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-            </li>
+            </review-card>
           </ul>
-      </div>
+        </div>
         
     </div>
 </li>

@@ -25,16 +25,28 @@
     &.center {
       left: 50%;
       transform: translateX(-50%) translateY(-20%);
+
+      &.bottom {
+        transform: translateX(-50%) translateY(90%);
+      }
     }
 
     &.left {
       left: 0;
       transform: translateX(10%) translateY(-20%);
+
+      &.bottom {
+        transform: translateX(10%) translateY(90%);
+      }
     }
 
     &.right {
       right: 0;
       transform: translateX(-10%) translateY(-20%);
+
+      &.bottom {
+        transform: translateX(-10%) translateY(90%);
+      }
     }
   }
 
@@ -53,16 +65,28 @@
   &.center {
     left: 50%;
     transform: translateX(-50%) rotate(-45deg);
+
+    &.bottom {
+      bottom: 25%;
+    }
   }
 
   &.left {
     left: 0;
     transform: translateX(10%) rotate(-45deg);
+
+    &.bottom {
+      bottom: 25%;
+    }
   }
 
   &.right {
     right: 0;
     transform: translateX(-10%) rotate(-45deg);
+
+    &.bottom {
+      bottom: 25%;
+    }
   }
 
   @include _tablet {

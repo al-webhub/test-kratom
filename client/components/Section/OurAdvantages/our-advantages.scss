@@ -80,20 +80,4 @@
   @include _tablet {
     max-height: 100px;
   }
-
-  @include _desktop {
-  }
-}
-
-@media screen and (max-width: 1200px) {
-    /* Advantages */
-  .our-advantages .general-decor-text {
-    right: 55px;
-    top: -22px;
-  }
-  .caption {
-    font-size: 18px;
-    line-height: 22px;
-  }
-  /* //Advantages */
 }

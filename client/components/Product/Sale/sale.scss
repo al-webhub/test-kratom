@@ -1,48 +1,73 @@
-.product-page__info-sale {
-  max-width: 347px;
+@import 'assets/scss/global/mixins';
+
+.box {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
   width: 100%;
+  padding: 10px;
   border: 1px solid #4F4F4F;
   text-align: center;
-  padding: 30px;
   font-size: 14px;
   line-height: 150%;
   font-weight: 700;
   text-transform: uppercase;
-}
-.product-page__info-sale .current-dis {
-  margin-bottom: 30px;
-  font-weight: 700;
-}
-.product-page__info-sale .current-dis span {
-  color: #ACDA53;
-}
-.product-page__info-sale .sale {
-  display: inline-block;
-  color: #EB5757;
-  padding-bottom: 4px;
-  border-bottom: 2px solid #EB5757;
-  margin-bottom: 13px;
-}
-.product-page__info-sale .offer {
-  font-weight: 400;
-  text-transform: initial;
-}
-.product-page__info-sale .offer span {
-  font-weight: 700;
-  text-transform: uppercase;
-}
 
-@media screen and (max-width: 1024px) {
-  .product-page__info-sale {
-    max-width: 100%;
-    order: -1;
-    margin-bottom: 30px;
-    padding: 20px;
+  @include _tablet {
+    grid-template-columns: 55% 45%;
+    text-align: left;
+  }
+
+  @include _desktop {
+    grid-template-columns: 1fr;
+    padding: 30px;
+    text-align: center;
+  }
+}
+.discount {
+  font-weight: 700;
+
+  span {
+    color: #ACDA53;
   }
 }
 
-@media screen and (max-width: 767px) {
-  .product-page__info-sale {
-    display: none;
+.sale {
+  display: inline-block;
+  width: fit-content;
+  margin: 0 auto;
+  padding-bottom: 4px;
+  color: #EB5757;
+  border-bottom: 2px solid #EB5757;
+
+  @include _tablet {
+    grid-column-start: 1;
+    margin: initial;
+  }
+
+  @include _desktop {
+    grid-column-start: initial;
+    margin: 0 auto;
+  }
+}
+.offer {
+  font-weight: 400;
+  text-transform: initial;
+
+  @include _tablet {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 2;
+  }
+
+  @include _desktop {
+    grid-row-start: 3;
+    grid-row-end: 3;
+    grid-column-start: 1;
+  }
+
+  span {
+    font-weight: 700;
+    text-transform: uppercase;
   }
 }

@@ -20,10 +20,11 @@ export default {
 <style src="assets/scss/pages/contacts.scss" lang="sass" scoped />
 
 <template>
+<div>
   <section class="contact">
-      <div class="general-decor-text">kratom helper</div>
+      <!-- <div class="general-decor-text">kratom helper</div> -->
       <div class="contact__wrapper container">
-          <div class="general-decor-figure"></div>
+          <!-- <div class="general-decor-figure"></div> -->
           
           <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
           
@@ -120,4 +121,5 @@ export default {
           </div>
       </div>
   </section>
+</div>
 </template>

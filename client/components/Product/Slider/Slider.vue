@@ -44,7 +44,7 @@ export default {
         class="product-page__img-item js-slider-item"
       >
         <img
-          :src="image"
+          :src="image.src"
           :title="image.title || image.alt || null"
           :alt="image.alt || image.title || null"
         />

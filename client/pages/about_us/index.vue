@@ -23,35 +23,36 @@ export default {
 <style src="assets/scss/pages/about-us.scss" lang="sass" scoped />
 
 <template>
-  <section class="about-us-page">
-      <div class="about-us-page__wrapper container">
-          <div class="general-decor-figure"></div>
-          <div class="general-decor-text">about us</div>
-          <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
-          <div class="about-us-page__container">
-              <div :style="{backgroundImage: 'url(' + page.image_1 + ')'}" class="about-us-page__main-img js-img-bg"></div>
-              <div class="about-us-page__content">
-                  <h2 class="about-us-page__content__caption">{{ page.title_1 }}</h2>
-                  <p>{{ page.content_1 }}</p>
-                  <div class="main">
-                      <p>{{ page.q_1 }}</p>
-                  </div>
-                  <h2 class="about-us-page__content__caption">{{ page.title_2 }}</h2>
-                  <p>{{ page.content_2 }}</p>
-                  <div class="about-us-page__img-group about-us-page__img-group-tablet">
-                      <div :style="{backgroundImage: 'url(' + page.image_2 + ')'}" class="img js-img-bg"></div>
-                      <div :style="{backgroundImage: 'url(' + page.image_3 + ')'}" class="img js-img-bg"></div>
-                  </div>
-                  <p>{{ page.content_3 }}</p>
-              </div>
-              <div class="about-us-page__img-group">
-                  <div :style="{backgroundImage: 'url(' + page.image_2 + ')'}" class="img js-img-bg"></div>
-                  <div :style="{backgroundImage: 'url(' + page.image_3 + ')'}" class="img js-img-bg"></div>
-              </div>
-          </div>
-      </div>
-  </section>
+  <div>
+    <section class="about-us-page">
+        <div class="about-us-page__wrapper container">
+            <!-- <div class="general-decor-figure"></div>
+            <div class="general-decor-text">about us</div> -->
+            <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
+            <div class="about-us-page__container">
+                <div :style="{backgroundImage: 'url(' + page.image_1 + ')'}" class="about-us-page__main-img js-img-bg"></div>
+                <div class="about-us-page__content">
+                    <h2 class="about-us-page__content__caption">{{ page.title_1 }}</h2>
+                    <p>{{ page.content_1 }}</p>
+                    <div class="main">
+                        <p>{{ page.q_1 }}</p>
+                    </div>
+                    <h2 class="about-us-page__content__caption">{{ page.title_2 }}</h2>
+                    <p>{{ page.content_2 }}</p>
+                    <div class="about-us-page__img-group about-us-page__img-group-tablet">
+                        <div :style="{backgroundImage: 'url(' + page.image_2 + ')'}" class="img js-img-bg"></div>
+                        <div :style="{backgroundImage: 'url(' + page.image_3 + ')'}" class="img js-img-bg"></div>
+                    </div>
+                    <p>{{ page.content_3 }}</p>
+                </div>
+                <div class="about-us-page__img-group">
+                    <div :style="{backgroundImage: 'url(' + page.image_2 + ')'}" class="img js-img-bg"></div>
+                    <div :style="{backgroundImage: 'url(' + page.image_3 + ')'}" class="img js-img-bg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section-write-us></section-write-us>
-
+    <section-write-us></section-write-us>
+  </div>
 </template>

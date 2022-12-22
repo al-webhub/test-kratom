@@ -28,7 +28,7 @@ export default {
       :class="{active: value.id === modelValue.id}"
       class="product__weight-item"
     >
-      {{ value.name }}
+      {{ value.short_name }}
     </li>
   </ul>
 </template>

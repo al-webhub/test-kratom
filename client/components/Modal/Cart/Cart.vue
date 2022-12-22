@@ -12,31 +12,6 @@ export default {
 
   data() {
     return {
-      total: 453.43,
-      cart: [
-        [
-          {
-            id: 1,
-            name: '500 gr',
-            product_link: '/',
-            product_image: null,
-            product_name: 'Kratom Maeng',
-            price: 12.00,
-            amount: 2,
-          }
-        ],
-        [
-          {
-            id: 1,
-            name: '500 gr',
-            product_link: '/',
-            product_image: null,
-            product_name: 'Kratom Maeng',
-            price: 12.00,
-            amount: 2,
-          }
-        ]
-      ]
     }
   },
 
@@ -51,14 +26,25 @@ export default {
       return this.cartStore?.show
     },
 
+    cart() {
+      return this.cartStore?.cart
+    },
+
+    total() {
+      return this.cart.reduce(
+        (carry, item) => carry + item.price * item.amount, 
+        0
+      ).toFixed(2)
+    },
+
     cartLength() {
       return Object.keys(this.cart).length
     }
   },
 
   methods: {
-    deleteFromCart(arg1, arg2) {
-
+    deleteHandler(id) {
+      this.cartStore.remove(id)
     },
 
     checkIfCartEmpty(event) {
@@ -84,15 +70,19 @@ export default {
     </div>
 
     <template v-if="cartLength">
+      
       <div class="popup-noty-cart__body">
         <ul class="popup-noty-cart__list">
-          <template v-for="(product, key) in cart">
-            <template v-for="modification in product" :key="modification.id">
-              <checkout-product-tiny :modification="modification"></checkout-product-tiny>
-            </template>
-          </template>
+          <checkout-product-tiny
+            v-for="(product, key) in cart"
+            :modification="product"
+            :key="product.id"
+            @delete="deleteHandler(product.id)"
+          >
+          </checkout-product-tiny>
         </ul>
       </div>
+
       <div class="popup-noty-cart__footer js-drop-item">
         <button class="popup-noty-cart__open-button js-drop-button"></button>
         <div class="total__wrapper">
@@ -101,12 +91,12 @@ export default {
             <p class="description">usd {{ total }}</p>
           </div>
         </div>
-        <a href="checkout" @click="checkIfCartEmpty($event)" class="main-button-color popup-noty-cart__button">
+        <NuxtLink :to="localePath('/checkout')" @click="checkIfCartEmpty($event)" class="main-button-color popup-noty-cart__button">
           <span class="text">{{ $t('text.checkout') }}</span>
-        </a>
-        <a href="shop" class="main-button popup-noty-cart__button">
+        </NuxtLink>
+        <NuxtLink :to="localePath('/shop')" class="main-button popup-noty-cart__button">
           <span class="text">{{ $t('text.edit') }}</span>
-        </a>
+        </NuxtLink>
       </div>
     </template>
 

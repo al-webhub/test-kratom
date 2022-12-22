@@ -58,6 +58,9 @@ export default {
     isActive: {
       type: Boolean,
       default: false
+    },
+    order: {
+      type: Object
     }
   }
 }
@@ -81,16 +84,19 @@ export default {
       <div class="checkout__item__body">
           <p class="checkout-caption">{{ $t('text.desired_delivery') }}</p>
           
-          <ul class="delivery__list delivery__list-option delivery__list-option-checkout">
+          <ul class="delivery__list">
             <li 
               v-for="method in deliveryTimes"
               :key="method.id"
               class="delivery__item"
             >
               <label class="input__wrapper input__wrapper-radio">
-                <input v-model="selectedDelivery" :value="method.name" type="radio" class="input-radio" name="delivery">
+                <input v-model="order.delivery" :value="method.name" type="radio" class="input-radio" name="delivery">
                 <span class="custome-radio"></span>
-                <p>{{ method.name }} <br> <span>({{ $t('text.from') }} ${{ method.price }})</span></p>
+                <p class="delivery__label">
+                  {{ method.name }} 
+                  <span class="delivery__price">({{ $t('text.from') }} ${{ method.price }})</span>
+                </p>
               </label>
             </li>
           </ul>
@@ -99,7 +105,7 @@ export default {
           
           <div class="checkout__item__address">
             <form-select
-              v-model="address.country"
+              v-model="order.address.country"
               :placeholder="$t('text.Country_Region')"
               :values="countries"
               required
@@ -108,7 +114,7 @@ export default {
             </form-select>
 
             <form-text
-              v-model="address.city"
+              v-model="order.address.city"
               :placeholder="$t('text.Town_City')"
               required
               class="form-component"
@@ -116,28 +122,28 @@ export default {
             </form-text>
 
             <form-text
-              v-model="address.state"
+              v-model="order.address.state"
               :placeholder="$t('text.State')"
               class="form-component"
             >
             </form-text>
 
             <form-text
-              v-model="address.street"
+              v-model="order.address.street"
               :placeholder="$t('text.Street_Number')"
               class="form-component"
             >
             </form-text>
 
             <form-text
-              v-model="address.apartment"
+              v-model="order.address.apartment"
               :placeholder="$t('text.Apartment_house_flat')"
               class="form-component"
             >
             </form-text>
 
             <form-text
-              v-model="address.zip"
+              v-model="order.address.zip"
               :placeholder="$t('text.ZIP')"
               class="form-component"
             >

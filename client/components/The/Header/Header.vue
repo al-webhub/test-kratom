@@ -1,32 +1,20 @@
 <script>
 import { useCartStore } from '~/store/cart';
+import { useAuthStore } from '~/store/auth';
 
 export default {
   setup() {
     const cartStore = useCartStore()
+    const authStore = useAuthStore()
 
     return {
       cartStore,
+      authStore
     }
   },
 
   data() {
     return {
-      menu: [
-        {
-          id: 1,
-          link: '/',
-          name: 'Kratom'
-        },{
-          id: 2,
-          link: '/',
-          name: 'Kratom'
-        },{
-          id: 3,
-          link: '/',
-          name: 'Kratom'
-        }
-      ],
       search_list: [
         {
           name: 'Kratom 1',
@@ -40,6 +28,54 @@ export default {
       user: null,
       isSearchActive: false,
       isLanguagesActive: false
+    }
+  },
+
+  computed: {
+    menu() {
+      return [
+        {
+          id: 1,
+          link: '/shop',
+          name: this.$t('menu.item_1')
+        },{
+          id: 2,
+          link: '/shop/other-products',
+          name: this.$t('menu.item_2')
+        },{
+          id: 3,
+          link: '/rewards',
+          name: this.$t('menu.item_3')
+        },{
+          id: 4,
+          link: '/pay_delivery',
+          name: this.$t('menu.item_4')
+        },{
+          id: 5,
+          link: '/reviews',
+          name: this.$t('menu.item_5')
+        },{
+          id: 6,
+          link: '/guidebook',
+          name: this.$t('menu.item_6')
+        },{
+          id: 7,
+          link: '/about_us',
+          name: this.$t('menu.item_7')
+        },{
+          id: 8,
+          link: '/faq',
+          name: this.$t('menu.item_8')
+        },{
+          id: 9,
+          link: '/contacts',
+          name: this.$t('menu.item_9')
+        }
+      ]
+    },
+
+    cartLength() {
+      return this.cartStore.cart.length
     }
   },
 
@@ -58,6 +94,10 @@ export default {
 
     openCartHandler() {
       this.cartStore.open()
+    },
+
+    openSignInSocialHandler() {
+      this.authStore.open('signInSocial')
     }
   }
 }
@@ -68,9 +108,9 @@ export default {
 <template>
   <header class="header">
     
-    <a href="/" class="logo">
-      <img src="~assets/images/logo.png" alt="Kratom">
-    </a>
+    <NuxtLink :to="localePath('/')" class="logo">
+      <img src="~assets/images/logo.svg" alt="Kratom">
+    </NuxtLink>
 
     <nav class="nav">
         <span class="general-decor-elem"></span>
@@ -80,13 +120,12 @@ export default {
               v-for="(item, index) in menu"
               :key="item.id"
               class="item">
-                <a
-                  :href="item.link"
-                  :class="{active: false}"
+                <NuxtLink
+                  :to="localePath(item.link)"
                   class="link"
                 >
                   {{ item.name }}
-                </a>
+                </NuxtLink>
             </li>
             
           
@@ -162,8 +201,7 @@ export default {
 
         <div class="header__nav-profile__item">
             
-            <button v-if="!user" class="js-button" data-target="registration-social">
-                <!-- <span class="icon-profile"></span> -->
+            <button v-if="!user" @click="openSignInSocialHandler">
               <img src="~assets/svg-icons/user.svg" class="icon" />
             </button>
 

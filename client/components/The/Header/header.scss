@@ -107,6 +107,10 @@
   .link {
     padding: 15px 0px;
     transition: color 0.4s;
+
+    &.router-link-active {
+      color: #ACDA53;
+    }
   }
 }
 

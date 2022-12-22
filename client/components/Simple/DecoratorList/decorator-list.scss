@@ -1,0 +1,23 @@
+@import 'assets/scss/global/mixins';
+
+.list {
+  z-index: 9;
+  font-size: 8px;
+  line-height: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #ACDA53;
+
+  @include _tablet {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+.item {
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0px;
+  }
+}

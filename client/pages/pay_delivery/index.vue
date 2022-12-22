@@ -63,10 +63,11 @@ We would like to inform you at once that there are different delivery ways with 
 <style src="assets/scss/pages/pay-delivery.scss" lang="sass" scoped />
 
 <template>
+<div>
 <section class="pay-delivery">
     <div class="pay-deliver__wrapper container">
-        <div class="general-decor-figure"></div>
-        <div class="general-decor-text">kratom helper</div>
+        <!-- <div class="general-decor-figure"></div>
+        <div class="general-decor-text">kratom helper</div> -->
         
         <h1 class="main-caption main-caption-align">{{ page.h1 || page.title  }}</h1>
 
@@ -148,4 +149,5 @@ We would like to inform you at once that there are different delivery ways with 
 </section>
 
 <section-write-us></section-write-us>
+</div>
 </template>

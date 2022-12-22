@@ -31,44 +31,48 @@ export default {
 <template>
   <div 
     v-if="stimulation != null && relaxation != null && euphoria != null" 
-    class="choose-kratom__filter"
+    class="box"
   >
-    <div class="choose-kratom__filter__item"> 
-      <p class="caption">{{ $t('text.stimulation') }}</p>
-      <simple-five-dots
-        :model-value="stimulation"
-        @update:modelValue="updateStimulationHandler"
-        size="medium"
-      >
-      </simple-five-dots>
-    </div>
-    
-    <div class="choose-kratom__filter__item">
-      <p class="caption">{{ $t('text.relaxation') }}</p>
-      <simple-five-dots
-        :model-value="relaxation"
-        @update:modelValue="updateRelaxationHandler"
-        size="medium"
-      >
-      </simple-five-dots>
+    <div class="qualities">
+      <div class="item"> 
+        <p class="caption">{{ $t('text.stimulation') }}</p>
+        <simple-five-dots
+          :model-value="stimulation"
+          @update:modelValue="updateStimulationHandler"
+          size="medium"
+        >
+        </simple-five-dots>
+      </div>
+      
+      <div class="item">
+        <p class="caption">{{ $t('text.relaxation') }}</p>
+        <simple-five-dots
+          :model-value="relaxation"
+          @update:modelValue="updateRelaxationHandler"
+          size="medium"
+        >
+        </simple-five-dots>
+      </div>
+
+      <div class="item">
+        <p class="caption">{{ $t('text.euphoria') }}</p>
+        <simple-five-dots
+          :model-value="euphoria"
+          @update:modelValue="updateEuphoriaHandler"
+          size="medium"
+        >
+        </simple-five-dots>
+      </div>
     </div>
 
-    <div class="choose-kratom__filter__item">
-      <p class="caption">{{ $t('text.euphoria') }}</p>
-      <simple-five-dots
-        :model-value="euphoria"
-        @update:modelValue="updateEuphoriaHandler"
-        size="medium"
-      >
-      </simple-five-dots>
+    <div
+      v-if="stimulation !== null && relaxation !== null && euphoria !== null"
+      class="info"
+    >
+      <p>{{ $t('text.Users_take') }}</p>
+      <p>{{ $t('text.As_soon_as') }}</p>
     </div>
-  </div>
 
-  <div
-    class="product-page__info-text"
-    v-if="stimulation !== null && relaxation !== null && euphoria !== null"
-  >
-    <p>{{ $t('text.Users_take') }}</p>
-    <p>{{ $t('text.As_soon_as') }}</p>
+    <simple-more-btn :text="$t('text.pay_delivery')" class="more-btn"></simple-more-btn>
   </div>
 </template>

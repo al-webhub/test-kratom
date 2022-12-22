@@ -22,8 +22,10 @@
       border-top: none;
       
       .inner-text {
+        position: relative;
+        top: initial;
         color: #FFFFFF;
-        transform: translateY(-28px) scale(0.8);
+        transform: translateY(-50%) scale(0.8);
       }
     }
   }

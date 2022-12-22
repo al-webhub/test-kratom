@@ -1,83 +1,62 @@
 <script>
+import { useProductStore } from '~/store/product';
+import { useCategoryStore } from '~/store/category';
+
 export default {
+  setup() {
+
+    const productStore = useProductStore()
+    const categoryStore = useCategoryStore()
+
+    return {
+      productStore,
+      categoryStore
+    }
+  },
+
   data() {
     return {
-      products: [
-        {
-          id: 1,
-          name: '123123',
-          image: null,
-          link: '/porduct',
-          excerpt: '3123123123',
-          stimulation: 3,
-          relaxation: 4,
-          euphoria: 5,
-          modifications: [
-            {
-              id: 1,
-              name: '50',
-              price: 10
-            },{
-              id: 2,
-              name: '100',
-              price: 15
-            },{
-              id: 3,
-              name: '150',
-              price: 20
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: '123123',
-          image: null,
-          link: '/porduct',
-          excerpt: '3123123123',
-          stimulation: 2,
-          relaxation: 3,
-          euphoria: 2,
-          modifications: [
-            {
-              id: 1,
-              name: '50',
-              price: 10
-            },{
-              id: 2,
-              name: '100',
-              price: 15
-            },{
-              id: 3,
-              name: '150',
-              price: 20
-            }
-          ]
-        }
-      ],
-      categories: [
-        {
-          id: 1,
-          name: 'Kratom',
-          description: `The history of the occurrence and usage of the kratom
-
-Kratom was first time mentioned in Thailand. The tradition of its usage originated from that exotic country. But later it spread over many countries. It is believed to empower human strength and increase endurance that was so crucial for hard workers in fields. So, it was mainly used to support a man while his hard physical labor. In this regard, men consumed much more kratom than women. This was how the whole story began.`
-        },{
-          id: 2,
-          name: 'Other products',
-          description: null
-        }
-      ],
-      query: {
-        category: 1
-      },
+      tab: 0,
       pageH1: 'Kratom'
     }
   },
 
-  methods: {
-    loadmore() {
+  computed: {
+    products() {
+      return this.productStore?.all;
+    },
 
+    meta() {
+      console.log('META', this.productStore?.meta)
+      return this.productStore?.meta;
+    },
+
+    categories() {
+      return this.categoryStore?.all;
+    },
+
+    tabs() {
+      return this.categories.map((item) => (item.name))
     }
+  },
+
+  methods: {
+    async getProducts() {
+      await this.productStore?.getAll({per_page: 8})
+    },
+
+    async getCategories() {
+      await this.categoryStore?.getAll()
+    },
+
+    async loadmoreHandler() {
+      await this.productStore?.getAll({per_page: 8, page: this.meta.current_page + 1})
+    }
+  },
+
+  async created() {
+    await useAsyncData('products', () => this.getProducts())
+    await useAsyncData('categories', () => this.getCategories())
   }
 }
 </script>
@@ -85,50 +64,45 @@ Kratom was first time mentioned in Thailand. The tradition of its usage originat
 <style src="assets/scss/pages/shop.scss" lang="sass" scoped />
 
 <template>
+<div>
   <section class="shop-page">
-        <div class="shop-page__wrapper container">
-            <div class="general-decor-figure"></div>
-            
-            <h1 class="main-caption main-caption-align">{{ pageH1 }}</h1>
+      <div class="shop-page__wrapper container">
+          <!-- <div class="general-decor-figure"></div> -->
+          
+          <h1 class="main-caption main-caption-align">{{ pageH1 }}</h1>
 
-            <ul class="general-tabs__list">
-                <li 
-                  v-for="(category, index) in categories"
-                  :key="category.id"
-                  @click="query.category = category.id"
-                  :class="{active: query.category == category.id}" 
-                  class="general-tabs__item" 
-                >
-                  {{ category.name }}
-                </li>
+          <simple-tabs
+            v-if="categories && categories.length"
+            v-model:activeTab="tab"
+            :values="tabs"
+          ></simple-tabs>
+
+          <div v-if="products && products.length" class="product__position">
+            <ul class="product__list">
+              <li 
+                v-for="product in products"
+                :key="product.id"
+                class="product__item" 
+              >
+                <product-card :product="product"></product-card>
+              </li>
             </ul>
+          </div>
 
-            <div class="product__position">
-                <ul class="product__list">
-                    <li 
-                      v-for="product in products"
-                      :key="product.id"
-                      class="product__item" 
-                    >
-                      <product-card :product="product"></product-card>
-                    </li>
-                </ul>
-            </div>
-
-            <button class="main-button" @click="loadmore()" v-if="products.current_page != products.last_page">
-                <span class="text">{{ $t('text.show_more') }}</span>
-            </button>
-        </div>
-    </section>
+          <button v-if="meta && meta.current_page !== meta.last_page" @click="loadmoreHandler" class="main-button">
+            <span class="text">{{ $t('text.show_more') }}</span>
+          </button>
+      </div>
+  </section>
     
     
-    <section v-if="categories[query.category].description" class="seo-block seo-block-main">
-	    <div class="seo-block__wrapper container">
+  <section v-if="categories.length && categories[tab].content" class="seo-block seo-block-main">
+    <div class="seo-block__wrapper container">
 <!--             <div class="main-caption">Kratom tea for sale</div> -->
-        <div class="seo-block__container" v-html="categories[query.category].description"></div>
-		  </div>
-    </section>
+      <div class="seo-block__container" v-html="categories[tab].content"></div>
+    </div>
+  </section>
 
-    <section-write-us></section-write-us>
-
+  <section-write-us></section-write-us>
+</div>
 </template>

@@ -38,6 +38,10 @@ export default {
   },
 
   methods: {
+    changeHandler(v) {
+      this.$emit('update:modelValue', v.target.value)
+    },
+
     focusHandler() {
       this.onFocus = true
     },
@@ -55,6 +59,7 @@ export default {
   <div :class="{error: error}" class="input__wrapper">
     <input
       :value="modelValue"
+      @change="changeHandler"
       @focus="focusHandler"
       @blur="blurHandler"
       type="text"

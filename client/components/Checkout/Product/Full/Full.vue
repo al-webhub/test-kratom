@@ -8,8 +8,8 @@ export default {
   },
 
   methods: {
-    deleteFromCart(arg1, arg2){
-
+    deleteHandler() {
+      this.$emit('delete')
     }
   }
 }
@@ -21,21 +21,21 @@ export default {
   <li class="order__info__item">
       <div class="order__info__preview order-position-item">
         <div class="order__info__preview__img">
-          <a :href="modification.product_link">
+          <NuxtLink :to="localePath('/' + modification.slug)">
             <img 
-              :src="modification.product_image"
-              :alt="modification.product_name"
-              :title="modification.product_name"
+              :src="modification.image?.src"
+              :alt="modification.image?.alt"
+              :title="modification.image?.title"
             />
-          </a>
+          </NuxtLink>
         </div>
 
         <div class="order__info__preview__descrip">
           <p class="order__info__preview__name">
-            <a :href="modification.product_link">{{ modification.product_name }}</a>
+            <NuxtLink :to="localePath('/' + modification.slug)">{{ modification.name }}</NuxtLink>
           </p>
           <ul class="product__weight-list">
-            <li class="product__weight-item">{{ modification.name }}</li>
+            <li class="product__weight-item">{{ modification.short_name }}</li>
           </ul>
           <div class="order-tablet-version">
             <div class="order__info__price">
@@ -64,7 +64,7 @@ export default {
 
       <div class="order__mobile-weight">
         <ul class="product__weight-list">
-          <li class="product__weight-item">{{ modification.name }}</li>
+          <li class="product__weight-item">{{ modification.short_name }}</li>
         </ul>
       </div>
 
@@ -79,7 +79,7 @@ export default {
       </div>
 
       <div class="order-position-last order__delete">
-        <button type="button" class="delete-button" @click="deleteFromCart(key, modification.id)" title="Remove">
+        <button type="button" class="delete-button" @click="deleteHandler" title="Remove">
           <img src="~assets/svg-icons/delete.svg" class="icon" />
         </button>
       </div>

@@ -211,23 +211,6 @@ body {
   height: 21px;
   background: url(assets/images/general-decor.svg) center / contain no-repeat;
 }
-.general-decor-text__list {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  text-transform: uppercase;
-  color: #ACDA53;
-  position: absolute;
-  right: 150px;
-  top: 100px;
-  z-index: 9;
-}
-.general-decor-text__item {
-  margin-bottom: 10px;
-}
-.general-decor-text__item:last-child {
-  margin-bottom: 0px;
-}
 
 
 // CAPTION

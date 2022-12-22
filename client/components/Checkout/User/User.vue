@@ -2,7 +2,8 @@
 export default {
   data() {
     return {
-      currentTab: 'guest',
+      tabs: ['guest', 'login', 'register'],
+      currentTab: 0,
       errors: {
         firstname: {
           message: 'Error'
@@ -32,8 +33,11 @@ export default {
     user: {
       type: Object,
       default: false
+    },
+    order: {
+      type: Object
     }
-  }
+  },
 }
 </script>
 
@@ -56,17 +60,19 @@ export default {
         <p class="text">{{ $t('text.All_registered_users') }}</p>
       </div>
 
-      <ul class="general-tabs__list">
-        <li class="general-tabs__item" :class="{active: currentTab == 'guest'}" @click="currentTab = 'guest'" v-if="!user">{{ $t('text.Checkout_as_guest') }}</li>
-        <li class="general-tabs__item" :class="{active: currentTab == 'login'}" @click="currentTab = 'login'">{{ $t('text.Log_In') }}</li>
-        <li class="general-tabs__item" :class="{active: currentTab == 'register'}" @click="currentTab = 'register'" v-if="!user">{{ $t('text.Register_account') }}</li>
-      </ul>
+      <simple-tabs
+        v-model:activeTab="currentTab"
+        :values="tabs"
+        class="general-tabs__list"
+      >
+      </simple-tabs>
+
 
       <!-- GUEST TAB -->
-      <div class="checkout_form__wrapper" v-if="currentTab == 'guest'">
+      <div class="checkout_form__wrapper" v-if="currentTab === 0">
         
         <form-text
-          v-model="new_user.firstname"
+          v-model="order.user.firstname"
           :placeholder="$t('text.First_name')"
           :error="errors.firstname"
           required
@@ -75,7 +81,7 @@ export default {
         </form-text>
 
         <form-text
-          v-model="new_user.lastname"
+          v-model="order.user.lastname"
           :placeholder="$t('text.Last_name')"
           :error="errors.lastname"
           class="form-component"
@@ -83,7 +89,7 @@ export default {
         </form-text>
 
         <form-select
-          v-model="new_user.communication"
+          v-model="order.user.communication"
           :values="communications"
           :placeholder="$t('text.Preferred_communication')"
           :error="errors.communication"
@@ -92,11 +98,11 @@ export default {
         </form-select>
 
         <form-text
-          v-model="new_user.communication_number"
+          v-model="order.user.communication_number"
           :placeholder="$t('text.account')"
           :error="errors.communication_number"
           required
-          :is-disabled="new_user.communication"
+          :is-disabled="!order.user.communication"
           class="form-component"
         >
         </form-text>
@@ -107,7 +113,7 @@ export default {
       </div>
       
       <!-- LOGIN TAB -->
-      <div class="checkout_form__wrapper" v-else-if="currentTab == 'login'">
+      <div class="checkout_form__wrapper" v-else-if="currentTab === 1">
         <div v-if="user" class="checkout-user">
           <div class="checkout-user__container">
             <div :style="{backgroundImage: 'url(' + './img/photo-log-in.png' + ')'}" class="checkout-user__img"></div>
@@ -122,7 +128,7 @@ export default {
         <template v-else>
 
           <form-text
-            v-model="login"
+            v-model="order.user.email"
             placeholder="Email"
             :error="errors.email"
             required
@@ -149,10 +155,10 @@ export default {
       </div>
       
       <!-- REGISTER TAB -->
-      <div class="checkout_form__wrapper" v-else-if="currentTab == 'register'">
+      <div class="checkout_form__wrapper" v-else-if="currentTab === 2">
 
         <form-text
-          v-model="new_user.firstname"
+          v-model="order.user.firstname"
           :placeholder="$t('text.First_name')"
           :error="errors.firstname"
           required
@@ -161,7 +167,7 @@ export default {
         </form-text>
 
         <form-text
-          v-model="new_user.lastname"
+          v-model="order.user.lastname"
           :placeholder="$t('text.Last_name')"
           :error="errors.lastname"
           class="form-component"
@@ -170,7 +176,7 @@ export default {
 
 
         <form-text
-          v-model="login"
+          v-model="order.user.email"
           placeholder="Email"
           :error="errors.email"
           required
@@ -188,7 +194,7 @@ export default {
         </form-password>
 
         <form-select
-          v-model="new_user.communication"
+          v-model="order.user.communication"
           :values="communications"
           :placeholder="$t('text.Preferred_communication')"
           :error="errors.communication"
@@ -197,11 +203,11 @@ export default {
         </form-select>
 
         <form-text
-          v-model="new_user.communication_number"
+          v-model="order.user.communication_number"
           :placeholder="$t('text.account')"
           :error="errors.communication_number"
           required
-          :is-disabled="new_user.communication"
+          :is-disabled="order.user.communication"
           class="form-component"
         >
         </form-text>

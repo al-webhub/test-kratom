@@ -53,81 +53,82 @@ Follow the link - a one-time payment, constantly during registration. Second lin
 <style src="assets/scss/pages/rewards.scss" lang="sass" scoped />
 
 <template>
+<div>
   <section class="earn">
-        <div class="earn__wrapper container">
-            <div class="general-decor-figure"></div>
-            <div class="general-decor-figure"></div>
-            <div class="general-decor-text">kratom helper</div>
-            <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
-            <div class="earn__compensation">
-                
-              <h2 class="main-caption-l">{{ page.compensation_mt_1 }}</h2>
+      <div class="earn__wrapper container">
+          <!-- <div class="general-decor-figure"></div>
+          <div class="general-decor-figure"></div>
+          <div class="general-decor-text">kratom helper</div> -->
+          <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
+          <div class="earn__compensation">
+              
+            <h2 class="main-caption-l">{{ page.compensation_mt_1 }}</h2>
 
-                <ul class="earn__compensation__list">
+              <ul class="earn__compensation__list">
 
-                    <li class="earn__compensation__item">
-                        <div class="general-decor-caption">
-                            <div :style="{backgroundImage: iconImg}" class="img orders js-img-bg"></div>
-                        </div>
-                        <h3 class="main-caption-s">{{ page.compensation_t_1 }}</h3>
-                        <div v-html="page.compensation_c_1"></div>
-                    </li>
+                  <li class="earn__compensation__item">
+                      <div class="general-decor-caption">
+                          <div :style="{backgroundImage: iconImg}" class="img orders js-img-bg"></div>
+                      </div>
+                      <h3 class="main-caption-s">{{ page.compensation_t_1 }}</h3>
+                      <div v-html="page.compensation_c_1"></div>
+                  </li>
 
-                    <li class="earn__compensation__item">
-                        <div class="general-decor-caption">
-                            <div :style="{backgroundImage: iconImg}" class="img discounts js-img-bg"></div>
-                        </div>
-                        <h3 class="main-caption-s">{{ page.compensation_t_2 }}</h3>
-                        <div v-html="page.compensation_c_2"></div>
-                    </li>
+                  <li class="earn__compensation__item">
+                      <div class="general-decor-caption">
+                          <div :style="{backgroundImage: iconImg}" class="img discounts js-img-bg"></div>
+                      </div>
+                      <h3 class="main-caption-s">{{ page.compensation_t_2 }}</h3>
+                      <div v-html="page.compensation_c_2"></div>
+                  </li>
 
-                    <li class="earn__compensation__item">
-                        <div class="general-decor-caption">
-                            <div :style="{backgroundImage: iconImg}" class="img money js-img-bg"></div>
-                        </div>
-                        <h3 class="main-caption-s">{{ page.compensation_t_3 }}</h3>
-                        <div v-html="page.compensation_c_3"></div>
-                    </li>
+                  <li class="earn__compensation__item">
+                      <div class="general-decor-caption">
+                          <div :style="{backgroundImage: iconImg}" class="img money js-img-bg"></div>
+                      </div>
+                      <h3 class="main-caption-s">{{ page.compensation_t_3 }}</h3>
+                      <div v-html="page.compensation_c_3"></div>
+                  </li>
 
-                </ul>
-            </div>
+              </ul>
+          </div>
 
-            <div class="earn__partner-programm">
-                <h2 class="main-caption-l">{{ page.program_mt_1 }}</h2>
-                <div v-html="page.partner_program_info"></div>
-            </div>
+          <div class="earn__partner-programm">
+              <h2 class="main-caption-l">{{ page.program_mt_1 }}</h2>
+              <div v-html="page.partner_program_info"></div>
+          </div>
 
-            <div class="earn__how-works">
-                <h2 class="main-caption-l">{{ page.htw_mt_1 }}</h2>
-                <ul class="earn__how-works__list">
-                    <li class="earn__how-works__item">
-                        <div class="number-wrapper">
-                            <p class="number">1.</p>
-                        </div>
-                        <p class="main-caption-s">{{ page.program_t_1 }}</p>
-                        <div v-html="page.program_c_1"></div>
-                    </li>
-                    <li class="earn__how-works__item">
-                        <div class="number-wrapper">
-                            <p class="number">2.</p>
-                        </div>
-                        <p class="main-caption-s">{{ page.program_t_2 }}</p>
-                        <div v-html="page.program_c_2"></div>
-                    </li>
-                    <li class="earn__how-works__item">
-                        <div class="number-wrapper">
-                            <p class="number">3.</p>
-                        </div>
-                        <p class="main-caption-s">{{ page.program_t_3 }}</p>
-                        <div v-html="page.program_c_3"></div>
-                    </li>
-                </ul>
-            </div>
-            <div class="earn__text" v-html="page.htw_info"> 
-            </div>
-        </div>
-    </section>
+          <div class="earn__how-works">
+              <h2 class="main-caption-l">{{ page.htw_mt_1 }}</h2>
+              <ul class="earn__how-works__list">
+                  <li class="earn__how-works__item">
+                      <div class="number-wrapper">
+                          <p class="number">1.</p>
+                      </div>
+                      <p class="main-caption-s">{{ page.program_t_1 }}</p>
+                      <div v-html="page.program_c_1"></div>
+                  </li>
+                  <li class="earn__how-works__item">
+                      <div class="number-wrapper">
+                          <p class="number">2.</p>
+                      </div>
+                      <p class="main-caption-s">{{ page.program_t_2 }}</p>
+                      <div v-html="page.program_c_2"></div>
+                  </li>
+                  <li class="earn__how-works__item">
+                      <div class="number-wrapper">
+                          <p class="number">3.</p>
+                      </div>
+                      <p class="main-caption-s">{{ page.program_t_3 }}</p>
+                      <div v-html="page.program_c_3"></div>
+                  </li>
+              </ul>
+          </div>
+          <div class="earn__text" v-html="page.htw_info"> 
+          </div>
+      </div>
+  </section>
 
-    <section-referral></section-referral>
-
+  <section-referral></section-referral>
+</div>
 </template>

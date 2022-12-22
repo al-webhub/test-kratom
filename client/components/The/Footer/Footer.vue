@@ -4,40 +4,52 @@ export default {
   data() {
     return {
       current_language: 'En',
-      menu: [
-        {
-          id: 1,
-          name: 'Menu 1',
-          link: '/'
-        },{
-          id: 2,
-          name: 'Menu 2',
-          link: '/'
-        },{
-          id: 3,
-          name: 'Menu 3',
-          link: '/'
-        }
-      ],
-      submenu: [
-        {
-          id: 1,
-          name: 'Menu 1',
-          link: '/'
-        },{
-          id: 2,
-          name: 'Menu 2',
-          link: '/'
-        },{
-          id: 3,
-          name: 'Menu 3',
-          link: '/'
-        }
-      ]
     }
   },
 
   computed: {
+    menu() {
+      return [
+        {
+          id: 1,
+          link: '/shop',
+          name: this.$t('menu.item_1')
+        },{
+          id: 2,
+          link: '/shop/other-products',
+          name: this.$t('menu.item_2')
+        },{
+          id: 3,
+          link: '/rewards',
+          name: this.$t('menu.item_3')
+        },{
+          id: 4,
+          link: '/pay_delivery',
+          name: this.$t('menu.item_4')
+        },{
+          id: 5,
+          link: '/reviews',
+          name: this.$t('menu.item_5')
+        },{
+          id: 6,
+          link: '/guidebook',
+          name: this.$t('menu.item_6')
+        },{
+          id: 7,
+          link: '/about_us',
+          name: this.$t('menu.item_7')
+        },{
+          id: 8,
+          link: '/faq',
+          name: this.$t('menu.item_8')
+        },{
+          id: 9,
+          link: '/contacts',
+          name: this.$t('menu.item_9')
+        }
+      ]
+    },
+
     year() {
       return new Date().getFullYear()
     }
@@ -62,21 +74,18 @@ export default {
         </div>
 
         <ul class="footer__list">
-            <li
-              v-for="(item, index) in menu"
-              :key="item.id"
-              class="footer__item"
+          <li
+            v-for="(item, index) in menu"
+            :key="item.id"
+            class="footer__item"
+          >
+            <NuxtLink
+              :to="localePath(item.link)"
+              class="footer__link"
             >
-                <a :href="item.link" class="footer__link">{{ item.name }}</a>
-            </li>
-
-            <li
-              v-for="(item, index) in sub_menu"
-              :key="item.id"
-              class="footer__item"
-            >
-                <a :href="item.link" class="footer__link">{{ item.name }}</a>
-            </li>
+              {{ item.name }}
+            </NuxtLink>
+          </li>
         </ul>
           
           <!-- <ul class="footer__social-list">
@@ -114,17 +123,17 @@ export default {
       </div>
 
       <div class="footer__wrapper__down">
-          <p class="footer__copyright">
-            Copyright © {{ year }}
-          </p>
+        <p class="footer__copyright">
+          Copyright © {{ year }}
+        </p>
 
-          <a href="terms" itemprop="url" class="footer__down-link">
-            {{ $t('text.Terms_Conditions') }}
-          </a>
+        <NuxtLink :to="localePath('terms')" class="footer__down-link">
+          {{ $t('text.Terms_Conditions') }}
+        </NuxtLink>
 
-          <a href="privacy" itemprop="url" class="footer__down-link">
-            {{ $t('text.Privacy_Policy') }}
-          </a>
+        <NuxtLink :to="localePath('privacy')" class="footer__down-link">
+          {{ $t('text.Privacy_Policy') }}
+        </NuxtLink>
       </div>
 
     </div>

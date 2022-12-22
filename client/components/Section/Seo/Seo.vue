@@ -14,10 +14,10 @@ export default {
 <style src="./seo.scss" lang="sass" scoped />
 
 <template>
-  <section v-if="title || text" class="seo-block seo-block-main">
-    <div class="seo-block__wrapper container">
+  <section v-if="title || text" class="wrapper">
+    <div class="container">
       <h1 v-if="title" class="main-caption">{{ title }}</h1>
-      <div v-if="text" class="seo-block__container" v-html="text"></div>
+      <div v-if="text" class="text" v-html="text"></div>
     </div>
   </section>
 </template>

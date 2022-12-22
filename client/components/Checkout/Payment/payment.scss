@@ -1,3 +1,52 @@
+@media screen and (min-width: 1201px) {
+
+  .check-bonuse {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .check-bonuse__button {
+    font-size: 12px;
+    line-height: 15px;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    margin-bottom: 45px;
+    transition: color .4s;
+  }
+}
+
+.custome-checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 5px;
+  width: 15px;
+  height: 15px;
+  color: #ACDA53;
+  margin-right: 15px;
+  border: 1px solid #4F4F4F;
+  transition: border-color 0.4s;
+}
+
+.input__wrapper:last-child {
+  margin-bottom: 0px;
+}
+
+.input__wrapper-checkbox {
+  display: flex;
+  cursor: pointer;
+}
+
+
+
 
 .checkout__item__footer {
   display: flex;

@@ -1,161 +1,34 @@
 <script>
-import bannerImg1 from 'assets/images/main-banner-img-1.png';
-import bannerImg2 from 'assets/images/main-banner-img-2.png';
-import bannerImg3 from 'assets/images/main-banner-3.png';
-
-import product_img_1 from 'assets/images/mgd-green-50.jpg';
-import product_img_2 from 'assets/images/mgd-red-50.jpg';
+import { useProductStore } from '~/store/product';
+import { useReviewStore } from '~/store/review';
+import { useBannerStore } from '~/store/banner';
+import { useArticleStore } from '~/store/article';
 
 export default {
+  setup() {
+    definePageMeta({
+      breadcrumbsIsActive: false
+    })
+
+    const productStore = useProductStore()
+    const reviewStore = useReviewStore()
+    const bannerStore = useBannerStore()
+    const articleStore = useArticleStore()
+
+    bannerStore.$reset()
+    reviewStore.$reset()
+    articleStore.$reset()
+
+    return {
+      productStore,
+      reviewStore,
+      bannerStore,
+      articleStore
+    }
+  },
+
   data() {
     return {
-      products: [
-        {
-          id: 1,
-          name: 'GREEN THAI KRATOM',
-          image: '/images/mgd-green-50.jpg',
-          link: '/porduct',
-          excerpt: '3123123123',
-          stimulation: 3.5,
-          relaxation: 4.5,
-          euphoria: 5,
-          modifications: [
-            {
-              id: 1,
-              name: '50',
-              price: 10
-            },{
-              id: 2,
-              name: '100',
-              price: 15
-            },{
-              id: 3,
-              name: '150',
-              price: 20
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: 'WHITE ELEPHANT KRATOM',
-          image: '/images/mgd-red-50.jpg',
-          link: '/porduct',
-          excerpt: '3123123123',
-          stimulation: 2,
-          relaxation: 3,
-          euphoria: 2,
-          modifications: [
-            {
-              id: 1,
-              name: '50',
-              price: 10
-            },{
-              id: 2,
-              name: '100',
-              price: 15
-            },{
-              id: 3,
-              name: '150',
-              price: 20
-            }
-          ]
-        }
-      ],
-      banners: [
-        {
-          id: 1,
-          image: '',
-          badImage: bannerImg1,
-          desc: 'Natural product used to improve the quality of life,  mental and physiological health',
-          short_desc: 'kratom leaves',
-          title: 'shop now',
-          link: '/'
-        },{
-          id: 2,
-          image: '',
-          badImage: bannerImg2,
-          desc: 'Natural product used to improve the quality of life,  mental and physiological health',
-          short_desc: 'kratom leaves',
-          title: 'shop now',
-          link: '/'
-        },{
-          id: 3,
-          image: '',
-          badImage: bannerImg3,
-          desc: 'Natural product used to improve the quality of life,  mental and physiological health',
-          short_desc: 'kratom leaves',
-          title: 'shop now',
-          link: '/'
-        }
-      ],
-      articles: [
-        {
-          id: 1,
-          title: 'KRATOM TABLETS AND PILLS - BU',
-          short_desc: 'Everyone evaluates the comfort and convenience of the environments we spend our lives. It is the feature we expect to meet in all the things we deal with, be it various supplements',
-          image: null,
-          link: '/'
-        },
-        {
-          id: 2,
-          title: 'IS KRATOM LEGAL?',
-          short_desc: 'Everyone evaluates the comfort and convenience of the environments we spend our lives. It is the feature we expect to meet in all the things we deal with, be it various supplements',
-          image: null,
-          link: '/'
-        },
-        {
-          id: 3,
-          title: 'ALL ABOUT KRATOM',
-          short_desc: 'Everyone evaluates the comfort and convenience of the environments we spend our lives. It is the feature we expect to meet in all the things we deal with, be it various supplements',
-          image: null,
-          link: '/'
-        },
-        {
-          id: 4,
-          title: 'ALL ABOUT KRATOM',
-          short_desc: 'Everyone evaluates the comfort and convenience of the environments we spend our lives. It is the feature we expect to meet in all the things we deal with, be it various supplements',
-          image: null,
-          link: '/'
-        }
-      ],
-      reviews: [
-        {
-          id: 1,
-          photo: '/images/ava1.jpg',
-          name: 'Petep Pan',
-          text: 'В первую очередь отдельная благодарность.'
-        },
-        {
-          id: 2,
-          photo: '/images/ava2.jpg',
-          name: 'Petep Pan',
-          text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого. И тут опять пишем текст длинный для еще строк.'
-        },
-        {
-          id: 3,
-          photo: '/images/ava3.jpg',
-          name: 'Petep Pan',
-          text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого'
-        },
-        {
-          id: 4,
-          photo: '/images/ava4.jpg',
-          name: 'Petep Pan',
-          text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого'
-        },
-        {
-          id: 5,
-          photo: '/images/ava5.jpg',
-          name: 'Petep Pan',
-          text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого'
-        },
-        {
-          id: 6,
-          photo: '/images/ava6.jpg',
-          name: 'Petep Pan',
-          text: 'В первую очередь отдельная благодарность сотрудникам магазина,отличная командная работа,а что касается самого'
-        },
-      ],
       page: {
         h1: 'KRATOM TEA FOR SALE',
         seo_text: `
@@ -168,7 +41,53 @@ White Maeng Da - is the result of combining the best qualities of natural and ar
       }
     }
   },
+
+  computed: {
+    banner() {
+      console.log('BANNER', this.bannerStore?.banner);
+      return this.bannerStore?.banner;
+    },
+
+    products() {
+      return this.productStore?.all;
+    },
+
+    reviews() {
+      return this.reviewStore?.all;
+    },
+
+    articles() {
+      return this.articleStore?.all;
+    },
+
+    lang() {
+      return this.$i18n.locale;
+    }
+  },
+  
   methods: {
+    async getBanner() {
+      await this.bannerStore?.getOne(1)
+    },
+
+    async getProducts() {
+      await this.productStore?.getAll({per_page: 8})
+    },
+
+    async getReviews() {
+      await this.reviewStore?.getAll({per_page: 8})
+    },
+
+    async getArticles() {
+      await this.articleStore?.getAll({per_page: 4, lang: this.lang})
+    }
+  },
+
+  async created() {
+    await useAsyncData('banner', () => this.getBanner())
+    await useAsyncData('products', () => this.getProducts())
+    await useAsyncData('reviews', () => this.getReviews())
+    await useAsyncData('articles', () => this.getArticles())
   }
 }
 </script>
@@ -176,42 +95,42 @@ White Maeng Da - is the result of combining the best qualities of natural and ar
 <style src="assets/scss/pages/home.scss" lang="sass" scoped />
 
 <template>
-
+<div>
   <!-- MAIN SLIDER -->
   <simple-decorator
-    :settings="{title: {pos: 'right'}, figure: {pos: 'right', showTill: 'desktop'}}"
+    :settings="{title: {posX: 'right', posY: 'bottom'}, figure: {posX: 'right', showTill: 'desktop'}}"
     :is-figure="true"
   >
-    <section-main-slider :banners="banners"></section-main-slider>
+    <section-main-slider v-if="banner && banner.items.length" :banners="banner.items"></section-main-slider>
   </simple-decorator> 
 
-  <section-products-slider :products="products"></section-products-slider>
+  <section-products-slider :products="products" class="section"></section-products-slider>
   
   <!-- ABOUT US -->
   <simple-decorator 
-    :settings="{title: {pos: 'left'}, figure: {pos: 'right', showTill: 'mobile'}}"
+    :settings="{title: {posX: 'left'}, figure: {posX: 'right', showTill: 'mobile'}}"
     class="section"
   >
     <section-about-us></section-about-us>
   </simple-decorator>
 
-  <section-choose-kratom></section-choose-kratom>
+  <section-choose-kratom  class="section"></section-choose-kratom>
   
   <!-- OUR ADVANTAGES -->
   <simple-decorator
-    :settings="{title: {pos: 'right'}, figure: {pos: 'right', showTill: 'mobile'}}"
+    :settings="{title: {posX: 'right'}, figure: {posX: 'right', showTill: 'mobile'}}"
     :is-figure="true"
     class="section"
   >
     <section-our-advantages></section-our-advantages>
   </simple-decorator>
   
-  <section-articles :articles="articles" class="section"></section-articles>
+  <section-articles v-if="articles && articles.length" :articles="articles" class="section"></section-articles>
 
-  <section-client-reviews :reviews="reviews"></section-client-reviews>
+  <section-client-reviews v-if="reviews && reviews.length" :reviews="reviews" class="section"></section-client-reviews>
 
   <section-seo :title="page.h1" :text="page.seo_text" class="section"></section-seo>
 
   <section-write-us></section-write-us>
-
+</div>
 </template>

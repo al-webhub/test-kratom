@@ -7,8 +7,8 @@ export default {
   },
 
   methods: {
-    deleteFromCart(arg1, arg2) {
-
+    deleteHandler() {
+      this.$emit('delete')
     }
   }
 }
@@ -18,25 +18,25 @@ export default {
 
 <template>
   <li class="popup-noty-cart__item">
-    <a :href="modification.product_link" class="popup-noty-cart__img">
+    <NuxtLink :to="localePath('/' + modification.slug)" class="popup-noty-cart__img">
       <img
-        :src="modification.product_image"
-        :alt="modification.product_name"
-        :title="modification.product_name"
+        :src="modification.image?.src"
+        :alt="modification.image?.alt"
+        :title="modification.image?.title"
       >
-    </a>
+    </NuxtLink>
     <div class="popup-noty-cart__info">
       <p class="name"> 
-        <a :href="modification.product_link">{{ modification.product_name }}</a>
+        <NuxtLink :to="localePath('/' + modification.slug)">{{ modification.name }}</NuxtLink>
       </p>
       <p class="info">
-        <span class="weight">{{ modification.name }}</span>
+        <span class="weight">{{ modification.short_name }}</span>
         <span>x</span>
         <span class="calc">{{ modification.amount }}</span>
       </p>
       <div class="info__footer">
         <p class="price"> USD <span>{{ modification.price }}</span></p>
-        <button class="delete-button" @click="deleteFromCart(key, modification.id)">
+        <button class="delete-button" @click="deleteHandler">
           <img src="~assets/svg-icons/delete.svg" class="icon" />
         </button>
       </div>

@@ -30,10 +30,10 @@ export default {
 <style src="./more-btn.scss" lang="sass" scoped />
 
 <template>
-  <a :href="link" :class="{reverse: isReverse}" class="general-more" >
+  <NuxtLink :to="localePath(link)" :class="{reverse: isReverse}" class="general-more" >
       <span class="text">{{ label }}</span>
       <span class="circle">
         <img src="~assets/svg-icons/arrow.svg" class="icon" /> 
       </span>
-  </a>
+  </NuxtLink>
 </template>

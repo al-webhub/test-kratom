@@ -60,26 +60,11 @@
   }
 }
 
-.add-reviews__form .wrapper {
-  display: flex;
-}
 
 .add-reviews__buttons {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-}
-
-.reviews-img {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 20px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
 }
 
 
@@ -93,11 +78,6 @@
 @media screen and (max-width: 576px) {
   .add-reviews__item:last-of-type {
     margin-bottom: 20px;
-  }
-
-  .add-reviews__form .wrapper {
-    align-items: flex-start;
-    flex-direction: column;
   }
   
   .add-reviews__buttons {

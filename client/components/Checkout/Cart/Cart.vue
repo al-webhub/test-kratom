@@ -2,7 +2,6 @@
 export default {
   data() {
     return {
-      total: 567.44,
       bonusesLeft: 15,
       bonusesUsed: 10,
     }
@@ -19,6 +18,14 @@ export default {
   },
 
   computed: {
+
+    total() {
+      return this.cart.reduce(
+        (carry, item) => carry + item.price * item.amount, 
+        0
+      ).toFixed(2)
+    },
+
     cartLength(){
       return Object.keys(this.cart).length
     },
@@ -29,6 +36,10 @@ export default {
   },
 
   methods: {
+    deleteHandler(id) {
+      this.$emit('delete', id)
+    },
+
     bonusesUsedChange(dir){
 
     },
@@ -53,11 +64,13 @@ export default {
         </div>
 
         <ul class="order__info__list">
-          <template v-for="(product, index) in cart" :key="index">
-            <template v-for="modification in product" :key="modification.id">
-              <checkout-product-full :modification="modification"></checkout-product-full>
-            </template>
-          </template>
+          <checkout-product-full
+            v-for="(product, index) in cart"
+            :key="product.id"
+            :modification="product"
+            @delete="deleteHandler(product.id)"
+          >
+          </checkout-product-full>
           <li v-if="!cartLength" style="margin-top: 30px;">{{ $t('text.cart_is_empty') }}</li>
         </ul>
       </div>

@@ -62,9 +62,11 @@ export default {
 <style src="./sale.scss" lang="sass" scoped />
 
 <template>
-  <div class="product-page__info-sale">
-    <p class="current-dis">{{ $t('text.current_DISCOUNT') }}: <span>{{ currentDiscount }}%</span></p>
+  <div class="box">
+    <p class="discount">{{ $t('text.current_DISCOUNT') }}: <span>{{ currentDiscount }}%</span></p>
+    
     <p class="sale">{{ $t('text.save') }} {{ discounts.slice(-1)[0] }}%</p>
+
     <p class="offer">
       {{ $t('text.Order') }} {{ saleWeights }} 
       <br>
