@@ -10,18 +10,9 @@
     pointer-events: none;
 }
 
-.input__wrapper.error .input-error-text {
-  display: block;
-}
-.input-error-text {
-  display: none;
-  position: absolute;
-  top: calc(100% + 3px);
-  left: 20px;
-  font-size: 10px;
-  line-height: 12px;
-  color: #EB5757;
-}
+// .input__wrapper.error .input-error-text {
+//   display: block;
+// }
 
 
 

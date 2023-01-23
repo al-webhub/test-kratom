@@ -14,6 +14,16 @@
   }
 }
 
+.btn-block {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 10px;
+
+  @include _desktop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .btn-item {
   max-width: initial;
 }
@@ -24,8 +34,8 @@
   grid-gap: 15px;
 
   @include _desktop {
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 30px;
+    grid-template-columns: minmax(0, 1fr) 37%;
+    grid-column-gap: 40px;
   }
 }
 

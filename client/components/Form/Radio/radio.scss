@@ -1,0 +1,41 @@
+
+
+// RADIO
+.input__wrapper-radio {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.input-radio {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  opacity: 0;
+}
+.input-radio:checked + .custome-radio::before {
+  opacity: 1;
+}
+.custome-radio {
+  display: flex;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #4F4F4F;
+  position: relative;
+  margin-right: 15px;
+  transition: border-color 0.4s;
+}
+.custome-radio::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ACDA53;
+  opacity: 0;
+  transition: opacity 0.4s;
+}

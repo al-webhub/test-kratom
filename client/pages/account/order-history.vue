@@ -1,11 +1,25 @@
 <script>
-definePageMeta({
-  layout: "account",
-});
+import { useOrderStore } from '~/store/order';
 
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
 
-  layout: 'account',
+    definePageMeta({
+      layout: 'account',
+      middleware: 'auth',
+    })
+
+    const orderStore = useOrderStore()
+    orderStore.$reset()
+
+    useAccount().setTitle(t('title.order_history'))
+
+    return {
+      orderStore,
+      t
+    }
+  },
 
   data(){
     return {
@@ -23,74 +37,111 @@ export default {
           }
         }
       },
-      orders: [
-        {
-          id: 1,
-          code: '134564',
-          created_at: '10.10.2022',
-          info: {
-            payment: 'Bitcoin',
-            address_details: 'pr. Tura',
-            delivery: 'Nova Poshta',
-            products: [
-              [
-                {
-                  id: 1,
-                  name: '500 gr',
-                  product_link: '/',
-                  product_image: null,
-                  product_name: 'Kratom Maeng',
-                  price: 12.00,
-                  amount: 2,
-                }
-              ],
-              [
-                {
-                  id: 1,
-                  name: '500 gr',
-                  product_link: '/',
-                  product_image: null,
-                  product_name: 'Kratom Maeng',
-                  price: 12.00,
-                  amount: 2,
-                }
-              ]
-            ]
-          },
-          price: 500.50,
-          statusString: 'Done',
-        }
-      ]
     }
   },
+
+  computed: {
+    
+    orders() {
+      return this.orderStore?.orders;
+    },
+
+    ordersMeta() {
+      return this.orderStore?.ordersMeta;
+    },
+  },
+
+
+  methods: {
+
+    setCrumbs() {
+      useCrumbs().setCrumbs([
+          {
+            name: this.$t('crumbs.home'),
+            link: '/'
+          },{
+            name: this.$t('crumbs.account'),
+            link: '/account'
+          },{
+            name: this.$t('crumbs.order_history'),
+            link: '/account/order-history'
+          }
+      ])
+    },
+
+    async getOrders() {
+      await this.orderStore?.getOrders()
+    },
+    
+    async loadmoreOrdersHandler() {
+      const params = {
+        page: this.ordersMeta.current_page + 1
+      }
+
+      await this.orderStore?.getOrders(params)
+    },
+  },
+
+  async created() {
+    await useAsyncData('orders', () => this.getOrders())
+
+    this.setCrumbs()
+  }
 }
 </script>
 
 <style src="assets/scss/pages/account/order-history.scss" lang="sass" scoped />
 
 <template>
-    <div v-if="orders" class="profile__order-history">
+  <div>
+    <div class="profile__order-history">
         
       <div class="order-history__header">
         <p class="order-history__name order-history-position-num">№</p>
-        <p class="order-history__name order-history-position-date">{{ $t('text.Order_date') }}</p>
-        <p class="order-history__name order-history-position-recipient">{{ $t('text.Recipient') }}</p>
-        <p class="order-history__name order-history-position-total">{{ $t('text.Total') }}</p>
-        <p class="order-history__name order-history-position-status">{{ $t('text.Status') }}</p>
-        <p class="order-history__name order-history-position-details">{{ $t('text.Details') }}</p>
+        <p class="order-history__name order-history-position-date">{{ t('Order_date') }}</p>
+        <p class="order-history__name order-history-position-recipient">{{ t('Recipient') }}</p>
+        <p class="order-history__name order-history-position-total">{{ t('Total') }}</p>
+        <p class="order-history__name order-history-position-status">{{ t('Status') }}</p>
+        <p class="order-history__name order-history-position-details">{{ t('Details') }}</p>
         <p class="order-history-position-button"></p>
       </div>
       
-      <account-order-card
-        v-for="order in orders"
-        :key="order.id"
-        :order="order"
-      >
-      </account-order-card>
+      <template v-if="orders && orders.length">
+        <account-order-card
+          v-for="order in orders"
+          :key="order.id"
+          :order="order"
+        >
+        </account-order-card>
+      </template>
 
     </div>
 
-    <div v-else class="profile__order-history">
-      {{ $t('text.any_previous_orders') }}
+    <div v-if="!orders || !orders.length" class="profile__order-history">
+      {{ t('any_previous_orders') }}
     </div>
+  </div>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "order_history": "Order history",
+      "any_previous_orders" : "You have not made any previous orders!",
+      "Order_date" : "Order date",
+      "Recipient" : "Recipient",
+      "Total" : "Price",
+      "Status" : "Status",
+      "Details" : "Details",
+    },
+    "ru": {
+      "order_history": "Order history",
+      "any_previous_orders" : "Вы не сделали никаких предыдущих заказов!",
+      "Order_date" : "Дата заказа",
+      "Recipient" : "Получатель",
+      "Total" : "Сумма",
+      "Status" : "Статус",
+      "Details" : "Подробности",
+    }
+  }
+</i18n>

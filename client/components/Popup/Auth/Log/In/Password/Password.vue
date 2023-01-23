@@ -6,22 +6,25 @@ export default {
     const authStore = useAuthStore()
 
     return {
-      authStore
+      authStore,
     }
   },
 
   data() {
-    return {
-      password: '',
-      errors: {
-        password: null
-      }
-    }
+    return {}
   },
 
   computed: {
     isActive() {
       return this.authStore.showLogInPassword
+    },
+
+    user() {
+      return this.authStore.getUser
+    },
+
+    errors() {
+      return this.authStore.getErrors
     }
   },
 
@@ -36,6 +39,10 @@ export default {
 
     openLogInEmailHandler() {
       return this.authStore.open('logInEmail')
+    },
+
+    async loginHandler() {
+      useLogin()()
     }
   }
 }
@@ -46,28 +53,31 @@ export default {
 <template>
   <popup-layout-simple :is-active="isActive" @close="closeHandler">
     <template v-slot:title>
-      {{ $t('text.Password') }}
+      {{ $t('title.password') }}
     </template>
     <template v-slot:content>
       <div class="popup__body">
 
         <form-password
-          v-model="password"
-          :placeholder="$t('text.Password')"
+          v-model="user.password"
+          :placeholder="$t('form.Password')"
           :errors="errors.password"
         >
         </form-password>
 
-        <button class="main-button-color main-button-color-popup">
-          <span class="text">{{ $t('text.Log_In') }}</span>
+        <button @click="loginHandler" class="main-button primary small">
+          <span class="text">{{ $t('button.Log_In') }}</span>
         </button>
+
       </div>
     </template>
+
     <template v-slot:footer>
       <div class="popup__footer__navigation">
-        <button @click="openLogInEmailHandler" type="button" class="button-nav">{{ $t('text.Back') }}</button>
-        <button @click="openChangePasswordHandler" type="button" class="button-nav">{{ $t('text.Forgot_Password') }}</button>
+        <button @click="openLogInEmailHandler" type="button" class="button-nav">{{ $t('button.Back') }}</button>
+        <button @click="openChangePasswordHandler" type="button" class="button-nav">{{ $t('button.Forgot_Password') }}</button>
       </div>
     </template>
+
   </popup-layout-simple>
 </template>

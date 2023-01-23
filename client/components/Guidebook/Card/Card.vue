@@ -8,6 +8,15 @@ export default {
     article: {
       type: Object
     }
+  },
+
+  computed: {
+    photo() {
+      if(this.article.image) 
+        return '/server/' + this.article.image
+      else
+        return null
+    }
   }
 }
 </script>
@@ -18,7 +27,18 @@ export default {
   <li class="article">
       
     <div class="image">
-        <img :src="article.image" :alt="article.title" :title="article.title">
+        <nuxt-img
+          v-if="photo"
+          :src = "photo"
+          :alt="article.title"
+          :title="article.title"
+          sizes = "mobile:100vw tablet:300px"
+          format = "webp"
+          quality = "30"
+          loading = "lazy"
+          class="cover"
+        >
+        </nuxt-img>
     </div>
     
     <p class="caption">{{ article.title }}</p>

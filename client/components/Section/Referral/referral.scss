@@ -1,3 +1,9 @@
+
+.main-button{
+  max-width: 171px;
+  margin: 20px auto 0 auto;
+}
+
 /* Subscribe */
 .subscribe {
   background-position: center;
@@ -31,21 +37,12 @@
 .subscribe__container .input__wrapper {
   margin-top: 20px;
 }
-.subscribe__container .main-button-color {
-  max-width: 171px;
-  margin: 0px auto;
-}
 .subscribe__form {
   width: 100%;
   max-width: 360px;
 }
 .subscribe__form .custome-placeholder__text {
     color: #ffffff;
-}
-
-
-.main-button-color.main-button-color-earn {
-  margin-top: 20px;
 }
 /* //Subscribe */
 

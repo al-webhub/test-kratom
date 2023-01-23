@@ -6,6 +6,15 @@ export default {
     }
   },
 
+  computed: {
+    photo() {
+      if(this.modification?.image?.src)
+        return '/server/' + this.modification?.image?.src
+      else
+        return null
+    }
+  },
+
   methods: {
     deleteHandler() {
       this.$emit('delete')
@@ -18,12 +27,19 @@ export default {
 
 <template>
   <li class="popup-noty-cart__item">
-    <NuxtLink :to="localePath('/' + modification.slug)" class="popup-noty-cart__img">
-      <img
-        :src="modification.image?.src"
+    <NuxtLink :to="localePath('/' + modification.slug)" class="img-link">
+      <nuxt-img
+        :src="photo"
         :alt="modification.image?.alt"
         :title="modification.image?.title"
+        :class="modification.image?.size"
+        sizes = "mobile:128px desktop:128px"
+        format = "webp"
+        quality = "40"
+        loading = "lazy"
+        class="image"
       >
+      </nuxt-img>
     </NuxtLink>
     <div class="popup-noty-cart__info">
       <p class="name"> 

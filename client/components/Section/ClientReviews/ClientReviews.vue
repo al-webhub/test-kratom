@@ -2,6 +2,16 @@
 import clientsSayBg from 'assets/images/clients-say-bg.png'; 
 
 export default {
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    }) 
+
+    return {
+      t
+    }
+  },
+
   data() {
     return {
     }
@@ -27,25 +37,34 @@ export default {
 
 <style src="./client-reviews.scss" lang="sass" scoped />
 
+<i18n src="./messages.json"></i18n>
+
 <template>
   <section class="clients-say">
-      
-    <div class="bg-image" :style="{backgroundImage: bgImage}"></div>
+     
+    <nuxt-img
+      src="/images/clients-say-bg.png"
+      sizes = "mobile:100vw desktop: 100vw"
+      format = "webp"
+      quality = "80"
+      loading = "lazy"
+      class="bg-image">
+    </nuxt-img>
       
     <div class="wrapper container">
         
-      <h2 class="main-caption">{{ $t('text.What_our_clients_say') }}</h2>
+      <h2 class="main-caption">{{ t('What_our_clients_say') }}</h2>
         
       <div class="header">
-        <p class="caption">{{ $t('text.leave_feedback_and_earn') }}</p>
+        <p class="caption">{{ t('leave_feedback_and_earn') }}</p>
 
         <div class="buttons">
-          <a href="reviews#feedback" class="main-button-color">
-            <span class="text">{{ $t('text.leave_feedback') }}</span>
-          </a>
-          <a href="rewards" class="main-button-color learn-more__button">
-            <span class="text">{{ $t('text.learn_more') }}</span>
-          </a>
+          <NuxtLink :to="localePath('/reviews')" class="main-button primary">
+            <span class="text">{{ $t('button.leave_feedback') }}</span>
+          </NuxtLink>
+          <NuxtLink :to="localePath('/rewards')" class="main-button transparent">
+            <span class="text">{{ $t('button.learn_more') }}</span>
+          </NuxtLink>
         </div>
       </div>
 
@@ -53,8 +72,9 @@ export default {
         :values="reviews"
         target-component-name="reviewHomeCard"
         target-data-name="review"
-        :all-items-label="$t('text.read_all_reviews')"
+        :all-items-label="$t('button.read_all_reviews')"
         all-items-link="reviews"
+        class="slider"
       >
       </simple-slider>
       

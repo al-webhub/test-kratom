@@ -5,6 +5,16 @@ import wallet_img from 'assets/svg-icons/promo/wallet.svg';
 import diamond_img from 'assets/svg-icons/promo/diamond.svg';
 
 export default {
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    }) 
+
+    return {
+      t
+    }
+  },
+
   data() {
     return {
       
@@ -16,29 +26,29 @@ export default {
       return [
         {
           id: 1,
-          title: this.$t('text.Consultation'),
-          text: this.$t('text.Our_advantages_1'),
+          title: this.t('Consultation'),
+          text: this.t('Our_advantages_1'),
           image: call_img,
           link: '/our-advantages'
         },
         {
           id: 2,
-          title: this.$t('text.Fast_delivery'),
-          text: this.$t('text.Our_advantages_2'),
+          title: this.t('Fast_delivery'),
+          text: this.t('Our_advantages_2'),
           image: track_img,
           link: '/our-advantages#delivery'
         },
         {
           id: 3,
-          title: this.$t('text.Return_the_money'),
-          text: this.$t('text.Our_advantages_3'),
+          title: this.t('Return_the_money'),
+          text: this.t('Our_advantages_3'),
           image: wallet_img,
           link: '/our-advantages#return'
         },
         {
           id: 4,
-          title: this.$t('text.Quality'),
-          text: this.$t('text.Our_advantages_4'),
+          title: this.t('Quality'),
+          text: this.t('Our_advantages_4'),
           image: diamond_img,
           link: '/our-advantages#quality'
         }
@@ -50,10 +60,12 @@ export default {
 
 <style src="./our-advantages.scss" lang="sass" scoped />
 
+<i18n src="./messages.json"></i18n>
+
 <template>
   <section class="container">
 
-    <h2 class="main-caption">{{ $t('text.Our_advantages') }}</h2>
+    <h2 class="main-caption">{{ t('Our_advantages') }}</h2>
     
     <ul class="list">
       <li 
@@ -68,7 +80,7 @@ export default {
 
         <div class="content">{{ advantage.text }}</div>
 
-        <simple-more-btn :link="advantage.link"></simple-more-btn>
+        <simple-more-btn :link="advantage.link" class="more-btn"></simple-more-btn>
       </li>
     </ul>
 

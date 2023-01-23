@@ -1,13 +1,11 @@
 <script>
 export default {
   data() {
-    return {
-      comment: ''
-    }
+    return {}
   },
 
   props: {
-    newComment: {
+    modelValue: {
       type: String
     },
 
@@ -16,12 +14,9 @@ export default {
     }
   },
 
-  watch: {
-    comment: {
-      immediate: true,
-      handler(value) {
-        this.$emit('update:newComment', value)
-      }
+  methods: {
+    updateHandler(value) {
+      this.$emit('update:modelValue', value)
     }
   }
 }
@@ -36,8 +31,9 @@ export default {
     
     <!-- textarea -->
     <form-textarea
-      v-model="comment"
-      :placeholder="$t('text.your_reviews')"
+      :model-value="modelValue"
+      @update:modelValue="updateHandler"
+      :placeholder="$t('form.your_review')"
     >
     </form-textarea>
 

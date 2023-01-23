@@ -1,9 +1,14 @@
 <script>
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'}) 
+    return {t}
+  },
+
   data() {
     return {
-      bonusesLeft: 15,
-      bonusesUsed: 10,
+      bonusesUsed: 0,
+      hintIsOpen: false
     }
   },
 
@@ -12,12 +17,25 @@ export default {
       type: Array,
       required: true
     },
+
     user: {
+      type: Object
+    },
+    
+    profile: {
       type: Object
     }
   },
 
   computed: {
+    bonusesLeft() {
+      return this.balance - this.bonusesUsed
+    },
+
+    balance() {
+      console.log(this.profile, this.profile?.balance)
+      return this.profile?.balance?.balance
+    },
 
     total() {
       return this.cart.reduce(
@@ -36,13 +54,24 @@ export default {
   },
 
   methods: {
-    deleteHandler(id) {
-      this.$emit('delete', id)
+    updateBonusHandler(value) {
+      if(this.total - value) 
+        this.bonusesUsed = value
+       
+      this.$emit('update:bonus', this.bonusesUsed)  
+    },
+
+    deleteHandler(product) {
+      this.$emit('delete', product)
     },
 
     bonusesUsedChange(dir){
 
     },
+
+    openHintHandler() {
+      this.hintIsOpen = !this.hintIsOpen
+    }
   }
 }
 </script>
@@ -53,13 +82,13 @@ export default {
   <div class="order__wrapper">
 
       <div class="order__info">
-        <p class="main-caption-l">{{ $t('text.your_order') }}</p>
+        <p class="main-caption-l">{{ $t('title.your_order') }}</p>
         
         <div class="order__info__header">
-          <p class="order__info__name order-position-item">{{ $t('text.item') }}</p>
-          <p class="order__info__name order-position-price">{{ $t('text.price') }}</p>
-          <p class="order__info__name order-position-quantity">{{ $t('text.quantity') }}</p>
-          <p class="order__info__name order-position-subtotal">{{ $t('text.subtotal') }}</p>
+          <p class="order__info__name order-position-item">{{ t('item') }}</p>
+          <p class="order__info__name order-position-price">{{ t('price') }}</p>
+          <p class="order__info__name order-position-quantity">{{ t('quantity') }}</p>
+          <p class="order__info__name order-position-subtotal">{{ t('subtotal') }}</p>
           <p class="order__info__name order-position-last"></p>
         </div>
 
@@ -68,44 +97,45 @@ export default {
             v-for="(product, index) in cart"
             :key="product.id"
             :modification="product"
-            @delete="deleteHandler(product.id)"
+            @delete="deleteHandler(product)"
           >
           </checkout-product-full>
-          <li v-if="!cartLength" style="margin-top: 30px;">{{ $t('text.cart_is_empty') }}</li>
+          <li v-if="!cartLength" style="margin-top: 30px;">{{ $t('messages.cart_is_empty') }}</li>
         </ul>
+
       </div>
 
       <div class="order__info-bar">
         <div class="order__info-bar__wrapper">
-          <p class="caption">{{ $t('text.your_order') }}</p>
+          <p class="caption">{{ $t('title.your_order') }}</p>
           <div class="total__wrapper">
               
             <div class="total__item">
-              <p class="type">{{ $t('text.order_price') }}</p>
+              <p class="type">{{ t('order_price') }}</p>
               <p class="description">usd {{ total }}</p>
             </div>
 
             <div v-if="user" class="bonuses__container">
               <div class="bonuses__wrapper">
-                <p>how much do you <br> want to use?</p>
+                <p v-html="t('how_much')"></p>
               </div>
 
               <div class="bonuses__wrapper">
-                <p class="sub-text">{{ $t('text.your_bonus_balance') }}: <span>USD {{ bonusesLeft }}</span></p>
+                <p class="sub-text">{{ t('your_bonus_balance') }}: <span>USD {{ bonusesLeft.toFixed(2) }}</span></p>
                 
-                <form-amount v-model="bonusesUsed" :max="maxBonusesUsed"></form-amount>
+                <form-amount @update:modelValue="updateBonusHandler" :model-value="bonusesUsed" :min="0" :max="maxBonusesUsed"></form-amount>
 
               </div>
             </div>
 
-            <div class="total-info js-drop-item">
-                <p class="total-info__caption">+{{ $t('text.delivery_cost') }}</p>
-                <button type="button" class="info-button js-drop-button"></button>
-                <div class="info-drop"><p>{{ $t('text.The_Dispatch_takes') }}</p></div>
+            <div :class="{active: hintIsOpen}" class="total-info">
+                <p class="total-info__caption">+{{ t('delivery_cost') }}</p>
+                <button @click="openHintHandler" type="button" class="info-button"></button>
+                <div class="info-drop"><p>{{ $t('delivery.The_Dispatch_takes') }}</p></div>
             </div>
 
             <div class="total__item total__item-general">
-                <p class="type">{{ $t('text.subtotal') }}</p>
+                <p class="type">{{ $t('label.subtotal') }}</p>
                 <p class="description">usd {{ total - bonusesUsed }}</p>
             </div>
 
@@ -113,8 +143,8 @@ export default {
         </div>
 
         <p class="order__info-bar__text">
-          <a href="/contacts">{{ $t('text.Сontact_us') }}</a> 
-          <span>{{ $t('text.have_questions') }}</span>
+          <a href="/contacts">{{ t('Сontact_us') }}</a>&nbsp;
+          <span>{{ t('have_questions') }}</span>
         </p>
       </div>
       
@@ -122,8 +152,35 @@ export default {
         v-if="cartLength"
         class="main-button-color main-button-color-mobile"
       >
-        <span class="text">{{ $t('text.checkout') }}</span>
+        <span class="text">{{ t('checkout') }}</span>
       </button>
 
   </div>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "item" : "item",
+      "price" : "price",
+      "quantity" : "quantity",
+      "order_price" : "order price",
+      "your_bonus_balance" : "your bonus balance",
+      "delivery_cost" : "delivery cost",
+      "Сontact_us" : "Сontact us",
+      "have_questions" : "if you have questions",
+      "how_much" : "how much do you <br> want to use?",
+    },
+    "ru": {
+      "item" : "товар",
+      "price" : "цена",
+      "quantity" : "количество",
+      "order_price" : "стоимость заказа",
+      "your_bonus_balance" : "Ваш бонусный баланс",
+      "delivery_cost" : "стоимость доставки",
+      "Сontact_us" : "Сообщите нам",
+      "have_questions" : "Если у вас есть вопросы",
+      "how_much" : "Сколько вы хотите <br> использовать?",
+    }
+  }
+</i18n>

@@ -1,14 +1,37 @@
 <script>
+import { useAuthStore } from '~/store/auth';
+
 export default {
+  async setup() {
+    const { t } = useI18n({useScope: 'local'}) 
+    const authStore = useAuthStore()
+
+    return {
+      authStore,
+      t
+    }
+  },
+
   data() {
     return {
       isActive: false
     }
   },
 
+  computed: {
+    isActive() {
+      return this.authStore.showLogOut
+    },
+  },
+
   methods: {
     closeHandler() {
-      this.isActive = false
+      this.authStore.close('logOut')
+    },
+
+    logoutHandler() {
+      useLogout()('/')
+      this.closeHandler()
     }
   }
 }
@@ -19,18 +42,29 @@ export default {
 <template>
   <popup-layout-simple :is-active="isActive" @close="closeHandler">
     <template v-slot:title>
-      {{ $t('text.logout') }}
+      {{ $t('title.logout') }}
     </template>
     <template v-slot:content>
-      {{ $t('text.want_to_logout') }}
+      {{ t('want_to_logout') }}
     </template>
     <template v-slot:footer>
-      <button class="button-only-text js-close">
-          <span class="text">{{ $t('text.cancel') }}</span>
+      <button @click="closeHandler" class="button-only-text">
+          <span class="text">{{ $t('button.cancel') }}</span>
       </button>
-      <a href="{{ url('logout') }}" class="main-button main-button-small main-button-profile">
-          <span class="text">{{ $t('text.yes') }}</span>
-      </a> 
+      <button @click="logoutHandler" class="main-button small">
+        <span class="text">{{ $t('button.yes') }}</span>
+      </button> 
     </template>
   </popup-layout-simple>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "want_to_logout" : "Are you sure you want to logout?",
+    },
+    "ru": {
+      "want_to_logout" : "Вы действительно хотите выйти?",
+    }
+  }
+</i18n>

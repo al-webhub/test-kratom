@@ -59,9 +59,9 @@ export default {
     </div>
     
     <!-- //Точки нужно выводить если они кратны 3 -->
-    <a :href="link" class="main-button">
+    <NuxtLink :to="localePath(link)" class="main-button">
       <span class="text">{{ title }}</span>
-    </a>
+    </NuxtLink>
 
     <button @click="nextHandler" class="slider-button next">
       <img src="~assets/svg-icons/arrow.svg" class="icon" />

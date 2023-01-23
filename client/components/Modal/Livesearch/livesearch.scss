@@ -1,0 +1,117 @@
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
+
+.search {
+  position: fixed;
+  top: 50px;
+  width: 100%;
+  height: calc(100vh - 60px);
+  padding: 0 15px;
+  background-color: rgb(0 0 0 / 85%);
+  z-index: 500;
+
+  @include _tablet {
+    top: 70px;
+  }
+
+  &-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin: 70px 0 0 0;
+    left: 50%;
+    width: 100%;
+    max-width: 1000px;
+    height: 60px;
+    padding: 0 30px;
+    transform: translateX(-50%);
+    background: $color-dark-2;
+    box-shadow: rgb(0 0 0 / 25%) 0 4px 8px;
+
+    @include _desktop {
+      margin: 30px 0 0 0;
+    }
+  }
+
+  &-input {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    text-transform: uppercase;
+    background-color: transparent;
+    width: 100%;
+    border: none;
+
+    &::placeholder {
+      color: #828282;
+    }
+  }
+
+  &-button {
+    &:hover {
+      .icon {
+        filter: $filter-color-primary;
+      }
+    }
+  }
+
+  .livesearch {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin: 10px auto 0 auto;
+    padding: 30px;
+    background-color: #333333;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    visibility: hidden;
+    opacity: 0;
+  
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.4s, visibility 0s 0s;
+    }
+  
+    &__list {
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 15px;
+      color: #E0E0E0;
+      text-transform: uppercase;
+    }
+  
+    &__item {
+      margin-bottom: 20px;
+      transition: color .4s;
+  
+      &:last-child {
+        margin-bottom: 0px;
+      }
+    }
+
+    &__link {
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    .old-price {
+      padding-right: 10px;
+      text-decoration: line-through;
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    transition: transform .3s;
+
+    &:hover {
+      transform: rotate(90deg);
+    }
+  }
+}

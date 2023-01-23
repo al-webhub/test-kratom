@@ -35,22 +35,34 @@
   cursor: pointer;
 }
 
-.general-drop .icon-drop {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 4px;
-  transform: rotate(-180deg);
-  transition: transform 0.4s;
+.general-drop {
+  .icon-drop {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      transform: rotate(180deg);
+      transition: transform 0.3s;
+    }
+  }
+
+  &.active {
+    .icon-drop {
+      .icon {
+        transform: rotate(0);
+      }
+    }
+  }
 }
+
 .general-drop.active .general-drop__list {
   visibility: visible;
   opacity: 1;
   transition: visibility 0s 0s, opacity 0.4s;
-}
-.general-drop.active .icon-drop {
-  transform: rotate(0deg);
 }
 .general-drop__list {
   position: absolute;

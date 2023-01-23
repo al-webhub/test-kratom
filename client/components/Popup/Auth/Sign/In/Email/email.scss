@@ -1,13 +1,17 @@
-.form-component {
-  margin-bottom: 20px;
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
+
+.form-component,
+:deep(.form-component) {
+  margin-bottom: 25px;
 
   &:last-child {
     margin-bottom: 0;
   }
 }
-.main-button-color-popup {
+
+.main-button {
   max-width: 100%;
-  height: 39px;
   margin-top: 20px;
 }
 
@@ -18,7 +22,4 @@
   color: #E0E0E0;
   font-size: 12px;
   line-height: 15px;
-}
-.popup__footer__sing-up .button-enter {
-  margin-left: 2px;
 }

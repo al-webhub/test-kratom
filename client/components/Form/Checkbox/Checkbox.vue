@@ -5,7 +5,10 @@ export default {
       type: Boolean,
       default: false
     },
-    label: {
+    value: {
+      type: String
+    },
+    name: {
       type: String
     },
     required: {
@@ -20,6 +23,12 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+
+  methods: {
+    changeHandler(v) {
+      this.$emit('update:modelValue', v.target.value)
+    }
   }
 }
 </script>
@@ -28,10 +37,19 @@ export default {
 
 <template>
   <label class="input__wrapper input__wrapper-checkbox">
-    <input :checked="modelValue" type="checkbox" class="input-checkbox">
+    <input
+      :checked="modelValue === value"
+      :value="value"
+      :name="name"
+      @change="changeHandler"
+      type="checkbox"
+      class="input-checkbox"
+    />
+    
     <span class="custome-checkbox">
       <img src="~assets/svg-icons/check.svg" class="icon"/>
     </span>
-    <p class="text">{{ label }}</p>
+
+    <slot />
   </label>
 </template>

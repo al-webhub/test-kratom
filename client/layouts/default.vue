@@ -10,10 +10,17 @@ export default {
     })
     const title = computed(() => t('layouts.title', { title: t(route.meta.title ?? 'TBD') }))
     
+    
+    const breadcrumbsIsActive = ref(route.meta.breadcrumbsIsActive === undefined? true: route.meta.breadcrumbsIsActive)
+
+    watch(route, async (route) => {
+      breadcrumbsIsActive.value = route.meta.breadcrumbsIsActive === undefined? true: route.meta.breadcrumbsIsActive
+    })
+
     return {
       head,
       title,
-      breadcrumbsIsActive: route.meta.breadcrumbsIsActive
+      breadcrumbsIsActive
     }
   }
 }
@@ -34,7 +41,11 @@ export default {
       <Body>
         <the-header></the-header>
 
-        <the-breadcrumbs v-if="(breadcrumbsIsActive !== false)"></the-breadcrumbs>
+        <transition name="fade-in">
+          <the-breadcrumbs v-if="breadcrumbsIsActive"></the-breadcrumbs>
+        </transition>
+
+        <modal-noty></modal-noty>
 
         <main>
           <slot />

@@ -1,12 +1,15 @@
 <script>
 import { useLikesStore } from '~/store/likes';
+import { useReviewStore } from '~/store/review';
 
 export default {
   setup() {
     const likesStore = useLikesStore()
+    const reviewStore = useReviewStore()
 
     return {
-      likesStore
+      likesStore,
+      reviewStore
     }
   },
 
@@ -37,12 +40,21 @@ export default {
 
   computed: {
     photo: function(){
-      let noAvatar = '/img/photo-log-in.png';
+      const noAvatar = '/images/photo-log-in.png';
       
-      if(this.user)
-        return this.user.usermeta.photo? this.user.usermeta.photo: noAvatar;
-      else
-        return noAvatar;
+      if(this.isIncognito)
+        return '/images/incognito.png'
+
+      console.log(this.review?.owner?.photo)
+
+      return this.review?.owner?.photo? '/server/' + this.review?.owner?.photo: noAvatar
+    },
+
+    name: function() {
+      if(this.isIncognito)
+        return 'Incognito'
+      
+      return this.review?.owner?.fullname
     },
 
     isLiked() {
@@ -52,6 +64,10 @@ export default {
     isDisliked() {
       return this.likesStore.dislikes.includes(this.review.id)
     },
+
+    isIncognito() {
+      return this.review.extras?.method && this.review.extras?.method === 'incognito'
+    }
   },
 
   methods: {
@@ -63,8 +79,25 @@ export default {
       this.isReplyActive = false
     },
     
-    sendReplyHandler() {
+    async sendReplyHandler(comment) {
 
+      const data = {
+        parent_id: this.review.id,
+        text: comment,
+        provider: 'auth'
+      }
+
+      await this.reviewStore.create(data).then((res) => {
+        if(res.data) {
+          useNoty().setNoty(this.$t('noty.add_review'))
+          this.toggleRepliesHandler()
+        }
+        
+        if(res.error)
+          useNoty().setNoty(this.$t('noty.add_review_fail'))
+      })
+
+      //console.log('sendReplyHandler', comment)
     },
     
     toggleRepliesHandler() {
@@ -79,27 +112,6 @@ export default {
       this.likesStore.toggleDislike(this.review.id)
     },
 
-    reply: function(parentId, baseIndex){
-      var component = this;
-      
-      let params = {
-        parent_id: parentId,
-        product_id: this.productId,
-        text: this.comment.text,
-        name: this.user.usermeta.fullname,
-        likes: 0,
-        dislikes: 0,
-        photo: this.photo
-      };
-      
-      this.reviews.data[baseIndex].children.push(params);
-      
-      axios.post('/reviews/reply/create', params).then(function(response) {
-        console.log(response);
-        component.comment.text = '';
-      });
-    },
-
     cancel: function(){
       this.comment.text = '';
     },
@@ -111,13 +123,28 @@ export default {
 
 <template>
 <li class="box">
-    <div :style="{backgroundImage: 'url(' + review.owner.photo + ')'}" :title="review.owner.fullname" class="avatar"></div>
+    <nuxt-img
+      v-if="photo"
+      :src = "photo"
+      :alt = "name"
+      :title = "name"
+      sizes = "mobile:40px"
+      format = "webp"
+      quality = "40"
+      loading = "lazy"
+      class="avatar">
+    >
+    </nuxt-img> 
 
     <div :class="bodyClass" class="body">
 
         <div class="header">
-          <p class="name">{{ review.owner.fullname }}</p>
-          <p class="date">{{ review.created_at }}</p>
+          <p class="name">{{ name }}</p>
+          <div class="rating" v-if="review.rating">
+            <img src="~assets/svg-icons/star.svg" class="icon"/>
+            <span class="rating__value">{{ review.rating }}</span>
+          </div>
+          <p class="date">{{ $d(review.created_at, 'long') }}</p>
         </div>
         
         <div class="content" v-html="review.text">
@@ -148,19 +175,19 @@ export default {
               
               <!-- REPLY BUTTON -->
               <button
-                v-if="(user && isReplyAllowed)"
+                v-if="user && isReplyAllowed"
                 @click="toggleReplyFormHandler"
                 class="controls__button controls__button-reply"
               >
                 <img src="~assets/svg-icons/reply.svg" class="icon" />
-                <span class="text">{{ $t('text.reply') }}</span>
+                <span class="text">{{ $t('button.reply') }}</span>
               </button>
 
             </div>
 
             <!-- REPLY FORM -->
             <review-reply-form
-              v-if="isReplyAllowed"
+              v-if="user && isReplyAllowed"
               :user="user"
               @reply="sendReplyHandler"
               @close="closeReplyHandler"
@@ -182,7 +209,7 @@ export default {
             @click="toggleRepliesHandler"
             class="more-btn"
           >
-            <span class="text">Show {{ review.children.length }} replies</span>
+            <span class="text">{{ $t('button.show_x_replies', {replies: review.children.length}) }}</span>
             <img src="~assets/svg-icons/arrow-simple.svg" class="icon" />
           </button>
 

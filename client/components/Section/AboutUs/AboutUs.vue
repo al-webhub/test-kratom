@@ -1,27 +1,41 @@
 <script>
-
-import type_1_img from 'assets/images/about-us-img-1.png'
-import type_2_img from 'assets/images/about-us-img-2.png'
-import type_3_img from 'assets/images/about-us-img-3.png'
-
 export default {
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    }) 
+
+    return {
+      t
+    }
+  },
+
   computed: {
+    page() {
+      return {
+        h1: this.t('about_our_kratom'),
+        text: this.t('about_our_kratom_1'),
+        types: this.t('Types_of_kratom'),
+        types_desc: this.t('Types_of_kratom_1')
+      }
+    },
+
     kratoms() { 
       return [
         {
           id: 1,
-          title: this.$t('text.Green_strain'),
-          text: this.$t('text.Green_strain_1'),
+          title: this.t('Green_strain'),
+          text: this.t('Green_strain_1'),
           image: '/images/about-us-img-1.png'
         },{
           id: 2,
-          title: this.$t('text.Red_strain'),
-          text: this.$t('text.Red_strain_1'),
+          title: this.t('Red_strain'),
+          text: this.t('Red_strain_1'),
           image: '/images/about-us-img-2.png'
         },{
           id: 3,
-          title: this.$t('text.White_strain'),
-          text: this.$t('text.White_strain_1'),
+          title: this.t('White_strain'),
+          text: this.t('White_strain_1'),
           image: '/images/about-us-img-3.png'
         }
       ]
@@ -32,38 +46,43 @@ export default {
 
 <style src="./about-us.scss" lang="sass" scoped />
 
+<i18n src="./messages.json"></i18n>
+
 <template>
   <section class="wrapper">
       <div class="container">
           
-        <p class="main-caption">{{ $t('text.about_our_kratom') }}</p>
+        <p class="main-caption">{{ page.h1  }}</p>
         
         <div class="row-1">
-          <nuxt-picture
+          <nuxt-img
             src = "/images/about-us-block-img-1.png"
             sizes = "mobile:100vw tablet:360px desktop:580px"
             quality = "25"
             fit="cover"
+            format="webp"
             class="row-1-img cover"
           >
-          </nuxt-picture>
+          </nuxt-img>
           
           <div class="row-1-text">
             <span class="general-decor-elem"></span>
+            
             <div class="wrapper">
-                <p>{{ $t('text.about_our_kratom_1') }}</p>
+              <p>{{ page.text }}</p>
             </div>
-            <a href="about_us" class="main-button">
-                <span class="text">{{ $t('text.learn_more') }}</span>
-            </a>
+            
+            <NuxtLink :to="localePath('/about_us')" class="main-button">
+                <span class="text">{{ $t('button.learn_more') }}</span>
+            </NuxtLink>
           </div>
         </div>
 
         <div class="row-2">
             
-          <h2 class="main-caption-s">{{ $t('text.Types_of_kratom') }}</h2>
+          <h2 class="main-caption-s">{{ page.types }}</h2>
 
-          <p class="info">{{ $t('text.Types_of_kratom_1') }}</p>
+          <p class="info">{{ page.types_desc }}</p>
 
           <ul class="row-2__list">
               
@@ -73,14 +92,14 @@ export default {
                 class="row-2__item"
               >
                   <div class="img">
-                    <nuxt-picture
+                    <nuxt-img
                       :src = "type.image"
                       sizes = "mobile:100px"
-                      quality = "40"
+                      quality = "5"
                       loading = "lazy"
                       :alt="type.title"
                     >
-                    </nuxt-picture> 
+                    </nuxt-img> 
                   </div>
                   <h3 class="main-caption-xs">{{ type.title }}</h3>
                   <p class="info">{{ type.text  }}</p>

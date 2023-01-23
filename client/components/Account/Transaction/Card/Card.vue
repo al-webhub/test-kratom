@@ -27,7 +27,7 @@ export default {
     <li class="referral-history__item referral-history-position-data">
       <div class="main-wrapper">
         <p class="main-type">{{ $t('text.Transaction_date') }}</p>
-        <p class="text">{{ transaction.created_at }}</p>
+        <p class="text">{{ $d(transaction.created_at, 'long') }}</p>
       </div>
     </li>
     <li class="referral-history__item referral-history-position-descrip">
@@ -40,20 +40,20 @@ export default {
       </div>
     </li>
     <li class="referral-history__item referral-history-position-amount">
-      <p class="text" style="text-transform: uppercase">{{ transaction.is_completed? 'done': 'pending' }}</p>
+      <p class="text" style="text-transform: uppercase">{{ transaction.status }}</p>
       <div class="referral-history__sub">
         <div class="wrapper">
           <p class="type">{{ $t('text.Status') }}</p>
-          <p class="description">{{ transaction.is_completed }}</p>
+          <p class="description">{{ transaction.status }}</p>
         </div>
       </div>
     </li>
     <li class="referral-history__item referral-history-position-amount">
-      <p class="text">{{ transaction.change }}</p>
+      <p class="text">{{ transaction.value }}</p>
       <div class="referral-history__sub">
         <div class="wrapper">
           <p class="type">{{ $t('text.Amount') }}</p>
-          <p class="description">{{ transaction.change }}</p>
+          <p class="description">{{ transaction.value }}</p>
         </div>
       </div>
     </li>

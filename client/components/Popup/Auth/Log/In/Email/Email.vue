@@ -1,42 +1,32 @@
-<!-- <script setup>
-  import { useAuthStore } from '~/store/auth';
-
-  const authStore = useAuthStore()
-
-  async function submit(){
-    await $fetch('/api/login', {
-        method: 'GET'
-    }).then(res => console.log(res));
-  }
-
-</script> -->
 <script>
 import { useAuthStore } from '~/store/auth';
 
 export default {
   async setup() {
+    const { t } = useI18n({useScope: 'local'}) 
     const authStore = useAuthStore()
-    // const {data: resp} = await useFetch('http://localhost:8888/api/login')
-
-    // console.log('RESP', resp)
 
     return {
-      authStore
+      authStore,
+      t
     }
   },
 
   data() {
-    return {
-      email: '',
-      errors: {
-        email: null
-      }
-    }
+    return {}
   },
 
   computed: {
     isActive() {
       return this.authStore.showLogInEmail
+    },
+
+    user() {
+      return this.authStore.getUser
+    },
+
+    errors() {
+      return this.authStore.getErrors
     }
   },
 
@@ -52,22 +42,6 @@ export default {
     openSignInSocialHandler() {
       return this.authStore.open('signInSocial')
     },
-
-    async login() {
-      // const sunc = await fetch('http://localhost:8888/sanctum/csrf-cookie');
-
-      // console.log('sunc', sunc)
-
-      // const response = await fetch('http://localhost:8888/api/login', {
-      //   method: 'GET',
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded'
-      //   },
-      // }).then((resp) => console.log(resp.json()))
-
-      // const answ = await response;
-      // console.log('response', answ);
-    }
   }
 }
 </script>
@@ -77,34 +51,42 @@ export default {
 <template>
   <popup-layout-simple :is-active="isActive" @close="closeHandler">
     <template v-slot:title>
-      {{ $t('text.Log_In') }}
+      {{ $t('title.log_in') }}
     </template>
 
     <template v-slot:content>
       <div class="popup__body">
 
         <form-text
-          v-model="email"
-          :placeholder="$t('text.Email')"
+          v-model="user.email"
+          :placeholder="$t('form.email')"
           :errors="errors.email"
         >
         </form-text>
 
-        <button @click="submit" type="button" class="main-button-color main-button-color-popup">
-            <span class="text">{{ $t('text.next') }}</span>
+        <button @click="openLogInPasswordHandler" type="button" class="main-button primary-color small">
+            <span class="text">{{ $t('button.next') }}</span>
         </button>
-
-        <!-- <button @click="openLogInPasswordHandler" type="button" class="main-button-color main-button-color-popup">
-            <span class="text">{{ $t('text.next') }}</span>
-        </button> -->
       </div>
     </template>
 
     <template v-slot:footer>
       <div class="popup__footer__sing-up">
-        <p>{{ $t('text.Don_have_any_account') }}</p>
-        <button @click="openSignInSocialHandler" type="button" class="button-enter">{{ $t('text.Sign_Up') }}</button>
+        <p>{{ t('Don_have_any_account') }}</p>&nbsp;
+        <button @click="openSignInSocialHandler" type="button" class="a-link">{{ $t('button.sign_up') }}</button>
       </div>
     </template>
+
   </popup-layout-simple>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "Don_have_any_account" : "Don’t have any account?",
+    },
+    "ru": {
+      "Don_have_any_account" : "У вас нет аккаунта?",
+    }
+  }
+</i18n>

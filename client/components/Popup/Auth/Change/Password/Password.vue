@@ -4,9 +4,11 @@ import { useAuthStore } from '~/store/auth';
 export default {
   setup() {
     const authStore = useAuthStore()
+    const { t } = useI18n({useScope: 'local'}) 
 
     return {
-      authStore
+      authStore,
+      t
     }
   },
 
@@ -14,9 +16,6 @@ export default {
     return {
       password: '',
       password_confirmation: '',
-      user: {
-        email: 'flomaster@gmail.com'
-      },
       errors: {
         password: null,
         password_confirmation: null
@@ -25,19 +24,27 @@ export default {
   },
 
   computed: {
+    user() {
+      return this.authStore.getUser
+    },
+
+    errors() {
+      return this.authStore.getErrors
+    },
+
     rules() { 
       return [
         {
           uid: 1,
-          label: this.$t('text.Min_8_characters'),
+          label: this.$t('form.Min_8_characters'),
           validated: this.password.length >= 8
         },{
           uid: 2,
-          label: this.$t('text.1_Letter'),
+          label: this.$t('form.1_Letter'),
           validated: false
         },{
           uid: 3,
-          label: this.$t('text.1_Number'),
+          label: this.$t('form.1_Number'),
           validated: false
         }
       ]
@@ -45,10 +52,19 @@ export default {
 
     isActive() {
       return this.authStore.showChangePassword
+    },
+
+    isDisabled() {
+      return !this.password.length || !this.password_confirmation.length
     }
   },
 
   methods: {
+    backHandler() {
+      this.closeHandler()
+      this.authStore.open('logInPassword')
+    },
+
     closeHandler() {
       return this.authStore.close('changePassword')
     }
@@ -61,12 +77,12 @@ export default {
 <template>
   <popup-layout-simple :is-active="isActive" @close="closeHandler">
     <template v-slot:title>
-      {{ $t('text.set_new_password') }}
+      {{ $t('title.set_new_password') }}
     </template>
     <template v-slot:content>
 
       <div class="popup__header">
-        <p class="email">{{ $t('text.for') }} <span v-if="user">{{ user.email }}</span></p>
+        <p class="email" v-if="user">{{ t('for', {email: user.email}) }}</p>
         <ul class="popup-check__list">
           <li 
             v-for="rule in rules"
@@ -86,7 +102,7 @@ export default {
 
         <form-password
           v-model="password"
-          :placeholder="$t('text.New_Password')"
+          :placeholder="$t('form.New_Password')"
           :errors="errors.password"
           class="form-component"
         >
@@ -94,22 +110,32 @@ export default {
 
         <form-password
           v-model="password_confirmation"
-          :placeholder="$t('text.Password')"
+          :placeholder="$t('form.Password')"
           :errors="errors.password_confirmation"
           class="form-component"
         >
         </form-password>
 
-        <button class="main-button-color main-button-color-popup disabled js-pass-button">
-            <span class="text">{{ $t('text.set_new_password') }}</span>
+        <button :class="{disabled: isDisabled}" class="main-button primary small">
+            <span class="text">{{ $t('button.set_new_password') }}</span>
         </button>
       </div>
     </template>
-    <!-- <template v-slot:footer>
-      <div class="popup__footer__navigation">
-        <button type="button" class="button-nav">{{ $t('text.Back') }}</button>
-        <button type="button" class="button-nav">{{ $t('text.Forgot_Password') }}</button>
+    <template v-slot:footer>
+      <div class="footer">
+        <button @click="backHandler" type="button" class="back-btn">{{ $t('button.Back') }}</button>
       </div>
-    </template> -->
+    </template>
   </popup-layout-simple>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "for" : "for {email}",
+    },
+    "ru": {
+      "for" : "для {email}",
+    }
+  }
+</i18n>

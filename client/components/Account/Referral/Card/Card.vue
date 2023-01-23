@@ -13,14 +13,17 @@ export default {
     }
   },
 
-  methods: {
-    totalRefsLvl2(arg) {
-      return 10
+  computed: {
+    totalRefsLvl2() {
+      return this.referral.referrals.length
     },
 
-    totalRefsLvl3(arg) {
-      return 4
+    totalRefsLvl3() {
+      return this.referral.referrals.reduce((carry, user) => carry + user.referrals.length, 0)
     },
+  },
+
+  methods: {
 
     toggleHandler() {
       this.isActive = !this.isActive
@@ -42,11 +45,11 @@ export default {
     </li>
 
     <li class="referral-history__item referral-history-position-2-lvl">
-      <p class="text">{{ totalRefsLvl2(referral) }}</p>
+      <p class="text">{{ totalRefsLvl2 }}</p>
       <div class="referral-history__sub">
         <div class="wrapper">
           <p class="type">{{ $t('text.Referral_partners') }} (2nd lvl)</p>
-          <p class="description">{{ totalRefsLvl2(referral) }}</p>
+          <p class="description">{{ totalRefsLvl2 }}</p>
         </div>
 
         <ul class="referral-history__sub-list">
@@ -62,11 +65,11 @@ export default {
     </li>
 
     <li class="referral-history__item referral-history-position-3-lvl">
-      <p class="text">{{ totalRefsLvl3(referral) }}</p>
+      <p class="text">{{ totalRefsLvl3 }}</p>
       <div class="referral-history__sub">
         <div class="wrapper">
           <p class="type">{{ $t('text.Referral_partners') }} (3rd lvl)</p>
-          <p class="description">{{ totalRefsLvl3(referral) }}</p>
+          <p class="description">{{ totalRefsLvl3 }}</p>
         </div>
         <ul class="referral-history__sub-list">
           <template v-for="ref_lvl_2 in referral.referrals">
@@ -83,17 +86,17 @@ export default {
     </li>
 
     <li class="referral-history__item referral-history-position-data">
-      <p class="text">{{ referral.created_at }}</p>
+      <p class="text">{{ $d(referral.created_at, 'long') }}</p>
       <div class="referral-history__sub">
         <div class="wrapper">
           <p class="type">{{ $t('text.add_date') }}</p>
-          <p class="description">{{ referral.created_at }}</p>
+          <p class="description">{{ $d(referral.created_at, 'long') }}</p>
         </div>
       </div>
     </li>
 
     <li @click="toggleHandler" class="referral-history__item referral-history-position-last">
-      <img src="~assets/svg-icons/arrow-simple.svg"  class="icon toggle-list-btn" />
+      <img v-if="totalRefsLvl2"  src="~assets/svg-icons/arrow-simple.svg"  class="icon toggle-list-btn" />
     </li>
   </ul>
 </template>

@@ -10,6 +10,11 @@ export default {
     isActive: {
       type: Boolean,
       default: false
+    },
+
+    size: {
+      type: String,
+      default: 'small'
     }
   },
 
@@ -24,7 +29,7 @@ export default {
 <style src="./simple.scss" lang="sass" scoped />
 
 <template>
-  <popup-layout-wrapper :is-active="isActive">
+  <popup-layout-wrapper :size="size" :is-active="isActive">
     <button @click="closeHandler" type="button" class="close__popup">
       <img src="~assets/svg-icons/close.svg" class="icon" />
     </button>

@@ -1,10 +1,8 @@
 <script>
-
 export default {
   data() {
     return {
-      isActive: false,
-      content: ''
+      isActive: false
     }
   },
 
@@ -31,20 +29,15 @@ export default {
 
   computed: {
     isPlaceholderActive() {
-      return this.isActive || this.content.length
-    }
-  },
-
-  watch: {
-    content: {
-      handler(value) {
-        this.$emit('update:modelValue', value)
-      },
-      immediate: true
+      return this.isActive || this.modelValue && this.modelValue.length
     }
   },
 
   methods: {
+    updateHandler(value) {
+      this.$emit('update:modelValue', value)
+    },
+
     focusHandler() {
       this.isActive = true
     },
@@ -54,10 +47,6 @@ export default {
     },
 
   },
-
-  mounted() {
-    this.content = this.modelValue
-  }
 }
 </script>
 
@@ -66,16 +55,17 @@ export default {
 <template>
   <div :class="{error: error}" class="input__wrapper">
     
-    <resize-textarea
-      v-model="content"
-      :min-height="30"
+    <form-textarea-resize
+      :model-value="modelValue"
+      @update:modelValue="updateHandler"
+      :min-height="40"
       :max-height="350"
       :rows="1"
-      @focus.native="focusHandler"
-      @blur.native="blurHandler"
+      @focus="focusHandler"
+      @blur="blurHandler"
       class="main-textarea"
     >
-    </resize-textarea>
+    </form-textarea-resize>
 
     <form-placeholder
       v-if="placeholder"

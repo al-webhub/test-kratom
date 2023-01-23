@@ -31,14 +31,14 @@ export const useBannerStore = defineStore('bannerStore', {
         .catch((error) => console.log(error));
     },
 
-    getOne(slug: string|number) {
+    async getOne(slug: string|number) {
       const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.apiBase}/banners/${slug}`
 
-      $fetch(runtimeConfig.public.apiBase + '/banners/' + slug)
-        .then((response) => {
-          this.bannerState = response
-        })
-        .catch((error) => console.log(error));
+      await useApiFetch(url).then((response) => {
+        if(response.data)
+          this.bannerState = response.data
+      })
     },
   },
 })

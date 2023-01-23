@@ -1,108 +1,170 @@
 <script>
-
-definePageMeta({
-  layout: "account",
-});
+import { useProfileStore } from '~/store/profile';
+import { useTransactionStore } from '~/store/transaction';
 
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
+
+    definePageMeta({
+      layout: 'account',
+      middleware: 'auth'
+    })
+
+    useAccount().setTitle(t('title.referral_network'))
+
+    const profileStore = useProfileStore()
+    const transactionStore = useTransactionStore()
+
+    transactionStore.$reset()
+
+    return {
+      profileStore,
+      transactionStore,
+      t
+    }
+  },
+
   data(){
     return {
-      user: {
-        referral_code: 'fdsf32f'
-      },
-      balance: 15,
       currentTab: 'referrals',
-      referrals: {
-        data: [
-          {
-            id: 1,
-            fullname: 'Adam Smith',
-            created_at: '10.10.2022',
-            referrals: [
-              {
-                id: 2,
-                fullname: 'Maria Ko',
-                created_at: '12.10.2022',
-                referrals: null
-              }
-            ]
-          },{
-            id: 2,
-            fullname: 'Vasil Smith',
-            created_at: '10.10.2022',
-            referrals: null
-          }
-        ],
-        current_page: 1,
-        last_page: 2,
-        total: 20
-      },
-      transactions: {
-        data: [
-          {
-            id: 1,
-            created_at: '10.05.2021',
-            description: 'Description',
-            is_comleted: true,
-            change: 10,
-            balance: 100
-          },{
-            id: 2,
-            created_at: '10.05.2021',
-            description: 'Description',
-            is_comleted: true,
-            change: 10,
-            balance: 100
-          }
-        ],
-        current_page: 1,
-        last_page: 2,
-        total: 20
-      }
     }
   },
 
   computed: {
+    
+    referrerCode() {
+      return this.profile?.referrer_code
+    },
+
+    profile() {
+      return this.profileStore.profile  
+    },
+
+    balance() {
+      return this.profile?.balance
+    },
+
+    referrals() {
+      return this.profileStore?.referrals;
+    },
+
+    referralsMeta() {
+      return this.profileStore?.referralsMeta;
+    },
+
+    transactions() {
+      return this.transactionStore?.transactions;
+    },
+
+    transactionsMeta() {
+      return this.transactionStore?.meta;
+    },
+
     tabs() {
       return [
         {
           uid: 'referrals',
-          label: this.$t('text.Friends_Network'),
+          label:  this.t('Friends_Network'),
         },{
           uid: 'transactions',
-          label: this.$t('text.transactions'),
+          label:  this.t('transactions'),
         }
       ]
     },
+
     balances() {
       return [
         {
           uid: 1,
-          title: this.$t('text.Bonuses_earned_total'),
-          amount: 10
+          title: this.t('Bonuses_earned_total'),
+          amount: this.balance?.debit
         },{
           uid: 2,
-          title: this.$t('text.cashback_for_purchases'),
-          amount: 10
+          title:  this.t('cashback_for_purchases'),
+          amount: this.balance?.cashback
         },{
           uid: 3,
-          title: this.$t('text.earned_in_partner'),
-          amount: 10
+          title:  this.t('earned_in_partner'),
+          amount: this.balance?.bonus
         },{
           uid: 4,
-          title: this.$t('text.earned_for_reviews'),
-          amount: 10
+          title:  this.t('earned_for_reviews'),
+          amount: this.balance?.review
         },{
           uid: 5,
-          title: this.$t('text.Your_current_balance'),
-          amount: this.balance
+          title:  this.t('Your_current_balance'),
+          amount: this.balance?.balance
         }
       ]
     },
 
     referralLink() {
-      return '/?ref=' + this.user.referral_code;
+      return '/?ref=' + this.referrerCode;
     }
+  },
+
+  watch: {
+    currentTab: {
+      async handler(value){
+        if(value === 'transactions'){
+          await this.getTransactions()
+        }
+      },
+      immediate: true
+    }
+  },
+
+  methods: {
+    setCrumbs() {
+      useCrumbs().setCrumbs([
+          {
+            name: this.$t('crumbs.home'),
+            link: '/'
+          },{
+            name: this.$t('crumbs.account'),
+            link: '/account'
+          },{
+            name: this.$t('crumbs.referral_network'),
+            link: '/account/referral_network'
+          }
+      ])
+    },
+
+    async getReferrals() {
+      await this.profileStore?.getReferrals()
+    },
+    
+    async loadmoreReferralsHandler() {
+      const params = {
+        page: this.referralsMeta.current_page + 1
+      }
+
+      await this.profileStore?.getReferrals(params)
+    },
+
+    async getTransactions() {
+      const params = {
+        owner_id: 3
+      }
+
+      await this.transactionStore?.getTransactions(params)
+    },
+
+    async loadmoreTransactionsHandler() {
+      const params = {
+        owner_id: 3,
+        page: this.transactionsMeta.current_page + 1
+      }
+
+      await this.transactionStore?.getTransactions(params)
+
+    }
+  },
+
+  async created() {
+    await useAsyncData('referrals', () => this.getReferrals())
+    this.setCrumbs()
   }
 }
 </script>
@@ -110,8 +172,7 @@ export default {
 <style src="assets/scss/pages/account/referral-network.scss" lang="sass" scoped />
 
 <template>
-<div>
-
+  <div>
     <div class="referral-info">
       <!-- HEADER LEFT SIDE -->
       <ul class="referral-info__list">
@@ -127,13 +188,13 @@ export default {
 
       <!-- HEADER RIGHT SIDE -->
       <div class="referral-withdrawal">
-        <button class="main-button-color js-button" :class="{disabled: balance < 10}">
-          <span class="text">{{ $t('text.request_withdrawal') }}</span>
+        <button class="main-button primary" :class="{disabled: balance < 10}">
+          <span class="text">{{ t('request_withdrawal') }}</span>
         </button>
-        <p>{{ $t('text.available') }}:</p>
+        <p>{{ t('available') }}:</p>
         <ul>
-          <li>{{ $t('text.once_a_day') }}</li>
-          <li>{{ $t('text.balance_is_above') }}</li>
+          <li>{{ t('once_a_day') }}</li>
+          <li>{{ t('balance_is_above') }}</li>
         </ul>
       </div>
     </div>
@@ -141,52 +202,81 @@ export default {
 
     <div class="referral-container">
 
-        <p class="profile__info__caption">{{ $t('text.my_referral_network') }}</p>
+        <p class="profile__info__caption">{{ t('my_referral_network') }}</p>
 
         <!-- REFERRAL LINK -->
-        <p class="referral-link-text">{{ $t('text.Copy_your_referral') }}</p>
+        <p class="referral-link-text">{{ t('Copy_your_referral') }}</p>
 
         <div class="referral-link">
-          <form-link v-model="referralLink" placeholder="Referral link"></form-link>
-          <!-- <label class="input__wrapper">
-            <input :value="referralLink" type="text" class="main-input" readonly>
-            <span class="custome-placeholder__wrapper">
-              <span class="custome-placeholder__before"></span>
-              <span class="custome-placeholder__text">
-              </span>
-              <span class="custome-placeholder__after"></span>
-            </span>
-          </label>
-          <button class="copy-referral-link">
-            <span class="icon-copy"></span>
-          </button> -->
+          <form-link v-model="referralLink" :placeholder="$t('form.referral_link')"></form-link>
         </div>
 
         <!-- TABS -->
-        <ul class="general-tabs__list">
-          <li 
-            v-for="tab in tabs"
-            :key="tab.uid"
-            @click="currentTab = tab.uid"
-            :class="{active: currentTab === tab.uid}"
-            class="general-tabs__item"
-          >
-            {{ tab.label }}
-          </li>
-        </ul>
+        <simple-tabs
+          v-model="currentTab"
+          :values="tabs"
+          index="uid"
+          value="label"
+        >
+        </simple-tabs>
 
         <account-referral-table
           v-if="currentTab == 'referrals'"
           :referrals="referrals"
+          :meta="referralsMeta"
+          @loadmore="loadmoreReferralsHandler"
         >
         </account-referral-table>
 
         <account-transaction-table
           v-if="currentTab == 'transactions'"
           :transactions="transactions"
+          :meta="transactionsMeta"
+          @loadmore="loadmoreTransactionsHandler"
         >
         </account-transaction-table>
 
     </div>
-</div>
+  </div>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "Bonuses_earned_total" : "Bonuses earned total",
+      "cashback_for_purchases" : "cashback for purchases",
+      "earned_in_partner" : "earned in partner program",
+      "earned_for_reviews" : "earned for reviews",
+      "Your_current_balance" : "Your current balance",
+      "request_withdrawal" : "request withdrawal",
+      "available" : "available",
+      "once_a_day" : "once a day",
+      "balance_is_above" : "balance is above 10$",
+      "my_referral_network" : "my referral network",
+      "Copy_your_referral" : "Copy your referral link and send it to your friends to start build the network!",
+      "Friends_Network" : "Friends Network",
+      "transactions" : "transactions",
+      "My_referral" : "My referral",
+      "Referral_partners" : "Referral’s partners",
+      "add_date" : "add date",
+    },
+    "ru": {
+      "Bonuses_earned_total" : "Всего заработано бонусов",
+      "cashback_for_purchases" : "Кэшбек за покупки",
+      "earned_in_partner" : "Заработано в партнерке",
+      "earned_for_reviews" : "Заработано за отзывы",
+      "Your_current_balance" : "Ваш текущий баланс",
+      "request_withdrawal" : "Вывод средств",
+      "available" : "доступно",
+      "once_a_day" : "один раз в день",
+      "balance_is_above" : "баланс выше 10$",
+      "my_referral_network" : "моя реферальная сеть",
+      "Copy_your_referral" : "Скопируйте свою реферальную ссылку и отправьте ее своим друзьям, чтобы начать строить сеть!",
+      "Friends_Network" : "Сеть друзей",
+      "transactions" : "Транзакции",
+      "My_referral" : "Мой реферал",
+      "Referral_partners" : "Партнеры реферала",
+      "add_date" : "дата добавления",
+    }
+  }
+</i18n>

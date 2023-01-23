@@ -22,10 +22,8 @@
 .about-us-page__main-img {
   width: 322px;
   height: 355px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   margin-right: 50px;
+  object-fit: cover;
 }
 .about-us-page__content {
   max-width: 520px;
@@ -74,9 +72,7 @@
 .about-us-page__img-group .img {
   height: 158px;
   margin-bottom: 50px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  object-fit: cover;
 }
 .about-us-page__img-group .img:last-child {
   margin-bottom: 0px;
@@ -128,6 +124,7 @@
     width: calc(50% - 10px);
     height: 160px;
     margin-bottom: 20px;
+    object-fit: cover;
   }
   .about-us-page__img-group:not(.about-us-page__img-group-tablet) {
     display: none;
@@ -166,6 +163,7 @@
   }
   .about-us-page__img-group .img {
     width: 100%;
+    object-fit: cover;
   }
   /* //About us */
 }

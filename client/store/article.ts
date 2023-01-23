@@ -24,26 +24,32 @@ export const useArticleStore = defineStore('articleStore', {
 
   actions: {
 
-    getAll(query: string) {
+    async getAll(query: string, refresh: boolean = true) {
       const runtimeConfig = useRuntimeConfig()
       const params = query? '?' + new URLSearchParams(query).toString(): '';
+      const url = `${runtimeConfig.public.apiBase}/articles${params}`
 
-      $fetch(runtimeConfig.public.apiBase + '/articles' + params)
-        .then(({ data, meta }) => {
+      await useApiFetch(url).then(({
+        data: {data, meta}
+      }) => {
+        if(refresh)
+          this.allState.data = data
+        else
           this.allState.data = this.allState.data.concat(data)
-          this.allState.meta = meta
-        })
-        .catch((error) => console.log(error));
+
+        this.allState.meta = meta
+      })
     },
 
-    getOne(slug: string) {
+    async getOne(slug: string) {
       const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.apiBase}/articles/${slug}`
+      const context = this
 
-      $fetch(runtimeConfig.public.apiBase + '/articles/' + slug)
-        .then((data) => {
-          this.articleState = data
-        })
-        .catch((error) => console.log(error));
+      return await useApiFetch(url).then(({data}) => {
+        if(data)
+          context.articleState = data
+      })
     },
   },
 })

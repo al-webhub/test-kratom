@@ -8,13 +8,18 @@
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: flex-start;
+
+  .input__wrapper,
+  :deep(.input__wrapper){
+    width: calc(50% - 10px);
+  }
 }
-.profile__form__body .input__wrapper {
-  width: calc(50% - 10px);
-}
+
+
 .profile__form__body .input__wrapper.input__wrapper100 {
   width: 100%;
 }
+
 
 .profile__form__footer {
   display: flex;

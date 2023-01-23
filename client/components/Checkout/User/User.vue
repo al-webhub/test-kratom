@@ -1,27 +1,32 @@
 <script>
+import { useAuthStore } from '~/store/auth';
+
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'}) 
+    const authStore = useAuthStore()
+
+    return {
+      authStore,
+      t
+    }
+  },
+
   data() {
     return {
-      tabs: ['guest', 'login', 'register'],
       currentTab: 0,
-      errors: {
-        firstname: {
-          message: 'Error'
-        },
-        lastname: null,
-        communication: null,
-        communication_number: null,
-        email: null,
-        password: null,
-      },
+
       new_user: {
         firstname: '',
         lastname: '',
         communication: null,
         communication_number: '',
       },
+
       login: null,
+      
       password: null,
+      
       communications: [
         'Viber',
         'Telegram'
@@ -30,14 +35,50 @@ export default {
   },
 
   props: {
-    user: {
-      type: Object,
-      default: false
-    },
+
     order: {
+      type: Object
+    },
+
+    errors: {
       type: Object
     }
   },
+
+  computed: {
+    tabs() {
+      if(this.isAuth)
+        return ['login']
+      else
+        return ['guest', 'login', 'register']
+    },
+
+    isAuth() {
+      return this.authStore.isAuth
+    },
+
+    user() {
+      return this.authStore?.getUser
+    },
+
+    errors() {
+      return this.authStore.getErrors
+    }
+  },
+
+  methods: {
+    async loginHandler() {
+      useLogin()()
+    },
+
+    async registerHandler() {
+      useRegister()()
+    },
+
+    async logoutHandler() {
+      useLogout()()
+    }
+  }
 }
 </script>
 
@@ -52,29 +93,29 @@ export default {
 
       <div class="checkout__item__header">
         <p class="calc">1/3</p>
-        <p class="caption">{{ $t('text.information') }}</p>
+        <p class="caption">{{ t('information') }}</p>
       </div>
 
       <div class="checkout__item__body">
-        <p class="checkout-caption checkout-caption-information">{{ $t('text.Register_for_quicker') }}</p>
-        <p class="text">{{ $t('text.All_registered_users') }}</p>
+        <p class="checkout-caption checkout-caption-information">{{ t('Register_for_quicker') }}</p>
+        <p class="text">{{ t('All_registered_users') }}</p>
       </div>
 
       <simple-tabs
-        v-model:activeTab="currentTab"
+        v-model:modelValue="currentTab"
         :values="tabs"
-        class="general-tabs__list"
+        class="user-tabs"
       >
       </simple-tabs>
 
 
       <!-- GUEST TAB -->
-      <div class="checkout_form__wrapper" v-if="currentTab === 0">
+      <div class="checkout_form__wrapper" v-if="currentTab === 0 && !isAuth">
         
         <form-text
           v-model="order.user.firstname"
-          :placeholder="$t('text.First_name')"
-          :error="errors.firstname"
+          :placeholder="$t('form.first_name')"
+          :error="errors?.user?.firstname"
           required
           class="form-component"
         >
@@ -82,147 +123,163 @@ export default {
 
         <form-text
           v-model="order.user.lastname"
-          :placeholder="$t('text.Last_name')"
-          :error="errors.lastname"
+          :placeholder="$t('form.Last_name')"
+          :error="errors?.user?.lastname"
           class="form-component"
         >
         </form-text>
 
-        <form-select
-          v-model="order.user.communication"
-          :values="communications"
-          :placeholder="$t('text.Preferred_communication')"
-          :error="errors.communication"
-          class="form-component"
-        >
-        </form-select>
-
-        <form-text
-          v-model="order.user.communication_number"
-          :placeholder="$t('text.account')"
-          :error="errors.communication_number"
-          required
-          :is-disabled="!order.user.communication"
-          class="form-component"
-        >
-        </form-text>
-
-        <div class="chckout__item__shipping-info" style="margin-top:0">
-          <p>{{ $t('text.your_telephone_number') }}</p>
-        </div>
+        <form-p-c
+          :user="order.user"
+          :errors="[]"
+        ></form-p-c>
       </div>
       
       <!-- LOGIN TAB -->
-      <div class="checkout_form__wrapper" v-else-if="currentTab === 1">
-        <div v-if="user" class="checkout-user">
-          <div class="checkout-user__container">
-            <div :style="{backgroundImage: 'url(' + './img/photo-log-in.png' + ')'}" class="checkout-user__img"></div>
-            <p class="checkout-user__name">{{ user.usermeta.firstname }}</p>
-            <p class="checkout-user__active"><span class="icon-active"></span></p>
+      <div class="checkout_form__wrapper" v-else-if="currentTab === 1 || isAuth">
+        
+        <template v-if="isAuth">
+          <div class="checkout-user">
+            
+            <div class="checkout-user__container">
+              <div :style="{backgroundImage: 'url(' + user.photo + ')'}" class="checkout-user__img"></div>
+              <p class="checkout-user__name">{{ user.fullname }}</p>
+              <p class="checkout-user__active">
+                <img src="~assets/svg-icons/check.svg" class="icon icon-active" />
+              </p>
+            </div>
+
+            <button @click="logoutHandler" type="button" class="checkout-user__logout">
+              <span class="text">{{ $t('button.logout') }}</span>
+            </button>
+
           </div>
-          <button type="button" class="checkout-user__logout">
-            <span class="text">{{ $t('text.logout') }}</span>
-          </button>
-        </div>
+        </template>
 
         <template v-else>
 
           <form-text
-            v-model="order.user.email"
+            v-model="user.email"
             placeholder="Email"
-            :error="errors.email"
+            :error="errors?.user?.email"
             required
             class="form-component"
           >
           </form-text>
 
           <form-password
-            v-model="password"
-            :placeholder="$t('text.Password')"
-            :error="errors.password"
+            v-model="user.password"
+            :placeholder="$t('form.Password')"
+            :error="errors?.user?.password"
             required
             class="form-component"
           >
           </form-password>
 
-          <button type="button" class="button-nav">{{ $t('text.Forgot_Password') }}</button>
+          <button type="button" class="button-nav">{{ $t('button.Forgot_Password') }}</button>
 
-          <button type="button" class="main-button-color">
-            <span class="text">{{ $t('text.Log_In') }}</span>
+          <button @click="loginHandler" type="button" class="main-button primary">
+            <span class="text">{{ $t('button.Log_In') }}</span>
           </button>
 
         </template>
       </div>
       
       <!-- REGISTER TAB -->
-      <div class="checkout_form__wrapper" v-else-if="currentTab === 2">
+      <div class="checkout_form__wrapper" v-else-if="currentTab === 2 && !isAuth">
 
         <form-text
-          v-model="order.user.firstname"
-          :placeholder="$t('text.First_name')"
-          :error="errors.firstname"
+          v-model="user.firstname"
+          :placeholder="$t('form.first_name')"
+          :error="errors?.firstname"
           required
           class="form-component"
         >
         </form-text>
 
         <form-text
-          v-model="order.user.lastname"
-          :placeholder="$t('text.Last_name')"
-          :error="errors.lastname"
+          v-model="user.lastname"
+          :placeholder="$t('form.Last_name')"
+          :error="errors?.lastname"
           class="form-component"
         >
         </form-text>
 
 
         <form-text
-          v-model="order.user.email"
+          v-model="user.email"
           placeholder="Email"
-          :error="errors.email"
+          :error="errors?.email"
           required
           class="form-component"
         >
         </form-text>
 
         <form-password
-          v-model="password"
-          :placeholder="$t('text.Password')"
-          :error="errors.password"
+          v-model="user.password"
+          :placeholder="$t('form.Password')"
+          :error="errors?.password"
+          required
+          class="form-component"
+        >
+        </form-password>
+
+        <form-password
+          v-model="user.password_confirmation"
+          :placeholder="$t('form.Confirm_Password')"
+          :error="errors?.password_confirmation"
           required
           class="form-component"
         >
         </form-password>
 
         <form-select
-          v-model="order.user.communication"
+          v-model="user.communication"
           :values="communications"
-          :placeholder="$t('text.Preferred_communication')"
-          :error="errors.communication"
+          :placeholder="$t('form.Preferred_communication')"
+          :error="errors?.user?.communication"
           class="form-component"
         >
         </form-select>
 
         <form-text
-          v-model="order.user.communication_number"
-          :placeholder="$t('text.account')"
-          :error="errors.communication_number"
+          v-model="user.communication_number"
+          :placeholder="$t('form.account')"
+          :error="errors?.user?.communication_number"
           required
           :is-disabled="order.user.communication"
           class="form-component"
         >
         </form-text>
           
-        <button class="main-button-color">
-          <span class="text">{{ $t('text.sign_up') }}</span>
+        <button @click="registerHandler" class="main-button primary">
+          <span class="text">{{ $t('button.sign_up') }}</span>
         </button>
 
         <div class="popup__footer">
           <div class="popup__footer__sing-up">
-            <p>{{ $t('text.Already_have_account') }}</p>
-            <button type="button" class="button-enter js-button" data-target="log-in">{{ $t('text.Log_In') }}</button>
+            <p>{{ t('Already_have_account') }}</p>
+            <button type="button" class="button-enter js-button" data-target="log-in">{{ $t('button.Log_In') }}</button>
           </div>
         </div>
 
       </div>
   </li>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "Already_have_account": "Already have account?",
+      "information" : "information",
+      "Register_for_quicker" : "Register for quicker orders and get a bonus",
+      "All_registered_users" : "All registered users get the compensation for their orders. The compensation is equal to 1% of the order amount. It is saved in your personal cabinet and may be spent on any goods in our e-shop at any time;",
+    },
+    "ru": {
+      "Already_have_account": "Уже есть аккаунт?",
+      "information" : "информация",
+      "Register_for_quicker" : "Зарегистрируйтесь, чтобы делать заказы быстрее и получать бонусы",
+      "All_registered_users" : "Все зарегистрированные пользователи получают вознаграждение за свои заказы. Компенсация составляет 1% от суммы заказа. Он сохраняется в вашем личном кабинете и может быть потрачен на любые товары в нашем интернет-магазине в любое время;",
+    }
+  }
+</i18n>

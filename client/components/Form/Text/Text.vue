@@ -18,7 +18,7 @@ export default {
       default: false
     },
     error: {
-      type: Object,
+      type: [Object, Array, String],
       default: false
     },
     isDisabled: {
@@ -34,7 +34,7 @@ export default {
   computed: {
     isActive() {
       return this.onFocus || this.modelValue?.length
-    }
+    },
   },
 
   methods: {
@@ -56,7 +56,7 @@ export default {
 <style src="./text.scss" lang="sass" scoped />
 
 <template>
-  <div :class="{error: error}" class="input__wrapper">
+  <div :class="{error: error, disabled: isDisabled}" class="input__wrapper">
     <input
       :value="modelValue"
       @change="changeHandler"
@@ -72,11 +72,13 @@ export default {
       :is-active="isActive"
       :placeholder="placeholder"
       :is-required="required"
+      :is-disabled="isDisabled"
     >
     </form-placeholder>
 
     <slot name="icon-right"></slot>
+    
+    <form-error :error="error"></form-error>
 
-    <span v-if="error" class="input-error-text">{{ error.message }}</span>
   </div>
 </template>

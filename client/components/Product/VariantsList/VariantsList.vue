@@ -20,13 +20,13 @@ export default {
 <style src="./variants-list.scss" lang="sass" scoped />
 
 <template>
-  <ul class="product__weight-list">
+  <ul class="list">
     <li
       v-for="(value, key) in values"
       :key="value.id"
       @click="changeHandler(value)"
       :class="{active: value.id === modelValue.id}"
-      class="product__weight-item"
+      class="item"
     >
       {{ value.short_name }}
     </li>

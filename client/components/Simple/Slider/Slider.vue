@@ -1,5 +1,6 @@
 <script>
 export default {
+
   setup (props){
     let targetComponent = null
 
@@ -19,10 +20,10 @@ export default {
 
   data() {
     return {
-      items: [],
       arrayLength: 0,
-      cardHeight: 0,
-      startIndex: 0,
+      offset: 0,
+      gap: 30,
+      perPage: 4,
       direction: 'next',
       touch: {
         from: null,
@@ -57,25 +58,45 @@ export default {
   computed: {
     listStyleValue() {
       return {
-        height: this.cardHeight
+        transform: `translateX(${this.offset}px)`
       }
+    },
+
+    slides() {
+      return this.values
+      //return this.values.slice(this.startIndex, 4)
+    },
+
+    cardWidth() {
+      if(this.$refs?.card && this.$refs?.card[0])
+        return this.$refs?.card[0].offsetWidth
+      else
+        return 0
     }
   },
 
   methods: {
     prevHandler(){
-      this.direction = 'prev'
-      let index = this.arrayLength - 1
+      const cardWidth = this.$refs?.card[0].offsetWidth + this.gap
+      const maxWidth = (this.arrayLength - this.perPage) * cardWidth * -1;
 
-      let item = this.items.splice(index, 1)
-      this.items.unshift(item[0])
+      if(this.offset < 0) {
+        this.offset = this.offset + cardWidth
+      }else {
+        this.offset = maxWidth
+      }
     },
 
     nextHandler() {
-      this.direction = 'next'
-      let index = 0
-      let item = this.items.splice(index, 1)
-      this.items.push(item[0])
+      const cardWidth = this.$refs?.card[0].offsetWidth + this.gap
+      const maxWidth = (this.arrayLength - this.perPage) * cardWidth * -1;
+
+      console.log('PREV', this.offset, maxWidth)
+      if(this.offset > maxWidth)
+        this.offset = this.offset - cardWidth
+      else {
+        this.offset = 0
+      }
     },
 
     touchHandler(event) {
@@ -96,68 +117,44 @@ export default {
         this.nextHandler()
       }
     },
-
-    heightHandler(value) {
-      this.cardHeight = value
-    },
   },
 
   mounted() {
     this.startIndex = 0
     this.arrayLength = this.values.length
-    this.items = this.values
   }
 }
 </script>
 
 <style src="./slider.scss" lang="scss" scoped />
 
-<style lang="scss">
-.list-ul{
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-gap: 30px;
-
-  @media (min-width: 768px) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (min-width: 1024px) {
-    display: block;
-  }
-}
-</style>
-
 <template>
-  <div class="list"
-    @touchmove="touchHandler"
-    @touchstart="touchStartHandler"
-    @touchend="touchEndHandler"
-    :style="listStyleValue"
-    :class="initOn"
-  >
-    <TransitionGroup name="list" tag="ul" class="list-ul"  mode="in-out" appear>
-      <li
-        v-for="(item, index) in items"
-        :key="item.id"
-        :class="[{show:  index === startIndex }, direction, 'item-' + index]"
-        class="item"
-        ref="card"
-      >
-        <component :is="targetComponent" :[targetDataName]="item" @height="heightHandler"></component>
-        <!-- <review-home-card :review="review"></review-home-card> -->
-      </li>
-    </TransitionGroup>
-  </div>
+  <div>
+    <div class="list"
+      @touchmove="touchHandler"
+      @touchstart="touchStartHandler"
+      @touchend="touchEndHandler"
+      :class="initOn"
+    >
+      <ul :style="listStyleValue" class="list-ul">
+        <li
+          v-for="(item, index) in slides"
+          :key="item.id"
+          class="item"
+          ref="card"
+        >
+          <component :is="targetComponent" :[targetDataName]="item"></component>
+        </li>
+      </ul>
+    </div>
 
-  <simple-slider-btns
-    :title="allItemsLabel"
-    :items="values.length"
-    :link="allItemsLink"
-    @prev="prevHandler"
-    @next="nextHandler"
-  >
-  </simple-slider-btns>
+    <simple-slider-btns
+      :title="allItemsLabel"
+      :items="values.length"
+      :link="allItemsLink"
+      @prev="prevHandler"
+      @next="nextHandler"
+    >
+    </simple-slider-btns>
+  </div>
 </template>

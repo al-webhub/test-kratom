@@ -1,10 +1,18 @@
 <script>
+import { useAuthStore } from '~/store/auth';
 export default {
+  setup() {
+    const authStore = useAuthStore()
+
+    return {
+      authStore
+    }
+  },
 
   data() {
     return {
       comment: {
-        text: '',
+        text: null,
         extras: {
           method: 'common'
         }
@@ -24,7 +32,13 @@ export default {
   methods: {
     createHandler(method = 'common') {
       this.comment.extras.method = method
-      this.$emit('create', this.comment)
+      this.$emit('create', JSON.parse(JSON.stringify(this.comment)))
+
+      this.comment.text = null
+    },
+
+    loginHandler() {
+      this.authStore.open('signInSocial')
     }
   }
 }
@@ -36,13 +50,13 @@ export default {
   <div>
     <div class="reviews__caption">
       <span class="general-decor-elem"></span>
-      <p>{{ $t('text.feedback_and_earn') }}</p>
+      <p>{{ $t('messages.feedback_and_earn') }}</p>
     </div>
 
     <!-- CONDITIONS INFO 1 -->
     <div class="add-reviews__item">
       <img src="~assets/svg-icons/promo/user-filled.svg" class="icon" />
-      <p>{{ $t('text.first_of_all') }}</p>
+      <p>{{ $t('messages.first_of_all') }}</p>
       
       <template v-if="user">
         <p class="add-reviews__active">
@@ -50,14 +64,14 @@ export default {
         </p>
       </template>
       <template v-else>
-        <button class="button-enter">{{ $t('text.Log_In') }}</button>
+        <button @click="loginHandler" class="button-enter">{{ $t('button.Log_In') }}</button>
       </template>
     </div>
     
     <!-- CONDITIONS INFO 2 -->
     <div class="add-reviews__item">
       <img src="~assets/svg-icons/promo/dollar-filled.svg" class="icon" />
-      <p v-html="$t('text.leave_incognito_for')"></p>
+      <p v-html="$t('messages.leave_incognito_for', {first: '$1', second: '$2'})"></p>
     </div>
 
     <!-- REVIEW FORM -->
@@ -65,18 +79,18 @@ export default {
 
       <!-- COMMENT FORM -->
       <review-input
-        v-model:newComment="comment.text"
+        v-model="comment.text"
         :user="user"
       >
       </review-input>
 
       <!-- COMMENT BUTTONS -->
       <div class="add-reviews__buttons">
-        <button class="main-button main-button-small" @click="createHandler('incognito')">
-          <span class="text">{{ $t('text.post_incognito') }}</span>
+        <button class="main-button primary-color btn" @click="createHandler('incognito')">
+          <span class="text">{{ $t('button.post_incognito') }}</span>
         </button>
-        <button class="main-button main-button-small main-button-confirm" @click="createHandler('common')">
-          <span class="text">{{ $t('text.post') }}</span>
+        <button class="main-button primary btn" @click="createHandler('common')">
+          <span class="text">{{ $t('button.post') }}</span>
         </button>
       </div>
 

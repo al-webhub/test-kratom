@@ -1,58 +1,60 @@
 <script>
 export default {
-  
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
+    return {t}
+  },
+
   data() {
     return {
-      current_language: 'En',
+      paymentsData: null
     }
   },
 
   computed: {
-    menu() {
+    contacts() {
+      const contacts = useContacts()
+
+      return [
+        contacts.address,
+        contacts.email,
+        contacts.phone,
+      ]
+    },
+
+    navs() {
+      const menu = useMenu().menu
+
+      const groups = useProductGroups()
+      const productGroups = groups.reduce((carry, item) => carry.concat(item.items), [])
+
       return [
         {
-          id: 1,
-          link: '/shop',
-          name: this.$t('menu.item_1')
+          name: this.t('products'),
+          items: productGroups
         },{
-          id: 2,
-          link: '/shop/other-products',
-          name: this.$t('menu.item_2')
-        },{
-          id: 3,
-          link: '/rewards',
-          name: this.$t('menu.item_3')
-        },{
-          id: 4,
-          link: '/pay_delivery',
-          name: this.$t('menu.item_4')
-        },{
-          id: 5,
-          link: '/reviews',
-          name: this.$t('menu.item_5')
-        },{
-          id: 6,
-          link: '/guidebook',
-          name: this.$t('menu.item_6')
-        },{
-          id: 7,
-          link: '/about_us',
-          name: this.$t('menu.item_7')
-        },{
-          id: 8,
-          link: '/faq',
-          name: this.$t('menu.item_8')
-        },{
-          id: 9,
-          link: '/contacts',
-          name: this.$t('menu.item_9')
+          name: this.t('info'),
+          items: menu
         }
+        
       ]
     },
 
     year() {
       return new Date().getFullYear()
     }
+  },
+
+  methods: {
+    async getPayments() {
+      return await usePayments().then((res) => {
+        this.paymentsData = res.value
+      })
+    },
+  },
+
+  async created() {
+    await this.getPayments()
   }
 
 }
@@ -63,80 +65,98 @@ export default {
 <template>
   <footer class="footer">
 
-    <div class="footer__wrapper container">
 
-      <div class="footer__wrapper__top">
-          
-        <div class="footer__logo-wrapper">
-          <div class="footer__logo">
-              <img src="~assets/images/logo.svg" alt="Kratom">
-          </div>
-        </div>
+    <!-- BODY -->
+    <div class="body">
+        
+      <img src="~assets/images/logo.svg" alt="Kratom" class="logo">
 
-        <ul class="footer__list">
+      <nav
+        v-for="nav in navs"
+        :key="nav.name"
+        class="nav"
+      >
+        <div class="footer-title">{{ nav.name}}</div>
+        <ul class="nav-list">
           <li
-            v-for="(item, index) in menu"
+            v-for="(item, index) in nav.items"
             :key="item.id"
-            class="footer__item"
+            class="nav-item"
           >
             <NuxtLink
               :to="localePath(item.link)"
-              class="footer__link"
+              class="nav-link"
             >
               {{ item.name }}
             </NuxtLink>
           </li>
         </ul>
-          
-          <!-- <ul class="footer__social-list">
-              <li class="footer__social-item">
-                  <a href="{{ config('settings.fb') }}" class="footer__social__link" target="_blank">
-                      <span class="icon-fb"></span>
-                  </a>
-              </li>
-              <li class="footer__social-item">
-                  <a href="{{ config('settings.inst') }}" class="footer__social__link" target="_blank">
-                      <span class="icon-inst"></span>
-                  </a>
-              </li>
-          </ul> -->
+      </nav>
 
-        <div class="footer__lang js-drop-item">
-          <div class="footer__lang_popup">
-            <!-- @include('includes.languages') -->
-          </div>
-          <div class="footer__lang_link js-drop-button">
-            <div>
-              <span class="icon-globe"></span>
-            </div>
-
-            <div class="footer__lang_name">
-              {{ current_language }}
-            </div>
-
-            <div>
-              <span class="icon-drop"></span>
-            </div>
+      <div class="cp">
+        <div class="contacts">
+          <div class="footer-title">{{ t('contact_us') }}</div>
+          <div v-for="(contact, index) in contacts" :key="index" class="contacts-item">
+            <img :src="contact.icon" class="icon" />
+            <a :href="contact.link" class="contacts-link">{{ contact.text }}</a>
           </div>
         </div>
-
+        <div class="payment">
+          <div class="footer-title">{{ t('payment_options') }}</div>
+          <div class="payment-images">
+            <template
+                v-for="(payment, index) in paymentsData"
+                :key="index"
+            >
+              <nuxt-img
+                :src="payment.image"
+                :alt="payment.name"
+                :title="payment.name"
+                sizes = "mobile:80px"
+                format = "webp"
+                quality = "100"
+                loading = "lazy"
+                class="payment-image">
+              </nuxt-img>
+            </template>
+          </div>
+        </div>
       </div>
+        
+    </div>
 
-      <div class="footer__wrapper__down">
-        <p class="footer__copyright">
-          Copyright © {{ year }}
-        </p>
+    <!-- SUB -->
+    <div class="sub">
+      <p class="sub-copyright">
+        Copyright © {{ year }}
+      </p>
 
-        <NuxtLink :to="localePath('terms')" class="footer__down-link">
-          {{ $t('text.Terms_Conditions') }}
-        </NuxtLink>
+      <NuxtLink :to="localePath('terms')" class="sub-link">
+        {{ $t('title.Terms_Conditions') }}
+      </NuxtLink>
 
-        <NuxtLink :to="localePath('privacy')" class="footer__down-link">
-          {{ $t('text.Privacy_Policy') }}
-        </NuxtLink>
-      </div>
-
+      <NuxtLink :to="localePath('privacy')" class="sub-link">
+        {{ $t('title.Privacy_Policy') }}
+      </NuxtLink>
     </div>
 
   </footer>
 </template>
+
+<i18n>
+  {
+    en: {
+      contact_us: "Contact us",
+      payment_options: "Payment options",
+      products: "Products",
+      info: "Info"
+    },
+
+    ru: {
+      contact_us: "Свяжитесь с нами",
+      payment_options: "Варианты оплаты",
+      products: "Товары",
+      info: "Информация"
+    }
+  }
+</i18n>

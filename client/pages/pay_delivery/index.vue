@@ -2,59 +2,70 @@
 import payDeliveryImg from 'assets/images/pay-delivery.png'
 
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
+
+    return {
+      t
+    }
+  },
+
   data() {
     return {
-      page: {
-        h1: '',
-        title: 'PAY/DELIVERY INFORMATION',
-        payment_info_title: 'PAYMENT',
-        payment_info: `You can pay in any way convenient for you, if this method is not in the proposed options, please contact us.
-
-We would like to inform you at once that there are different delivery ways with the same result – your order will be brought home. You must pay the delivery additionally. As soon as you choose a delivery way, we are going to inform you about its price`,
-        delivery_times_title: 'DELIVERY TIMES',
-        delivery_times: 'If you have the possibility to wait for 2 or 3 weeks, you may choose the cheapest delivery way. It is going to cost about $5-10 (depending on your location).',
-        delivery_method_title: 'DELIVERY METHOD',
-        delivery_method: 'Dispatch takes place from the Czech Republic, the further your delivery address, the more expensive the delivery will cost. We will inform you of the exact details after placing the order'
-
-      },
-      payments: [
-        {
-          id: 1,
-          name: 'KIWI',
-          image: null
-        },{
-          id: 1,
-          name: 'TINKOFF',
-          image: null
-        }
-      ],
-      deliveries: [
-        {
-          id: 1,
-          name: '7 to 28 days',
-          price: 0
-        },{
-          id: 2,
-          name: 'from 3 to 21 days (Europe)',
-          price: 0
-        }
-      ],
-      deliveryTypes: [
-        {
-          id: 1,
-          name: 'Fedex'
-        },{
-          id: 2,
-          name: 'Fedex'
-        }
-      ]
+      paymentsData: null,
+      deliveriesData: null,
     }
   },
 
   computed: {
     payDeliveryBg() {
       return 'url(' + payDeliveryImg + ')'
+    },
+
+    page() {
+      return {
+        h1: this.t('pay_delivery_info'),
+        title: this.t('pay_delivery_info'),
+        payment_info_title: this.$t('payment.payment'),
+        payment_info: this.$t('payment.info'),
+        delivery_times_title: this.$t('delivery.delivery_time'),
+        delivery_times: this.$t('delivery.delivery_time_info'),
+        delivery_method_title: this.$t('delivery.delivery_method'),
+        delivery_method: this.$t('delivery.The_Dispatch_takes')
+      }
     }
+  },
+
+  methods: {
+    setCrumbs() {
+      useCrumbs().setCrumbs([
+          {
+            name: this.$t('crumbs.home'),
+            link: '/'
+          },{
+            name: this.$t('crumbs.pay_delivery'),
+            link: '/pay_delivery'
+          }
+      ])
+    },
+
+    async getDeliveries() {
+      return await useDeliveries().then((res) => {
+        this.deliveriesData = res.value
+      })
+    },
+
+    async getPayments() {
+      return await usePayments().then((res) => {
+        this.paymentsData = res.value
+      })
+    },
+  },
+
+  async created() {
+    this.setCrumbs()
+    await this.getPayments()
+    await this.getDeliveries()
   }
 
 }
@@ -75,15 +86,15 @@ We would like to inform you at once that there are different delivery ways with 
 
             <li class="pay-delivery__item">
                 <div class="general-decor-caption">
-                    <div :style="{backgroundImage: payDeliveryBg}" class="img js-img-bg"></div>
+                  <img src="~assets/svg-icons/promo/wallet.svg" class="icon" />
                 </div>
 
                 <h2 class="main-caption-l">{{ page.payment_info_title }}</h2>
 
-                <ul class="delivery__list delivery__list-payment">
+                <ul v-if="paymentsData" class="delivery__list delivery__list-payment">
                     <li 
-                      v-for="(payment, index) in payments"
-                      :key="payment.id"
+                      v-for="(payment, index) in paymentsData"
+                      :key="index"
                       class="delivery__item"
                     >
                       <div 
@@ -97,7 +108,7 @@ We would like to inform you at once that there are different delivery ways with 
                     </li>
 
                     <li class="delivery__item">
-                        <p class="text">{{ $t('text.Another_Payment_Method') }}</p>
+                        <p class="text">{{ $t('payment.another') }}</p>
                     </li>
                 </ul>
 
@@ -106,20 +117,19 @@ We would like to inform you at once that there are different delivery ways with 
 
             <li class="pay-delivery__item">
                 <div class="general-decor-caption">
-                    <div :style="{backgroundImage: payDeliveryBg}" class="img delivery-times-img js-img-bg"></div>
+                  <img src="~assets/svg-icons/promo/clock.svg" class="icon" />
                 </div>
 
                 <h2 class="main-caption-l">{{ page.delivery_times_title }}</h2>
                 
-                <ul class="delivery__list delivery__list-option">
+                <ul v-if="deliveriesData && deliveriesData.times" class="delivery__list delivery__list-option">
                   <li
-                    v-for="(delivery, index) in deliveries"
-                    :key="delivery.id"
+                    v-for="(delivery, index) in deliveriesData.times"
+                    :key="index"
                     class="delivery__item"
                   >
                       <p>
-                        {{ delivery.name }} 
-                        <span v-if="delivery.price">({{ $t('text.from') }} $ {{ delivery.price }})</span>
+                        {{ delivery }} 
                       </p>
                   </li>
                 </ul>
@@ -129,17 +139,17 @@ We would like to inform you at once that there are different delivery ways with 
 
             <li class="pay-delivery__item">
                 <div class="general-decor-caption">
-                    <div :style="{backgroundImage: payDeliveryBg}" class="img delivery-method-img js-img-bg"></div>
+                  <img src="~assets/svg-icons/promo/track.svg" class="icon" />
                 </div>
 
                 <h2 class="main-caption-l">{{ page.delivery_method_title }}</h2>
-                <ul class="delivery__list delivery__list-deliver">
+                <ul  v-if="deliveriesData && deliveriesData.methods" class="delivery__list delivery__list-deliver">
                   <li
-                    v-for="(delivery, index) in deliveryTypes"
-                    :key="delivery.id"
+                    v-for="(delivery, index) in deliveriesData.methods"
+                    :key="index"
                     class="delivery__item"
                   >
-                    <p>{{ delivery.name }}</p>
+                    <p>{{ delivery }}</p>
                   </li>
                 </ul>
                 <div v-html="page.delivery_method"></div>
@@ -151,3 +161,14 @@ We would like to inform you at once that there are different delivery ways with 
 <section-write-us></section-write-us>
 </div>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "pay_delivery_info": "pay/delivery information",
+    },
+    "ru": {
+      "pay_delivery_info": "Информация об оплате/доставке",
+    }
+  }
+</i18n>

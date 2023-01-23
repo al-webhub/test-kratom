@@ -10,6 +10,11 @@ export default {
       default: 1
     },
 
+    min: {
+      type: Number,
+      default: 1
+    },
+
     max: {
       type: Number,
       default: 999999
@@ -18,7 +23,7 @@ export default {
 
   methods: {
     minusHandler() {
-      if(this.modelValue > 1) {
+      if(this.modelValue > this.min) {
         let value = this.modelValue
         this.$emit('update:modelValue', --value)
       }
@@ -45,7 +50,7 @@ export default {
       <span class="text">-</span>
     </button>
     
-    <input :value="modelValue" @change="updateHandler" :max="max" type="text" class="calc-input">
+    <input :value="modelValue" @change="updateHandler" :max="max" :min="min" type="text" class="calc-input">
 
     <button @click="plusHandler" type="button" class="calc_button">
       <span class="text">+</span>

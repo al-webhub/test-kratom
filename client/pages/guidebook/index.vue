@@ -2,23 +2,28 @@
 import { useArticleStore } from '~/store/article';
 
 export default {
-  setup() {
+  async setup() {
+    const { t, locale } = useI18n({useScope: 'local'}) 
     const articleStore = useArticleStore()
 
-    articleStore.$reset()
+    const query = computed(() => {
+      return {
+        per_page: 12, 
+        lang: locale.value
+      }
+    })
+
+    await useAsyncData('articles', () => articleStore.getAll(query.value, true))
 
     return {
-      articleStore
+      articleStore,
+      query,
+      t
     }
   },
 
   data() {
-    return {
-      page: {
-        h1: 'Guidebook',
-        seo_text: 'SEO TEXT'
-      },
-    }
+    return {}
   },
 
   computed: {
@@ -30,28 +35,38 @@ export default {
       return this.articleStore?.meta;
     },
 
-    lang() {
-      return this.$i18n.locale;
+    page() {
+      return {
+        title: this.t('title'),
+        seo_text: this.t('seo_text')
+      }
     }
   },
 
   methods: {
-    async getArticles(data) {
-      const query = data? data : {
-        per_page: 12, 
-        lang: this.lang
-      };
-
-      await this.articleStore?.getAll(query)
+    setCrumbs() {
+      useCrumbs().setCrumbs([
+          {
+            name: this.$t('crumbs.home'),
+            link: '/'
+          },{
+            name: this.$t('crumbs.guidebook'),
+            link: '/guidebook'
+          }
+      ])
     },
 
     async loadmoreHandler() {
-      await this.getArticles({per_page: 12, lang: this.lang, page: this.meta.current_page + 1})
+      const query = {
+        ...this.query,
+        page: this.meta.current_page + 1
+      }
+      await this.articleStore?.getAll(query, false)
     }
   },
 
   async created() {
-    await useAsyncData('articles', () => this.getArticles())
+    this.setCrumbs()
   }
 }
 </script>
@@ -63,7 +78,7 @@ export default {
     <section class="wrapper">
       <div class="container">
           
-        <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
+        <h1 class="main-caption main-caption-align">{{ page.title }}</h1>
 
         <ul v-if="articles && articles.length" class="article__list">
           <guidebook-card
@@ -75,7 +90,7 @@ export default {
         </ul>
 
         <button class="main-button" @click="loadmoreHandler()" v-if="meta && meta.current_page !== meta.last_page">
-          <span class="text">{{ $t('text.show_more') }}</span>
+          <span class="text">{{ $t('button.show_more') }}</span>
         </button>
         
         <section-seo
@@ -92,3 +107,17 @@ export default {
   </div>
 
 </template>
+
+
+<i18n>
+  {
+    "en": {
+      "title": "Guidebook",
+      "seo_text": "Our unique articles are written by several people. In general, they are our regular customers, who are fond of ethnobotany and chemistry. Some of them are just kratom admirers. The new articles are going to appear on a regular basis. We have a lot of interesting information for you to know. As far as we are not English native speakers, the translation of the articles takes some time. We will do the best for you not just to enjoy the effects of kratom intaking, but also to receive the qualitative information about kratom itself.",
+    },
+    "ru": {
+      "title": "Журнал",
+      "seo_text": "",
+    }
+  }
+</i18n>

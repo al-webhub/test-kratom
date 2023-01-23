@@ -1,4 +1,5 @@
 @import 'assets/scss/global/mixins';
+@import 'assets/scss/global/rich-text';
 
 .wrapper {
   position: relative;
@@ -27,9 +28,6 @@
 .text {
   max-height: 465px;
   margin-top: 30px;
-  font-size: 16px;
-  color: #E0E0E0;
-  line-height: 150%;
   overflow: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -39,19 +37,5 @@
 
   &::-webkit-scrollbar {
     display: none;
-  }
-
-  h4 {
-    font-size: 18px;
-    color: #FFFFFF;
-    margin-bottom: 25px;
-  }
-
-  p {
-    margin-bottom: 25px;
-
-    &:last-child {
-      margin-bottom: 0px;
-    }
   }
 }

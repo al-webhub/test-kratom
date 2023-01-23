@@ -1,32 +1,17 @@
 <script>
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
+
+    return {
+      t
+    }
+  },
+
   data() {
     return {
       selectedDelivery: null,
-      deliveryTimes: [
-        {
-          id: 1,
-          name: 'POST 1',
-          price: 10
-        },{
-          id: 2,
-          name: 'POST 2',
-          price: 7
-        },{
-          id: 3,
-          name: 'POST 3',
-          price: 15
-        }
-      ],
-      deliveryTypes: [
-        {
-          id: 1,
-          name: 'DCH'
-        },{
-          id: 2,
-          name: 'Nova Poshta'
-        }
-      ],
+      deliveriesData: null,
       user: {
         usermeta: {
           addressDetails: {
@@ -61,7 +46,22 @@ export default {
     },
     order: {
       type: Object
+    },
+    errors: {
+      type: Object
     }
+  },
+
+  methods: {
+    async getDeliveries() {
+      return await useDeliveries().then((res) => {
+        this.deliveriesData = res.value
+      })
+    },
+  },
+
+  async created() {
+    await this.getDeliveries()
   }
 }
 </script>
@@ -78,36 +78,35 @@ export default {
       
       <div class="checkout__item__header">
           <p class="calc">2/3</p>
-          <p class="caption">{{ $t('text.shipping') }}</p>
+          <p class="caption">{{ t('shipping') }}</p>
       </div>
 
       <div class="checkout__item__body">
-          <p class="checkout-caption">{{ $t('text.desired_delivery') }}</p>
+          <h6 class="checkout-caption">{{ t('desired_delivery') }}</h6>
           
-          <ul class="delivery__list">
+          <ul v-if="deliveriesData && deliveriesData.times" class="delivery__list fr1">
             <li 
-              v-for="method in deliveryTimes"
-              :key="method.id"
+              v-for="(method, index) in deliveriesData.times"
+              :key="index"
               class="delivery__item"
             >
-              <label class="input__wrapper input__wrapper-radio">
-                <input v-model="order.delivery" :value="method.name" type="radio" class="input-radio" name="delivery">
-                <span class="custome-radio"></span>
+              <form-radio v-model="order.delivery" :value="method" name="delivery">
                 <p class="delivery__label">
-                  {{ method.name }} 
-                  <span class="delivery__price">({{ $t('text.from') }} ${{ method.price }})</span>
+                  {{ method }} 
+                  <!-- <span class="delivery__price">({{ $t('text.from') }} ${{ method.price }})</span> -->
                 </p>
-              </label>
+              </form-radio>
             </li>
           </ul>
 
-          <p class="checkout-caption">{{ $t('text.Shipping_address') }}</p>
+          <h6 class="checkout-caption">{{ t('Shipping_address') }}</h6>
           
           <div class="checkout__item__address">
             <form-select
               v-model="order.address.country"
-              :placeholder="$t('text.Country_Region')"
+              :placeholder="$t('form.Country_Region')"
               :values="countries"
+              :error="errors?.address?.country"
               required
               class="form-component"
             >
@@ -115,7 +114,8 @@ export default {
 
             <form-text
               v-model="order.address.city"
-              :placeholder="$t('text.Town_City')"
+              :placeholder="$t('form.Town_City')"
+              :error="errors?.address?.city"
               required
               class="form-component"
             >
@@ -123,28 +123,32 @@ export default {
 
             <form-text
               v-model="order.address.state"
-              :placeholder="$t('text.State')"
+              :placeholder="$t('form.State')"
+              :error="errors?.address?.state"
               class="form-component"
             >
             </form-text>
 
             <form-text
               v-model="order.address.street"
-              :placeholder="$t('text.Street_Number')"
+              :placeholder="$t('form.Street_Number')"
+              :error="errors?.address?.street"
               class="form-component"
             >
             </form-text>
 
             <form-text
               v-model="order.address.apartment"
-              :placeholder="$t('text.Apartment_house_flat')"
+              :placeholder="$t('form.Apartment_house_flat')"
+              :error="errors?.address?.apartment"
               class="form-component"
             >
             </form-text>
 
             <form-text
               v-model="order.address.zip"
-              :placeholder="$t('text.ZIP')"
+              :placeholder="$t('form.ZIP')"
+              :error="errors?.address?.zip"
               class="form-component"
             >
             </form-text>
@@ -152,26 +156,43 @@ export default {
 
           <!-- FOOTER -->
           <div class="chckout__item__shipping-info">
-            <p class="caption">{{ $t('text.We_deliver') }}:</p>
+            <h6 class="checkout-caption">{{ t('We_deliver') }}:</h6>
             
-            <ul class="delivery__list delivery__list-deliver">
-              <li 
-                v-for="delivery in deliveryTypes"
-                :key="delivery.id"
+            <div v-if="deliveriesData && deliveriesData.methods" class="delivery__list list">
+              <div 
+                v-for="(delivery, index) in deliveriesData.methods"
+                :key="index"
                 class="delivery__item">
-                  <p>{{ delivery.name }}</p>
-              </li>
-            </ul>
+                  <p>{{ delivery }}</p>
+              </div>
+            </div>
 
-            <p>{{ $t('text.The_Dispatch_takes') }}</p>
+            <p>{{ $t('delivery.The_Dispatch_takes') }}</p>
 
             <div class="checkout__item__anonympus">
-              <p class="checkout-caption">{{ $t('text.Anonymous_delivery') }}</p>
-              <p>{{ $t('text.Concerning_safety') }}</p>
-              <p>{{ $t('text.So_you_may') }}</p>
+              <h6 class="checkout-caption">{{ $t('delivery.Anonymous_delivery') }}</h6>
+              <p>{{ $t('delivery.Concerning_safety') }}</p>
+              <p>{{ $t('delivery.So_you_may') }}</p>
             </div>
           </div>
 
       </div>
   </li>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "shipping" : "shipping",
+      "desired_delivery" : "Choose your desired delivery time",
+      "Shipping_address": "Shipping address",
+      "We_deliver" : "We deliver",
+    },
+    "ru": {
+      "shipping" : "Доставка",
+      "desired_delivery" : "Выберите желаемое время доставки",
+      "Shipping_address": "Адреса доставки",
+      "We_deliver" : "Мы доставляем",
+    }
+  }
+</i18n>

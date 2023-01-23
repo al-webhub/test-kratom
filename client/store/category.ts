@@ -13,10 +13,12 @@ export const useCategoryStore = defineStore('categoryStore', {
     },
     categoryState: null as Category | null,
   }),
+  
   getters: {
     all: (state) => state.allState.data,
     category: (state) => state.categoryState,
   },
+
   actions: {
     getAll(query: string) {
       const runtimeConfig = useRuntimeConfig()
@@ -30,8 +32,14 @@ export const useCategoryStore = defineStore('categoryStore', {
         .catch((error) => console.log(error));
     },
 
-    getOne(slug: string) {
+    async getOne(slug: string) {
       const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.apiBase}/categories/${slug}`
+
+      return await useApiFetch(url).then(({data: {data}}) => {
+        if(data)
+          this.categoryState = data
+      })
 
       $fetch(runtimeConfig.public.apiBase + '/categories/' + slug)
         .then(({ data }) => (this.categoryState = data))

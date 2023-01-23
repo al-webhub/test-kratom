@@ -1,0 +1,54 @@
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
+
+.stars {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover {
+    .item {
+      color: $color-secondary;
+
+      .icon {
+        filter: $filter-color-secondary;
+      }
+    }
+  }
+}
+
+.item {
+  width: 100%;
+  padding: 0;
+  text-align: center;
+  font-size: 12px;
+  color: $color-dark-3;
+  cursor: pointer;
+
+  &:hover {
+
+    ~.item {
+      color: $color-dark-3 !important;
+
+      .icon {
+        filter: $filter-color-dark-3 !important;
+      }
+    
+    }
+  }
+
+  &.active {
+    color: $color-secondary;
+
+    .icon {
+      filter: $filter-color-secondary;
+    }
+  }
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  filter: $filter-color-dark-3;
+  transition: none;
+}

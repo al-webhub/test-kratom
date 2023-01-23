@@ -2,7 +2,7 @@
 export default {
   data() {
     return {
-      newComment: ''
+      newComment: null
     }
   },
 
@@ -26,6 +26,8 @@ export default {
   methods: {
     sendHandler() {
       this.$emit('reply', this.newComment)
+      this.newComment = null
+      this.closeHandler()
     },
 
     closeHandler() {
@@ -41,17 +43,17 @@ export default {
   <div class="add-reviews__form">
       
     <review-input
-      v-model:newComment="newComment"
+      v-model="newComment"
       :user="user"
     >
     </review-input>
 
     <div class="buttons">
-      <button @click="closeHandler" type="button" class="button-only-text">
-        <span class="text">{{ $t('text.cancel') }}</span>
+      <button @click="closeHandler" type="button" class="button-only-text btn">
+        <span class="text">{{ $t('button.cancel') }}</span>
       </button>
-      <button @click="sendHandler" class="main-button main-button-small main-button-confirm">
-        <span class="text">{{ $t('text.reply') }}</span>
+      <button @click="sendHandler" class="main-button small primary-color btn">
+        <span class="text">{{ $t('button.reply') }}</span>
       </button>
     </div>
     

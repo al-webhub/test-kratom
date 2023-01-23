@@ -2,6 +2,14 @@
 import bgImage from 'assets/images/question-block-img.png'
 
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
+
+    return {
+      t
+    }
+  },
+
   data() {
     return {}
   },
@@ -21,17 +29,33 @@ export default {
       <div class="subscribe__wrapper container">
           <div class="subscribe__container">
               
-            <h2 class="main-caption">{{ $t('text.Lets_earn_together') }}</h2>
+            <h2 class="main-caption">{{ t('Lets_earn_together') }}</h2>
 
-              <p class="sub">{{ $t('text.Bring_your_friends_to_us') }}</p>
+              <p class="sub">{{ t('Bring_your_friends_to_us') }}</p>
               
-              <a v-if="user" href="transactions" class="main-button-color main-button-color-earn">
-                  <span class="text">{{ $t('text.earn_with_us') }}</span>
+              <a v-if="user" href="transactions" class="main-button primary">
+                  <span class="text">{{ t('earn_with_us') }}</span>
               </a>
-              <button v-else class="main-button-color main-button-color-earn js-button" data-target="registration-social">
-                  <span class="text">{{ $t('text.earn_with_us') }}</span>
+              
+              <button v-else class="main-button primary">
+                  <span class="text">{{ t('earn_with_us') }}</span>
               </button>
           </div>
       </div>
   </section>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "Lets_earn_together" : "Let’s earn together!",
+      "Bring_your_friends_to_us" : "Bring your friends to us",
+      "earn_with_us" : "earn with us",
+    },
+    "ru": {
+      "Lets_earn_together" : "Давайте заработаем вместе!",
+      "Bring_your_friends_to_us" : "Приведите своих друзей к нам",
+      "earn_with_us" : "Начать",
+    }
+  }
+</i18n>

@@ -1,5 +1,17 @@
 <script>
+import { useProductStore } from '~/store/product';
+
 export default {
+  setup() {
+    const productStore = useProductStore()
+    const { t } = useI18n({useScope: 'local'}) 
+
+    return {
+      productStore,
+      t
+    }
+  },
+
   data() {
     return {
       calc: {
@@ -10,50 +22,36 @@ export default {
     }
   },
 
-  props: {
-
-  },
-
   computed: {
     effects() {
       return [
         {
           uid: 'stimulation',
-          title: this.$t('text.stimulation'),
+          title: this.$t('label.stimulation'),
         },
         {
           uid: 'relaxation',
-          title: this.$t('text.relaxation'),
+          title: this.$t('label.relaxation'),
         },
         {
           uid: 'euphoria',
-          title: this.$t('text.euphoria'),
+          title: this.$t('label.euphoria'),
         }
       ]
     }
   },
 
   methods: {
+    searchHandler() {
+      return this.productStore.toggleModal('chooseKratom')
+    },
 
-	  loadCalcItems: function(){
-		  // var component = this;
-		  // component.for_you = [];
-		  
-		  // axios.post('/catalog/calcRequest', this.calc).then(response => {
-			//   console.log(response);
-			  
-			//   response.data.forEach(function(item){
-			// 	  component.for_you.push(item);
-			//   });
-		  // });
-	  },
-
-  	calcMinus: function(param){
+  	calcMinus (param){
 	  	if(this.calc[param] > 0)
 	  		this.calc[param] -= 0.5;
   	},
 
-  	calcPlus: function(param){
+  	calcPlus (param){
 	  	if(this.calc[param] < 5)
 	  		this.calc[param] += 0.5;
   	}
@@ -69,8 +67,8 @@ export default {
       <div class="wrapper">
           
         <div class="info">
-          <h2 class="main-caption">{{ $t('text.choose_kratom_for_yourself') }}</h2>
-          <span>{{ $t('text.What_would_you_like?') }}</span>
+          <h2 class="main-caption">{{ t('choose_kratom_for_yourself') }}</h2>
+          <span>{{ t('What_would_you_like?') }}</span>
         </div>
 
           <div class="box">
@@ -85,8 +83,8 @@ export default {
                   <simple-five-dots v-model="calc[effect.uid]"></simple-five-dots>
                 </div>
                 
-                <button @click="loadCalcItems()" class="main-button-color">
-                  <span class="text">{{ $t('text.choose_kratom') }}</span>
+                <button @click="searchHandler()" class="main-button primary">
+                  <span class="text">{{ $t('button.choose_kratom') }}</span>
                 </button>
 
               </div>
@@ -125,3 +123,17 @@ export default {
       </div>
   </section>
 </template>
+
+
+<i18n>
+  {
+    "en": {
+      "choose_kratom_for_yourself": "choose kratom for yourself",
+      "What_would_you_like?": "What would you like?",
+    },
+    "ru": {
+      "choose_kratom_for_yourself": "выберите кратом для себя",
+      "What_would_you_like?": "Что вам нравится?",
+    }
+  }
+</i18n>

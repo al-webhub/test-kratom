@@ -20,13 +20,22 @@ export default {
   },
 
   methods: {
+
     updateVariantHandler(value) {
       this.$emit('update:selectedModification', value)
     },
     
-    toCartHandler(arg1, arg2) {
-      this.cartStore.add(this.selectedModification)
+    async toCartHandler() {
+      const {setNoty} = useNoty()
+      
+      await this.cartStore.add(this.selectedModification).then(() => {
+        setNoty(this.$t('noty.product_to_cart', {product: this.selectedModification.name}), 3000)
+      })
     },
+
+    buyHandler() {
+      this.cartStore.toggleBuy1()
+    }
   }
 }
 </script>
@@ -57,8 +66,17 @@ export default {
     >
     </product-sale>
 
-    <button @click="toCartHandler" class="main-button-color btn-item">
-      <span class="text">{{ $t('text.add_to_cart') }}</span>
-    </button>
+    <div class="btn-block">
+      <button @click="toCartHandler" class="main-button primary btn-item">
+        <span class="text">{{ $t('button.add_to_cart') }}</span>
+      </button>
+
+      <button @click="buyHandler" class="main-button primary-color btn-item">
+        <img src="~assets/svg-icons/flash.svg" class="icon" />
+        <span class="text">{{ $t('button.buy-1-click') }}</span>
+      </button>
+    </div>
+
+    <popup-buy-1-click></popup-buy-1-click>
   </div>
 </template>

@@ -7,14 +7,11 @@
     margin: 20px 0px 30px;
   }
 
-  @include _576 {
-    display: none;
-  }
-
   .list {
     display: flex;
     font-size: 14px;
     line-height: 14px;
+    min-height: 14px;
   }
   .item {
     margin-right: 20px;

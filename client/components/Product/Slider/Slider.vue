@@ -14,6 +14,13 @@ export default {
   },
 
   methods: {
+    getImageUrl(src) {
+      if(src)
+        return '/server/' + src
+      else
+        return null
+    },
+
     prevHandler() {
       if(this.showIndex > 0)
         this.showIndex -= 1
@@ -41,18 +48,24 @@ export default {
         v-for="(image, index) in images"
         :key="index"
         :class="{show: index === showIndex}"
-        class="product-page__img-item js-slider-item"
+        class="product-page__img-item"
       >
-        <img
-          :src="image.src"
+        <nuxt-img
+          :src="getImageUrl(image.src)"
           :title="image.title || image.alt || null"
           :alt="image.alt || image.title || null"
-        />
+          sizes = "mobile:100vw tablet:450px desktop:470px"
+          format = "webp"
+          quality = "40"
+          loading = "lazy"
+          class="image"
+        >
+        </nuxt-img>
       </li>
     </ul>
     
     <div
-      v-if="images.length"
+      v-if="images.length > 1"
       class="product-page__img-arrows"
     >
       <button @click="prevHandler" class="nav-button prev">
@@ -63,7 +76,7 @@ export default {
       </button>
     </div>
 
-    <div v-if="images.length" class="dots__list">
+    <div v-if="images.length > 1" class="dots__list">
       <div class="dots__item active js-dot"></div>
       <div
         v-for="index in images.length"

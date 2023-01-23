@@ -22,7 +22,7 @@ export default {
   },
   
   mounted() {
-    this.label = this.text? this.text: this.$t('text.read_more')
+    this.label = this.text? this.text: this.$t('button.read_more')
   }
 }
 </script>

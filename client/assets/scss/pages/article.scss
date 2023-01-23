@@ -1,5 +1,6 @@
 @import 'assets/scss/global/mixins';
 @import 'assets/scss/global/vars';
+@import 'assets/scss/global/rich-text';
 
 .inner {
   position: relative;
@@ -50,55 +51,7 @@
   line-height: 150%;
   color: $color-text;
 
-  & > h6 {
-    font-size: 14px;
-    line-height: 150%;
-    color: $color-text-bright;
-    margin-bottom: 10px;
-  }
-
-  & > ul {
-    margin-bottom: 20px;
-
-    li {
-      position: relative;
-      padding-left: 20px;
-      margin-bottom: 20px;
-
-      &:last-child {
-        margin-bottom: 0px;
-      }
-
-      &::before {
-        content: "";
-        position: absolute;
-        left: 0px;
-        top: 7px;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background-color: $color-text;
-      }
-
-    }
-  }
-
-  & > ol {
-    padding-left: 15px;
-    margin-bottom: 20px;
-  }
-
-  & > h2 {
-    margin-bottom: 20px;
-  }
   
-  & > p {
-    margin-bottom: 20px;
-    
-    &:last-of-type {
-      margin-bottom: 0px;
-    }
-  }
 
   & > .narrow,
   & > p,

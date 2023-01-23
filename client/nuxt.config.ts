@@ -2,12 +2,18 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
+      base: 'http://localhost:8888',
       apiBase: 'http://localhost:8888/api'
     }
   },
 
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' }
+    pageTransition: { name: 'page-tr', mode: 'out-in' },
+    layoutTransition: { name: 'layout-tr', mode: 'out-in' },
+  },
+
+  nitro: {
+    compressPublicAssets: true,
   },
 
   css: [
@@ -15,6 +21,16 @@ export default defineNuxtConfig({
   ],
 
   modules: [
+    [
+      '@nuxtjs/google-fonts',
+      {
+        families: {
+          Montserrat: {
+            wght: [400, 500, 700, 900]
+          },
+        }
+      }
+    ],
     '@nuxtjs/device',
     [
       '@nuxt/image-edge',
@@ -31,6 +47,10 @@ export default defineNuxtConfig({
               format: 'webp',
             }
           }
+        },
+        domains: ['localhost:8888'],
+        alias: {
+          server: 'http://localhost:8888'
         }
       }
     ],
@@ -52,6 +72,7 @@ export default defineNuxtConfig({
         baseUrl: 'https://kratomhelper.com',
         defaultLocale: 'en',
         lazy: true,
+        vueI18nLoader: true,
         langDir: 'lang/',
         locales: [
           {
@@ -71,6 +92,36 @@ export default defineNuxtConfig({
         ],
         vueI18n: {
           fallbackLocale: 'en',
+          datetimeFormats: {
+            en: {
+              short: {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              },
+              long: {
+                year: '2-digit',
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric'
+              }
+            },
+            ru: {
+              short: {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              },
+              long: {
+                year: '2-digit',
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric'
+              }
+            },
+          },
         }
       }
     ]

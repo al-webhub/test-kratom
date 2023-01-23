@@ -1,0 +1,41 @@
+
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
+@import 'assets/scss/global/rich-text';
+
+
+.description-wrapper {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 50px;
+  align-items: flex-start;
+
+  @include _tablet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.see-more {
+  padding:  10px 0 0 0;
+  border-top: 1px solid $color-gray;
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    transition: color .3s;
+
+    &:hover {
+      color: $color-primary;
+
+      .icon {
+        filter: $filter-color-primary;
+      }
+    }
+    
+    .icon {
+      margin-left: 5px;
+      transform: rotate(180deg);
+    }
+  }
+}
+

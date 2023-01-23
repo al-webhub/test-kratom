@@ -1,3 +1,6 @@
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
+
 .bonuses__container {
   margin: 20px 0px;
   padding: 20px 0px 10px;
@@ -25,6 +28,14 @@
   }
 }
 
+
+.total__item {
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: $color-gray-2;
+}
 
 
 

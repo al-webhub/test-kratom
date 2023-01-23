@@ -1,6 +1,15 @@
+@import 'assets/scss/global/mixins';
 
 .checkout__list {
   display: flex;
-  margin-right: -50px;
+  flex-direction: column;
   margin-top: 30px;
+
+  @include _tablet {
+    flex-direction: row;
+  }
+}
+
+.cart__wrapper .main-caption-l {
+  margin-top: 50px;
 }

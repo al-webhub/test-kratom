@@ -1,3 +1,11 @@
 .button-only-text {
-  margin-right: 30px;
+  margin: 0  30px;
+}
+
+.main-button {
+  max-width: 50%;
+}
+
+:deep(.footer) {
+ justify-content: center;
 }

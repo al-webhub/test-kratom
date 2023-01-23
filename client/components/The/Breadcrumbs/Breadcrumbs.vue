@@ -1,10 +1,7 @@
-<script>
-export default {
-  props: {
-    crumbs: Array,
-    required: true
-  }
-}
+<script setup>
+  const crumbs = computed(() => {
+    return useCrumbs()?.items?.value
+  })
 </script>
 
 <style src="./breadcrumbs.scss" lang="sass" scoped />
@@ -13,14 +10,12 @@ export default {
   <section class="breadcrumbs">
     <div class="container">
       <ul class="list">
-        <li class="item">
-          <a href="https://kratomhelper.com" class="breadcrumbs__link">Главная</a>
-        </li>
-        <li class="item">
-          <a href="https://kratomhelper.com/guidebook" class="breadcrumbs__link">Журнал</a>
-        </li>
-        <li class="item">
-          <a href="http://kratom.parabee8.beget.tech" class="breadcrumbs__link">Кратом: способы приёма и общие эффекты</a>
+        <li
+          v-for="(crumb, index) in crumbs"
+          :key="crumb"
+          class="item"
+        >
+          <NuxtLink :to="localePath(crumb.link)" class="breadcrumbs__link">{{ crumb.name }}</NuxtLink>
         </li>
       </ul>
     </div>

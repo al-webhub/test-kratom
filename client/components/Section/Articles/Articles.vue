@@ -1,5 +1,15 @@
 <script>
 export default {
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    }) 
+
+    return {
+      t
+    }
+  },
+  
   data() {
     return {}
   },
@@ -17,7 +27,7 @@ export default {
 
 <template>
   <section class="container">
-    <h2 class="main-caption">{{ $t('text.articles') }}</h2>
+    <h2 class="main-caption">{{ t('articles') }}</h2>
       
     <ul class="list">
         <guidebook-card
@@ -28,8 +38,19 @@ export default {
         </guidebook-card>
     </ul>
     
-    <a href="guidebook" class="main-button">
-        <span class="text">{{ $t('text.go_guidebook') }}</span>
-    </a>
+    <NuxtLink :to="localePath('/guidebook')" class="main-button">
+      <span class="text">{{ $t('button.go_guidebook') }}</span>
+    </NuxtLink>
   </section>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "articles": "Articles"
+    },
+    "ru": {
+      "articles": "Статьи"
+    }
+  }
+</i18n>

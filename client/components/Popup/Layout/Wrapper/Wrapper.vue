@@ -1,9 +1,30 @@
 <script>
+import { useAuthStore } from '~/store/auth';
+
 export default {
+  async setup() {
+    const authStore = useAuthStore()
+
+    return {
+      authStore
+    }
+  },
+
   props: {
     isActive: {
       type: Boolean,
       default: false
+    },
+
+    size: {
+      type: String,
+      default: 'small'
+    }
+  },
+
+  methods: {
+    closeHandler() {
+      this.authStore.closeAll()
     }
   }
 }
@@ -12,7 +33,9 @@ export default {
 <style src="./wrapper.scss" lang="sass" scoped />
 
 <template>
-  <section :class="{active: isActive}" class="popup popup-logout">
-    <slot />
-  </section>
+  <div @click.self="closeHandler" :class="{active: isActive}" class="popup-wrapper">
+    <section :class="size" class="popup">
+      <slot />
+    </section>
+  </div>
 </template>

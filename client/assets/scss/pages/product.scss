@@ -1,7 +1,8 @@
 @import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
 
 @media screen and (min-width: 1201px) {
-  .product-page__price-wrapper .main-button-color:hover::before {
+  .main-button-color:hover::before {
     transform: rotate(45deg) translate(0px, -120px);
   }
   .popup-noty-cart__button:hover::before {
@@ -16,35 +17,93 @@
   position: relative;
 }
 
+.sup {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  grid-gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+
+  @include _tablet {
+    grid-template-columns: repeat(3, max-content);
+  }
+
+  &-sku {
+    &__label {
+      margin-right: 5px;
+      font-weight: 700;
+    }
+  }
+
+  &-delimiter {
+    @include _tablet {
+      height: 100%;
+      border-right: 1px solid $color-white;
+    }
+  }
+
+  &-rating {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      margin-right: 5px;
+      filter: $filter-color-secondary;
+    }
+
+    &__value {
+      font-weight: 700;
+    }
+  }
+
+  &-reviews {
+    margin-left: 20px;
+    white-space: nowrap;
+    text-decoration: underline;
+    transition: .3s;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
 .header {
   position: relative;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  margin-bottom: 150px;
   margin-top: 20px;
+  margin-bottom: 50px;
 
   @include _tablet {
     margin-bottom: 80px;
   }
   @include _desktop {
     flex-direction: row;
-
+    margin-bottom: 100px;
   }
 }
 
 .meta {
   display: flex;
   flex-direction: column;
-  max-width: 100%;
   width: 100%;
 
-  @include _tablet {
-    max-width: calc(62% - 10px);
+  @include _desktop {
+    margin-left: 40px;
   }
 
-  @include _desktop {
-    max-width: calc(58% - 25px);
+  .in-stock {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $color-primary;
+
+    @include _tablet {
+      margin-bottom: 20px;
+    }
   }
 }
 
@@ -83,47 +142,22 @@
   }
 
   @include _desktop {
-
+    margin-top: 0;
   }
 }
 
 
-.body {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-
-  @include _desktop {
-    flex-direction: row;
-  }
-
-  .tabs {
-    display: flex;
-    margin-bottom: 20px;
-
-    @include _desktop {
-      display: none;
+.tabs {
+  &.large {
+    @include _tablet {
+      font-size: 16px;
     }
   }
 }
 
-
-.product-page__caption {
-  display: none;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #E0E0E0;
-
-  @include _desktop {
-    display: block;
-  }
-  
+.body {
+  padding: 40px 0;
 }
-
 
 
 .description {
@@ -132,10 +166,6 @@
   font-size: 16px;
   line-height: 20px;
   color: #E0E0E0;
-
-  @include _tablet {
-    max-width: calc(42% - 25px);
-  }
 
   &.disabled {
     display: none;
@@ -202,10 +232,6 @@
 .reviews {
   max-width: 100%;
   width: 100%;
-
-  @include _tablet {
-    max-width: calc(58% - 25px);
-  }
 
   &.disabled {
     display: none;

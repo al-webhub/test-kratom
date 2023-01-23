@@ -1,7 +1,8 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+    }
   },
 
   props: {
@@ -23,7 +24,13 @@ export default {
       type: Boolean,
       default: false
     }
-  }
+  },
+  
+  methods: {
+    changeHandler(value) {
+      this.$emit('update:modelValue', value)
+    },
+  },
 }
 </script>
 
@@ -31,7 +38,8 @@ export default {
 
 <template>
   <form-text
-    :modelValue="modelValue"
+    :model-value="modelValue"
+    @update:modelValue="changeHandler"
     :placeholder="placeholder"
     :required="required"
     :error="error"

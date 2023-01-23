@@ -7,7 +7,7 @@ export default {
     const authStore = useAuthStore()
 
     return {
-      authStore
+      authStore,
     }
   },
 
@@ -47,22 +47,22 @@ export default {
 <template>
   <popup-layout-simple :is-active="isActive" @close="closeHandler">
     <template v-slot:title>
-      {{ $t('text.sign_up') }}
+      {{ $t('title.sign_up') }}
     </template>
     <template v-slot:content>
       <a href="'login/google" class="main-button main-button-social-popup">
           <span :style="{backgroundImage: googleImage }" class="google-icon"></span>
-          <span class="text">{{ $t('text.continue_with_google') }}</span>
+          <span class="text">{{ $t('button.continue_with_google') }}</span>
       </a>
       
       <button @click="openSignInEmailHandler" class="main-button main-button-social-popup">
           <img src="~assets/svg-icons/mail.svg" class="icon"/>
-          <span class="text">{{ $t('text.sign_up_with_email') }}</span>
+          <span class="text">{{ $t('button.sign_up_with_email') }}</span>
       </button>
 
     </template>
     <template v-slot:footer>
-      <button @click="openLogInEmailHandler" type="button" class="button-enter">{{ $t('text.Log_In') }}</button>
+      <button @click="openLogInEmailHandler" type="button" class="a-link">{{ $t('button.Log_In') }}</button>
     </template>
   </popup-layout-simple>
 </template>

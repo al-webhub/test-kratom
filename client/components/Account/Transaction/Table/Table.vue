@@ -3,12 +3,15 @@ export default {
   props: {
     transactions: {
       type: Object
+    },
+    meta: {
+      type: Object
     }
   },
 
   methods: {
-    loadmore() {
-      
+    loadmoreHandler() {
+      this.$emit('loadmore')
     }
   }
 }
@@ -25,17 +28,17 @@ export default {
         <p class="referral-history__name referral-history-position-amount">{{ $t('text.Amount') }}</p>
         <p class="referral-history__name referral-history-position-balance">{{ $t('text.Current_balance') }}</p>
     </div>
-    <div class="referral-history__body">
+    <div v-if="transactions && transactions.length" class="referral-history__body">
         <account-transaction-card
-          v-for="transaction in transactions.data"
+          v-for="transaction in transactions"
           :key="transaction.id"
           :transaction="transaction"
         >
         </account-transaction-card>
         
         <div
-          v-if="transactions.last_page != transactions.current_page"
-          @click="loadmore()"
+          v-if="meta.last_page != meta.current_page"
+          @click="loadmoreHandler()"
           style="text-align:center; cursor:pointer;padding:10px"
         >
           {{ $t('text.Load_more') }}
@@ -43,10 +46,10 @@ export default {
         
     </div>
     <div
-      v-if="!transactions.total"
+      v-else
       class="referral-info-body referra-empty"
     >
-      <p>{{ $t('text.have_any_transactions') }}</p>
+      <p>{{ $t('account.have_any_transactions') }}</p>
     </div>
   </div>
 </template>

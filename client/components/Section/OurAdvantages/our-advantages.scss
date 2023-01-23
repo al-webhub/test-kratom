@@ -52,6 +52,8 @@
   border: 1px solid #4F4F4F;
 
   img {
+    width: 30px;
+    height: 30px;
     transform: rotate(45deg);
     filter: $filter-color-green;
   }
@@ -80,4 +82,8 @@
   @include _tablet {
     max-height: 100px;
   }
+}
+
+.more-btn {
+  margin: 0 0 0 auto;
 }

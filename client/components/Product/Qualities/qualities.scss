@@ -1,4 +1,5 @@
 @import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
 
 .box {
   display: grid;
@@ -9,7 +10,8 @@
   margin: 0 auto;
 
   @include _tablet {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: minmax(0, 1fr) 37%;
+    grid-gap: 40px;
     max-width: initial;
   }
 
@@ -18,12 +20,11 @@
   }
 }
 
-.more-btn {
-  grid-row-start: 1;
-
-  @include _desktop {
-    grid-row-start: 2;
-  }
+.line {
+  margin-right: 15px;
+  width: 100%;
+  height: 70%;
+  border-bottom: 1px solid $color-dark-3;
 }
 
 .qualities {
@@ -40,13 +41,21 @@
   @include _desktop {
     grid-row-start: 1;
   }
+
+  &-caption {
+    margin-bottom: 15px;
+    color: $color-gray;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
 }
 
 .item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 
   &:last-child {
     margin-bottom: 0px;

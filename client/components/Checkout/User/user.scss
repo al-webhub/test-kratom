@@ -1,3 +1,8 @@
-.form-component {
-  margin-bottom: 20px;
+.form-component,
+:deep(.form-component) {
+  margin-bottom: 25px;
+}
+
+.user-tabs {
+  margin: 30px 0 30px 0;
 }

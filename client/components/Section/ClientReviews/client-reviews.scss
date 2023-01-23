@@ -1,19 +1,21 @@
 @import 'assets/scss/global/mixins';
 @import 'assets/scss/global/vars';
 
+.slider {
+  margin-top: 50px;
+}
+
 .clients-say {
   position: relative;
 }
 
 .bg-image {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   position: absolute;
   left: 0px;
   top: 45px;
   width: 100%;
   height: 246px;
+  object-fit: cover;
   z-index: -1;
 
   @include _tablet {
@@ -61,11 +63,16 @@
     flex-direction: row;
   }
 
-  .main-button-color {
+  .main-button {
     max-width: 320px;
 
     @include _tablet {
       max-width: 204px;
+      margin-right: 20px;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }

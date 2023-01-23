@@ -1,205 +1,174 @@
-/* Footer */
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
+
+
 .footer {
   position: relative;
-  background-color: #333333;
-  margin-top: auto;
+  padding-top: 40px;
+  background-color: $color-dark-2;
+
+  &-title {
+    margin-bottom: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
 }
-.footer::before {
-  content: "";
-  position: absolute;
-  left: 0px;
-  bottom: 55px;
-  width: 100%;
-  height: 2px;
-  background-color: #4F4F4F;
+
+.body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-gap: 40px;
+  padding: 0 20px 40px 20px;
+
+  @include _tablet {
+    grid-gap: 60px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include _desktop {
+    grid-template-columns: 140px repeat(2, min-content) minmax(0, 1fr);
+    grid-gap: 100px;
+  }
 }
-.footer__wrapper__top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 0px;
-}
-.footer__logo {
+
+.logo {
   max-width: 138px;
   height: 31px;
+  grid-column-start: 1;
+  grid-column-end: 4;
+
+  @include _tablet {
+  }
+
+  @include _desktop {
+    grid-column-start: initial;
+    grid-column-end: initial;
+  }
 }
-.footer__list {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-/*   max-width: 605px; */
-	max-width: 715px;
-  width: 100%;
-  max-height: 70px;
-  color: #E0E0E0;
+
+.nav {
   font-size: 12px;
-  line-height: 15px;
   text-transform: uppercase;
-  margin-bottom: -20px;
+
+  &-list {
+
+  }
+
+  &-item {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &-link {
+    white-space: nowrap;
+    transition: color .3s;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
 }
-.footer__item {
-  margin-right: 60px;
-  margin-bottom: 20px;
-  transition: color 0.4s;
-}
-.footer__social-list {
-	position: relative;
-	z-index: 99;
+
+.sub {
   display: flex;
-}
-.footer__social-item {
-  margin-right: 30px;
-}
-.footer__social-item:last-child {
-  margin-right: 0px;
-}
-.footer__social__link {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #4F4F4F;
-  transition: background-color 0.4s;
-}
-.footer__wrapper__down {
-  display: flex;
-  padding: 20px 0px;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 20px;
   font-size: 12px;
   line-height: 15px;
   text-transform: uppercase;
-  color: #828282;
-}
-.footer__copyright {
-  margin-left: auto;
-  margin-right: -260px;
-}
-.footer__down-link {
-  color: #E0E0E0;
-  transition: color 0.4s;
-}
-.footer__down-link:first-of-type {
-  margin-left: auto;
-  margin-right: 60px;
-}
+  color: $color-gray;
+  border-top: 1px solid $color-dark-3;
 
+  @include _tablet {
+    flex-direction: row;
+  }
 
+  &-copyright {
+    @include _tablet {
+      margin-right: auto;
+    }
+  }
 
-.footer__lang {
-	position: relative;
-	z-index: 1;
-}
-.footer__lang_popup {
-	overflow: hidden;
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	width: 300px;
-	filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.1));
-	border-radius: 20px;
-	background: #333333;
-	opacity: 0;
-  transition: opacity 0.1s, bottom 0.1s;
-}
-.footer__lang.active .footer__lang_popup{
-	opacity: 1;
-	bottom: 36px;
-    transition: opacity 0.2s 0.15s, bottom 0.3s;
-}
+  &-link {
+    display: inline-block;
+    transition: color 0.3s;
 
+    &:hover {
+      color: $color-primary;
+    }
 
-.footer__lang_link .icon-globe {
-	padding-right: 10px;
-	font-size: 16px;
-}
-.footer__lang.active .icon-drop {
-	transform: rotate(0);
-}
-.footer__lang_link .icon-drop {
-	display: block;
-	transform: rotate(180deg);
-	padding:0  10px;
-	font-size: 4px;
-	transition: transform 0.3s;
-}
-.footer__lang_link .icon-drop:before{
-	color: inherit;
-}
-.footer__lang_name {
-	font-weight: normal;
-	font-size: 12px;
-	line-height: 15px;
-	/* identical to box height */
-	
-	text-align: center;
-	text-transform: uppercase;
-}
-
-/* Footer */
-@media screen and (max-width: 1024px) {
-  .footer__wrapper__top {
-    flex-wrap: wrap;
-  }
-  .footer__logo-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 30px;
-  }
-  .footer__list {
-    max-width: 495px;
-  }
-  .footer__item {
-    margin-right: 30px;
-    margin-bottom: 18px;
-  }
-  .footer__wrapper__down {
-    justify-content: space-between;
-  }
-  .footer__copyright {
-    margin: 0px;
-  }
-  .footer__down-link:first-of-type {
-    margin: 0px;
-  }
-  .footer__lang {
-	  width: 100%;
-	  margin-top: 30px; 
-  }
-}
-@media screen and (max-width: 670px) {
-  .footer::before {
-    bottom: 125px;
-  }
-  .footer__list {
-    order: -1;
-    max-height: 185px;
-    max-width: 270px;
-  }
-  .footer__logo-wrapper {
-    justify-content: flex-start;
-    margin: 50px 0px 20px;
-  }
-  .footer__wrapper__down {
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px 0px 55px;
-  }
-  .footer__down-link {
-    order: -1;
-  }
-  .footer__down-link:first-of-type {
-    margin-right: 40px;
-  }
-  .footer__copyright {
-    width: 100%;
-    margin-top: 20px;
-    text-align: center;
-  }
-  .footer__lang_link {
-	  justify-content: flex-start;
+    &:first-of-type {
+      margin: 15px 0;
+      @include _tablet {
+        margin:0 30px 0 0;
+      }
+    }
   }
 }
 
-/* //Footer */
+.cp {
+  grid-column-start: 1;
+  grid-column-end: 4;
+
+  @include _tablet {
+  }
+
+  @include _desktop {
+    justify-self: flex-end;
+    grid-column-start: initial;
+    grid-column-end: initial;
+  }
+}
+
+.contacts {
+  &-item {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .icon {
+      margin-right: 10px;
+      width: 20px;
+      height: 20px;
+      filter: $filter-color-gray;
+    }
+  }
+
+  &-link {
+    font-size: 14px;
+    transition: color .3s;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+.payment {
+  margin-top: 40px;
+
+  &-images {
+    display: grid;
+    grid-template-columns: repeat(3, 65px);
+    grid-gap: 15px;
+
+    @include _tablet {
+      grid-template-columns: repeat(5, 65px);
+    }
+  }
+
+  &-image {
+    width: 65px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 3px;
+  }
+}

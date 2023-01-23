@@ -3,21 +3,7 @@ export default {
   data() {
     return {
       privatePolicy: null,
-      payments: [
-        {
-          id: 1,
-          name: 'Mastercard',
-          image: null
-        },{
-          id: 2,
-          name: 'Kiwi',
-          image: null
-        },{
-          id: 3,
-          name: 'Crypto',
-          image: null
-        }
-      ]
+      paymentsData: null
     }
   },
 
@@ -26,11 +12,10 @@ export default {
       type: Boolean,
       default: false
     },
-    bonuses: {
-      type: Number,
-      default: 10
-    },
     order: {
+      type: Object
+    },
+    errors: {
       type: Object
     }
   },
@@ -38,13 +23,26 @@ export default {
   computed: {
     canConfirm() {
       return this.order.payment && this.privatePolicy
+    },
+    bonuses() {
+      return this.order.bonusesUsed
     }
   },
 
   methods: {
+    async getPayments() {
+      return await usePayments().then((res) => {
+        this.paymentsData = res.value
+      })
+    },
+
     confirmHandler() {
       this.$emit('confirm')
     }
+  },
+
+  async created() {
+    await this.getPayments()
   }
 }
 </script>
@@ -57,64 +55,63 @@ export default {
       
     <div class="checkout__item__header">
       <p class="calc">3/3</p>
-      <p class="caption">{{ $t('text.payment') }}</p>
+      <p class="caption">{{ $t('payment.payment') }}</p>
     </div>
 
     <div class="checkout__item__body">
-      <ul class="delivery__list delivery__list-payment delivery__list-payment-checkout">
+      <ul class="list">
+
         <li
-          v-for="method in payments"
-          :key="method.id"
-          class="delivery__item"
+          v-for="(method, index) in paymentsData"
+          :key="index"
+          class="item"
         >
-          <label class="input__wrapper input__wrapper-radio">
-            <input v-model="order.payment" :value="method.name" type="radio" class="input-radio" name="payment" >
-            <span class="custome-radio"></span>
-            <div :style="{backgroundImage: 'url(' + method.image + ')'}" class="delivery__item__img"></div>
-            <p class="text">{{ method.name }}</p>
-          </label>
+          <form-radio v-model="order.payment" :value="method.name" :key="index" name="payment">
+            <div class="radio-slot">
+              <nuxt-img
+                :src="method.image"
+                sizes = "mobile:90px"
+                format = "webp"
+                quality = "90"
+                loading = "lazy"
+                class="image"
+              >
+              </nuxt-img>
+              <div class="name">{{ method.name }}</div>
+            </div>
+          </form-radio>
         </li>
 
-        <li class="delivery__item">
-          <label class="input__wrapper input__wrapper-radio">
-            <input v-model="order.payment" value="another" type="radio" class="input-radio" name="payment">
-            <span class="custome-radio"></span>
-            <p class="text">{{ $t('text.Another_Payment_Method') }}</p>
-          </label>
+        <li class="item">
+          <form-radio v-model="order.payment" value="another" name="payment">
+            <div class="radio-slot">
+              <p class="name">{{ $t('payment.another') }}</p>
+            </div>
+          </form-radio>
         </li>
+
       </ul>
 
       <template v-if="bonuses">
         <div class="check-bonuse">
-          <p class="type">{{ $t('text.Bonuses_used') }}</p>
+          <p class="type">{{ $t('payment.bonuses_used') }}</p>
           <p class="description">USD {{ bonuses }}</p>
         </div>
-        <button class="check-bonuse__button js-button" data-target="bonuses">{{ $t('text.change_bonus_amount') }}</button>
+        <button class="check-bonuse__button js-button" data-target="bonuses">{{ $t('payment.change_bonus_amount') }}</button>
       </template>
     </div>
 
-    <div class="checkout__item__footer">
-      <div class="checkout__item__policy">
-        <label class="input__wrapper input__wrapper-checkbox">
-          
-          <input v-model="privatePolicy" type="checkbox" class="input-checkbox" required>
-
-          <span class="custome-checkbox">
-            <span class="icon-active"></span>
-          </span>
-
-          <p class="privat-policy-text">
-            {{ $t('text.I_agreed_with') }} 
-            <NuxtLink :to="localePath('/privacy')">{{ $t('text.Privacy_Policy') }}</NuxtLink>
-          </p>
-
-        </label>
-      </div>
+    <div class="footer">
+      <form-checkbox v-model="privatePolicy" value="privatePolicy" class="policy">
+        <p class="privat-policy-text">
+          {{ $t('messages.i_agreed_with') }} 
+          <NuxtLink :to="localePath('/privacy')">{{ $t('title.Privacy_Policy') }}</NuxtLink>
+        </p>
+      </form-checkbox>
       
-      <button @click="confirmHandler" :class="{disabled:!canConfirm}" class="main-button-color">
-        <span class="text">{{ $t('text.confirm_order') }}</span>
+      <button @click="confirmHandler" :class="{disabled: !canConfirm}" class="main-button primary">
+        <span class="text">{{ $t('button.confirm_order') }}</span>
       </button>
-
     </div>
 
   </li>

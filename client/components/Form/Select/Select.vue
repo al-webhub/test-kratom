@@ -1,5 +1,11 @@
 <script>
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
+
+    return {t}
+  },
+
   data() {
     return {
       isActive: false
@@ -24,13 +30,17 @@ export default {
     values: {
       type: [Array, Object],
       required: true
-    }
+    },
+    error: {
+      type: [Object, Array, String],
+      default: false
+    },
   },
 
   computed: {
     placeholderIsActive() {
       return this.isActive || this.modelValue?.length
-    }
+    },
   },
 
   methods: {
@@ -63,12 +73,20 @@ export default {
       
       <form-placeholder v-if="placeholder" :is-active="placeholderIsActive" :placeholder="placeholder" :is-required="required"></form-placeholder>
 
-      <span class="icon-drop"></span>
+      <span class="icon-drop">
+        <img src="~assets/svg-icons/arrow-simple.svg" class="icon" />
+      </span>
+
+      <form-error :error="error"></form-error>
 
       <div class="general-drop__list">
         
-        <div v-if="nullable" class="general-drop__item general-drop__item-select">
-          <div class="text">{{ $t('text.Please_select') }}</div>
+        <div
+          v-if="nullable"
+          @click="selectHandler(null)"
+          class="general-drop__item"
+        >
+          <div class="text">{{ t('Please_select') }}</div>
         </div>
 
         <div
@@ -76,7 +94,7 @@ export default {
           :key="index"
           @click="selectHandler(value)"
           :class="{active: modelValue === value}"
-          class="general-drop__item js-drop-contains"
+          class="general-drop__item"
         >
           <span class="icon-active"></span>
           <div class="text">{{ value }}</div>
@@ -85,3 +103,14 @@ export default {
       </div>
   </div>
 </template>
+
+<i18n>
+  {
+    "en": {
+      "Please_select" : "Please select",
+    },
+    "ru": {
+      "Please_select" : "Выберите вариант",
+    }
+  }
+</i18n>

@@ -1,187 +1,116 @@
-@media screen and (min-width: 1201px) {
-  /* Contact */
-.contact-to-us__link:hover {
-  color: #E0E0E0;
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0 ,1fr);
+  margin-top: 30px;
+
+  @include _tablet {
+
+  }
+
+  @include _desktop {
+    grid-gap: 100px;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
-/* //Contact */
+  
+.form {
+  padding: 40px;
+  margin-bottom: 30px;
+  background: $color-dark-2;
+  box-shadow: 0px 4px 8px rgb(0 0 0 / 10%);
+
+  &-item {
+    width: 100%;
+    margin-bottom: 25px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
-/* Contact */
-.contact {
-padding-bottom: 100px;
-position: relative;
-}
-.contact .general-decor-text {
-bottom: -90px;
-right: 180px;
-text-align: right;
-left: 0px;
-transform: none;
-}
-.contact__wrapper {
-position: relative;
-padding-bottom: 100px;
-}
-.contact__wrapper .general-decor-figure {
-width: 470px;
-height: 470px;
-transform: rotate(155.66deg);
-top: -350px;
-right: -100px;
-}
-.contact__text {
-margin-top: 30px;
-max-width: 540px;
-font-size: 14px;
-line-height: 150%;
-margin-bottom: 50px;
-}
-.contact__text p {
-margin-bottom: 20px;
-}
-.contact__text p:last-child {
-margin-bottom: 0px;
-}
-.contact__text .general-decor-elem {
-width: 16px;
-height: 16px;
-margin-bottom: 5px;
-}
-.contact-caption {
-font-family: "Impact", sans-serif;
-font-size: 20px;
-line-height: 24px;
-font-weight: 400;
-text-transform: uppercase;
-color: #FFFFFF;
-}
-.contact__container {
-display: flex;
-justify-content: space-between;
-}
-.contact__container .wrapper {
-max-width: 556px;
-width: 100%;
-display: flex;
-justify-content: space-between;
-}
-.contact__container .question-block__list {
-margin-top: 30px;
-}
-.contact-to-us {
-max-width: 500px;
-}
-.contact-to-us__list {
-font-weight: 900;
-font-size: 14px;
-line-height: 17px;
-letter-spacing: 0.05em;
-margin-top: 30px;
-}
-.contact-to-us__item {
-display: flex;
-margin-bottom: 20px;
-}
-.contact-to-us__item:last-child {
-margin-bottom: 0px;
-}
-.contact-to-us__item span {
-color: #828282;
-}
-.contact-to-us__link {
-transition: color 0.4s;
-}
-.contact-to-us__item-place .icon-place {
-font-size: 20px;
-margin-right: 20px;
-}
-.contact-to-us__item-email .icon-message {
-font-size: 14px;
-margin-right: 20px;
-}
-.contact-to-us__item-phone .icon-phone {
-font-size: 16px;
-margin-right: 20px;
-}
-/* //Contact */
+.contacts {
+  &-list {
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.05em;
+  }
 
-@media screen and (max-width: 1200px) {
-  /* Contact */
-.contact {
-  padding-bottom: 80px;
-}
-.contact .general-decor-text {
-  bottom: -30px;
-  right: 450px;
-}
-.contact__wrapper .general-decor-figure {
-  width: 245px;
-  height: 245px;
-  transform: rotate(29.47deg);
-  right: auto;
-  top: auto;
-  left: -60px;
-  bottom: -150px;
-}
-.contact__container .wrapper {
-  flex-direction: column;
-}
-.contact__container .question-block__list {
-  margin-top: 20px;
-}
-.contact__text {
-  max-width: 100%;
-  margin-top: 50px;
-}
-.contact-to-us {
-  margin-right: 30px;
-}
-.contact-to-us__list {
-  margin-top: 20px;
-}
-.contact__follow-us {
-  margin-top: 50px;
-}
-/* //Contact */
+  &-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+    .icon {
+      margin-right: 10px;
+    }
+  }
+
+  &-link {
+    line-height: 24px;
+  }
 }
 
-@media screen and (max-width: 767px) {
-  /* Contact */
-.contact {
-  padding-bottom: 50px;
+.socials {
+  &-list {
+    display: flex;
+    align-items: center;
+  }
+
+  &-item {
+    margin-right: 30px;
+  }
+
+  &-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+  }
 }
-.contact .general-decor-text {
-  right: -170px;
-  bottom: -20px;
-  white-space: nowrap;
+
+
+.text {
+  font-size: 14px;
+  line-height: 150%;
+
+  p {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+
+  .general-decor-elem {
+    width: 16px;
+    height: 16px;
+    margin-bottom: 5px;
+  }
 }
-.contact__wrapper .general-decor-figure {
-  width: 188px;
-  height: 188px;
-  transform: rotate(149.21deg);
-  right: -50px;
-  top: -50px;
-  left: auto;
-  bottom: auto;
+
+.mb {
+  margin-bottom: 50px;
 }
-.contact__text {
-  margin: 20px 0px 30px;
-}
-.contact__container {
-  flex-direction: column;
-}
-.contact__container .wrapper {
-  margin-top: 50px;
-}
-.contact__container .question-block__link {
-  width: 40px;
+
+.btn {
+  margin: 0 auto;
   height: 40px;
 }
-.contact__container .question-block__item {
-  margin-right: 20px;
-}
-.contact__container .question-block__item:last-child {
-  margin-right: 0px;
-}
-/* //Contact */
+
+.contact-caption {
+  margin-bottom: 30px;
+  font-family: "Impact", sans-serif;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #FFFFFF;
 }

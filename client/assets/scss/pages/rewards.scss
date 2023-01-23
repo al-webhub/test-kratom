@@ -1,3 +1,26 @@
+.earn__how-works__item {
+  :deep(ul) {
+    margin: 0 0 0 15px;
+    list-style-type: disc;
+
+    li {
+      padding: 0 0 15px 0;
+    }
+  }
+}
+
+.earn__text {
+  :deep(p) {
+    margin-bottom: 25px;
+
+    &:first-child::before {
+      content: "*";
+      color: #ACDA53;
+      display: inline-block;
+      margin-right: 2px;
+    }
+  }
+}
 /* Earn */
 .earn {
   margin-bottom: 100px;
@@ -112,9 +135,6 @@
 .earn__how-works__item p {
   margin-bottom: 20px;
 }
-.earn__how-works__item p:last-of-type {
-  margin-bottom: 0px;
-}
 .earn__how-works__item li {
   padding-left: 20px;
   position: relative;
@@ -158,12 +178,6 @@
 }
 .earn__text p:last-child {
   margin-bottom: 0px;
-}
-.earn__text p:first-child::before {
-  content: "*";
-  color: #ACDA53;
-  display: inline-block;
-  margin-right: 2px;
 }
 
 .general-decor-caption {

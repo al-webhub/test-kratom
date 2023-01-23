@@ -7,6 +7,15 @@ export default {
     }
   },
 
+  computed: {
+    photo() {
+      if(this.modification?.image?.src)
+        return '/server/' + this.modification?.image?.src
+      else
+        return null
+    }
+  },
+
   methods: {
     deleteHandler() {
       this.$emit('delete')
@@ -20,15 +29,20 @@ export default {
 <template>
   <li class="order__info__item">
       <div class="order__info__preview order-position-item">
-        <div class="order__info__preview__img">
-          <NuxtLink :to="localePath('/' + modification.slug)">
-            <img 
-              :src="modification.image?.src"
-              :alt="modification.image?.alt"
-              :title="modification.image?.title"
-            />
-          </NuxtLink>
-        </div>
+        <NuxtLink :to="localePath('/' + modification.slug)" class="order__info__preview__img">
+          <nuxt-img
+            :src="photo"
+            :alt="modification.image?.alt"
+            :title="modification.image?.title"
+            :class="modification.image?.size"
+            sizes = "mobile:128px desktop:128px"
+            format = "webp"
+            quality = "40"
+            loading = "lazy"
+            class="image"
+          >
+          </nuxt-img>
+        </NuxtLink>
 
         <div class="order__info__preview__descrip">
           <p class="order__info__preview__name">

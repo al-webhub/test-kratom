@@ -1,0 +1,16 @@
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-gap: 30px;
+
+  @include _tablet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  @include _desktop {
+    grid-auto-rows: 460px;
+  }
+}

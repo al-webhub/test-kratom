@@ -1,0 +1,24 @@
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
+
+.wrapper {
+  position: fixed;
+  right: 15px;
+  top: 85px;
+  width: 300px;
+  z-index: 1000;
+}
+
+.noty {
+  margin-bottom: 15px;
+  padding: 30px;
+  background: $color-dark-2;
+  box-shadow: 0px 4px 8px rgb(0 0 0 / 10%);
+}
+
+.message{
+  color: $color-text;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 130%;
+}

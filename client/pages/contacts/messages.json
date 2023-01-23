@@ -1,0 +1,17 @@
+{
+  "en": {
+    "contacts": "Contacts",
+    "desc": "You can contact us by writing or calling. If it is our working time, you will get an answer within 1 hour. According to Greenwich Mean Time, we are online from 8 a.m. to 4 p.m. (from Monday to Saturday). If you contact us not within our working time, we will answer you as soon as our working hours start.",
+    "contact_to_us": "Contact to us",
+    "write_to_us" : "Write to us",
+    "write_throw_messanger": "Write throw messangers"
+  },
+
+  "ru": {
+    "contacts": "Контакты",
+    "desc": "Вы можете связаться с нами, написав или позвонив. Если это наше рабочее время, вы получите ответ в течение 1 часа. Согласно среднему времени по Гринвичу, мы работаем с 9:00 до 18:00. (с понедельника по субботу). Если вы обратитесь к нам в нерабочее время, мы ответим вам, как только начнется наше рабочее время.",
+    "contact_to_us": "Контактные данные",
+    "write_to_us" : "Обратная связь",
+    "write_throw_messanger": "Напишите нам в мессенджерах"
+  }
+}

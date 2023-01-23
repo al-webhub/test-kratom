@@ -7,12 +7,14 @@ export default {
       bannersAmount: 0,
     }
   },
+  
   props: {
     banners: {
       type: Array,
       required: true
     }
   },
+
   methods: {
     prevHandler: function(){
       if(this.currentIndex >= 1)
@@ -27,8 +29,7 @@ export default {
         this.currentIndex = 0;
     }
   },
-  computed: {
-  },
+  computed: {},
   watch: {
   },
   created() {
@@ -51,22 +52,22 @@ export default {
             :class="{show: currentIndex == index}"
             class="slide" 
           >
-            <nuxt-picture
-              :src = "banner.src"
+            <nuxt-img
+              :src = "`/server/${banner.src}`"
               :alt = "banner.alt"
               :title = "banner.title"
-              sizes = "mobile:100vw"
+              sizes = "mobile:100vw desktop:100vw"
               format = "webp"
-              quality = "80"
+              quality = "25"
               loading = "lazy"
               class="image cover"
             >
-            </nuxt-picture> 
+            </nuxt-img> 
 
             <div class="content container">
               <p class="content__line-1">{{ banner.caption }}</p>
               <p class="content__line-2">{{ banner.excerpt }}</p>
-              <a :href="banner.link" class="main-button-color">
+              <a :href="banner.link" class="main-button primary">
                 <span class="text">{{ banner.title }}</span>
               </a>
             </div>

@@ -1,11 +1,29 @@
 @import 'assets/scss/global/vars';
+@import 'assets/scss/global/mixins';
+
+
+.sidebar {
+  @include _tablet {
+    position: sticky;
+    top: 85px;
+    align-self: flex-start;
+  }
+}
+
 
 @media screen and (min-width: 1201px) {
-  /* Profile */
-  .profile__sidebar-link:hover span {
-    color: #ACDA53;
+  .profile__sidebar-link {
+    &:hover,
+    &.router-link-exact-active {
+      span {
+        color: $color-primary;
+      }
+
+      img {
+        filter: $filter-color-primary;
+      }
+    }
   }
-  /* /Profile */
 }
 
 
@@ -46,9 +64,7 @@
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  object-fit: cover;
   margin-right: 20px;
 }
 .profile__email {
@@ -60,9 +76,6 @@
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
-}
-.profile__sidebar-list {
-  margin-top: 32px;
 }
 .profile__sidebar-item {
   font-size: 14px;
@@ -94,7 +107,9 @@
 .profile__info + form {
   position: absolute;
 }
-.profile__info__caption {
+
+.profile__info__caption,
+:deep(.profile__info__caption) {
   margin-bottom: 20px;
   padding-bottom: 10px;
   font-size: 16px;
@@ -121,9 +136,6 @@
   }
   .profile__container {
     margin-top: 32px;
-  }
-  .profile__sidebar-list {
-    margin-top: 20px;
   }
   .profile__info__caption {
     font-size: 14px;
@@ -156,9 +168,6 @@
   }
   .profile__container {
     flex-direction: column;
-  }
-  .profile__sidebar-list {
-    margin-top: 0px;
   }
   .profile__sidebar-item {
     margin-bottom: 30px;

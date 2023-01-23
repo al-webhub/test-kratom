@@ -1,0 +1,39 @@
+@import 'assets/scss/global/mixins';
+@import 'assets/scss/global/vars';
+
+.features {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.name {
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.value {
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: underline;
+}
+
+.link {
+  transition: color .3s;
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.line {
+  width: 100%;
+  margin: 0 20px;
+  border-bottom: 1px solid $color-dark-3;
+}

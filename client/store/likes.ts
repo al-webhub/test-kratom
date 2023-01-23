@@ -18,7 +18,6 @@ export const useLikesStore = defineStore('likesStore', {
       const reviewStore = useReviewStore()
       
       reviewStore.like(value, {
-        owner_id: 1,
         direction: 'plus',
         type: 'likes'
       })
@@ -35,7 +34,6 @@ export const useLikesStore = defineStore('likesStore', {
       const reviewStore = useReviewStore()
       
       reviewStore.like(value, {
-        owner_id: 1,
         direction: 'minus',
         type: 'likes'
       })
@@ -58,7 +56,6 @@ export const useLikesStore = defineStore('likesStore', {
       const reviewStore = useReviewStore()
       
       reviewStore.like(value, {
-        owner_id: 1,
         direction: 'plus',
         type: 'dislikes'
       })
@@ -75,7 +72,6 @@ export const useLikesStore = defineStore('likesStore', {
       const reviewStore = useReviewStore()
       
       reviewStore.like(value, {
-        owner_id: 1,
         direction: 'minus',
         type: 'dislikes'
       })

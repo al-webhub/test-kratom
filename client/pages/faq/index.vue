@@ -1,56 +1,83 @@
 <script>
 export default {
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    }) 
+
+    return {
+      t
+    }
+  },
+
   data() {
     return {
-      page: {
-        h1: 'Frequently Asked Questions',
-        title: 'We are fully aware of the fact that you may have several questions, which you would prefer to find the quick answers to (without writing to our messenger or e-mail box). Perhaps, you may find the information you need here.',
-        content: '',
-      },
-
       activeIndex: null
     }
   },
 
   computed: {
+    page() {
+      return {
+        title: this.t('title'),
+        content: this.t('content'),
+      }
+    },
+
     faqs() { 
       return [
         {
           id: 1,
-          title: this.$t('faqs.q_1'),
-          content: this.$t('faqs.a_1')
+          title: this.t('q_1'),
+          content: this.t('a_1')
         },{
           id: 2,
-          title: this.$t('faqs.q_2'),
-          content: this.$t('faqs.a_2')
+          title: this.t('q_2'),
+          content: this.t('a_2')
         },{
           id: 3,
-          title: this.$t('faqs.q_3'),
-          content: this.$t('faqs.a_3')
+          title: this.t('q_3'),
+          content: this.t('a_3')
         },{
           id: 4,
-          title: this.$t('faqs.q_4'),
-          content: this.$t('faqs.a_4')
+          title: this.t('q_4'),
+          content: this.t('a_4')
         },{
           id: 5,
-          title: this.$t('faqs.q_5'),
-          content: this.$t('faqs.a_5')
+          title: this.t('q_5'),
+          content: this.t('a_5')
         },{
           id: 6,
-          title: this.$t('faqs.q_6'),
-          content: this.$t('faqs.a_6')
+          title: this.t('q_6'),
+          content: this.t('a_6')
         }
       ]
     }
   },
 
   methods: {
+    setCrumbs() {
+      useCrumbs().setCrumbs([
+          {
+            name: this.$t('crumbs.home'),
+            link: '/'
+          },{
+            name: this.$t('crumbs.faq'),
+            link: '/faq'
+          }
+      ])
+    },
+
     toggleHandler(index) {
       if(this.activeIndex === index)
         this.activeIndex = null
       else
         this.activeIndex = index
     }
+  },
+
+  created() {
+    this.setCrumbs()
   }
 }
 </script>
@@ -61,6 +88,8 @@ export default {
   margin-bottom: 25px;
 }
 </style>
+
+<i18n src="./messages.json"></i18n>
 
 <template>
 <div>  

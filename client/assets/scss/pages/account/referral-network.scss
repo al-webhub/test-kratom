@@ -1,3 +1,8 @@
+.referral-withdrawal .main-button {
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+
 /* Profile referral */
 .referral-info {
 display: flex;
@@ -31,17 +36,8 @@ line-height: 15px;
 text-transform: uppercase;
 color: #E0E0E0;
 }
-.referral-withdrawal .main-button-color {
-max-width: 100%;
-height: 40px;
-margin-bottom: 10px;
-}
-.referral-withdrawal .main-button-color::before {
-top: -230%;
-right: -48px;
-width: 110%;
-height: 670%;
-}
+
+
 .referral-withdrawal p {
 font-size: 12px;
 line-height: 15px;

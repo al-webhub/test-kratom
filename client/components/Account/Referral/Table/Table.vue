@@ -8,7 +8,7 @@ export default {
 
   props: {
     referrals: {
-      type: Object,
+      type: Array,
     }
   },
 
@@ -32,9 +32,9 @@ export default {
       <p class="referral-history__name referral-history-position-last"></p>
     </div>
 
-    <div v-if="referrals.data.length" class="referral-history__body">
+    <div v-if="referrals.length" class="referral-history__body">
         <account-referral-card
-          v-for="(referral, key) in referrals.data"
+          v-for="(referral, key) in referrals"
           :key="referral.id"
           :referral="referral"
         >
@@ -50,7 +50,7 @@ export default {
     </div>
     
     <div v-else class="referral-info-body referra-empty">
-      <p>{{ $t('text.network_is_empty') }}</p>
+      <p>{{ $t('account.network_is_empty') }}</p>
     </div>
 
   </div>

@@ -15,36 +15,17 @@ export default {
     }
   },
 
-  methods: {
-    emitHeightHandler() {
-      if (process.client){
-        if(window.innerWidth >= 1024)
-          this.$emit('height', '305px')
-        else
-          this.$emit('height', 'auto')
-      }else{
-        if(this.$device.isDesktop)
-          this.$emit('height', '305px')
-        else
-          this.$emit('height', 'auto')        
+  computed: {
+    photo() {
+      if(this.review.owner.photo) {
+        return '/server/' + this.review.owner.photo 
+      }
+      else
+      {
+        return '/images/photo-log-in.png'
       }
     }
   },
-
-  created: function(){
-    this.emitHeightHandler()
-
-    if (process.client){
-      window.addEventListener("resize", this.emitHeightHandler);
-    }
-  },
-
-  destroyed: function() {
-    if (process.client){
-      window.removeEventListener("resize", this.emitHeightHandler);
-    }
-  },
-
 }
 </script>
 
@@ -61,19 +42,19 @@ export default {
           </div>
         </div>
         
-        <button class="info__more">{{ $t('text.read_more') }}</button>
+        <!-- <button class="info__more">{{ $t('text.read_more') }}</button> -->
 	    </div>
 
 	    <div class="footer">
-        <nuxt-picture
-          :src = "review.owner.photo"
+        <nuxt-img
+          :src = "photo"
           sizes = "mobile:70px"
           format = "webp"
           quality = "80"
           loading = "lazy"
           class="photo cover"
         >
-        </nuxt-picture> 
+        </nuxt-img> 
 	      <p class="name">{{ review.owner.name }}</p>
 	    </div>
 	</div>

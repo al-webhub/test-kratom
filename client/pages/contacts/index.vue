@@ -1,123 +1,166 @@
 <script>
+
 export default {
-  data() {
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    }) 
+
     return {
-      page: {
-        h1: 'Contacts',
-        content: `You can contact us by writing or calling. If it is our working time, you will get an answer within 1 hour. According to Greenwich Mean Time, we are online from 8 a.m. to 4 p.m. (from Monday to Saturday). If you contact us not within our working time, we will answer you as soon as our working hours start.`
-      }
+      t
     }
   },
 
-  methods: {
-    config(text) {
-      return text
+  data() {
+    return {
+      feedback: {
+        name: null,
+        email: null,
+        content: null,
+      },
     }
+  },
+
+  computed: {
+    page() {
+      return {
+        h1: this.t('contacts'),
+        content: this.t('desc'),
+        title1: this.t('contact_to_us'),
+        title2: this.t('write_throw_messanger'),
+        title3: this.t('write_to_us')
+      }
+    },
+
+    socials() {
+      const contacts = useContacts()
+      
+      return {
+        mail: contacts.email,
+        telegram: contacts.telegram,
+        whatsapp: contacts.whatsapp,
+        skype: contacts.skype,
+        viber: contacts.viber
+      }
+    },
+    contacts() {
+      const contacts = useContacts()
+
+      return [
+        contacts.address,
+        contacts.email,
+        contacts.phone,
+      ]
+    },
+
+  },
+
+  methods: {
+
+    setCrumbs() {
+      useCrumbs().setCrumbs([
+          {
+            name: this.$t('crumbs.home'),
+            link: '/'
+          },{
+            name: this.$t('crumbs.contacts'),
+            link: '/contacts'
+          }
+      ])
+    },
+
+    sendHandler() {
+      useNoty().setNoty(this.$t('noty.message_success'))
+      this.feedback.name = null
+      this.feedback.email = null
+      this.feedback.content = null
+    }
+  },
+
+  async created() {
+    this.setCrumbs()
   }
 }
 </script>
 
 <style src="assets/scss/pages/contacts.scss" lang="sass" scoped />
 
+<i18n src="./messages.json"></i18n>
+
 <template>
 <div>
   <section class="contact">
       <!-- <div class="general-decor-text">kratom helper</div> -->
-      <div class="contact__wrapper container">
+      <div class="container">
           <!-- <div class="general-decor-figure"></div> -->
           
           <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
+
+          <div class="inner">
+            
+            <div class="left">
           
-          <div class="contact__text">
-              <span class="general-decor-elem"></span>
-              <div v-html="page.content"></div>
-          </div>
-
-          <div class="row cont-data" itemscope="" itemtype="http://schema.org/Organization">
-              <meta itemprop="name" content="kratomhelper">
-              <meta itemprop="url" content="kratomhelper.com">
-              
-              <div itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
-                  <meta itemprop="postalCode" content="14000">
-                  <meta itemprop="streetAddress" content="Na Hřebenech II 1718/8">
-                  <meta itemprop="addressLocality" content="Praha">
-                  <meta itemprop="addressCountry" content="Czech Republic">
+              <div class="text mb">
+                <span class="general-decor-elem"></span>
+                <div v-html="page.content"></div>
               </div>
 
-              <meta itemprop="telephone" content="+420 728 591 865">
-              <meta itemprop="email" content="info@kratomhelper.com">
-          </div>
+              <div class="contacts mb">
+                <p class="contact-caption">{{ page.title1 }}</p>
 
-          <div class="contact__container">
-              <div class="contact-to-us">
-                  <p class="contact-caption">{{ $t('text.contact_to_us') }}</p>
-                  <ul class="contact-to-us__list">
-                      <li class="contact-to-us__item contact-to-us__item-place">
-                          <span class="icon-place"></span>
-                          <p>{{ config('settings.address') }}</p>
-                      </li>
-                      <li class="contact-to-us__item contact-to-us__item-email">
-                          <span class="icon-message"></span>
-                          <a href="mailto: {{ config('settings.contact_email') }}" class="contact-to-us__link">{{ config('settings.contact_email') }}</a>
-                      </li>
-                      <li class="contact-to-us__item contact-to-us__item-phone">
-                          <span class="icon-phone"></span>
-                          <a href="tel:{{ config('settings.tel') }}" class="contact-to-us__link">{{ config('settings.tel') }}</a>
-                      </li>
-                  </ul>
+                <ul class="contacts-list">
+                  <li
+                    v-for="(contact, index) in contacts"
+                    :key="index"
+                    class="contacts-item"
+                  >
+                    <img :src="contact.icon" class="icon" />
+                    <a :href="contact.link" class="contacts-link">{{ contact.text }}</a>
+                  </li>
+                </ul>
               </div>
-              <div class="wrapper">
-                  <div class="contact__write-us">
-                      <p class="contact-caption">{{ $t('text.write_to_us') }}</p>
-                      <ul class="question-block__list">
-                          <li class="question-block__item question-block__item-message">
-                              <a href="mailto: {{ config('settings.contact_email') }}" class="question-block__link">
-                                  <span class="icon-message"></span>
-                              </a>
-                          </li>
-                          <li class="question-block__item question-block__item-teleg">
-                              <a href="tg://resolve?domain={{ config('settings.tg') }}" class="question-block__link">
-                                  <span class="icon-teleg"></span>
-                              </a>
-                          </li>
-                          <li class="question-block__item question-block__item-whatsapp">
-                              <a href="https://wa.me/{{ config('settings.whatsapp') }}" class="question-block__link">
-                                  <span class="icon-whatsapp"></span>
-                              </a>
-                          </li>
-                          <li class="question-block__item question-block__item-skype">
-                              <a href="skype:{{ config('settings.skype') }}?chat" class="question-block__link">
-                                  <span class="icon-skype"></span>
-                              </a>
-                          </li>
-                          <li class="question-block__item question-block__item-viber">
-                              <a href="viber://chat?number=+{{ config('settings.viber') }}" class="question-block__link hide-desktop">
-                                  <span class="icon-viber"></span>
-                              </a>
-                              <a href="viber://chat?number={{ config('settings.viber') }}" class="question-block__link hide-mobile">
-                                  <span class="icon-viber"></span>
-                              </a>
-                          </li>
-                      </ul>
-                  </div>
-                  
-                  <!-- <div class="contact__follow-us">
-                      <p class="contact-caption">{{ $t('text.follow_us') }}</p>
-                      <ul class="question-block__list">
-                          <li class="question-block__item question-block__item-fb">
-                              <a href="{{ config('settings.fb') }}" target="_blank" class="question-block__link">
-                                  <span class="icon-fb"></span>
-                              </a>
-                          </li>
-                          <li class="question-block__item question-block__item-inst">
-                              <a href="{{ config('settings.inst') }}" target="_blank" class="question-block__link">
-                                  <span class="icon-inst"></span>
-                              </a>
-                          </li>
-                      </ul>
-                  </div> -->
 
+              <div class="socials mb">
+                <p class="contact-caption">{{ page.title2 }}</p>
+
+                <ul class="socials-list">
+                  <li v-for="(item, key) in socials" :key="key" class="socials-item">
+                    <a :href="item.link" :class="key + '-color'" class="socials-link">
+                      <img :src="item.icon" class="icon" />
+                    </a>
+                  </li>
+                </ul>
               </div>
+            </div>
+
+            <div class="right">
+              <div class="form">
+                <p class="contact-caption">{{ page.title3 }}</p>
+
+                <form-text 
+                  v-model="feedback.name"
+                  :placeholder="$t('form.first_name')"
+                  class="form-item"
+                />
+                
+                <form-text 
+                  v-model="feedback.email"
+                  :placeholder="$t('form.email')"
+                  class="form-item"
+                />
+                
+                <form-textarea 
+                  v-model="feedback.content"
+                  :placeholder="$t('form.your_comment')"
+                  class="form-item"
+                />
+
+                <button @click="sendHandler" class="main-button primary-color form-item btn">
+                  <span class="text">{{ $t('button.send_message') }}</span>
+                </button>
+              </div>
+            </div>
+            
           </div>
       </div>
   </section>

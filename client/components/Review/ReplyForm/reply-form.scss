@@ -1,3 +1,5 @@
+@import 'assets/scss/global/mixins';
+
 .add-reviews__form {
   position: relative;
   width: 100%;
@@ -7,4 +9,14 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
+
+  .button-only-text {
+    margin-right: 10px;
+  }
+
+  .btn {
+    @include _tablet {
+      max-width: 170px;
+    }
+  }
 }
