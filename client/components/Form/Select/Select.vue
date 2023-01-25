@@ -32,7 +32,7 @@ export default {
       required: true
     },
     error: {
-      type: [Object, Array, String],
+      type: [Object, Array, String, Boolean],
       default: false
     },
   },

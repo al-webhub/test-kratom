@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { nextTick } from "vue";
+// import { nextTick } from "vue";
 /**
  * Resize textarea
  * @author Dinesh Paradesi Vadamodula

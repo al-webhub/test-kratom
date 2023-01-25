@@ -4,17 +4,35 @@ import payDeliveryImg from 'assets/images/pay-delivery.png'
 export default {
   setup() {
     const { t } = useI18n({useScope: 'local'})
+    
+    const data = ref({
+      deliveriesData: null,
+      paymentsData: null
+    })
+
+    const getDeliveries = async () => {
+      return await useDeliveries().then((res) => {
+        data.value.deliveriesData = res.value
+      })
+    }
+
+    const getPayments = async () => {
+      return await usePayments().then((res) => {
+        data.value.paymentsData = res.value
+      })
+    }
+    
+    getPayments()
+    getDeliveries()
 
     return {
-      t
+      t,
+      data
     }
   },
 
   data() {
-    return {
-      paymentsData: null,
-      deliveriesData: null,
-    }
+    return {}
   },
 
   computed: {
@@ -49,23 +67,10 @@ export default {
       ])
     },
 
-    async getDeliveries() {
-      return await useDeliveries().then((res) => {
-        this.deliveriesData = res.value
-      })
-    },
-
-    async getPayments() {
-      return await usePayments().then((res) => {
-        this.paymentsData = res.value
-      })
-    },
   },
 
   async created() {
     this.setCrumbs()
-    await this.getPayments()
-    await this.getDeliveries()
   }
 
 }
@@ -91,9 +96,9 @@ export default {
 
                 <h2 class="main-caption-l">{{ page.payment_info_title }}</h2>
 
-                <ul v-if="paymentsData" class="delivery__list delivery__list-payment">
+                <ul v-if="data.paymentsData" class="delivery__list delivery__list-payment">
                     <li 
-                      v-for="(payment, index) in paymentsData"
+                      v-for="(payment, index) in data.paymentsData"
                       :key="index"
                       class="delivery__item"
                     >
@@ -122,9 +127,9 @@ export default {
 
                 <h2 class="main-caption-l">{{ page.delivery_times_title }}</h2>
                 
-                <ul v-if="deliveriesData && deliveriesData.times" class="delivery__list delivery__list-option">
+                <ul v-if="data.deliveriesData && data.deliveriesData.times" class="delivery__list delivery__list-option">
                   <li
-                    v-for="(delivery, index) in deliveriesData.times"
+                    v-for="(delivery, index) in data.deliveriesData.times"
                     :key="index"
                     class="delivery__item"
                   >
@@ -143,9 +148,9 @@ export default {
                 </div>
 
                 <h2 class="main-caption-l">{{ page.delivery_method_title }}</h2>
-                <ul  v-if="deliveriesData && deliveriesData.methods" class="delivery__list delivery__list-deliver">
+                <ul  v-if="data.deliveriesData && data.deliveriesData.methods" class="delivery__list delivery__list-deliver">
                   <li
-                    v-for="(delivery, index) in deliveriesData.methods"
+                    v-for="(delivery, index) in data.deliveriesData.methods"
                     :key="index"
                     class="delivery__item"
                   >

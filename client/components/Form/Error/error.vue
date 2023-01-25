@@ -2,7 +2,7 @@
 export default {
   props: {
     error: {
-      type: [Object, Array, String],
+      type: [Object, Array, String, Boolean],
       default: false
     },
   },

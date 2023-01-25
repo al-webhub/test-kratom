@@ -17,7 +17,7 @@ export default {
       default: false
     },
     error: {
-      type: Object,
+      type: [Object, Boolean],
       default: false
     },
     isDisabled: {

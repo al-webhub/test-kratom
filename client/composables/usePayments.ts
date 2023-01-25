@@ -7,9 +7,11 @@ type Payment = {
 
 export const usePayments = async () => {
   const nuxtApp = useNuxtApp()
+  
+  const { locale } = useI18n({useScope: 'global'})
+
   const messages = useState('payments', () => [] as Payment[])
 
-  const locale = await nuxtApp.$i18n.locale
   const payments = await jsonData[locale.value]?.payment?.options
 
   messages.value = []

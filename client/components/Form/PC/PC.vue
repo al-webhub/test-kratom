@@ -22,7 +22,7 @@ export default {
       type: Object
     },
     errors: {
-      type: Array
+      type: [Array, Boolean]
     }
   },
 

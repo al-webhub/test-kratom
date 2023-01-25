@@ -2,13 +2,25 @@
 export default {
   setup() {
     const { t } = useI18n({useScope: 'local'})
-    return {t}
+
+    const paymentsData = ref()
+
+    const getPayments = async () => {
+      return await usePayments().then((res) => {
+        paymentsData.value = res.value
+      })
+    }
+    
+    getPayments()
+
+    return {
+      t,
+      paymentsData
+    }
   },
 
   data() {
-    return {
-      paymentsData: null
-    }
+    return {}
   },
 
   computed: {
@@ -44,19 +56,6 @@ export default {
       return new Date().getFullYear()
     }
   },
-
-  methods: {
-    async getPayments() {
-      return await usePayments().then((res) => {
-        this.paymentsData = res.value
-      })
-    },
-  },
-
-  async created() {
-    await this.getPayments()
-  }
-
 }
 </script>
 

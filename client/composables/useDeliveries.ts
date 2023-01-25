@@ -1,15 +1,13 @@
 import jsonData from '/lang/data.json'
 
 export const useDeliveries = async () => {
-  const nuxtApp = useNuxtApp()
+  const { locale } = useI18n({useScope: 'global'})
   const messages = useState('deliveries', () => {
     return {
       times: [],
       methods: []
     }
   })
-
-  const locale = await nuxtApp.$i18n.locale
 
   const times = await jsonData[locale.value]?.deliveries?.times
   const methods = await jsonData[locale.value]?.deliveries?.methods

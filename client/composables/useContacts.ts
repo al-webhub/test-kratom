@@ -1,5 +1,3 @@
-
-
 import pinIcon from '/assets/svg-icons/pin.svg';
 import phoneIcon from '/assets/svg-icons/phone.svg';
 import mailIcon from '/assets/svg-icons/mail.svg';
@@ -9,25 +7,23 @@ import skypeIcon from '/assets/svg-icons/skype.svg';
 import viberIcon from '/assets/svg-icons/viber.svg';
 
 export const useContacts = () => {
-  const nuxtApp = useNuxtApp()
+  const { t } = useI18n({useScope: 'global'})
 
-  const items = useState('contacts', () => {})
-
-  items.value = {
+  const contacts = {
     address: {
       link: '/',
       icon: pinIcon,
-      text: nuxtApp.$i18n.t('contacts.address')
+      text: t('contacts.address')
     },
     email: {
       icon: mailIcon,
-      link: `mailto:${nuxtApp.$i18n.t('contacts.email')}`,
-      text: nuxtApp.$i18n.t('contacts.email')
+      link: `mailto:${t('contacts.email')}`,
+      text: t('contacts.email')
     },
     phone: {
       icon: phoneIcon,
-      link: `tel:${nuxtApp.$i18n.t('contacts.phone')}`,
-      text: nuxtApp.$i18n.t('contacts.phone')
+      link: `tel:${t('contacts.phone')}`,
+      text: t('contacts.phone')
     },
     telegram: {
       icon: telegramIcon,
@@ -51,5 +47,5 @@ export const useContacts = () => {
     }
   }
 
-  return items.value
+  return contacts
 }
