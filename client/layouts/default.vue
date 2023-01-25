@@ -8,8 +8,9 @@ export default {
       identifierAttribute: 'id',
       addSeoAttributes: true
     })
-    const title = computed(() => t('layouts.title', { title: t(route.meta.title ?? 'TBD') }))
     
+    //const title = computed(() => t('layouts.title', { title: t(route.meta.title ?? 'TBD') }))
+    const title = "Kratomhelper";
     
     const breadcrumbsIsActive = ref(route.meta.breadcrumbsIsActive === undefined? true: route.meta.breadcrumbsIsActive)
 

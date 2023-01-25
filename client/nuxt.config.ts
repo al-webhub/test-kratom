@@ -73,6 +73,7 @@ export default defineNuxtConfig({
         defaultLocale: 'en',
         lazy: true,
         vueI18nLoader: true,
+        runtimeOnly: false,
         langDir: 'lang/',
         locales: [
           {
@@ -91,6 +92,7 @@ export default defineNuxtConfig({
           }
         ],
         vueI18n: {
+          runtimeOnly: false,
           fallbackLocale: 'en',
           datetimeFormats: {
             en: {

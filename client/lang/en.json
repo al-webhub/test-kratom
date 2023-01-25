@@ -1,4 +1,20 @@
 {
+  "filter": {
+    "region": "Regions",
+    "color": "Color",
+    "type": "Type",
+    "thai": "Thai kratom",
+    "borneo": "Borneo kratom",
+    "sumatra": "Sumatra kratom",
+    "malay": "Malay kratom",
+    "white": "White kratom",
+    "red": "Red kratom",
+    "green": "Green kratom",
+    "seed": "Kratom in seeds",
+    "pills": "Kratom in pills",
+    "powder": "Kratom powder"
+  },
+
   "crumbs": {
     "home": "Home",
     "search": "Search",

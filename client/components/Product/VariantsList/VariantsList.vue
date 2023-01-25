@@ -5,7 +5,7 @@ export default {
       type: Array
     },
     modelValue: {
-      type: Number
+      type: Object
     }
   },
 

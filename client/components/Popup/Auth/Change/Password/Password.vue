@@ -80,45 +80,46 @@ export default {
       {{ $t('title.set_new_password') }}
     </template>
     <template v-slot:content>
+      <div>
+        <div class="popup__header">
+          <p class="email" v-if="user">{{ t('for', {email: user.email}) }}</p>
+          <ul class="popup-check__list">
+            <li 
+              v-for="rule in rules"
+              :key="rule.id"
+              :class="{active: rule.validated}"
+              class="popup-check__item"
+            >
+              <span class="decor">
+                <img src="~assets/svg-icons/check.svg" class="icon" />
+              </span>
+              <span class="text">{{ rule.label }}</span>
+            </li>
+          </ul>
+        </div>
 
-      <div class="popup__header">
-        <p class="email" v-if="user">{{ t('for', {email: user.email}) }}</p>
-        <ul class="popup-check__list">
-          <li 
-            v-for="rule in rules"
-            :key="rule.id"
-            :class="{active: rule.validated}"
-            class="popup-check__item"
+        <div class="popup__body">
+
+          <form-password
+            v-model="password"
+            :placeholder="$t('form.New_Password')"
+            :errors="errors.password"
+            class="form-component"
           >
-            <span class="decor">
-              <img src="~assets/svg-icons/check.svg" class="icon" />
-            </span>
-            <span class="text">{{ rule.label }}</span>
-          </li>
-        </ul>
-      </div>
+          </form-password>
 
-      <div class="popup__body">
+          <form-password
+            v-model="password_confirmation"
+            :placeholder="$t('form.Password')"
+            :errors="errors.password_confirmation"
+            class="form-component"
+          >
+          </form-password>
 
-        <form-password
-          v-model="password"
-          :placeholder="$t('form.New_Password')"
-          :errors="errors.password"
-          class="form-component"
-        >
-        </form-password>
-
-        <form-password
-          v-model="password_confirmation"
-          :placeholder="$t('form.Password')"
-          :errors="errors.password_confirmation"
-          class="form-component"
-        >
-        </form-password>
-
-        <button :class="{disabled: isDisabled}" class="main-button primary small">
-            <span class="text">{{ $t('button.set_new_password') }}</span>
-        </button>
+          <button :class="{disabled: isDisabled}" class="main-button primary small">
+              <span class="text">{{ $t('button.set_new_password') }}</span>
+          </button>
+        </div>
       </div>
     </template>
     <template v-slot:footer>

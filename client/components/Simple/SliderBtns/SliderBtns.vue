@@ -48,14 +48,14 @@ export default {
     <!-- Точки нужно выводить если они кратны 3 -->
     
     <div class="dots__list">
-      <div
-        v-for="(item, key) in items"
-        :key="key"
-        v-if="(key + 1) % 3 == 0"
-        :class="{active: key === activeIndex}"
-        class="dots__item" 
-      >
-      </div>
+      <template v-for="(item, key) in items" :key="key">
+        <div
+          v-if="(key + 1) % 3 == 0"
+          :class="{active: key === activeIndex}"
+          class="dots__item" 
+        >
+        </div>
+      </template>
     </div>
     
     <!-- //Точки нужно выводить если они кратны 3 -->

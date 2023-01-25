@@ -1,82 +1,49 @@
 export const useProductGroups = () => {
-  const { t } = useI18n({
-    messages: {
-      en: {
-        region: "Regions",
-        color: "Color",
-        type: "Type",
-        thai: "Thai kratom",
-        borneo: "Borneo kratom",
-        sumatra: "Sumatra kratom",
-        malay: "Malay kratom",
-        white: "White kratom",
-        red: "Red kratom",
-        green: "Green kratom",
-        seed: "Kratom in seeds",
-        pills: "Kratom in pills",
-        powder: "Kratom powder"
-      },
-      ru: {
-        region: "Регион",
-        color: "Цвет",
-        type: "Тип",
-        thai: "Тайланд",
-        borneo: "Борнео",
-        sumatra: "Суматра",
-        malay: "Малайзия",
-        white: "Белый кратом",
-        red: "Красный кратом",
-        green: "Заленый кратом",
-        seed: "Кратом в зернах",
-        pills: "Кратом в таблетках",
-        powder: "Кратом - порошок"
-      }
-    }
-  })
+  const { t } = useI18n({useScope: 'global'})
 
   const groups = [
     {
-      name: t('region'),
+      name: t('filter.region'),
       items: [
         {
-          name: t('thai'),
+          name: t('filter.thai'),
           link: '/shop/thai-kratom'
         },{
-          name: t('borneo'),
+          name: t('filter.borneo'),
           link: '/shop/borneo-kratom'
         },{
-          name: t('sumatra'),
+          name: t('filter.sumatra'),
           link: '/shop/sumatra-kratom'
         },{
-          name: t('malay'),
+          name: t('filter.malay'),
           link: '/shop/malay-kratom'
         }
       ]
     },{
-      name: t('color'),
+      name: t('filter.color'),
       items: [
         {
-          name: t('white'),
+          name: t('filter.white'),
           link: '/shop/white-kratom'
         },{
-          name: t('red'),
+          name: t('filter.red'),
           link: '/shop/red-kratom'
         },{
-          name: t('green'),
+          name: t('filter.green'),
           link: '/shop/green-kratom'
         }
       ]
     },{
-      name: t('type'),
+      name: t('filter.type'),
       items: [
         {
-          name: t('seed'),
+          name: t('filter.seed'),
           link: '/shop/kratom-in-seeds'
         },{
-          name: t('pills'),
+          name: t('filter.pills'),
           link: '/shop/kratom-in-pills'
         },{
-          name: t('powder'),
+          name: t('filter.powder'),
           link: '/shop/kratom-powder'
         }
       ]

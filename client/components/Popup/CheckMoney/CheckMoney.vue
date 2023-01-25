@@ -24,7 +24,7 @@ export default {
         </div>
     </template>
     <template v-slot:content>
-      {{ $t('text.Text_money') }} 😊
+      {{ 'text.Text_money' }} 😊
     </template>
   </popup-layout-simple>
 </template>

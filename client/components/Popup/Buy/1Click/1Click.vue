@@ -48,15 +48,15 @@ export default {
     </template>
 
     <template v-slot:content>
+      <div>
+        <p class="form-item">{{ t('leave_your_contacts') }}</p>
 
-      <p class="form-item">{{ t('leave_your_contacts') }}</p>
+        <form-text v-model="order.name" :placeholder="$t('form.first_name')" class="form-item"></form-text>
 
-      <form-text v-model="order.name" :placeholder="$t('form.first_name')" class="form-item"></form-text>
+        <form-text v-model="order.name" :placeholder="$t('form.first_name')" class="form-item"></form-text>
 
-      <form-text v-model="order.name" :placeholder="$t('form.first_name')" class="form-item"></form-text>
-
-      <form-textarea v-model="order.text" :placeholder="$t('form.your_review')" class="form-item"></form-textarea>
-
+        <form-textarea v-model="order.text" :placeholder="$t('form.your_review')" class="form-item"></form-textarea>
+      </div>
     </template>
 
     <template v-slot:footer>

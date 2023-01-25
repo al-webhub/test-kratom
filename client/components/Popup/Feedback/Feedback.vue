@@ -66,20 +66,20 @@ export default {
     </template>
 
     <template v-slot:content>
+      <div>
+        <form-stars v-model="comment.rating" class="rate"></form-stars>
 
-      <form-stars v-model="comment.rating" class="rate"></form-stars>
+        <form-textarea v-model="comment.text" :placeholder="$t('form.your_review')" ></form-textarea>
 
-      <form-textarea v-model="comment.text" :placeholder="$t('form.your_review')" ></form-textarea>
-
-      <div class="buttons">
-        <button class="main-button main-button-small" @click="createHandler('incognito')">
-          <span class="text">{{ $t('button.post_incognito') }}</span>
-        </button>
-        <button class="main-button main-button-small main-button-confirm" @click="createHandler('common')">
-          <span class="text">{{ $t('button.post') }}</span>
-        </button>
+        <div class="buttons">
+          <button class="main-button main-button-small" @click="createHandler('incognito')">
+            <span class="text">{{ $t('button.post_incognito') }}</span>
+          </button>
+          <button class="main-button main-button-small main-button-confirm" @click="createHandler('common')">
+            <span class="text">{{ $t('button.post') }}</span>
+          </button>
+        </div>
       </div>
-
     </template>
 
     <template v-slot:footer>

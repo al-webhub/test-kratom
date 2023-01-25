@@ -161,7 +161,7 @@ export default {
       </ul>
 
       <!-- PRODUCT MODIFICATIONS -->
-      <div class="weight">
+      <div class="weight" v-if="selectedModification && product.modifications">
         <product-variants-list v-model="selectedModification" :values="product.modifications"></product-variants-list>
       </div>
 

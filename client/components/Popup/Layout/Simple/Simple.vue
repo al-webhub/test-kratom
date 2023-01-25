@@ -36,23 +36,25 @@ export default {
 
 <template>
   <popup-layout-wrapper :size="size" :is-active="isActive">
-    <button v-if="canClose" @click="closeHandler" type="button" class="close__popup">
-      <img src="~assets/svg-icons/close.svg" class="icon" />
-    </button>
+    <div>
+      <button v-if="canClose" @click="closeHandler" type="button" class="close__popup">
+        <img src="~assets/svg-icons/close.svg" class="icon" />
+      </button>
 
-    <p class="popup-caption">
-      <!-- TITLE SLOT -->
-      <slot name="title"></slot>
-    </p>
+      <p class="popup-caption">
+        <!-- TITLE SLOT -->
+        <slot name="title"></slot>
+      </p>
 
-    <p class="content">
-      <!-- CONTENT SLOT -->
-      <slot name="content"></slot>
-    </p>
+      <p class="content">
+        <!-- CONTENT SLOT -->
+        <slot name="content"></slot>
+      </p>
 
-    <footer class="footer">
-      <!-- FOOTER SLOT -->
-      <slot name="footer"></slot>
-    </footer>
+      <footer class="footer">
+        <!-- FOOTER SLOT -->
+        <slot name="footer"></slot>
+      </footer>
+    </div>
   </popup-layout-wrapper>
 </template>
