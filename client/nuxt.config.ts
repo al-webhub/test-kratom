@@ -2,8 +2,8 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      base: 'http://localhost:8888',
-      apiBase: 'http://localhost:8888/api'
+      base: 'http://super.kratomhelper.com:8888',
+      apiBase: 'http://super.kratomhelper.com:8888/api'
     }
   },
 
@@ -48,9 +48,9 @@ export default defineNuxtConfig({
             }
           }
         },
-        domains: ['localhost:8888'],
+        domains: ['super.kratomhelper.com:8888'],
         alias: {
-          server: 'http://localhost:8888'
+          server: 'http://super.kratomhelper.com:8888'
         }
       }
     ],

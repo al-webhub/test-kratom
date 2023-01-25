@@ -1,3 +1,13 @@
+.btn {
+  width: 100%;
+  max-width: 170px;
+}
+
 .button-only-text {
-  margin-right: 30px;
+  max-width: 100px;
+  margin:0 30px;
+}
+
+:deep(.footer) {
+  justify-content: center;
 }

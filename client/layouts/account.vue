@@ -162,8 +162,11 @@ export default {
       </section>
     </main>
 
+    <section-write-us></section-write-us>
+
     <the-footer></the-footer>
 
+    <modal-cart></modal-cart>
     <popup-auth-log-out></popup-auth-log-out>
     <popup-auth-change-password></popup-auth-change-password>
 

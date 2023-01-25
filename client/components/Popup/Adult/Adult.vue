@@ -1,14 +1,52 @@
 <script>
+import {useAppStore} from '~/store/app'
+
 export default {
-  data() {
+  setup() {
+    const appStore = useAppStore()
+    const { t, locale } = useI18n({useScope: 'local'})
+    
     return {
-      isActive: false
+      appStore,
+      t,
+      locale
+    }
+  },
+
+  data() {
+    return {}
+  },
+
+  computed: {
+    isActive() {
+      return this.appStore.adult
     }
   },
 
   methods: {
+    notHandler() {
+      let url = ''
+      switch(this.locale) {
+        case 'ru':
+          url = 'https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B0%D1%82%D0%BE%D0%BC'
+          break;
+        case 'en':
+          url = "https://en.wikipedia.org/wiki/Mitragyna_speciosa"
+          break;
+        default:
+          url = 'https://en.wikipedia.org/wiki/Mitragyna_speciosa'
+          break;
+      }
+
+      navigateTo(url, { external: true })
+    },
+
+    yesHandler() {
+      this.appStore.close('adult') 
+    },
+
     closeHandler() {
-      this.isActive = false
+      //this.appStore.close('adult') 
     }
   }
 }
@@ -17,20 +55,38 @@ export default {
 <style src="./adult.scss" lang="sass" scoped />
 
 <template>
-  <popup-layout-simple :is-active="isActive" @close="closeHandler">
+  <popup-layout-simple :is-active="isActive" @close="closeHandler" :can-close="false">
     <template v-slot:title>
-      You must be 18+ to visit our webshop
+      {{ t('you_must') }}
     </template>
     <template v-slot:content>
-      You must be at least eighteen years old to view this content. Are you over eighteen?
+      {{ t('you_must_2') }}
     </template>
     <template v-slot:footer>
-      <a href="https://www.google.com/search?q=relaxation" class="button-only-text js-close">
-        <span class="text">No, I am not</span>
-      </a>
-      <a href="/18" class="main-button main-button-small main-button-profile">
-        <span class="text">I am 18+</span>
-      </a>    
+      <button @click="notHandler" class="button-only-text btn">
+        <span class="text">{{ t('no') }}</span>
+      </button>
+      <button @click="yesHandler" class="main-button small btn">
+        <span class="text">{{ t('i_am_18') }}</span>
+      </button>    
     </template>
   </popup-layout-simple>
 </template>
+
+<i18n>
+  {
+    en: {
+      you_must: "You must be 18+ to visit our webshop",
+      you_must_2: "You must be at least eighteen years old to view this content. Are you over eighteen?",
+      no: "No, I am not",
+      i_am_18: "I am 18+",
+    },
+
+    ru: {
+      you_must: "Контент 18+",
+      you_must_2: "Вам должно быть не менее восемнадцати лет, чтобы смотреть этот контент. Вам исполнилось восемнадцать лет?",
+      no: "Нет",
+      i_am_18: "Мне 18+",
+    }
+  }
+</i18n>

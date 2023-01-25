@@ -15,12 +15,18 @@ export default {
     size: {
       type: String,
       default: 'small'
+    },
+
+    canClose: {
+      type: Boolean,
+      default: true
     }
   },
 
   methods: {
     closeHandler() {
-      this.$emit('close')
+      if(this.canClose)
+        this.$emit('close')
     }
   }
 }
@@ -30,7 +36,7 @@ export default {
 
 <template>
   <popup-layout-wrapper :size="size" :is-active="isActive">
-    <button @click="closeHandler" type="button" class="close__popup">
+    <button v-if="canClose" @click="closeHandler" type="button" class="close__popup">
       <img src="~assets/svg-icons/close.svg" class="icon" />
     </button>
 
