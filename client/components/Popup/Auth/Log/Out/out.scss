@@ -6,6 +6,8 @@
   max-width: 50%;
 }
 
-:deep(.footer) {
- justify-content: center;
+.footer-inner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

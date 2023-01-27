@@ -129,9 +129,12 @@ export default {
       :alt = "name"
       :title = "name"
       sizes = "mobile:40px"
+      width="40"
+      height="40"
       format = "webp"
       quality = "40"
       loading = "lazy"
+      fit="cover"
       class="avatar">
     >
     </nuxt-img> 

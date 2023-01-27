@@ -56,11 +56,13 @@ export default {
               :src = "`/server/${banner.src}`"
               :alt = "banner.alt"
               :title = "banner.title"
+              height="260"
               sizes = "mobile:100vw desktop:100vw"
               format = "webp"
               quality = "25"
-              loading = "lazy"
-              class="image cover"
+              fit="cover"
+              :loading = "index === 0? null: 'lazy'"
+              class="image"
             >
             </nuxt-img> 
 

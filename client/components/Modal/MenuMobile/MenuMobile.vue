@@ -16,6 +16,13 @@ export default {
   computed: {
     menu() {
       return useMenu().menu
+    },
+  },
+
+  methods: {
+    closeHandler() {
+      console.log('CLOSE')
+      this.$emit('close')
     }
   }
 }
@@ -28,7 +35,7 @@ export default {
     <div v-if="isActive" class="menu-wrapper">
       <ul class="nav">
         <li v-for="(li, index) in menu" :key="li.id"  class="nav-item">
-          <NuxtLink :to="localePath(li.link)"  class="nav-link">{{ li.name }}</NuxtLink>
+          <NuxtLink :to="localePath(li.link)" @click="closeHandler" class="nav-link">{{ li.name }}</NuxtLink>
         </li>
       </ul>
     </div>

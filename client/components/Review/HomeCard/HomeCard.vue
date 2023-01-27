@@ -48,9 +48,12 @@ export default {
 	    <div class="footer">
         <nuxt-img
           :src = "photo"
-          sizes = "mobile:70px"
+          width="70"
+          height="70"
+          sizes = "mobile:70px desktop:70px"
           format = "webp"
           quality = "80"
+          fit="cover"
           loading = "lazy"
           class="photo cover"
         >

@@ -111,6 +111,8 @@ export default {
                 :src="payment.image"
                 :alt="payment.name"
                 :title="payment.name"
+                width="65"
+                height="35"
                 sizes = "mobile:80px"
                 format = "webp"
                 quality = "100"

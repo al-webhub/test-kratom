@@ -48,7 +48,7 @@ export default {
       {{ t('want_to_logout') }}
     </template>
     <template v-slot:footer>
-      <div>
+      <div class="footer-inner">
         <button @click="closeHandler" class="button-only-text">
             <span class="text">{{ $t('button.cancel') }}</span>
         </button>

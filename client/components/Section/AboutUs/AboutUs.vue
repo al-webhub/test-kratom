@@ -57,6 +57,8 @@ export default {
         <div class="row-1">
           <nuxt-img
             src = "/images/about-us-block-img-1.png"
+            width="570"
+            height="342"
             sizes = "mobile:100vw tablet:360px desktop:580px"
             quality = "25"
             fit="cover"
@@ -94,10 +96,14 @@ export default {
                   <div class="img">
                     <nuxt-img
                       :src = "type.image"
-                      sizes = "mobile:100px"
+                      width="100"
+                      height="100"
+                      sizes = "mobile:100px desktop:100px"
                       quality = "5"
                       loading = "lazy"
+                      fit="cover"
                       :alt="type.title"
+                      class="cover"
                     >
                     </nuxt-img> 
                   </div>

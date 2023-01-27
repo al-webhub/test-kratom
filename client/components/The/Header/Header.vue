@@ -105,6 +105,10 @@ export default {
 
     toggleBurgerHandler() {
       this.burgerIsActive = !this.burgerIsActive
+    },
+
+    closeMobileMenuHandler() {
+      this.burgerIsActive = false
     }
   },
 
@@ -150,25 +154,6 @@ export default {
                   </li>
                 </ul>
             </li>
-            
-          
-            <!-- <li :class="{active: isSubmenuActive}" class="header__item header__item__drop">
-              <div @click="toggleSubmenuHandler" class="wrapper">
-                <a class="text">{{ $t('text.menu') }}</a>
-                <img src="~assets/svg-icons/arrow-simple.svg" class="icon icon-drop" />
-              </div>
-              <ul class="header__drop-list">
-                <li
-                  v-for="item in subMenu"
-                  :key="item.uid"
-                  class="header__drop-item">
-                  <NuxtLink :to="localePath(item.link)" class="header__drop-link">
-                    {{ item.name }}
-                  </NuxtLink>
-                </li>
-              </ul>
-            </li> -->
-            
         </ul>
         <button class="header__close-nav">
           <span class="icon-close"></span>
@@ -210,9 +195,12 @@ export default {
               <!-- <img :src="user.photo" class="photo" /> -->
               <nuxt-img
                 :src="'/server/'+user.photo"
+                width="24"
+                height="24"
                 sizes = "mobile:24px"
                 format = "webp"
                 quality = "20"
+                fit="cover"
                 loading = "lazy"
                 class="photo"
               >
@@ -233,7 +221,7 @@ export default {
           <span class="decor"></span>
         </button>
 
-        <modal-menu-mobile :is-active="burgerIsActive" :menu="menu"></modal-menu-mobile>
+        <modal-menu-mobile :is-active="burgerIsActive" :menu="menu" @close="closeMobileMenuHandler"></modal-menu-mobile>
     </div>
   </header>
 

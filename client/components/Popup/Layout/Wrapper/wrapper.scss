@@ -1,11 +1,10 @@
 @import 'assets/scss/global/mixins';
 
 .popup {
-  $self: &;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0);
+  transform: translate(-50%, -50%);
   z-index: 10;
   background-color: #fff;
   max-height: 100%;
@@ -32,22 +31,11 @@
     width: 100%;
     height: calc(100% - 50px);
     background: rgba(0,0,0, 0.85);
-    opacity: 0;
-    z-index: -1;
+    z-index: 10;
 
     @include _tablet {
       top: 70px;
       height: calc(100% - 70px);
-    }
-
-    &.active {
-      opacity: 1;
-      z-index: 10;
-
-      #{ $self } {
-        transform: translate(-50%, -50%) scale(1);
-        transition: transform 0.4s;
-      }
     }
   }
 }

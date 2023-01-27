@@ -2,8 +2,8 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      base: 'http://localhost:8888',
-      apiBase: 'http://localhost:8888/api'
+      base: process.env.SERVER_URL,
+      apiBase: process.env.API_SERVER_URL
     }
   },
 
@@ -11,9 +11,30 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page-tr', mode: 'out-in' },
     layoutTransition: { name: 'layout-tr', mode: 'out-in' },
   },
+  
+  // webpack: {
+  //   analyze: true,
+  //   extractCSS: true,
+  //   optimizeCSS: true,
+  // },
+  // sourcemap: false,
+  // experimental: {
+  //   asyncEntry: true,
+  //   viteServerDynamicImports: true
+  // },
+
+  // debug: false,
 
   nitro: {
-    compressPublicAssets: true,
+    compressPublicAssets: { 
+      gzip: true, 
+      brotli: true 
+    },
+    minify: true,
+    prerender: {
+      crawlLinks: true
+    },
+    preset: 'node-server',
   },
 
   css: [
@@ -48,9 +69,9 @@ export default defineNuxtConfig({
             }
           }
         },
-        domains: ['localhost:8888'],
+        domains: [process.env.DOMAIN],
         alias: {
-          server: 'http://localhost:8888'
+          server: process.env.SERVER_URL
         }
       }
     ],

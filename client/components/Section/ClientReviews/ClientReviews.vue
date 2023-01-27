@@ -44,9 +44,11 @@ export default {
      
     <nuxt-img
       src="/images/clients-say-bg.png"
-      sizes = "mobile:100vw desktop: 100vw"
+      height="226"
+      sizes = "mobile:100vw desktop:100vw"
       format = "webp"
       quality = "80"
+      fit="cover"
       loading = "lazy"
       class="bg-image">
     </nuxt-img>

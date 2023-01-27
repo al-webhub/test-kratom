@@ -121,10 +121,13 @@ export default {
           :alt = "product.image.alt"
           :title = "product.image.title"
           :class="product.image.size"
-          sizes = "mobile:100vw tablet:230px desktop:240px"
+          width="300"
+          height="190"
+          sizes = "mobile:100vw tablet:230px desktop:300px"
           format = "webp"
           quality = "40"
           loading = "lazy"
+          fit="outside"
         >
         </nuxt-img> 
       </NuxtLink>

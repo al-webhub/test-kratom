@@ -33,9 +33,11 @@ export default {
 <style src="./wrapper.scss" lang="sass" scoped />
 
 <template>
-  <div @click.self="closeHandler" :class="{active: isActive}" class="popup-wrapper">
-    <section :class="size" class="popup">
-      <slot />
-    </section>
-  </div>
+  <transition name="fade-in">
+    <div v-if="isActive" @click.self="closeHandler" class="popup-wrapper">
+      <section :class="size" class="popup">
+        <slot />
+      </section>
+    </div>
+  </transition>
 </template>
