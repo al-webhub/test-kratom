@@ -24,6 +24,7 @@
     "laravel/tinker": "^2.5",
     "parabellumkoval/backpack-articles": "dev-main",
     "parabellumkoval/backpack-banners": "dev-main",
+    "parabellumkoval/backpack-feedback": "dev-main",
     "parabellumkoval/backpack-profile": "dev-main",
     "parabellumkoval/backpack-reviews": "dev-main",
     "parabellumkoval/backpack-store": "dev-main",

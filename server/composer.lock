@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21b163abb8ffe43a9e855523201c15f3",
+    "content-hash": "e179665819433dc8847f4738445efbf2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3829,6 +3829,64 @@
             "time": "2022-12-21T12:49:28+00:00"
         },
         {
+            "name": "parabellumkoval/backpack-feedback",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/parabellumKoval/backpack-feedback.git",
+                "reference": "ba749c16ff4110c5de2aacf1607bca6ffe5ebfd3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-feedback/zipball/ba749c16ff4110c5de2aacf1607bca6ffe5ebfd3",
+                "reference": "ba749c16ff4110c5de2aacf1607bca6ffe5ebfd3",
+                "shasum": ""
+            },
+            "require": {
+                "backpack/crud": "4.1.*",
+                "laravel/framework": "^8.0|^7.0|^6.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Backpack\\Feedback\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Backpack\\Feedback\\": "src",
+                    "Backpack\\Feedback\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "parabellumKoval",
+                    "email": "parabellum.koval@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Implement feedback API & CRUD for backpack",
+            "homepage": "https://github.com/parabellumkoval/backpack-feedback",
+            "keywords": [
+                "backpack",
+                "feedback",
+                "laravel",
+                "parabellumKoval"
+            ],
+            "support": {
+                "issues": "https://github.com/parabellumKoval/backpack-feedback/issues",
+                "source": "https://github.com/parabellumKoval/backpack-feedback/tree/main"
+            },
+            "time": "2023-01-30T11:48:48+00:00"
+        },
+        {
             "name": "parabellumkoval/backpack-profile",
             "version": "dev-main",
             "source": {
@@ -4038,12 +4096,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-transactions.git",
-                "reference": "6eee0ba5b901e0c6dd259cc5e61d607f92b96376"
+                "reference": "c6afd72e53b994545523bb0d62fe4e706152d3bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-transactions/zipball/6eee0ba5b901e0c6dd259cc5e61d607f92b96376",
-                "reference": "6eee0ba5b901e0c6dd259cc5e61d607f92b96376",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-transactions/zipball/c6afd72e53b994545523bb0d62fe4e706152d3bd",
+                "reference": "c6afd72e53b994545523bb0d62fe4e706152d3bd",
                 "shasum": ""
             },
             "require": {
@@ -4090,7 +4148,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-transactions/issues",
                 "source": "https://github.com/parabellumKoval/backpack-transactions/tree/main"
             },
-            "time": "2023-01-20T20:19:50+00:00"
+            "time": "2023-01-29T20:32:23+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -10387,6 +10445,7 @@
     "stability-flags": {
         "parabellumkoval/backpack-articles": 20,
         "parabellumkoval/backpack-banners": 20,
+        "parabellumkoval/backpack-feedback": 20,
         "parabellumkoval/backpack-profile": 20,
         "parabellumkoval/backpack-reviews": 20,
         "parabellumkoval/backpack-store": 20,
