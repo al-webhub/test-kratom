@@ -44,6 +44,7 @@
     "International_phone" : "International phone",
     "first_name": "First name",
     "email": "Email",
+    "phone": "Phone",
     "your_comment": "Your comment",
     "your_review": "Your review",
     "Country_Region" : "Country / Region",
@@ -101,7 +102,8 @@
     "show_x_replies": "Show {replies} replies",
     "see_more": "See more reviews",
     "load_more" : "Load more reviews",
-    "search": "Search"
+    "search": "Search",
+    "shop": "Shop"
   },
 
   "review": {
@@ -129,7 +131,10 @@
     "add_review_fail": "An error has occurred. Your review has not been published 😓",
     "order_success": "Thanks for your order! 🤙 Your order number is {code} ",
     "order_fail": "The order was not completed, an error occurred.",
-    "message_success": "Thank you, your message was sent successfully 😉"
+    "message_success": "Thank you, your message was sent successfully 😉",
+    "message_fail": "An error has occurred. Your feedback has not been send 😓",
+    "1click_success": "Thanks for your order! Our manager will contact you soon 👍",
+    "1click_fail": "An error has occurred. Your order has not been create 👍",
   },
 
   "messages": {
@@ -141,10 +146,7 @@
     "no_reviews" : "There are no reviews for this product.",
     "no_results": "No results found for search query {search}",
     "products_no_found": "No products found for this query",
-    "search_results": "Search results for {search}"
-  },
-
-  "account": {
+    "search_results": "Search results for {search}",
     "network_is_empty" : "Your referral network is empty!",
     "have_any_transactions" : "You do not have any transactions!"
   },

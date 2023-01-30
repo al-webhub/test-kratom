@@ -144,20 +144,15 @@ export default {
     },
 
     async getTransactions() {
-      const params = {
-        owner_id: 3
-      }
-
-      await this.transactionStore?.getTransactions(params)
+      await this.transactionStore?.getTransactions()
     },
 
     async loadmoreTransactionsHandler() {
       const params = {
-        owner_id: 3,
         page: this.transactionsMeta.current_page + 1
       }
 
-      await this.transactionStore?.getTransactions(params)
+      await this.transactionStore?.getTransactions(params, false)
 
     }
   },

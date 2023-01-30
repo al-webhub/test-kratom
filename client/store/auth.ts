@@ -89,8 +89,6 @@ export const useAuthStore = defineStore('authStore', {
     setProfileData(data: Profile) {
       Object.keys(data).forEach((k) => data[k] == null && delete data[k]);
 
-      console.log('setProfileData', this.user, data)
-
       this.user = {
         ...this.user,
         ...data
@@ -99,10 +97,12 @@ export const useAuthStore = defineStore('authStore', {
 
     async getToken() {
       const runtimeConfig = useRuntimeConfig()
+      const locale = useNuxtApp().$i18n.locale
 
       const res = await fetch(`${runtimeConfig.public.base}/sanctum/csrf-cookie`, {
         headers: {
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Accept-Language': locale.value
         },
         credentials: 'include'
       })
@@ -111,9 +111,7 @@ export const useAuthStore = defineStore('authStore', {
     async logout() {
       const runtimeConfig = useRuntimeConfig()
       const context = this
-      
-      //context.authenticated = false
-      //await this.getToken()
+      const locale = useNuxtApp().$i18n.locale
 
       const { data, pending, error, refresh } = await useFetch(`${runtimeConfig.public.base}/logout`,{
         method: 'POST',
@@ -121,6 +119,7 @@ export const useAuthStore = defineStore('authStore', {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
+          'Accept-Language': locale.value
         },
         credentials: 'include',
         onResponse({ request, response, options }) {
@@ -132,6 +131,7 @@ export const useAuthStore = defineStore('authStore', {
     async login() {
       const runtimeConfig = useRuntimeConfig()
       const context = this
+      const locale = useNuxtApp().$i18n.locale
       
       await this.getToken()
 
@@ -141,6 +141,7 @@ export const useAuthStore = defineStore('authStore', {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
+          'Accept-Language': locale.value
         },
         referrer: '',
         credentials: 'include',
@@ -168,6 +169,7 @@ export const useAuthStore = defineStore('authStore', {
 
     async register() {
       const runtimeConfig = useRuntimeConfig()
+      const locale = useNuxtApp().$i18n.locale
       const context = this
 
       await this.getToken()
@@ -178,6 +180,7 @@ export const useAuthStore = defineStore('authStore', {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
+          'Accept-Language': locale.value
         },
         credentials: 'include',
         body: {

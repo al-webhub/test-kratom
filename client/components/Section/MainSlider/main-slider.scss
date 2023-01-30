@@ -134,8 +134,8 @@
   padding: 30px 0 0 0;
   font-family: "Impact", sans-serif;
   position: relative;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
+  -webkit-animation-duration: 0;
+  animation-duration: 0;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   letter-spacing: 0.05em;
@@ -154,6 +154,11 @@
   @include _large-desktop {
     padding-top: 90px;
     padding-left: 50px;
+  }
+
+  &.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
   }
 
   &__line-2 {
@@ -189,6 +194,7 @@
 
     @include _desktop {
       font-size: 20px;
+      max-width: 80%;
     }
   }
 }

@@ -29,11 +29,11 @@
 
 .rating {
   grid-row-start: 1;
-  margin-bottom: 30px;
   
   @include _tablet {
     position: sticky;
     top: 85px;
+    margin-bottom: 30px;
   }
 }
 

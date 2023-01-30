@@ -1,17 +1,29 @@
 <script>
+import {useAppStore} from '~/store/app'
+
 export default {
   setup() {
-    const { t } = useI18n({useScope: 'local'})
+    const { t, locale } = useI18n({useScope: 'local'})
+    const appStore = useAppStore()
+
+    const deliveryTimes = computed(() => {
+      return appStore.deliveryTimes(locale.value)
+    })
+
+    const deliveryMethods = computed(() => {
+      return appStore.deliveryMethods(locale.value)
+    })
 
     return {
-      t
+      t,
+      deliveryTimes,
+      deliveryMethods
     }
   },
 
   data() {
     return {
       selectedDelivery: null,
-      deliveriesData: null,
       user: {
         usermeta: {
           addressDetails: {
@@ -51,18 +63,6 @@ export default {
       type: Object
     }
   },
-
-  methods: {
-    async getDeliveries() {
-      return await useDeliveries().then((res) => {
-        this.deliveriesData = res.value
-      })
-    },
-  },
-
-  async created() {
-    await this.getDeliveries()
-  }
 }
 </script>
 
@@ -84,9 +84,9 @@ export default {
       <div class="checkout__item__body">
           <h6 class="checkout-caption">{{ t('desired_delivery') }}</h6>
           
-          <ul v-if="deliveriesData && deliveriesData.times" class="delivery__list fr1">
+          <ul v-if="deliveryTimes" class="delivery__list fr1">
             <li 
-              v-for="(method, index) in deliveriesData.times"
+              v-for="(method, index) in deliveryTimes"
               :key="index"
               class="delivery__item"
             >
@@ -158,9 +158,9 @@ export default {
           <div class="chckout__item__shipping-info">
             <h6 class="checkout-caption">{{ t('We_deliver') }}:</h6>
             
-            <div v-if="deliveriesData && deliveriesData.methods" class="delivery__list list">
+            <div v-if="deliveryMethods" class="delivery__list list">
               <div 
-                v-for="(delivery, index) in deliveriesData.methods"
+                v-for="(delivery, index) in deliveryMethods"
                 :key="index"
                 class="delivery__item">
                   <p>{{ delivery }}</p>

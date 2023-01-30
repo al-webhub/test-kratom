@@ -5,6 +5,7 @@ import { useLikesStore } from '~/store/likes';
 
 export default {
   async setup() {
+    const { t } = useI18n({useScope: 'local'})
     const reviewStore = useReviewStore()
     const likesStore = useLikesStore()
     const authStore = useAuthStore()
@@ -12,6 +13,30 @@ export default {
     const meta = computed(() => {
       return reviewStore?.meta;
     })
+
+    const setSeo = () => {
+      useHead({
+        title: t('seo.title'),
+        meta: [
+          {
+            name: 'description',
+            content: t('seo.description')
+          },
+        ],
+      })
+    }
+
+    const setCrumbs = () => {
+      useCrumbs().setCrumbs([
+          {
+            name: t('crumbs.home'),
+            link: '/'
+          },{
+            name: t('crumbs.reviews'),
+            link: '/reviews'
+          }
+      ])
+    }
 
     const getReviews = async (query, refresh) => {
       await useAsyncData('reviews', () => reviewStore.getAll(query, refresh))
@@ -22,6 +47,8 @@ export default {
     }
 
     getReviews({per_page: 12}, true)
+    setSeo()
+    setCrumbs()
 
     return {
       reviewStore,
@@ -33,12 +60,7 @@ export default {
   },
 
   data() {
-    return {
-      page: {
-        h1: 'REVIEWS',
-        title: ''
-      },
-    }
+    return {}
   },
 
   computed: {
@@ -61,18 +83,6 @@ export default {
   },
 
   methods: {
-    setCrumbs() {
-      useCrumbs().setCrumbs([
-          {
-            name: this.$t('crumbs.home'),
-            link: '/'
-          },{
-            name: this.$t('crumbs.reviews'),
-            link: '/reviews'
-          }
-      ])
-    },
-
     async addReview(data) {
       const {setNoty} = useNoty()
 
@@ -95,10 +105,6 @@ export default {
       this.addReview(data)
     },
 
-  },
-
-  async created() {
-    this.setCrumbs()
   }
 }
 </script>
@@ -114,7 +120,7 @@ export default {
     <section class="wrapper">
         <div class="container">
             
-            <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
+            <h1 class="main-caption main-caption-align">{{ $t('title.reviews') }}</h1>
             
             <div class="inner">
               <ul class="list">
@@ -150,3 +156,21 @@ export default {
     <section-write-us></section-write-us>
   </div>
 </template>
+
+
+<i18n>
+  {
+    "en": {
+      "seo": {
+        title: "Reviews {'|'} Kratomhelper",
+        description: "Online store Kratomhelper 🍂 Reviews 🍂 100% high-quality Kratom 👍 Fast delivery around the world 🚗 Qualified consultation ☑ Returning money 💲"
+      },
+    },
+    "ru": {
+      "seo": {
+        title: "Отзывы {'|'} Kratomhelper",
+        description: "Интернет-магазин KratomHelper 🍂 Отзывы 🍂 100% высококачественный Kratom 👍 Быстрая доставка по всему миру 🚗 Квалифицированная консультация ☑ возвращающиеся деньги 💲"
+      },
+    }
+  }
+</i18n>

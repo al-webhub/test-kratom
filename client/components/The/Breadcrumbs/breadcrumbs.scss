@@ -12,11 +12,25 @@
     font-size: 14px;
     line-height: 14px;
     min-height: 14px;
+    width: 100%;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    @include _desktop {
+      overflow-x: visible;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
+
   .item {
     margin-right: 20px;
     position: relative;
     transition: color 0.4s;
+    white-space: nowrap;
 
     &:hover {
       color: #ACDA53;

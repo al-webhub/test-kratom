@@ -1,9 +1,23 @@
 <script>
+import {useAppStore} from '~/store/app'
+
 export default {
+  setup() {
+    const { locale } = useI18n()
+    const appStore = useAppStore()
+
+    const payments = computed(() => {
+      return appStore.payments(locale.value)
+    })
+
+    return {
+      payments
+    }
+  },
+
   data() {
     return {
       privatePolicy: null,
-      paymentsData: null
     }
   },
 
@@ -30,20 +44,10 @@ export default {
   },
 
   methods: {
-    async getPayments() {
-      return await usePayments().then((res) => {
-        this.paymentsData = res.value
-      })
-    },
-
     confirmHandler() {
       this.$emit('confirm')
     }
   },
-
-  async created() {
-    await this.getPayments()
-  }
 }
 </script>
 
@@ -62,7 +66,7 @@ export default {
       <ul class="list">
 
         <li
-          v-for="(method, index) in paymentsData"
+          v-for="(method, index) in payments"
           :key="index"
           class="item"
         >
@@ -70,7 +74,7 @@ export default {
             <div class="radio-slot">
               <nuxt-img
                 :src="method.image"
-                sizes = "mobile:90px"
+                sizes = "mobile:100px"
                 format = "webp"
                 quality = "90"
                 loading = "lazy"

@@ -23,8 +23,6 @@ export default {
       arrayLength: 0,
       offset: 0,
       gap: 30,
-      perPage: 4,
-      direction: 'next',
       touch: {
         from: null,
         to: null
@@ -56,6 +54,16 @@ export default {
   },
 
   computed: {
+    perPage() {
+      if(this.$device.isDesktop)
+        return 4;
+
+      if(this.$device.isTablet)
+        return 2
+      
+      return 1;
+    },
+
     listStyleValue() {
       return {
         transform: `translateX(${this.offset}px)`
@@ -64,7 +72,6 @@ export default {
 
     slides() {
       return this.values
-      //return this.values.slice(this.startIndex, 4)
     },
 
     cardWidth() {
@@ -91,7 +98,6 @@ export default {
       const cardWidth = this.$refs?.card[0].offsetWidth + this.gap
       const maxWidth = (this.arrayLength - this.perPage) * cardWidth * -1;
 
-      console.log('PREV', this.offset, maxWidth)
       if(this.offset > maxWidth)
         this.offset = this.offset - cardWidth
       else {
@@ -100,7 +106,7 @@ export default {
     },
 
     touchHandler(event) {
-      console.log('TOUCH', event)
+      //console.log('TOUCH', event)
     },
 
     touchStartHandler(event) {
@@ -110,17 +116,19 @@ export default {
     touchEndHandler(event) {
       this.touch.to = event.changedTouches[0].screenX
 
-      if(this.touch.from < this.touch.to) {
+      const step = this.touch.from - this.touch.to
+      
+      if(Math.abs(step) < 30)
+        return
+
+      if(step < 0)
         this.prevHandler()
-      }else
-      {
+      else
         this.nextHandler()
-      }
     },
   },
 
   mounted() {
-    this.startIndex = 0
     this.arrayLength = this.values.length
   }
 }

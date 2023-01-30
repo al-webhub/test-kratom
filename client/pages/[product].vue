@@ -17,6 +17,10 @@ export default {
       return route.params.product
     })
 
+    const product = computed(() => {
+      return productStore.product
+    })
+
     const reviewQuery = computed(() => {
       const type = String.raw`Backpack\Store\app\Models\Product`;
 
@@ -31,6 +35,19 @@ export default {
       return reviewStore?.meta;
     })
 
+
+    const setSeo = () => {
+      useHead({
+        title: product.value && (product.value.seo.meta_title || product.value.seo.h1 || product.value.name),
+        meta: [
+          {
+            name: 'description',
+            content: product.value && product.value.seo.meta_description
+          },
+        ],
+      })
+    }
+
     const loadmoreReviewsHandler = async () => {
       const query = {
         ...reviewQuery.value,
@@ -43,7 +60,13 @@ export default {
       await useAsyncData('reviews', () => reviewStore.getAll(reviewQuery, refresh))
     }
 
-    await useAsyncData('product', () => productStore.getOne(route.params.product))
+    await useAsyncData('product', () => productStore.getOne(route.params.product)).then((res) => {
+      if(res.error._value){
+        throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
+      }
+
+      setSeo()
+    })
     await useAsyncData('products', () => productStore.getAll({per_page: 4}))
     await getReviews(reviewQuery.value, true)
     
@@ -52,6 +75,7 @@ export default {
       productStore,
       reviewStore,
       reviewsMeta,
+      product,
       loadmoreReviewsHandler,
       t
     }
@@ -91,10 +115,6 @@ export default {
 
     popularProducts() {
       return this.productStore?.all;
-    },
-
-    product() {
-      return this.productStore?.product;
     },
 
     rating() {
@@ -296,13 +316,13 @@ export default {
     </div>
   </section>
 
-  <product-grid
+  <lazy-product-grid
     v-if="popularProducts && popularProducts.length"
     :products="popularProducts"
     :title="t('related_products')"
     class="section"
   >
-  </product-grid>
+  </lazy-product-grid>
 
 </div>
 </template>

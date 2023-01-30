@@ -9,7 +9,7 @@ export default defineNuxtConfig({
 
   app: {
     pageTransition: { name: 'page-tr', mode: 'out-in' },
-    layoutTransition: { name: 'layout-tr', mode: 'out-in' },
+    layoutTransition: { name: 'page-tr', mode: 'out-in' },
   },
   
   // webpack: {
@@ -23,7 +23,7 @@ export default defineNuxtConfig({
   //   viteServerDynamicImports: true
   // },
 
-  // debug: false,
+  debug: true,
 
   nitro: {
     compressPublicAssets: { 
@@ -31,10 +31,27 @@ export default defineNuxtConfig({
       brotli: true 
     },
     minify: true,
-    prerender: {
-      crawlLinks: true
-    },
+    // prerender: {
+    //   crawlLinks: false
+    // },
     preset: 'node-server',
+    routeRules: {
+      '/assets/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
+      '/images/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
+      '/_nuxt/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
+      '/**/*.js': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
+      '/**/*.css': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
+      '/**/*.json': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
+      '/**/*.html': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
+      '/**/*.xml': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
+      '/**/*.svg': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
+    }
+  },
+
+  vite: {
+    build: {
+      assetsInlineLimit: 12000
+    }
   },
 
   css: [
@@ -43,13 +60,21 @@ export default defineNuxtConfig({
 
   modules: [
     [
+      'nuxt-delay-hydration',
+      {
+        mode: 'init',
+        debug: process.env.NODE_ENV === 'development'
+      }
+    ],
+    [
       '@nuxtjs/google-fonts',
       {
         families: {
           Montserrat: {
             wght: [400, 500, 700, 900]
           },
-        }
+        },
+        preload: true
       }
     ],
     '@nuxtjs/device',

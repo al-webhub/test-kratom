@@ -46,7 +46,7 @@ export default {
           <the-breadcrumbs v-if="breadcrumbsIsActive"></the-breadcrumbs>
         </transition>
 
-        <modal-noty></modal-noty>
+        <lazy-modal-noty></lazy-modal-noty>
 
         <main>
           <slot />
@@ -54,18 +54,18 @@ export default {
 
         <the-footer></the-footer>
 
-        <modal-cart></modal-cart>
+        <lazy-modal-cart></lazy-modal-cart>
 
-        <popup-adult></popup-adult>
+        <lazy-popup-adult></lazy-popup-adult>
 
-        <popup-check-money></popup-check-money>
+        <lazy-popup-check-money></lazy-popup-check-money>
 
-        <popup-auth-change-password></popup-auth-change-password>
-        <popup-auth-log-in-email></popup-auth-log-in-email>
-        <popup-auth-log-in-password></popup-auth-log-in-password>
-        <popup-auth-log-out></popup-auth-log-out>
-        <popup-auth-sign-in-social></popup-auth-sign-in-social>
-        <popup-auth-sign-in-email></popup-auth-sign-in-email>
+        <lazy-popup-auth-change-password></lazy-popup-auth-change-password>
+        <lazy-popup-auth-log-in-email></lazy-popup-auth-log-in-email>
+        <lazy-popup-auth-log-in-password></lazy-popup-auth-log-in-password>
+        <lazy-popup-auth-log-out></lazy-popup-auth-log-out>
+        <lazy-popup-auth-sign-in-social></lazy-popup-auth-sign-in-social>
+        <lazy-popup-auth-sign-in-email></lazy-popup-auth-sign-in-email>
 
         <section class="push_notification">
           <ul class="push_notification__list">

@@ -1,5 +1,10 @@
 <script>
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
+    return {t}
+  },
+
   props: {
     transactions: {
       type: Object
@@ -22,11 +27,11 @@ export default {
 <template>
   <div class="referral-history" >
     <div class="referral-history__header">
-        <p class="referral-history__name referral-history-position-data">{{ $t('text.Transaction_date') }}</p>
-        <p class="referral-history__name referral-history-position-descrip">{{ $t('text.description') }}</p>
-        <p class="referral-history__name referral-history-position-amount">{{ $t('text.Status') }}</p>
-        <p class="referral-history__name referral-history-position-amount">{{ $t('text.Amount') }}</p>
-        <p class="referral-history__name referral-history-position-balance">{{ $t('text.Current_balance') }}</p>
+        <p class="referral-history__name referral-history-position-data">{{ t('Transaction_date') }}</p>
+        <p class="referral-history__name referral-history-position-descrip">{{ t('description') }}</p>
+        <p class="referral-history__name referral-history-position-amount">{{ t('Status') }}</p>
+        <p class="referral-history__name referral-history-position-amount">{{ t('Amount') }}</p>
+        <p class="referral-history__name referral-history-position-balance">{{ t('Current_balance') }}</p>
     </div>
     <div v-if="transactions && transactions.length" class="referral-history__body">
         <account-transaction-card
@@ -41,7 +46,7 @@ export default {
           @click="loadmoreHandler()"
           style="text-align:center; cursor:pointer;padding:10px"
         >
-          {{ $t('text.Load_more') }}
+          {{ $t('button.show_more') }}
         </div>
         
     </div>
@@ -49,7 +54,25 @@ export default {
       v-else
       class="referral-info-body referra-empty"
     >
-      <p>{{ $t('account.have_any_transactions') }}</p>
+      <p>{{ $t('messages.have_any_transactions') }}</p>
     </div>
   </div>
 </template>
+<i18n>
+  {
+    "en": {
+      "Transaction_date": "Transaction date",
+      "description": "Description",
+      "Status": "Status",
+      "Amount": "Amount",
+      "Current_balance": "Current balance"
+    },
+    "ru": {
+      "Transaction_date": "Дата",
+      "description": "Описание",
+      "Status": "Статус",
+      "Amount": "Сумма",
+      "Current_balance": "Баланс"
+    }
+  }
+</i18n>

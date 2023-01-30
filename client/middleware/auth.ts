@@ -1,16 +1,22 @@
 import { useProfileStore } from '~/store/profile';
-// import { useAuthStore } from '~/store/auth';
+import { callWithNuxt } from '#app'
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
 
   const profileStore = useProfileStore()
-  // const authStore = useAuthStore()
-  
-  return await profileStore.getProfile().then((res) => {
-    if(res.error._value) {
-      return navigateTo('/')
-      //return abortNavigation(res.error._value)
-    }
-  })
+  const nuxtApp = useNuxtApp()
+
+  let profile = null
+
+  try{
+    profile = await profileStore.getProfile()
+  }catch(e) {
+    profile = null
+  }
+
+  if (!profile) {
+    const locale = nuxtApp.$i18n.locale.value === nuxtApp.$i18n.fallbackLocale.value ? '' : '/' + nuxtApp.$i18n.locale.value;
+    return callWithNuxt(nuxtApp, navigateTo, [locale])
+  }
   
 })

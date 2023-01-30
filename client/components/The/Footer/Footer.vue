@@ -1,21 +1,18 @@
 <script>
+import {useAppStore} from '~/store/app'
+
 export default {
   setup() {
-    const { t } = useI18n({useScope: 'local'})
+    const { t, locale } = useI18n({useScope: 'local'})
+    const appStore = useAppStore()
 
-    const paymentsData = ref()
-
-    const getPayments = async () => {
-      return await usePayments().then((res) => {
-        paymentsData.value = res.value
-      })
-    }
-    
-    getPayments()
+    const payments = computed(() => {
+      return appStore.payments(locale.value)
+    })
 
     return {
       t,
-      paymentsData
+      payments
     }
   },
 
@@ -104,7 +101,7 @@ export default {
           <div class="footer-title">{{ t('payment_options') }}</div>
           <div class="payment-images">
             <template
-                v-for="(payment, index) in paymentsData"
+                v-for="(payment, index) in payments"
                 :key="index"
             >
               <nuxt-img

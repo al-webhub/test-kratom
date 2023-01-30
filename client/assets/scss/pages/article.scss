@@ -18,8 +18,9 @@
 .hero-img {
   img {
     width: calc(100% + 40px);
+    max-width: calc(100% + 40px);
     margin-left: -20px;
-    height: 100px;
+    height: 224px;
     margin-bottom: 20px;
     object-fit: cover;
 

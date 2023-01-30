@@ -113,10 +113,10 @@ export default {
       const element = this.$refs.textarea;
       this.height = "auto !important";
       nextTick(() => {
-        if (this.minHeight) {
+        if (this.minHeight && element) {
           this.height = `${element.scrollHeight < this.minHeight ? this.minHeight : element.scrollHeight}${this.unit}`
         }
-        if (this.maxHeight) {
+        if (this.maxHeight && element) {
           if (element.scrollHeight > this.maxHeight) {
             this.height = `${this.maxHeight}${this.unit}`;
             this.isScrollEnabled = true;

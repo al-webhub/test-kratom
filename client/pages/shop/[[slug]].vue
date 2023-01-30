@@ -76,7 +76,7 @@ export default {
       </li>
     </ul>
 
-    <p v-else>{{ $t('product.products_no_found') }}</p>
+    <p v-else>{{ $t('messages.products_no_found') }}</p>
 
     <div class="loadmore">
       <button v-if="meta && meta.current_page !== meta.last_page" @click="loadmoreHandler" class="main-button">

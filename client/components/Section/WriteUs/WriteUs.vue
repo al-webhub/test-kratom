@@ -34,6 +34,7 @@ export default {
 
     <nuxt-img
       src = "/images/question-block-img.png"
+      height="304"
       sizes = "mobile:100vw desktop:100vw"
       format = "webp"
       quality = "20"

@@ -24,19 +24,26 @@ export const useTransactionStore = defineStore('transactionStore', {
 
   actions: {
 
-    async getTransactions(query: string) {
+    async getTransactions(query: string, refresh = true) {
       const runtimeConfig = useRuntimeConfig()
       const params = query? '?' + new URLSearchParams(query).toString(): '';
+      const url = `${runtimeConfig.public.apiBase}/transactions${params}`
 
-      const { data, pending, error, refresh } = await useFetch(`${runtimeConfig.public.apiBase}/transactions${params}`,{
-        onResponse({ request, response, options }) {
-          // Process the response data
-          return response._data
-        },
-      });
+      return await useApiFetch(url).then(({data, error}) => {
 
-      this.transactionsState.data = this.transactionsState.data.concat(data?.value?.data)
-      this.transactionsState.meta = data?.value?.meta
+        if(data){
+          if(refresh)
+            this.transactionsState.data = data.data
+          else
+            this.transactionsState.data = this.transactionsState.data.concat(data.data)
+
+          this.transactionsState.meta = data.meta
+        }
+
+        if(error) {
+          throw new Error(error.data)
+        }
+      })
     },
   },
 })

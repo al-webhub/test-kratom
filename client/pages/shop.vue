@@ -21,15 +21,13 @@ export default {
     })
 
     const h1 = computed(() => {
-      // if(!category.value)
-      //   return 'Kratom'
-      
-      return category.value.h1 || category.value.name
+      return category.value?.seo?.h1 || category.value?.name || ''
     })
 
     // WATCH
     watch(categorySlug, async(val) => {
       await getCategory()
+      setSeo()
       setCrumbs()
     })
 
@@ -51,7 +49,7 @@ export default {
 
       if(category.value && category.value.slug !== 'shop') {
         crumbs.push({
-          name: category.value.name,
+          name: category.value.seo.h1 || category.value.name,
           link: category.value.slug
         })
       }
@@ -59,8 +57,24 @@ export default {
       useCrumbs().setCrumbs(crumbs)
     }
 
-    await getCategory();
-    setCrumbs();
+    const setSeo = () => {
+      useHead({
+        title: category.value && (category.value.seo.meta_title || category.value.seo.h1 || category.value.name),
+        meta: [
+          {
+            name: 'description',
+            content: category.value && category.value.seo.meta_description
+          },
+        ],
+      })
+    }
+
+    await getCategory().then(() => {
+      //set meta after category fetch
+      setSeo()
+      setCrumbs()
+    });
+
 
     return {
       categoryStore,
@@ -104,7 +118,8 @@ export default {
   watch: {
     activeCategory: {
       handler(indx) {
-        navigateTo(this.localePath(this.categories[indx].slug))
+        if(indx !== null)
+          navigateTo(this.localePath(this.categories[indx].slug))
       }
     },
 

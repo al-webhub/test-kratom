@@ -8,15 +8,27 @@ export default {
     const slug = computed(() => route?.params?.article)
 
     const articleStore = useArticleStore()
+
+    const article = computed(() => {
+      return articleStore.article
+    })
  
-    await useAsyncData('article', () => articleStore.getOne(slug.value))
+    const articles = computed(() => {
+      return articleStore.all
+    })
+
+    await useAsyncData('article', () => articleStore.getOne(slug.value).catch((e) => {
+      throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
+    }))
+
     await useAsyncData('articles', () => articleStore.getAll({
         per_page: 4, 
         lang: locale.value
     }, true))
 
     return {
-      articleStore,
+      article,
+      articles,
       t
     }
   },
@@ -27,14 +39,6 @@ export default {
   },
 
   computed: {
-    article() {
-      return this.articleStore?.article;
-    },
-
-    articles() {
-      return this.articleStore?.all;
-    },
-
     photo() {
       if(this.article.image) 
         return '/server/' + this.article.image

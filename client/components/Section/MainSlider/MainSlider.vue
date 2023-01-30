@@ -5,6 +5,7 @@ export default {
     return {
       currentIndex: 0,
       bannersAmount: 0,
+      nextTickAnimate: false
     }
   },
   
@@ -29,11 +30,19 @@ export default {
         this.currentIndex = 0;
     }
   },
-  computed: {},
-  watch: {
+
+  computed: {
+    canAnimate(){
+      return this.nextTickAnimate
+    }
   },
+  
   created() {
     this.bannersAmount = this.banners.length;        
+
+    this.$nextTick(() => {
+        this.nextTickAnimate = true
+    })
   }
 }
 </script>
@@ -66,12 +75,12 @@ export default {
             >
             </nuxt-img> 
 
-            <div class="content container">
+            <div :class="{animated: canAnimate}" class="content container">
               <p class="content__line-1">{{ banner.caption }}</p>
               <p class="content__line-2">{{ banner.excerpt }}</p>
-              <a :href="banner.link" class="main-button primary">
+              <NuxtLink :to="localePath(banner.link)" class="main-button primary">
                 <span class="text">{{ banner.title }}</span>
-              </a>
+              </NuxtLink>
             </div>
           </li>
 		    </template>

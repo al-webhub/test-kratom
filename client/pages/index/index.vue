@@ -22,6 +22,21 @@ export default {
     await useAsyncData('reviews', () => reviewStore.getAll({per_page: 8}))
     await useAsyncData('articles', () => articleStore.getAll({per_page: 4, lang: locale.value}))
 
+
+    const setSeo = () => {
+      useHead({
+        title: t('seo.title'),
+        meta: [
+          {
+            name: 'description',
+            content: t('seo.description')
+          },
+        ],
+      })
+    }
+
+    setSeo()
+
     return {
       productStore,
       reviewStore,
@@ -77,7 +92,7 @@ export default {
     <section-main-slider :banners="banner.items"></section-main-slider>
   </simple-decorator> 
 
-  <section-products-slider :products="products" class="section"></section-products-slider>
+  <lazy-section-products-slider :products="products" class="section"></lazy-section-products-slider>
   
   <!-- ABOUT US -->
   <simple-decorator 
@@ -98,14 +113,14 @@ export default {
     <section-our-advantages></section-our-advantages>
   </simple-decorator>
   
-  <section-articles v-if="articles && articles.length" :articles="articles" class="section"></section-articles>
+  <lazy-section-articles v-if="articles && articles.length" :articles="articles" class="section"></lazy-section-articles>
 
-  <section-client-reviews v-if="reviews && reviews.length" :reviews="reviews" class="section"></section-client-reviews>
+  <lazy-section-client-reviews v-if="reviews && reviews.length" :reviews="reviews" class="section"></lazy-section-client-reviews>
 
   <section-seo :title="page.h1" :text="page.seo_text" class="section"></section-seo>
 
   <section-write-us></section-write-us>
 
-  <popup-choose-kratom></popup-choose-kratom>
+  <lazy-popup-choose-kratom></lazy-popup-choose-kratom>
 </div>
 </template>

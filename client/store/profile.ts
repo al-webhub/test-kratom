@@ -57,25 +57,19 @@ export const useProfileStore = defineStore('profileStore', {
 
     async getProfile() {
       const runtimeConfig = useRuntimeConfig()
-      const context = this
+      const url = `${runtimeConfig.public.apiBase}/profile`
 
-      return await useFetch(`${runtimeConfig.public.apiBase}/profile`,{
-        headers: {
-          'Accept': 'application/json',
-          'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        credentials: 'include',
-        onResponse({ request, response, options }) {
-          if(response.ok)
-            context.setProfileData(response._data as Profile)
-        },
-        onResponseError({ request, response, options }) {
-          console.log('PROFILE RESP Error', response._data)
-          return response._data
+      return await useApiFetch(url).then(({data, error}) => {
+
+        if(data) {
+          this.setProfileData(data as Profile)
+          return this.profileState
         }
-      });
 
+        if(error) {
+          throw new Error(error.data)
+        }
+      })
     },
 
     async getReferrals(params = null) {

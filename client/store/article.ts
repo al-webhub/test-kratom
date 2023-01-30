@@ -44,11 +44,15 @@ export const useArticleStore = defineStore('articleStore', {
     async getOne(slug: string) {
       const runtimeConfig = useRuntimeConfig()
       const url = `${runtimeConfig.public.apiBase}/articles/${slug}`
-      const context = this
 
-      return await useApiFetch(url).then(({data}) => {
+      return await useApiFetch(url).then(({data, error}) => {
         if(data)
-          context.articleState = data
+          this.articleState = data
+        
+        if(error)
+          throw new Error(error)  
+
+        return data
       })
     },
   },

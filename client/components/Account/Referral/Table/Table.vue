@@ -1,9 +1,12 @@
 <script>
 export default {
-  data() {
-    return {
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
+    return {t}
+  },
 
-    }
+  data() {
+    return {}
   },
 
   props: {
@@ -13,9 +16,7 @@ export default {
   },
 
   methods: {
-    loadmore() {
-
-    }
+    loadmore() {}
   }
 }
 </script>
@@ -25,10 +26,10 @@ export default {
 <template>
   <div class="referral-history">
     <div class="referral-history__header">
-      <p class="referral-history__name referral-history-position-1-lvl">{{ $t('text.My_referral') }}<br>(1st lvl)</p>
-      <p class="referral-history__name referral-history-position-2-lvl">{{ $t('text.Referral_partners') }}<br>(2nd lvl)</p>
-      <p class="referral-history__name referral-history-position-3-lvl">{{ $t('text.Referral_partners') }}<br>(3nd lvl)</p>
-      <p class="referral-history__name referral-history-position-data">{{ $t('text.add_date') }}</p>
+      <p class="referral-history__name referral-history-position-1-lvl">{{ t('My_referral') }}<br>({{ t('lvl', {lvl: 1}) }})</p>
+      <p class="referral-history__name referral-history-position-2-lvl">{{ t('Referral_partners') }}<br>({{ t('lvl', {lvl: 2}) }})</p>
+      <p class="referral-history__name referral-history-position-3-lvl">{{ t('Referral_partners') }}<br>({{ t('lvl', {lvl: 3}) }})</p>
+      <p class="referral-history__name referral-history-position-data">{{ t('add_date') }}</p>
       <p class="referral-history__name referral-history-position-last"></p>
     </div>
 
@@ -45,13 +46,29 @@ export default {
           @click="loadmore()"
           style="text-align:center; cursor:pointer;padding:10px"
         >
-          {{ $t('text.Load_more') }}
+          {{ $t('button.show_more') }}
         </div>
     </div>
     
     <div v-else class="referral-info-body referra-empty">
-      <p>{{ $t('account.network_is_empty') }}</p>
+      <p>{{ $t('messages.network_is_empty') }}</p>
     </div>
 
   </div>
 </template>
+<i18n>
+  {
+    "en": {
+      "My_referral": "My referral",
+      "Referral_partners": "Referral partners",
+      "add_date": "add date",
+      "lvl": "{lvl} lvl"
+    },
+    "ru": {
+      "My_referral": "Реферал",
+      "Referral_partners": "Партнеры",
+      "add_date": "Дата добавления",
+      "lvl": "{lvl} урв."
+    }
+  }
+</i18n>

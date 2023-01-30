@@ -3,7 +3,10 @@ export const useCartStore = defineStore('cartStore', {
 
   state: () => ({ 
     is_show: false,
-    buy_1_is_show: false,
+    buy_1: {
+      product: null,
+      is_show: false,
+    },
     errors: {},
     orderState: {
       bonusesUsed: 0,
@@ -11,7 +14,7 @@ export const useCartStore = defineStore('cartStore', {
       payment: null,
       user: {
         id: 1,
-        name: 'Vasia',
+        name: 'User',
         email: null,
         firstname: null,
         lastname: null,
@@ -31,16 +34,20 @@ export const useCartStore = defineStore('cartStore', {
   }),
 
   getters: {
-    buy1IsShow: (state) => state.buy_1_is_show,
+    buy1IsShow: (state) => state.buy_1.is_show,
+    buy1Product: (state) => state.buy_1.product,
     show: (state) => state.is_show,
     cart: (state) => state.data,
     order: (state) => state.orderState
   },
 
   actions: {
+    setBuy1Product(product) {
+      this.buy_1.product = product
+    },
 
     toggleBuy1() {
-      this.buy_1_is_show = !this.buy_1_is_show
+      this.buy_1.is_show = !this.buy_1.is_show
     },
 
     open() {

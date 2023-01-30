@@ -58,7 +58,8 @@ export default {
           format = "webp"
           quality = "40"
           loading = "lazy"
-          class="image"
+          fit="contain"
+          class="image contain"
         >
         </nuxt-img>
       </li>

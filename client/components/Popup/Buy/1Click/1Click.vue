@@ -1,13 +1,16 @@
 <script>
 import { useCartStore } from '~/store/cart';
+import {useFeedbackStore} from '~/store/feedback'
 
 export default {
   setup() {
     const { t } = useI18n({useScope: 'local'})
+    const feedbackStore = useFeedbackStore()
     const cartStore = useCartStore()
 
     return {
       cartStore,
+      feedbackStore,
       t
     }
   },
@@ -16,6 +19,7 @@ export default {
     return {
       order: {
         name: null,
+        phone: null,
         text: null
       },
     }
@@ -25,6 +29,14 @@ export default {
     isActive() {
       return this.cartStore.buy1IsShow
     },
+
+    errors() {
+      return this.feedbackStore.errors
+    },
+
+    product() {
+      return this.cartStore.buy1Product
+    }
   },
 
   methods: {
@@ -33,7 +45,22 @@ export default {
     },
 
     async createHandler() {
-      
+      try {
+        await this.feedbackStore.createFeedback({
+          ...this.order,
+          extras: {
+            product: this.product
+          }
+        }).then((res) => {
+          useNoty().setNoty(this.$t('noty.1click_success'))
+          this.closeHandler()
+          this.order.name = null
+          this.order.phone = null
+          this.order.text = null
+        })
+      }catch(e) {
+          useNoty().setNoty(this.$t('noty.1click_fail'))
+      }      
     },
   }
 }
@@ -51,11 +78,29 @@ export default {
       <div>
         <p class="form-item">{{ t('leave_your_contacts') }}</p>
 
-        <form-text v-model="order.name" :placeholder="$t('form.first_name')" class="form-item"></form-text>
+        <form-text
+          v-model="order.name"
+          :placeholder="$t('form.first_name')"
+          :error="errors?.name"
+          class="form-item"
+        >
+        </form-text>
 
-        <form-text v-model="order.name" :placeholder="$t('form.first_name')" class="form-item"></form-text>
+        <form-text
+          v-model="order.phone"
+          :placeholder="$t('form.phone')"
+          :error="errors?.phone"
+          class="form-item"
+        >
+        </form-text>
 
-        <form-textarea v-model="order.text" :placeholder="$t('form.your_review')" class="form-item"></form-textarea>
+        <form-textarea
+          v-model="order.text"
+          :placeholder="$t('form.your_comment')"
+          :error="errors?.text"
+          class="form-item"
+        >
+        </form-textarea>
       </div>
     </template>
 

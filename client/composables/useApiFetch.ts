@@ -1,13 +1,11 @@
 export const useApiFetch = async (url: string, body: Object = null, method: string = 'GET') => {
-  const nuxtApp = useNuxtApp()
-
-  const locale = nuxtApp.$i18n.locale
+  const locale = useNuxtApp().$i18n.locale
 
   const headers = {
     'Accept': 'application/json',
     'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
     'X-Requested-With': 'XMLHttpRequest',
-    'Accept-Language': locale
+    'Accept-Language': locale.value
   };
 
   let data = null;

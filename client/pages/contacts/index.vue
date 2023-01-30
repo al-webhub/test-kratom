@@ -1,13 +1,14 @@
 <script>
+import {useFeedbackStore} from '~/store/feedback'
 
 export default {
   setup() {
-    const { t } = useI18n({
-      useScope: 'local'
-    }) 
-
+    const feedbackStore = useFeedbackStore()
+    const { t } = useI18n({useScope: 'local'}) 
+  
     return {
-      t
+      t,
+      feedbackStore
     }
   },
 
@@ -16,7 +17,7 @@ export default {
       feedback: {
         name: null,
         email: null,
-        content: null,
+        text: null,
       },
     }
   },
@@ -43,6 +44,7 @@ export default {
         viber: contacts.viber
       }
     },
+
     contacts() {
       const contacts = useContacts()
 
@@ -53,6 +55,9 @@ export default {
       ]
     },
 
+    errors() {
+      return this.feedbackStore.errors
+    }
   },
 
   methods: {
@@ -69,11 +74,18 @@ export default {
       ])
     },
 
-    sendHandler() {
-      useNoty().setNoty(this.$t('noty.message_success'))
-      this.feedback.name = null
-      this.feedback.email = null
-      this.feedback.content = null
+    async sendHandler() {
+      try {
+        await this.feedbackStore.createFeedback(this.feedback).then((res) => {
+          useNoty().setNoty(this.$t('noty.message_success'))
+          
+          this.feedback.name = null
+          this.feedback.email = null
+          this.feedback.text = null
+        })
+      }catch(e) {
+          useNoty().setNoty(this.$t('noty.message_fail'))
+      }
     }
   },
 
@@ -140,18 +152,21 @@ export default {
                 <form-text 
                   v-model="feedback.name"
                   :placeholder="$t('form.first_name')"
+                  :error="errors?.name"
                   class="form-item"
                 />
                 
                 <form-text 
                   v-model="feedback.email"
                   :placeholder="$t('form.email')"
+                  :error="errors?.email"
                   class="form-item"
                 />
                 
                 <form-textarea 
-                  v-model="feedback.content"
+                  v-model="feedback.text"
                   :placeholder="$t('form.your_comment')"
+                  :error="errors?.text"
                   class="form-item"
                 />
 

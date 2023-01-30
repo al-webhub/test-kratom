@@ -34,6 +34,7 @@ export default {
     },
 
     buyHandler() {
+      this.cartStore.setBuy1Product(this.selectedModification)
       this.cartStore.toggleBuy1()
     }
   }
@@ -77,6 +78,6 @@ export default {
       </button>
     </div>
 
-    <popup-buy-1-click></popup-buy-1-click>
+    <lazy-popup-buy-1-click></lazy-popup-buy-1-click>
   </div>
 </template>
