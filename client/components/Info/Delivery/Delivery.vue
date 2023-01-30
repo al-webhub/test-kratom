@@ -1,24 +1,16 @@
-<script>
-export default {
+<script setup>
+  import {useAppStore} from '~/store/app'
 
-  data() {
-    return {
-      deliveriesData: null
-    }
-  },
+  const { locale } = useI18n({useScope: 'local'})
+  const appStore = useAppStore()
 
-  methods: {
-    async getDeliveries() {
-      return await useDeliveries().then((res) => {
-        this.deliveriesData = res.value
-      })
-    },
-  },
+  const deliveryTimes = computed(() => {
+    return appStore.deliveryTimes(locale.value)
+  })
 
-  async created() {
-    await this.getDeliveries()
-  }
-}
+  const deliveryMethods = computed(() => {
+    return appStore.deliveryMethods(locale.value)
+  })
 </script>
 
 <style src="./delivery.scss" lang="scss" scoped />
@@ -31,8 +23,8 @@ export default {
       {{ $t('delivery.we_have_several') }}
     </div>
     
-    <ul v-if="deliveriesData && deliveriesData.times" class="items">
-      <li v-for="(item, index) in deliveriesData.times" :key="index" class="item">
+    <ul v-if="deliveryTimes" class="items">
+      <li v-for="(item, index) in deliveryTimes" :key="index" class="item">
         <div class="item__name">{{ item }}</div>
       </li>
     </ul>
@@ -43,8 +35,8 @@ export default {
       {{ $t('delivery.we_have_several') }}
     </div>
 
-    <ul v-if="deliveriesData && deliveriesData.methods" class="items">
-      <li v-for="(item, index) in deliveriesData.methods" :key="index" class="item">
+    <ul v-if="deliveryMethods" class="items">
+      <li v-for="(item, index) in deliveryMethods" :key="index" class="item">
         <div class="item__name">{{ item }}</div>
       </li>
     </ul>

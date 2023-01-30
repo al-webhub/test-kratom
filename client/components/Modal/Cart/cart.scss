@@ -9,6 +9,14 @@
   }
 }
 
+.total__item{
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #BDBDBD;
+}
+
 @media screen and (min-width: 1201px) {
   .popup-noty-cart__button:hover::before {
       transform: rotate(45deg) translate(0px, -150px);

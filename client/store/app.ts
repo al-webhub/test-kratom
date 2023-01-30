@@ -39,37 +39,37 @@ export const useAppStore = defineStore('appStore', {
           }
         },
         ru: {
-          "sber": {
-            "name": "Sber",
-            "image": "/images/payment/visa.png"
+          sber: {
+            name: "Sber",
+            image: "/images/payment/sber.png"
           },
-          "tinkoff": {
-            "name": "Tinkoff",
-            "image": "/images/payment/visa.png"
+          tinkoff: {
+            name: "Tinkoff",
+            image: "/images/payment/tinkoff.png"
           },
-          "qiwi": {
-            "name": "Qiwi",
-            "image": "/images/payment/qiwi.png"
+          qiwi: {
+            name: "Qiwi",
+            image: "/images/payment/qiwi.png"
           },
-          "bitcoin": {
-            "name": "Любая криптовалюта",
-            "image": "/images/payment/bitcoin.png"
+          bitcoin: {
+            name: "Любая криптовалюта",
+            image: "/images/payment/bitcoin.png"
           },
-          "visa": {
-            "name": "Visa",
-            "image": "/images/payment/visa.png"
+          visa: {
+            name: "Visa",
+            image: "/images/payment/visa.png"
           },
-          "mastercard": {
-            "name": "Mastercard",
-            "image": "/images/payment/mastercard.png"
+          mastercard: {
+            name: "Mastercard",
+            image: "/images/payment/mastercard.png"
           },
-          "paypal": {
-            "name": "Paypal",
-            "image": "/images/payment/paypal.png"
+          paypal: {
+            name: "Paypal",
+            image: "/images/payment/paypal.png"
           },
-          "wu": {
-            "name": "Western Union",
-            "image": "/images/payment/wu.png"
+          wu: {
+            name: "Western Union",
+            image: "/images/payment/wu.png"
           }
         }
       },

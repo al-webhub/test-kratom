@@ -38,6 +38,7 @@ export default {
         <template v-for="meta in head.meta" :key="meta.id">
           <Meta :id="meta.id" :property="meta.property" :content="meta.content" />
         </template>
+        <Meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
       </Head>
       <Body>
         <the-header></the-header>

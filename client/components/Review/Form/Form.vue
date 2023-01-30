@@ -64,7 +64,7 @@ export default {
         </p>
       </template>
       <template v-else>
-        <button @click="loginHandler" class="button-enter">{{ $t('button.Log_In') }}</button>
+        <button @click="loginHandler" class="button-enter a-link">{{ $t('button.Log_In') }}</button>
       </template>
     </div>
     

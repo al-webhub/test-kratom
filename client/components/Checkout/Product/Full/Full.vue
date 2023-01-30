@@ -1,5 +1,10 @@
 <script>
 export default {
+  setup() {
+    const {t} = useI18n({useScope: 'local'})
+    return {t}
+  },
+
   props: {
     modification: {
       type: Object,
@@ -31,6 +36,7 @@ export default {
       <div class="order__info__preview order-position-item">
         <NuxtLink :to="localePath('/' + modification.slug)" class="order__info__preview__img">
           <nuxt-img
+            v-if="photo"
             :src="photo"
             :alt="modification.image?.alt"
             :title="modification.image?.title"
@@ -83,12 +89,12 @@ export default {
       </div>
 
       <div class="order__info__quantity order-position-quantity">
-        <p class="order-caption">{{ $t('text.quantity') }}:</p>
+        <p class="order-caption">{{ t('quantity') }}:</p>
         <form-amount v-model="modification.amount"></form-amount>
       </div>
 
       <div class="order__info__price order__info__price-subtotal order-position-subtotal">
-        <p class="order-caption">{{ $t('text.subtotal') }}:</p>
+        <p class="order-caption">{{ t('subtotal') }}:</p>
         <p>USD <span>{{ modification.price * modification.amount }}</span></p>
       </div>
 
@@ -100,3 +106,15 @@ export default {
 
   </li>
 </template>
+<i18n>
+  {
+    en: {
+      quantity: "Quantity",
+      subtotal: "Subtotal"
+    },
+    ru: {
+      quantity: "Количество",
+      subtotal: "Сумма"
+    }
+  }
+</i18n>

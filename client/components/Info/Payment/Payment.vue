@@ -1,24 +1,12 @@
-<script>
-export default {
+<script setup>
+  import {useAppStore} from '~/store/app'
 
-  data() {
-    return {
-      paymentsData: null
-    }
-  },
-  
-  methods: {
-    async getPayments() {
-      return await usePayments().then((res) => {
-        this.paymentsData = res.value
-      })
-    },
-  },
+  const { locale } = useI18n({useScope: 'local'})
+  const appStore = useAppStore()
 
-  async created() {
-    await this.getPayments()
-  }
-}
+  const payments = computed(() => {
+    return appStore.payments(locale.value)
+  })
 </script>
 
 <style src="./payment.scss" lang="scss" scoped />
@@ -31,7 +19,7 @@ export default {
     </div>
     
     <ul class="items">
-      <li v-for="(item, index) in paymentsData" :key="index" class="item">
+      <li v-for="(item, index) in payments" :key="index" class="item">
         <NuxtPicture v-if="item" :src="item.image" class="item__image"></NuxtPicture>
         <div class="item__name">{{ item.name }}</div>
       </li>

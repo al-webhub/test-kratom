@@ -74,6 +74,14 @@
         margin-right: 0;
       }
     }
+
+    &:first-child {
+      margin-bottom: 15px;
+
+      @include _tablet {
+        margin-bottom: 0;
+      }
+    }
   }
 }
 

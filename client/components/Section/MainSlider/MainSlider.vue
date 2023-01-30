@@ -5,7 +5,11 @@ export default {
     return {
       currentIndex: 0,
       bannersAmount: 0,
-      nextTickAnimate: false
+      nextTickAnimate: false,
+      touch: {
+        from: null,
+        to: null
+      }
     }
   },
   
@@ -17,18 +21,37 @@ export default {
   },
 
   methods: {
-    prevHandler: function(){
+    prevHandler() {
       if(this.currentIndex >= 1)
         this.currentIndex--;
       else
         this.currentIndex = this.bannersAmount - 1;
     },
-    nextHandler: function(){
+
+    nextHandler() {
       if(this.currentIndex < this.bannersAmount - 1)
         this.currentIndex++;
       else
         this.currentIndex = 0;
-    }
+    },
+
+    touchStartHandler(event) {
+      this.touch.from = event.changedTouches[0].screenX
+    },
+
+    touchEndHandler(event) {
+      this.touch.to = event.changedTouches[0].screenX
+
+      const step = this.touch.from - this.touch.to
+      
+      if(Math.abs(step) < 30)
+        return
+
+      if(step < 0)
+        this.prevHandler()
+      else
+        this.nextHandler()
+    },
   },
 
   computed: {
@@ -54,7 +77,11 @@ export default {
 
     <simple-decorator-list class="decor-list"></simple-decorator-list>
 
-	    <ul class="slides">
+	    <ul
+        @touchstart="touchStartHandler"
+        @touchend="touchEndHandler"
+        class="slides"
+      >
 
 		    <template v-for="(banner, index) in banners" :key="banner.id"> 
           <li

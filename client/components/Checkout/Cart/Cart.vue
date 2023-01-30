@@ -1,8 +1,12 @@
 <script>
+import { useAuthStore } from '~/store/auth';
+
 export default {
   setup() {
-    const { t } = useI18n({useScope: 'local'}) 
-    return {t}
+    const { t } = useI18n({useScope: 'local'})
+    const authStore = useAuthStore()
+
+    return {t, authStore}
   },
 
   data() {
@@ -50,7 +54,11 @@ export default {
 
     maxBonusesUsed() {
       return 100
-    }
+    },
+
+    isAuth() {
+      return this.authStore.isAuth
+    },
   },
 
   methods: {
@@ -115,20 +123,18 @@ export default {
               <p class="description">usd {{ total }}</p>
             </div>
 
-            <div v-if="user" class="bonuses__container">
+            <div v-if="isAuth" class="bonuses__container">
               <div class="bonuses__wrapper">
                 <p v-html="t('how_much')"></p>
               </div>
 
               <div class="bonuses__wrapper">
                 <p class="sub-text">{{ t('your_bonus_balance') }}: <span>USD {{ bonusesLeft.toFixed(2) }}</span></p>
-                
                 <form-amount @update:modelValue="updateBonusHandler" :model-value="bonusesUsed" :min="0" :max="maxBonusesUsed"></form-amount>
-
               </div>
             </div>
 
-            <div :class="{active: hintIsOpen}" class="total-info">
+            <div :class="{active: hintIsOpen, extra: !isAuth}" class="total-info">
                 <p class="total-info__caption">+{{ t('delivery_cost') }}</p>
                 <button @click="openHintHandler" type="button" class="info-button"></button>
                 <div class="info-drop"><p>{{ $t('delivery.The_Dispatch_takes') }}</p></div>

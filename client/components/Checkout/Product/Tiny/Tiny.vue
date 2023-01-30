@@ -29,6 +29,7 @@ export default {
   <li class="popup-noty-cart__item">
     <NuxtLink :to="localePath('/' + modification.slug)" class="img-link">
       <nuxt-img
+        v-if="photo"
         :src="photo"
         :alt="modification.image?.alt"
         :title="modification.image?.title"

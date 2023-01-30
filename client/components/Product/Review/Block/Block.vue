@@ -1,12 +1,15 @@
 <script>
 import { useReviewStore } from '~/store/review';
+import { useAuthStore } from '~/store/auth';
 
 export default {
   setup() {
     const reviewStore = useReviewStore()
+    const authStore = useAuthStore()
 
     return {
-      reviewStore
+      reviewStore,
+      authStore
     }
   },
 
@@ -46,13 +49,20 @@ export default {
 
     loadmoreHandler() {
       this.$emit('loadmore')
+    },
+
+    loginHandler() {
+      this.authStore.open('signInSocial')
     }
   },
 
   computed: {
     reviewsSlice() {
       return this.slice? this.reviews.slice(0, this.slice): this.reviews
-    }
+    },
+    isAuth() {
+      return this.authStore.isAuth
+    },
   }
 }
 </script>
@@ -90,9 +100,13 @@ export default {
       <div class="add-reviews">
         <div class="add-reviews__text">
           <p class="add-reviews__title">{{ $t('messages.feedback_and_earn') }}</p>
+          <div v-if="!isAuth" class="add-reviews__desc-0">
+            <p v-html="$t('messages.first_of_all')"></p>
+            <button @click="loginHandler" class="button-enter a-link">{{ $t('button.Log_In') }}</button>
+          </div>
           <p class="add-reviews__desc" v-html="$t('messages.leave_incognito_for', {first: '$1', second: '$2'})"></p>
         </div>
-        <button @click="addHandler" class="main-button primary btn-item">
+        <button v-if="isAuth" @click="addHandler" class="main-button primary btn-item">
           <span class="text">{{ $t('button.leave_feedback') }}</span>
         </button>
       </div>

@@ -1,17 +1,20 @@
 <script>
 import {useAppStore} from '~/store/app'
+import { useAuthStore } from '~/store/auth';
 
 export default {
   setup() {
     const { locale } = useI18n()
     const appStore = useAppStore()
+    const authStore = useAuthStore()
 
     const payments = computed(() => {
       return appStore.payments(locale.value)
     })
 
     return {
-      payments
+      payments,
+      authStore
     }
   },
 
@@ -40,7 +43,10 @@ export default {
     },
     bonuses() {
       return this.order.bonusesUsed
-    }
+    },
+    isAuth() {
+      return this.authStore.isAuth
+    },
   },
 
   methods: {
@@ -96,7 +102,7 @@ export default {
 
       </ul>
 
-      <template v-if="bonuses">
+      <template v-if="bonuses && isAuth">
         <div class="check-bonuse">
           <p class="type">{{ $t('payment.bonuses_used') }}</p>
           <p class="description">USD {{ bonuses }}</p>
