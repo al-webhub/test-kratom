@@ -1,15 +1,11 @@
 <script>
-import clientsSayBg from 'assets/images/clients-say-bg.png'; 
-
 export default {
   setup() {
     const { t } = useI18n({
       useScope: 'local'
     }) 
 
-    return {
-      t
-    }
+    return {t}
   },
 
   data() {
@@ -22,15 +18,6 @@ export default {
       type: Array,
       required: true
     }
-  },
-
-  computed: {
-    bgImage() {
-      return 'url(' + clientsSayBg + ')';
-    }
-  },
-
-  methods: {
   },
 }
 </script>

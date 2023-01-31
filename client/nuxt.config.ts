@@ -12,11 +12,11 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'page-tr', mode: 'out-in' },
   },
   
-  webpack: {
-    analyze: true,
-    extractCSS: true,
-    optimizeCSS: true,
-  },
+  // webpack: {
+  //   analyze: true,
+  //   extractCSS: true,
+  //   optimizeCSS: true,
+  // },
   
   sourcemap: false,
 
@@ -28,6 +28,7 @@ export default defineNuxtConfig({
   debug: false,
 
   nitro: {
+    // noPublicDir: true,
     compressPublicAssets: { 
       gzip: true, 
       brotli: true 
@@ -39,6 +40,8 @@ export default defineNuxtConfig({
     },
     preset: 'node-server',
     routeRules: {
+      '/pay_delivery': { static: true },
+      '/contacts': { static: true, headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/assets/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/images/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/_nuxt/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
@@ -50,12 +53,14 @@ export default defineNuxtConfig({
       '/**/*.svg': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
     }
   },
+  
+  // builder: 'webpack',
 
-  // vite: {
-  //   build: {
-  //     assetsInlineLimit: 12000
-  //   }
-  // },
+  vite: {
+    build: {
+      assetsInlineLimit: 0
+    }
+  },
 
   css: [
     '@/assets/scss/global/main.scss'

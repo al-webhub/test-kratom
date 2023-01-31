@@ -20,10 +20,6 @@ export default {
     products() {
       return this.productStore.all.slice(0,4)
     },
-
-    isActive() {
-      return this.productStore.chooseKratomIsShow
-    },
   },
 
   methods: {
@@ -37,7 +33,7 @@ export default {
 <style src="./choose-kratom.scss" lang="sass" scoped />
 
 <template>
-  <popup-layout-simple :is-active="isActive" size="medium" @close="closeHandler">
+  <popup-layout-simple size="medium" @close="closeHandler">
     <template v-slot:title>
       {{ t('kratom_for_you') }}
     </template>

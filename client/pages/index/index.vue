@@ -22,6 +22,9 @@ export default {
     await useAsyncData('reviews', () => reviewStore.getAll({per_page: 8}))
     await useAsyncData('articles', () => articleStore.getAll({per_page: 4, lang: locale.value}))
 
+    const isModalChooseKratomActive = computed(() => {
+      return productStore.chooseKratomIsShow
+    })
 
     const setSeo = () => {
       useHead({
@@ -42,6 +45,7 @@ export default {
       reviewStore,
       bannerStore,
       articleStore,
+      isModalChooseKratomActive,
       t
     }
   },
@@ -92,7 +96,7 @@ export default {
     <section-main-slider :banners="banner.items"></section-main-slider>
   </simple-decorator> 
 
-  <lazy-section-products-slider :products="products" class="section"></lazy-section-products-slider>
+  <section-products-slider :products="products" class="section"></section-products-slider>
   
   <!-- ABOUT US -->
   <simple-decorator 
@@ -113,14 +117,16 @@ export default {
     <section-our-advantages></section-our-advantages>
   </simple-decorator>
   
-  <lazy-section-articles v-if="articles && articles.length" :articles="articles" class="section"></lazy-section-articles>
+  <section-articles v-if="articles && articles.length" :articles="articles" class="section"></section-articles>
 
-  <lazy-section-client-reviews v-if="reviews && reviews.length" :reviews="reviews" class="section"></lazy-section-client-reviews>
+  <section-client-reviews v-if="reviews && reviews.length" :reviews="reviews" class="section"></section-client-reviews>
 
   <section-seo :title="page.h1" :text="page.seo_text" class="section"></section-seo>
 
   <section-write-us></section-write-us>
 
-  <lazy-popup-choose-kratom></lazy-popup-choose-kratom>
+  <transition name="fade-in">
+    <lazy-popup-choose-kratom v-if="isModalChooseKratomActive"></lazy-popup-choose-kratom>
+  </transition>
 </div>
 </template>
