@@ -1,4 +1,8 @@
 <script>
+import { useCartStore } from '~/store/cart';
+import { useAppStore } from '~/store/app'
+import { useAuthStore } from '~/store/auth';
+
 export default {
   setup() {
     const route = useRoute()
@@ -9,7 +13,6 @@ export default {
       addSeoAttributes: true
     })
     
-    //const title = computed(() => t('layouts.title', { title: t(route.meta.title ?? 'TBD') }))
     const title = "Kratomhelper";
     
     const breadcrumbsIsActive = ref(route.meta.breadcrumbsIsActive === undefined? true: route.meta.breadcrumbsIsActive)
@@ -18,7 +21,49 @@ export default {
       breadcrumbsIsActive.value = route.meta.breadcrumbsIsActive === undefined? true: route.meta.breadcrumbsIsActive
     })
 
+    // COMPUTED
+    const isModalCartActive = computed(() => {
+      return useCartStore().show
+    })
+
+    const isPopupAdultActive = computed(() => {
+      return useAppStore().adult
+    })
+
+    const isPopupAuthSignInSocialActive = computed(() => {
+      return useAuthStore().showSignInSocial
+    })
+
+    const isPopupAuthSignInEmailActive = computed(() => {
+      return useAuthStore().showSignInEmail
+    })
+
+    const isPopupAuthChangePasswordActive = computed(() => {
+      return useAuthStore().showChangePassword
+    })
+
+    const isPopupAuthLogInEmailActive = computed(() => {
+      return useAuthStore().showLogInEmail
+    })
+
+    const isPopupAuthLogInPasswordActive = computed(() => {
+      return useAuthStore().showLogInPassword
+    })
+
+    const isPopupAuthLogOutActive = computed(() => {
+      return useAuthStore().showLogOut
+    })
+    
+
     return {
+      isModalCartActive,
+      isPopupAdultActive,
+      isPopupAuthSignInSocialActive,
+      isPopupAuthSignInEmailActive,
+      isPopupAuthChangePasswordActive,
+      isPopupAuthLogInEmailActive,
+      isPopupAuthLogInPasswordActive,
+      isPopupAuthLogOutActive,
       head,
       title,
       breadcrumbsIsActive
@@ -47,31 +92,59 @@ export default {
           <the-breadcrumbs v-if="breadcrumbsIsActive"></the-breadcrumbs>
         </transition>
 
-        <lazy-modal-noty></lazy-modal-noty>
-
         <main>
           <slot />
         </main>
 
         <the-footer></the-footer>
 
-        <lazy-modal-cart></lazy-modal-cart>
+        <lazy-modal-noty></lazy-modal-noty>
 
-        <lazy-popup-adult></lazy-popup-adult>
+        <!-- MODAL / shoping cart -->
+        <transition name="move-x-right">
+          <lazy-modal-cart v-if="isModalCartActive"></lazy-modal-cart>
+        </transition>
 
-        <lazy-popup-check-money></lazy-popup-check-money>
+        <!-- POPUP / has 18? -->
+        <transition name="fade-in">
+          <lazy-popup-adult v-if="isPopupAdultActive"></lazy-popup-adult>
+        </transition>
 
-        <lazy-popup-auth-change-password></lazy-popup-auth-change-password>
-        <lazy-popup-auth-log-in-email></lazy-popup-auth-log-in-email>
-        <lazy-popup-auth-log-in-password></lazy-popup-auth-log-in-password>
-        <lazy-popup-auth-log-out></lazy-popup-auth-log-out>
-        <lazy-popup-auth-sign-in-social></lazy-popup-auth-sign-in-social>
-        <lazy-popup-auth-sign-in-email></lazy-popup-auth-sign-in-email>
+        <!-- POPUP / main auth entry -->
+        <transition name="fade-in">
+          <lazy-popup-auth-sign-in-social v-if="isPopupAuthSignInSocialActive"></lazy-popup-auth-sign-in-social>
+        </transition>
 
-        <section class="push_notification">
-          <ul class="push_notification__list">
-          </ul>
-        </section>
+        <!-- POPUP / registration -->
+        <transition name="fade-in">
+          <lazy-popup-auth-sign-in-email v-if="isPopupAuthSignInEmailActive"></lazy-popup-auth-sign-in-email>
+        </transition>
+
+        <!-- POPUP / change password -->
+        <transition name="fade-in">
+          <lazy-popup-auth-change-password v-if="isPopupAuthChangePasswordActive"></lazy-popup-auth-change-password>
+        </transition>
+
+        <!-- POPUP / log in 1 step -->
+        <transition name="fade-in">
+          <lazy-popup-auth-log-in-email v-if="isPopupAuthLogInEmailActive"></lazy-popup-auth-log-in-email>
+        </transition>
+
+        <!-- POPUP / log in 2 step -->
+        <transition name="fade-in">
+          <lazy-popup-auth-log-in-password v-if="isPopupAuthLogInPasswordActive"></lazy-popup-auth-log-in-password>
+        </transition>
+
+        <!-- POPUP / log out -->
+        <transition name="fade-in">
+          <lazy-popup-auth-log-out v-if="isPopupAuthLogOutActive"></lazy-popup-auth-log-out>
+        </transition>
+
+        <!-- POPUP / check money -->
+        <transition name="fade-in">
+          <lazy-popup-check-money v-if="false"></lazy-popup-check-money>
+        </transition>
+
       </Body>
     </Html>
   </div>

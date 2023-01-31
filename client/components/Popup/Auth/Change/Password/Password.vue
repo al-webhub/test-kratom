@@ -50,10 +50,6 @@ export default {
       ]
     },
 
-    isActive() {
-      return this.authStore.showChangePassword
-    },
-
     isDisabled() {
       return !this.password.length || !this.password_confirmation.length
     }
@@ -75,7 +71,7 @@ export default {
 <style src="./password.scss" lang="sass" scoped />
 
 <template>
-  <popup-layout-simple :is-active="isActive" @close="closeHandler">
+  <popup-layout-simple @close="closeHandler">
     <template v-slot:title>
       {{ $t('title.set_new_password') }}
     </template>

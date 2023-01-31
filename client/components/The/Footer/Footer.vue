@@ -110,9 +110,9 @@ export default {
                 :title="payment.name"
                 width="65"
                 height="35"
-                sizes = "mobile:80px"
+                sizes = "mobile:65px"
                 format = "webp"
-                quality = "100"
+                quality = "90"
                 loading = "lazy"
                 class="payment-image">
               </nuxt-img>

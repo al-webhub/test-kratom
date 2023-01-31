@@ -10,15 +10,7 @@ export default {
     }
   },
 
-  data() {
-    return {}
-  },
-
   computed: {
-    isActive() {
-      return this.authStore.showLogInPassword
-    },
-
     user() {
       return this.authStore.getUser
     },
@@ -51,7 +43,7 @@ export default {
 <style src="./password.scss" lang="sass" scoped />
 
 <template>
-  <popup-layout-simple :is-active="isActive" @close="closeHandler">
+  <popup-layout-simple @close="closeHandler">
     <template v-slot:title>
       {{ $t('title.password') }}
     </template>

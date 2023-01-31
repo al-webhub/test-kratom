@@ -12,18 +12,20 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'page-tr', mode: 'out-in' },
   },
   
-  // webpack: {
-  //   analyze: true,
-  //   extractCSS: true,
-  //   optimizeCSS: true,
-  // },
-  // sourcemap: false,
-  // experimental: {
-  //   asyncEntry: true,
-  //   viteServerDynamicImports: true
-  // },
+  webpack: {
+    analyze: true,
+    extractCSS: true,
+    optimizeCSS: true,
+  },
+  
+  sourcemap: false,
 
-  debug: true,
+  experimental: {
+    asyncEntry: true,
+    viteServerDynamicImports: true
+  },
+
+  debug: false,
 
   nitro: {
     compressPublicAssets: { 
@@ -31,9 +33,10 @@ export default defineNuxtConfig({
       brotli: true 
     },
     minify: true,
-    // prerender: {
-    //   crawlLinks: false
-    // },
+    prerender: {
+      crawlLinks: false,
+      routes: []
+    },
     preset: 'node-server',
     routeRules: {
       '/assets/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
@@ -48,17 +51,18 @@ export default defineNuxtConfig({
     }
   },
 
-  vite: {
-    build: {
-      assetsInlineLimit: 12000
-    }
-  },
+  // vite: {
+  //   build: {
+  //     assetsInlineLimit: 12000
+  //   }
+  // },
 
   css: [
     '@/assets/scss/global/main.scss'
   ],
 
   modules: [
+    '@nuxtjs/fontaine',
     [
       'nuxt-delay-hydration',
       {
@@ -74,6 +78,7 @@ export default defineNuxtConfig({
             wght: [400, 500, 700, 900]
           },
         },
+        display: 'swap',
         preload: true
       }
     ],

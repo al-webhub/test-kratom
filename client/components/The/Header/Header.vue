@@ -9,10 +9,15 @@ export default {
     const authStore = useAuthStore()
     const productStore = useProductStore()
     
+    const isModalLivesearchActive = computed(() => {
+      return productStore.livesearchIsShow
+    })
+
     return {
       cartStore,
       authStore,
-      productStore
+      productStore,
+      isModalLivesearchActive
     }
   },
 
@@ -175,9 +180,12 @@ export default {
         <!-- LANGUAGE BUTTON -->
         <div class="lang-btn">
           <transition name="fade-in">
-            <div v-if="isLanguagesActive" class="lang-popup">
-              <modal-lang-switcher @select="languageSelectHandler"></modal-lang-switcher>
-            </div>
+            <modal-lang-switcher
+              v-if="isLanguagesActive"
+              @select="languageSelectHandler"
+              class="lang-popup"
+            >
+            </modal-lang-switcher>
           </transition>
 	        
 	        <button class="js-button js-drop-button" @click="toggleLanguagesHandler">
@@ -221,10 +229,18 @@ export default {
           <span class="decor"></span>
         </button>
 
-        <modal-menu-mobile :is-active="burgerIsActive" :menu="menu" @close="closeMobileMenuHandler"></modal-menu-mobile>
+        <transition name="move-x-right">
+          <modal-menu-mobile
+            v-if="burgerIsActive"
+            :menu="menu"
+            @close="closeMobileMenuHandler"
+          ></modal-menu-mobile>
+        </transition>
     </div>
   </header>
 
-  <modal-livesearch></modal-livesearch>
+  <transition name="fade-in">
+    <modal-livesearch v-if="isModalLivesearchActive"></modal-livesearch>
+  </transition>
 
 </template>

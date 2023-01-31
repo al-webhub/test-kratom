@@ -10,16 +10,7 @@ export default {
     }
   },
 
-  data() {
-    return {
-    }
-  },
-
   computed: {
-    isActive() {
-      return this.cartStore?.show
-    },
-
     cart() {
       return this.cartStore?.cart
     },
@@ -60,49 +51,47 @@ export default {
 <style src="./cart.scss" lang="postcss" scoped />
 
 <template>
-  <transition name="move-x-right">
-    <section v-if="isActive" class="popup-noty-cart">
-        
-      <div class="popup-noty-cart__header">
-        <simple-more-btn :text="$t('button.Back')" @click="closeHandler" is-reverse></simple-more-btn>
-        <p class="main-caption">{{ $t('title.cart') }}</p>
+  <section class="popup-noty-cart">
+      
+    <div class="popup-noty-cart__header">
+      <simple-more-btn :text="$t('button.Back')" @click="closeHandler" is-reverse></simple-more-btn>
+      <p class="main-caption">{{ $t('title.cart') }}</p>
+    </div>
+
+    <template v-if="cartLength">
+      
+      <div class="popup-noty-cart__body">
+        <ul class="popup-noty-cart__list">
+          <checkout-product-tiny
+            v-for="(product, key) in cart"
+            :modification="product"
+            :key="product.id"
+            @delete="deleteHandler(product)"
+          >
+          </checkout-product-tiny>
+        </ul>
       </div>
 
-      <template v-if="cartLength">
-        
-        <div class="popup-noty-cart__body">
-          <ul class="popup-noty-cart__list">
-            <checkout-product-tiny
-              v-for="(product, key) in cart"
-              :modification="product"
-              :key="product.id"
-              @delete="deleteHandler(product)"
-            >
-            </checkout-product-tiny>
-          </ul>
-        </div>
-
-        <div class="popup-noty-cart__footer js-drop-item">
-          <button class="popup-noty-cart__open-button js-drop-button"></button>
-          <div class="total__wrapper">
-            <div class="total__item total__item-general">
-              <p class="type">{{ $t('label.subtotal') }}</p>
-              <p class="description">usd {{ total }}</p>
-            </div>
+      <div class="popup-noty-cart__footer js-drop-item">
+        <button class="popup-noty-cart__open-button js-drop-button"></button>
+        <div class="total__wrapper">
+          <div class="total__item total__item-general">
+            <p class="type">{{ $t('label.subtotal') }}</p>
+            <p class="description">usd {{ total }}</p>
           </div>
-          
-          <NuxtLink :to="localePath('/checkout')" @click="closeHandler" class="main-button primary btn">
-            <span class="text">{{ $t('button.checkout') }}</span>
-          </NuxtLink>
-          
-          <NuxtLink :to="localePath('/shop')" @click="closeHandler" class="main-button btn">
-            <span class="text">{{ $t('button.edit') }}</span>
-          </NuxtLink>
-
         </div>
-      </template>
+        
+        <NuxtLink :to="localePath('/checkout')" @click="closeHandler" class="main-button primary btn">
+          <span class="text">{{ $t('button.checkout') }}</span>
+        </NuxtLink>
+        
+        <NuxtLink :to="localePath('/shop')" @click="closeHandler" class="main-button btn">
+          <span class="text">{{ $t('button.edit') }}</span>
+        </NuxtLink>
 
-      <p class="popup-noty__empty" v-else>{{ $t('messages.cart_is_empty') }}</p>
-    </section>
-  </transition>
+      </div>
+    </template>
+
+    <p class="popup-noty__empty" v-else>{{ $t('messages.cart_is_empty') }}</p>
+  </section>
 </template>

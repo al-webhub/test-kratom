@@ -17,10 +17,6 @@ export default {
   },
 
   computed: {
-    isActive() {
-      return this.authStore.showSignInEmail
-    },
-
     user() {
       return this.authStore.getUser
     },
@@ -50,7 +46,7 @@ export default {
 
 <template>
 
-<popup-layout-simple :is-active="isActive" @close="closeHandler">
+<popup-layout-simple @close="closeHandler">
     <template v-slot:title>
       {{ $t('title.sign_up') }}
     </template>

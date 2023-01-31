@@ -12,18 +12,6 @@ export default {
     }
   },
 
-  data() {
-    return {
-      isActive: false
-    }
-  },
-
-  computed: {
-    isActive() {
-      return this.authStore.showLogOut
-    },
-  },
-
   methods: {
     closeHandler() {
       this.authStore.close('logOut')
@@ -40,7 +28,7 @@ export default {
 <style src="./out.scss" lang="sass" scoped />
 
 <template>
-  <popup-layout-simple :is-active="isActive" @close="closeHandler">
+  <popup-layout-simple @close="closeHandler">
     <template v-slot:title>
       {{ $t('title.logout') }}
     </template>

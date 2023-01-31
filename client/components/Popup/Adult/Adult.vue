@@ -13,16 +13,6 @@ export default {
     }
   },
 
-  data() {
-    return {}
-  },
-
-  computed: {
-    isActive() {
-      return this.appStore.adult
-    }
-  },
-
   methods: {
     notHandler() {
       let url = ''
@@ -55,7 +45,7 @@ export default {
 <style src="./adult.scss" lang="sass" scoped />
 
 <template>
-  <popup-layout-simple :is-active="isActive" @close="closeHandler" :can-close="false">
+  <popup-layout-simple @close="closeHandler" :can-close="false">
     <template v-slot:title>
       {{ t('you_must') }}
     </template>
