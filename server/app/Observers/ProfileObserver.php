@@ -2,7 +2,12 @@
 
 namespace App\Observers;
 
-use \Backpack\Profile\app\Models\Profile;
+use Illuminate\Support\Facades\Mail;
+
+use \App\Models\Override\Profile;
+
+use App\Mail\UserRegistered;
+use App\Mail\ReferralRegistered;
 
 class ProfileObserver
 {
@@ -14,7 +19,10 @@ class ProfileObserver
      */
     public function created(Profile $profile)
     {
-        //
+      Mail::to($profile->email)->send(new UserRegistered($profile));
+
+      if($profile->referrer)
+        Mail::to($profile->referrer->email)->send(new ReferralRegistered($profile));
     }
 
     /**
@@ -25,7 +33,7 @@ class ProfileObserver
      */
     public function updated(Profile $profile)
     {
-        //
+      //
     }
 
     /**

@@ -14,8 +14,11 @@ use \App\Observers\ReviewObserver;
 use \App\Models\Override\Order;
 use \App\Observers\OrderObserver;
 
-use \Backpack\Profile\app\Models\Profile;
+use \App\Models\Override\Profile;
 use \App\Observers\ProfileObserver;
+
+use \Backpack\Transactions\app\Models\Transaction;
+use \App\Observers\TransactionObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -24,11 +27,11 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<class-string, array<int, class-string>>
      */
-    protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
-        ],
-    ];
+    // protected $listen = [
+    //     Registered::class => [
+    //         SendEmailVerificationNotification::class,
+    //     ],
+    // ];
 
     /**
      * Register any events for your application.
@@ -40,5 +43,6 @@ class EventServiceProvider extends ServiceProvider
       Review::observe(ReviewObserver::class);
       Order::observe(OrderObserver::class);
       Profile::observe(ProfileObserver::class);
+      Transaction::observe(TransactionObserver::class);
     }
 }

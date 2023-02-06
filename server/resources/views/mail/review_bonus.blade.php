@@ -1,10 +1,10 @@
-@component('mail::layout', ['header' => 'Cashback info'])
+@component('mail::layout', ['header' => 'Review bonus'])
 <tr>
     <td style="font: 16px Arial,sans-serif; line-height: 24px; color: #333333; padding: 50px;">
-        <span style="-webkit-text-size-adjust:none; font-size: 16px; margin: 0px; display: block; padding-bottom: 20px;">
+        <span style="-webkit-text-size-adjust:none; font-size: 16px; margin: 0px; display: owner; padding-bottom: 20px;">
         Hi{{ $transaction->owner && $transaction->owner->firstname? ', '.$transaction->owner->firstname: '' }}</span>
         <span style="-webkit-text-size-adjust:none; font-size: 16px; margin: 0px;">
-        You received a cashback bonus from your order.
+        You received a bonus for posting a review on the site.
         </span>
     </td>
 </tr>

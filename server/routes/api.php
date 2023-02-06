@@ -29,7 +29,6 @@ use Backpack\Profile\app\Http\Controllers\Api\ProfileController;
 // 	Route::middleware('auth:sanctum')->get('/getUser', 'App\Http\Controllers\Auth\OAuthController@getUser');
 // });
 
-
 //Route::middleware('auth:profile')->get('/profile', [LoginController::class, 'profile']);
 //Route::middleware('auth:profile')->get('/profile', [ProfileController::class, 'show']);
 

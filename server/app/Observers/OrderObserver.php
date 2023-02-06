@@ -2,8 +2,14 @@
 
 namespace App\Observers;
 
+use Illuminate\Support\Facades\Mail;
+
 use \App\Models\Override\Order;
 use Backpack\Transactions\app\Models\Transaction;
+
+use \App\Mail\OrderCreated;
+use \App\Mail\OrderCreatedAdmin;
+
 
 class OrderObserver
 {
@@ -15,6 +21,18 @@ class OrderObserver
      */
     public function created(Order $order)
     {
+
+      // SEND NOTY TO ADMIN EMAIL
+      Mail::to(env('ADMIN_MAIL', 'info@kratomhelper.com'))->send(new OrderCreatedAdmin($order));  
+
+      // SEND NOTY TO CUSTOMER
+      $email = $order->user->email ?? null;
+      $email = $email? $email: ($order->info['user']['email'] ?? null);
+
+      if($email)
+        Mail::to($email)->send(new OrderCreated($order));
+      
+      // CREATE TRANSACTIONS
       if(!$order->user)
         return;
 
