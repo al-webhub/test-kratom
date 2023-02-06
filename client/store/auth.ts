@@ -218,14 +218,19 @@ export const useAuthStore = defineStore('authStore', {
       const runtimeConfig = useRuntimeConfig()
       const url = `${runtimeConfig.public.base}/auth/loginByToken?token=${token}`
 
-      await this.getToken().then(async () => {
-        await useApiFetch(url).then(({data}) => {
-          if(data) {
-            this.setProfileData(data)
-            this.authenticated = true
-          }
-        })
+      await this.getToken()
+
+      return await useApiFetch(url).then(({data, error}) => {
+        if(data) {
+          this.setProfileData(data)
+          this.authenticated = true
+          return data
+        }
+
+        if(error)
+          throw new Error(error)
       })
+
     }
   },
 })

@@ -1,75 +1,89 @@
-<script>
-import { useCartStore } from '~/store/cart';
-import { useAppStore } from '~/store/app'
-import { useAuthStore } from '~/store/auth';
+<script setup>
+  import { useCartStore } from '~/store/cart';
+  import { useAppStore } from '~/store/app'
+  import { useAuthStore } from '~/store/auth';
 
-export default {
-  setup() {
-    const route = useRoute()
-    const { t } = useI18n()
-    const head = useLocaleHead({
-      addDirAttribute: true,
-      identifierAttribute: 'id',
-      addSeoAttributes: true
-    })
-    
-    const title = "Kratomhelper";
-    
-    const breadcrumbsIsActive = ref(route.meta.breadcrumbsIsActive === undefined? true: route.meta.breadcrumbsIsActive)
+  const route = useRoute()
+  const { t } = useI18n()
+  const head = useLocaleHead({
+    addDirAttribute: true,
+    identifierAttribute: 'id',
+    addSeoAttributes: true
+  })
+  
+  const title = "Kratomhelper";
+  
+  const breadcrumbsIsActive = ref(route.meta.breadcrumbsIsActive === undefined? true: route.meta.breadcrumbsIsActive)
 
-    watch(route, async (route) => {
-      breadcrumbsIsActive.value = route.meta.breadcrumbsIsActive === undefined? true: route.meta.breadcrumbsIsActive
-    })
+  watch(route, async (route) => {
+    breadcrumbsIsActive.value = route.meta.breadcrumbsIsActive === undefined? true: route.meta.breadcrumbsIsActive
+  })
 
-    // COMPUTED
-    const isModalCartActive = computed(() => {
-      return useCartStore().show
-    })
+  onMounted(() => {
+    // LOGIN USER BY TOKEN
+    const token = route.query?.token
 
-    const isPopupAdultActive = computed(() => {
-      return useAppStore().adult
-    })
-
-    const isPopupAuthSignInSocialActive = computed(() => {
-      return useAuthStore().showSignInSocial
-    })
-
-    const isPopupAuthSignInEmailActive = computed(() => {
-      return useAuthStore().showSignInEmail
-    })
-
-    const isPopupAuthChangePasswordActive = computed(() => {
-      return useAuthStore().showChangePassword
-    })
-
-    const isPopupAuthLogInEmailActive = computed(() => {
-      return useAuthStore().showLogInEmail
-    })
-
-    const isPopupAuthLogInPasswordActive = computed(() => {
-      return useAuthStore().showLogInPassword
-    })
-
-    const isPopupAuthLogOutActive = computed(() => {
-      return useAuthStore().showLogOut
-    })
-    
-
-    return {
-      isModalCartActive,
-      isPopupAdultActive,
-      isPopupAuthSignInSocialActive,
-      isPopupAuthSignInEmailActive,
-      isPopupAuthChangePasswordActive,
-      isPopupAuthLogInEmailActive,
-      isPopupAuthLogInPasswordActive,
-      isPopupAuthLogOutActive,
-      head,
-      title,
-      breadcrumbsIsActive
+    if(token){
+      nextTick(() => {
+        useAuthStore().getUserByToken(token).then(() => {
+          useNoty().setNoty(nuxtApp.$i18n.t('noty.login_success'), 3000)
+        }).catch(() => {
+          useNoty().setNoty(nuxtApp.$i18n.t('noty.login_failed'), 5000)
+        }).finally(() => {
+          navigateTo('/')
+        })
+      })
     }
-  }
-}
+  })
+  
+
+  // COMPUTED
+  const isModalCartActive = computed(() => {
+    return useCartStore().show
+  })
+
+  const isPopupAdultActive = computed(() => {
+    return useAppStore().adult
+  })
+
+  const isPopupAuthSignInSocialActive = computed(() => {
+    return useAuthStore().showSignInSocial
+  })
+
+  const isPopupAuthSignInEmailActive = computed(() => {
+    return useAuthStore().showSignInEmail
+  })
+
+  const isPopupAuthChangePasswordActive = computed(() => {
+    return useAuthStore().showChangePassword
+  })
+
+  const isPopupAuthLogInEmailActive = computed(() => {
+    return useAuthStore().showLogInEmail
+  })
+
+  const isPopupAuthLogInPasswordActive = computed(() => {
+    return useAuthStore().showLogInPassword
+  })
+
+  const isPopupAuthLogOutActive = computed(() => {
+    return useAuthStore().showLogOut
+  })
+    
+
+    // return {
+    //   isModalCartActive,
+    //   isPopupAdultActive,
+    //   isPopupAuthSignInSocialActive,
+    //   isPopupAuthSignInEmailActive,
+    //   isPopupAuthChangePasswordActive,
+    //   isPopupAuthLogInEmailActive,
+    //   isPopupAuthLogInPasswordActive,
+    //   isPopupAuthLogOutActive,
+    //   head,
+    //   title,
+    //   breadcrumbsIsActive
+    // }
 </script>
 
 <template>
