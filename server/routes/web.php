@@ -15,7 +15,7 @@ use App\Http\Controllers\MigrateDbController;
 |
 */
 
-Route::get('/migr', [MigrateDbController::class, 'all']);
+//Route::get('/migr', [MigrateDbController::class, 'all']);
 
 Route::get('/mailable', function () {
   // $order = App\Models\Override\Order::find(24);
@@ -45,9 +45,9 @@ Route::get('/mailable', function () {
 
 
 Route::prefix('auth')->group(function() {
-	Route::middleware('web')->post('/{provider}', 'App\Http\Controllers\Auth\OAuthController@redirect')->where('provider', 'google|facebook');
-	Route::post('/{provider}/callback', 'App\Http\Controllers\Auth\OAuthController@callback')->where('provider', 'google|facebook');
-	Route::middleware('auth:profile')->get('/getUser', 'App\Http\Controllers\Auth\OAuthController@getUser');
+	Route::middleware('web')->any('/{provider}', 'App\Http\Controllers\Auth\OAuthController@redirect')->where('provider', 'google|facebook');
+	Route::middleware('web')->get('/{provider}/callback', 'App\Http\Controllers\Auth\OAuthController@callback')->where('provider', 'google|facebook');
+	Route::middleware('web')->get('/loginByToken', 'App\Http\Controllers\Auth\OAuthController@loginByToken');
 });
 
 //Route::post('/login', [LoginController::class, 'login']);

@@ -12,7 +12,7 @@ use Backpack\Profile\app\Models\Profile as BaseProfile;
 class Profile extends BaseProfile
 {
   use HasTransactions;
-   // use HasApiTokens, Notifiable;
+  use HasApiTokens;
 
   public function getBalanceDataAttribute() {
     return [

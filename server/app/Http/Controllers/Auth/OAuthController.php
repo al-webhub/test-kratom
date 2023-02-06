@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\AuthenticationException;
 
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Sanctum\PersonalAccessToken;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -44,10 +45,20 @@ class OAuthController extends Controller
 	}
 	
 	
-	public function getUser(Request $request){		
-		$profile = Auth::guard('profile')->user();
-    return response()->json($profile);
-    //return $request->user();
+	public function loginByToken(Request $request){	
+    $hashedTooken = $request->token;
+
+    $token = PersonalAccessToken::findToken($hashedTooken);
+    $profile = $token->tokenable;
+
+    if($profile) {
+      Auth::guard('profile')->login($profile, $remember = true);
+      $request->session()->regenerate();
+      return response()->json($profile);
+    }
+    else {
+      return response()->json(['error' => 'NO profile']);
+    }
 	}
 
   public function callback(Request $request, $service) {
@@ -57,32 +68,29 @@ class OAuthController extends Controller
     \Log::info(print_r($user_data, true));
 
     $fullname = explode(' ', $user_data->getName());
+    $email = $user_data->getEmail();
+    $password = random_bytes(6);
       
     $user = Profile::firstOrCreate(
       [
-        'email' => $user_data->getEmail()
+        'email' => $email
       ],
       [
-        'login' => $user_data->getEmail(),
+        'login' => $email,
         'firstname' => $fullname[0] ?? '',
         'lastname' => $fullname[1] ?? '',
-        'email' => $user_data->getEmail(),
+        'email' => $email,
         'photo' => $user_data->getAvatar(),
-        'password' => Hash::make(random_bytes(6)),
+        'password' => Hash::make($password),
         'email_verified_at' => now(),
         'referrer_code' => Str::random(8)
       ]
     );
     
-    // $token = $user->tokens()->where('name', $service)->first();
-    
-    // if(!$token)
-    //   $token = $user->createToken($service);
-  
-    // return $token->plainTextToken;
+    $user->tokens()->delete();
+    $token = $user->createToken($service);
 
-
-    return $user;
+    return redirect(env('FRONT_URL', 'http://localhost:3000') . '?token=' . $token->plainTextToken);
   }
 
   public function redirect($service) {   
