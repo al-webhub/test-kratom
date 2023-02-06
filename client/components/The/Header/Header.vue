@@ -200,8 +200,8 @@ export default {
             </button>
 
             <NuxtLink v-else-if="isAuth && user" :to="localePath('/account/order-history')">
-              <!-- <img :src="user.photo" class="photo" /> -->
-              <nuxt-img
+              <img :src="user.photo" class="photo" />
+              <!-- <nuxt-img
                 :src="'/server/'+user.photo"
                 width="24"
                 height="24"
@@ -212,7 +212,7 @@ export default {
                 loading = "lazy"
                 class="photo"
               >
-              </nuxt-img>
+              </nuxt-img> -->
             </NuxtLink>
         </div>
         

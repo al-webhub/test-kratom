@@ -1,5 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  
+  appConfig: {
+    SITE_URL: process.env.SITE_URL
+  },
+
   runtimeConfig: {
     public: {
       base: process.env.SERVER_URL,
@@ -15,15 +20,19 @@ export default defineNuxtConfig({
   // webpack: {
   //   analyze: true,
   //   extractCSS: true,
-  //   optimizeCSS: true,
+  //   optimization: {
+  //     minimize: true,
+  //     removeAvailableModules: true,
+  //     removeEmptyChunks: true,
+  //   },
   // },
   
-  sourcemap: false,
+  // sourcemap: false,
 
-  experimental: {
-    asyncEntry: true,
-    viteServerDynamicImports: true
-  },
+  // experimental: {
+  //   asyncEntry: true,
+  //   viteServerDynamicImports: true
+  // },
 
   debug: false,
 
@@ -34,14 +43,13 @@ export default defineNuxtConfig({
       brotli: true 
     },
     minify: true,
-    prerender: {
-      crawlLinks: false,
-      routes: []
-    },
-    preset: 'node-server',
+    // prerender: {
+    //   crawlLinks: false,
+    //   routes: []
+    // },
+    // preset: 'node-server',
     routeRules: {
-      '/pay_delivery': { static: true },
-      '/contacts': { static: true, headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
+      '/pages/**': { static: true, headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/assets/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/images/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/_nuxt/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
@@ -56,22 +64,23 @@ export default defineNuxtConfig({
   
   // builder: 'webpack',
 
-  vite: {
-    build: {
-      assetsInlineLimit: 0
-    }
-  },
+  // vite: {
+  //   build: {
+  //     assetsInlineLimit: 0
+  //   }
+  // },
 
   css: [
     '@/assets/scss/global/main.scss'
   ],
 
   modules: [
+    '@nuxtjs/device',
     '@nuxtjs/fontaine',
     [
       'nuxt-delay-hydration',
       {
-        mode: 'init',
+        mode: 'manual',
         debug: process.env.NODE_ENV === 'development'
       }
     ],
@@ -80,14 +89,13 @@ export default defineNuxtConfig({
       {
         families: {
           Montserrat: {
-            wght: [400, 500, 700, 900]
+            wght: [400, 700]
           },
         },
         display: 'swap',
         preload: true
       }
     ],
-    '@nuxtjs/device',
     [
       '@nuxt/image-edge',
       {
@@ -96,13 +104,6 @@ export default defineNuxtConfig({
           tablet: 768,
           desktop: 1024,
           large: 1440,
-        },
-        presets: {
-          base: {
-            modifiers: {
-              format: 'webp',
-            }
-          }
         },
         domains: [process.env.DOMAIN],
         alias: {
@@ -114,10 +115,7 @@ export default defineNuxtConfig({
       '@pinia/nuxt',
       {
         autoImports: [
-          // automatically imports `defineStore`
-          'defineStore', // import { defineStore } from 'pinia'
-          // automatically imports `defineStore` as `definePiniaStore`
-          //['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+          'defineStore',
         ],
       },
     ],
@@ -128,8 +126,7 @@ export default defineNuxtConfig({
         baseUrl: 'https://kratomhelper.com',
         defaultLocale: 'en',
         lazy: true,
-        vueI18nLoader: true,
-        runtimeOnly: false,
+        vueI18nLoader: false,
         langDir: 'lang/',
         locales: [
           {
@@ -148,7 +145,6 @@ export default defineNuxtConfig({
           }
         ],
         vueI18n: {
-          runtimeOnly: false,
           fallbackLocale: 'en',
           datetimeFormats: {
             en: {

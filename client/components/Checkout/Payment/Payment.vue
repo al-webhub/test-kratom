@@ -34,6 +34,10 @@ export default {
     },
     errors: {
       type: Object
+    },
+    isLoading: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -119,7 +123,7 @@ export default {
         </p>
       </form-checkbox>
       
-      <button @click="confirmHandler" :class="{disabled: !canConfirm}" class="main-button primary">
+      <button @click="confirmHandler" :class="{disabled: !canConfirm, loading: isLoading}" class="main-button primary">
         <span class="text">{{ $t('button.confirm_order') }}</span>
       </button>
     </div>

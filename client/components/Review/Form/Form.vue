@@ -26,6 +26,10 @@ export default {
   props: {
     user: {
       type: Object
+    },
+    isLoading: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -33,7 +37,6 @@ export default {
     createHandler(method = 'common') {
       this.comment.extras.method = method
       this.$emit('create', JSON.parse(JSON.stringify(this.comment)))
-
       this.comment.text = null
     },
 
@@ -86,10 +89,10 @@ export default {
 
       <!-- COMMENT BUTTONS -->
       <div class="add-reviews__buttons">
-        <button class="main-button primary-color btn" @click="createHandler('incognito')">
+        <button @click="createHandler('incognito')" :class="{loading: isLoading}" class="main-button primary-color btn">
           <span class="text">{{ $t('button.post_incognito') }}</span>
         </button>
-        <button class="main-button primary btn" @click="createHandler('common')">
+        <button @click="createHandler('common')" :class="{loading: isLoading}" class="main-button primary btn">
           <span class="text">{{ $t('button.post') }}</span>
         </button>
       </div>

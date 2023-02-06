@@ -20,7 +20,9 @@ export default {
   },
 
   data(){
-    return {}
+    return {
+      isLoading: false
+    }
   },
 
   computed: {
@@ -50,12 +52,16 @@ export default {
     },
 
     async saveHandler() {
+      this.isLoading = true
+      
       await this.profileStore?.updateProfile().then((res) => {
         if(res.data._value)
           useNoty().setNoty(this.$t('noty.update_success'))
         
         if(res.error._value)
           useNoty().setNoty(this.$t('noty.update_fail'))
+
+        this.isLoading = false
       })
     }
   },
@@ -133,7 +139,7 @@ export default {
     </div>
     
     <div class="profile__form__footer">
-      <button @click="saveHandler" class="main-button primary-color bordered small">
+      <button @click="saveHandler" :class="{loading: isLoading}" class="main-button primary-color bordered small">
         <span class="text">{{ $t('button.save_address') }}</span>
       </button>
     </div>

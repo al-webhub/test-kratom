@@ -2,6 +2,8 @@
 export default {
   data() {
     return {
+      clearValue: '',
+      isVisible: false
     }
   },
 
@@ -27,10 +29,46 @@ export default {
   },
   
   methods: {
-    changeHandler(value) {
+    changeVisible(value) {
+      this.clearValue = value
       this.$emit('update:modelValue', value)
     },
+
+    changeInvisible(value) {
+      const lastSymbol = value.slice(-1)
+
+      if(lastSymbol === '*' || !lastSymbol){
+        this.clearValue = this.clearValue.slice(0, -1)
+      }else {
+        this.clearValue += value.slice(-1)
+      }
+
+      this.$emit('update:modelValue', this.clearValue)
+    },
+
+    changeHandler(value) {
+      if(this.isVisible){
+        this.changeVisible(value)
+        return
+      }
+      
+      this.changeInvisible(value)
+      
+    },
+
+    showHandler() {
+      this.isVisible = !this.isVisible
+    }
   },
+
+  computed: {
+    valueWithStars() {
+      if(this.isVisible)
+        return this.modelValue
+      else
+        return '*'.repeat(this.modelValue.length)
+    }
+  }
 }
 </script>
 
@@ -38,7 +76,7 @@ export default {
 
 <template>
   <form-text
-    :model-value="modelValue"
+    :model-value="valueWithStars"
     @update:modelValue="changeHandler"
     :placeholder="placeholder"
     :required="required"
@@ -46,9 +84,10 @@ export default {
     :is-disabled="isDisabled"
   >
     <template v-slot:icon-right>
-      <button type="button" class="show-password">
+      <button @click="showHandler"  :class="{active: isVisible}" class="show-password">
         <img src="~assets/svg-icons/eye.svg" class="icon"/>
       </button>
     </template>
+
   </form-text>
 </template>

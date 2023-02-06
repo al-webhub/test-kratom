@@ -12,6 +12,7 @@ export default {
 
   data() {
     return {
+      isLoading: false,
       comment: {
         rating: null,
         text: null,
@@ -23,18 +24,13 @@ export default {
     }
   },
 
-  computed: {
-    isActive() {
-      return this.reviewStore.isShow
-    },
-  },
-
   methods: {
     closeHandler() {
       return this.reviewStore.closeModal()
     },
 
     async createHandler(method = 'common') {
+      this.isLoading = true
       this.comment.extras.method = method
       
       await this.reviewStore.create(this.comment).then((res) => {
@@ -51,6 +47,8 @@ export default {
         if(res.error) {
           useNoty().setNoty(this.$t('noty.add_review_fail'))
         }
+
+        this.isLoading = false
       })
     },
   }
@@ -60,7 +58,7 @@ export default {
 <style src="./feedback.scss" lang="sass" scoped />
 
 <template>
-  <popup-layout-simple :is-active="isActive" @close="closeHandler">
+  <popup-layout-simple @close="closeHandler">
     <template v-slot:title>
       {{ $t('title.your_feedback') }}
     </template>
@@ -70,19 +68,18 @@ export default {
         <form-stars v-model="comment.rating" class="rate"></form-stars>
 
         <form-textarea v-model="comment.text" :placeholder="$t('form.your_review')" ></form-textarea>
-
-        <div class="buttons">
-          <button class="main-button main-button-small" @click="createHandler('incognito')">
-            <span class="text">{{ $t('button.post_incognito') }}</span>
-          </button>
-          <button class="main-button main-button-small main-button-confirm" @click="createHandler('common')">
-            <span class="text">{{ $t('button.post') }}</span>
-          </button>
-        </div>
       </div>
     </template>
 
     <template v-slot:footer>
+        <div class="buttons">
+          <button @click="createHandler('incognito')" :class="{loading: isLoading}" class="main-button small">
+            <span class="text">{{ $t('button.post_incognito') }}</span>
+          </button>
+          <button @click="createHandler('common')" :class="{loading: isLoading}" class="main-button small primary">
+            <span class="text">{{ $t('button.post') }}</span>
+          </button>
+        </div>
     </template>
 
   </popup-layout-simple>

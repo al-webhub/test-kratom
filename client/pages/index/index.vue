@@ -96,17 +96,23 @@ export default {
     <section-main-slider :banners="banner.items"></section-main-slider>
   </simple-decorator> 
 
-  <section-products-slider :products="products" class="section"></section-products-slider>
+  <DelayHydration>
+    <lazy-section-products-slider :products="products" class="section"></lazy-section-products-slider>
+  </DelayHydration>
   
   <!-- ABOUT US -->
-  <simple-decorator 
-    :settings="{title: {posX: 'left'}, figure: {posX: 'right', showTill: 'mobile'}}"
-    class="section"
-  >
-    <section-about-us></section-about-us>
-  </simple-decorator>
+  <DelayHydration>
+    <lazy-simple-decorator 
+      :settings="{title: {posX: 'left'}, figure: {posX: 'right', showTill: 'mobile'}}"
+      class="section"
+    >
+      <section-about-us></section-about-us>
+    </lazy-simple-decorator>
+  </DelayHydration>
 
-  <section-choose-kratom  class="section"></section-choose-kratom>
+  <DelayHydration>
+    <lazy-section-choose-kratom  class="section"></lazy-section-choose-kratom>
+  </DelayHydration>
   
   <!-- OUR ADVANTAGES -->
   <simple-decorator
@@ -117,16 +123,24 @@ export default {
     <section-our-advantages></section-our-advantages>
   </simple-decorator>
   
-  <section-articles v-if="articles && articles.length" :articles="articles" class="section"></section-articles>
+  <DelayHydration>
+    <lazy-section-articles v-if="articles && articles.length" :articles="articles" class="section"></lazy-section-articles>
+  </DelayHydration>
 
-  <section-client-reviews v-if="reviews && reviews.length" :reviews="reviews" class="section"></section-client-reviews>
+  <DelayHydration>
+    <lazy-section-client-reviews v-if="reviews && reviews.length" :reviews="reviews" class="section"></lazy-section-client-reviews>
+  </DelayHydration>
 
   <section-seo :title="page.h1" :text="page.seo_text" class="section"></section-seo>
 
-  <section-write-us></section-write-us>
+  <DelayHydration>
+    <lazy-section-write-us></lazy-section-write-us>
+  </DelayHydration>
 
-  <transition name="fade-in">
-    <lazy-popup-choose-kratom v-if="isModalChooseKratomActive"></lazy-popup-choose-kratom>
-  </transition>
+  <DelayHydration>
+    <transition name="fade-in">
+      <lazy-popup-choose-kratom v-if="isModalChooseKratomActive"></lazy-popup-choose-kratom>
+    </transition>
+  </DelayHydration>
 </div>
 </template>

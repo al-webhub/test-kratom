@@ -6,6 +6,8 @@ import walletIcon from 'assets/svg-icons/wallet.svg';
 
 import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
+import { useTransactionStore } from '~/store/transaction'
+import { useCartStore } from '~/store/cart'
 
 export default {
   setup() {
@@ -13,17 +15,35 @@ export default {
     const authStore = useAuthStore()
     const profileStore = useProfileStore()
 
+    const isPopupAuthChangePasswordActive = computed(() => {
+      return useAuthStore().showChangePassword
+    })
+
+    const isModalCartActive = computed(() => {
+      return useCartStore().show
+    })
+
+    const isPopupAuthLogOutActive = computed(() => {
+      return useAuthStore().showLogOut
+    })
+
+    const isPopupWithdrawalShow = computed(() => {
+      return useTransactionStore().withdrawal.isShow
+    })
+
     return {
       authStore,
       profileStore,
+      isPopupWithdrawalShow,
+      isPopupAuthLogOutActive,
+      isModalCartActive,
+      isPopupAuthChangePasswordActive,
       t
     }
   },
 
   data() {
-    return {
-      //balance: 10.15,
-    }
+    return {}
   },
 
   computed: {
@@ -111,7 +131,8 @@ export default {
             </div>
 
             <div class="profile__main-info">
-              <nuxt-img
+              <img v-if="user.photo" :src="user.photo" class="profile__img"/>
+              <!-- <nuxt-img
                 v-if="user.photo"
                 :src="'/server/'+user.photo"
                 sizes = "mobile:50px"
@@ -119,7 +140,7 @@ export default {
                 quality = "80"
                 loading = "lazy"
                 class="profile__img"
-              ></nuxt-img>
+              ></nuxt-img> -->
               <div v-else class="profile__img">
                 <img src="~assets/images/photo-log-in.png" />
               </div>
@@ -166,9 +187,25 @@ export default {
 
     <the-footer></the-footer>
 
-    <modal-cart></modal-cart>
-    <popup-auth-log-out></popup-auth-log-out>
-    <popup-auth-change-password></popup-auth-change-password>
+    <!-- MODAL / shoping cart -->
+    <transition name="move-x-right">
+      <lazy-modal-cart v-if="isModalCartActive"></lazy-modal-cart>
+    </transition>
+
+    <!-- POPUP / log out -->
+    <transition name="fade-in">
+      <lazy-popup-auth-log-out v-if="isPopupAuthLogOutActive"></lazy-popup-auth-log-out>
+    </transition>
+
+    <!-- POPUP / change password -->
+    <transition name="fade-in">
+      <popup-auth-change-password v-if="isPopupAuthChangePasswordActive"></popup-auth-change-password>
+    </transition>
+
+    <!-- POPUP / withdrawal -->
+    <transition name="fade-in">
+      <popup-withdrawal v-if="isPopupWithdrawalShow"></popup-withdrawal>
+    </transition>
 
   </div>
 </template>

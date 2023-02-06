@@ -100,7 +100,7 @@ export default {
     },
 
     referralLink() {
-      return '/?ref=' + this.referrerCode;
+      return `${useAppConfig().SITE_URL}?ref=${this.referrerCode}`
     }
   },
 
@@ -129,6 +129,10 @@ export default {
             link: '/account/referral_network'
           }
       ])
+    },
+
+    withdrawalHandler() {
+      this.transactionStore.toggle('withdrawal')
     },
 
     async getReferrals() {
@@ -183,7 +187,7 @@ export default {
 
       <!-- HEADER RIGHT SIDE -->
       <div class="referral-withdrawal">
-        <button class="main-button primary" :class="{disabled: balance < 10}">
+        <button @click="withdrawalHandler" :class="{disabled: balance.balance < 10}" class="main-button primary">
           <span class="text">{{ t('request_withdrawal') }}</span>
         </button>
         <p>{{ t('available') }}:</p>

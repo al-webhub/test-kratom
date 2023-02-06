@@ -28,6 +28,11 @@ export default {
 
     openLogInEmailHandler() {
       return this.authStore.open('logInEmail')
+    },
+
+    googleHandler() {
+      this.closeHandler()
+      this.authStore.google()
     }
   }
 }
@@ -40,19 +45,21 @@ export default {
     <template v-slot:title>
       {{ $t('title.sign_up') }}
     </template>
+    
     <template v-slot:content>
       <div>
-        <a href="'login/google" class="main-button main-button-social-popup">
-            <span :style="{backgroundImage: googleImage }" class="google-icon"></span>
-            <span class="text">{{ $t('button.continue_with_google') }}</span>
-        </a>
+        <button @click="googleHandler" class="main-button main-button-social-popup">
+          <span :style="{backgroundImage: googleImage }" class="google-icon"></span>
+          <span class="text">{{ $t('button.continue_with_google') }}</span>
+        </button>
         
         <button @click="openSignInEmailHandler" class="main-button main-button-social-popup">
-            <img src="~assets/svg-icons/mail.svg" class="icon"/>
-            <span class="text">{{ $t('button.sign_up_with_email') }}</span>
+          <img src="~assets/svg-icons/mail.svg" class="icon"/>
+          <span class="text">{{ $t('button.sign_up_with_email') }}</span>
         </button>
       </div>
     </template>
+
     <template v-slot:footer>
       <button @click="openLogInEmailHandler" type="button" class="a-link">{{ $t('button.Log_In') }}</button>
     </template>

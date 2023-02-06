@@ -41,11 +41,11 @@ export default {
         },{
           uid: 2,
           label: this.$t('form.1_Letter'),
-          validated: false
+          validated:  /[a-zA-Z]+/.test(this.password) 
         },{
           uid: 3,
           label: this.$t('form.1_Number'),
-          validated: false
+          validated: /[0-9]+/.test(this.password)
         }
       ]
     },

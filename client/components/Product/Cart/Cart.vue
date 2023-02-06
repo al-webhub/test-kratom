@@ -5,8 +5,13 @@ export default {
   setup() {
     const cartStore = useCartStore()
 
+    const isPopupBuy1ClickShow = computed(() => {
+      return cartStore.buy1IsShow
+    })
+
     return {
-      cartStore
+      cartStore,
+      isPopupBuy1ClickShow
     }
   },
   props: {
@@ -26,10 +31,12 @@ export default {
     },
     
     async toCartHandler() {
-      const {setNoty} = useNoty()
-      
-      await this.cartStore.add(this.selectedModification).then(() => {
-        setNoty(this.$t('noty.product_to_cart', {product: this.selectedModification.name}), 3000)
+      const productToCart = Object.assign({}, this.selectedModification)
+
+      productToCart.image || (productToCart.image = this.product.images[0])
+
+      await this.cartStore.add(productToCart).then(() => {
+        useNoty().setNoty(this.$t('noty.product_to_cart', {product: this.selectedModification.name}), 3000)
       })
     },
 
@@ -78,6 +85,8 @@ export default {
       </button>
     </div>
 
-    <lazy-popup-buy-1-click></lazy-popup-buy-1-click>
+    <transition name="fade-in">
+      <lazy-popup-buy-1-click v-if="isPopupBuy1ClickShow"></lazy-popup-buy-1-click>
+    </transition>
   </div>
 </template>

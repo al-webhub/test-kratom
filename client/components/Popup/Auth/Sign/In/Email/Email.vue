@@ -13,7 +13,9 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      isLoading: false
+    }
   },
 
   computed: {
@@ -35,8 +37,11 @@ export default {
       return this.authStore.open('logInEmail')
     },
 
-    registerHandler() {
-      useRegister()()
+    async registerHandler() {
+      this.isLoading = true
+      await useRegister()().finally(() => {
+        this.isLoading = false
+      })
     }
   }
 }
@@ -107,14 +112,14 @@ export default {
             <input type="checkbox" value="1" required="required" class="input-checkbox"> 
             <span class="custome-checkbox"><span class="icon-active"></span></span> 
             <span>
-              {{ $t('auth.i_agreed_with') }}&nbsp;
+              {{ $t('messages.i_agreed_with') }}&nbsp;
               <NuxtLink :to="localePath('/privacy')" class="a-link" target="_blade">{{ $t('title.Privacy_Policy') }}</NuxtLink>
             </span>
           </label>
         </div>
             
         <!-- //Добавил пароль, в макете его небыло -->
-        <button @click="registerHandler" class="main-button primary small">
+        <button @click="registerHandler" :class="{loading: isLoading}" class="main-button primary small">
             <span class="text">{{ $t('button.sign_up') }}</span>
         </button>
 

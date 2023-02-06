@@ -91,10 +91,10 @@ export default {
         </nuxt-img>
       </div>
 
-      <div class="content">
+      <div class="content narrow">
         <h1 class="main-caption main-caption-align">{{ article.title }}</h1>
         
-        <div class="narrow rich-text" v-html="article.content"></div>
+        <div class="rich-text" v-html="article.content"></div>
 
         <simple-more-btn
           :link="'/guidebook'"

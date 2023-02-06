@@ -17,6 +17,7 @@ export default {
 
   data() {
     return {
+      isLoading: false,
       order: {
         name: null,
         phone: null,
@@ -26,10 +27,6 @@ export default {
   },
 
   computed: {
-    isActive() {
-      return this.cartStore.buy1IsShow
-    },
-
     errors() {
       return this.feedbackStore.errors
     },
@@ -45,6 +42,7 @@ export default {
     },
 
     async createHandler() {
+      this.isLoading = true
       try {
         await this.feedbackStore.createFeedback({
           ...this.order,
@@ -60,7 +58,9 @@ export default {
         })
       }catch(e) {
           useNoty().setNoty(this.$t('noty.1click_fail'))
-      }      
+      }finally {
+        this.isLoading = false
+      }   
     },
   }
 }
@@ -69,7 +69,7 @@ export default {
 <style src="./1-click.scss" lang="sass" scoped />
 
 <template>
-  <popup-layout-simple :is-active="isActive" @close="closeHandler">
+  <popup-layout-simple @close="closeHandler">
     <template v-slot:title>
       {{ t('buy-1-click') }}
     </template>
@@ -105,7 +105,7 @@ export default {
     </template>
 
     <template v-slot:footer>
-      <button class="main-button primary small btn" @click="createHandler()">
+      <button @click="createHandler()" :class="{loading: isLoading}" class="main-button primary small btn">
         <span class="text">{{ $t('button.post') }}</span>
       </button>
     </template>

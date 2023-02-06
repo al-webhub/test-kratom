@@ -14,6 +14,7 @@ export default {
 
   data() {
     return {
+      isLoading: false,
       feedback: {
         name: null,
         email: null,
@@ -75,6 +76,7 @@ export default {
     },
 
     async sendHandler() {
+      this.isLoading = true
       try {
         await this.feedbackStore.createFeedback(this.feedback).then((res) => {
           useNoty().setNoty(this.$t('noty.message_success'))
@@ -85,6 +87,8 @@ export default {
         })
       }catch(e) {
           useNoty().setNoty(this.$t('noty.message_fail'))
+      }finally {
+        this.isLoading = false
       }
     }
   },
@@ -101,6 +105,7 @@ export default {
 
 <template>
 <div>
+  <DelayHydration>
   <section class="contact">
       <!-- <div class="general-decor-text">kratom helper</div> -->
       <div class="container">
@@ -170,7 +175,7 @@ export default {
                   class="form-item"
                 />
 
-                <button @click="sendHandler" class="main-button primary-color form-item btn">
+                <button @click="sendHandler" :class="{loading: isLoading}" class="main-button primary-color form-item btn">
                   <span class="text">{{ $t('button.send_message') }}</span>
                 </button>
               </div>
@@ -179,5 +184,6 @@ export default {
           </div>
       </div>
   </section>
+  </DelayHydration>
 </div>
 </template>

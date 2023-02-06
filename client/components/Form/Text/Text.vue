@@ -59,7 +59,7 @@ export default {
   <div :class="{error: error, disabled: isDisabled}" class="input__wrapper">
     <input
       :value="modelValue"
-      @change="changeHandler"
+      @input="changeHandler"
       @focus="focusHandler"
       @blur="blurHandler"
       type="text"

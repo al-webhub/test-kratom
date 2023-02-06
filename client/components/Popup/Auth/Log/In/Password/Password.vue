@@ -10,6 +10,12 @@ export default {
     }
   },
 
+  data() {
+    return {
+      isLoading: false
+    }
+  },
+
   computed: {
     user() {
       return this.authStore.getUser
@@ -34,7 +40,11 @@ export default {
     },
 
     async loginHandler() {
-      useLogin()()
+      this.isLoading = true
+
+      await useLogin()().finally(() => {
+        this.isLoading = false
+      })
     }
   }
 }
@@ -57,7 +67,7 @@ export default {
         >
         </form-password>
 
-        <button @click="loginHandler" class="main-button primary small">
+        <button @click="loginHandler" :class="{loading: isLoading}" class="main-button primary small">
           <span class="text">{{ $t('button.Log_In') }}</span>
         </button>
 

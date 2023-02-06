@@ -158,6 +158,7 @@ export const useAuthStore = defineStore('authStore', {
 
           context.setProfileData(response._data)
           context.authenticated = true
+          context.errors = {}
         },
         onResponseError({ request, response, options }) {
           context.authenticated = false
@@ -196,9 +197,35 @@ export const useAuthStore = defineStore('authStore', {
 
           context.setProfileData(response._data)
           context.authenticated = true
+          context.errors = {}
         }
       })
 
+    },
+
+    async google() {
+      const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.base}/auth/google`
+
+      return await useApiFetch(url, null, 'POST').then(({data}) => {
+        if(data){
+          navigateTo(data, {external: true})
+        }
+      })
+    },
+
+    async getUserByToken(token) {
+      const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.base}/auth/loginByToken?token=${token}`
+
+      await this.getToken().then(async () => {
+        await useApiFetch(url).then(({data}) => {
+          if(data) {
+            this.setProfileData(data)
+            this.authenticated = true
+          }
+        })
+      })
     }
   },
 })

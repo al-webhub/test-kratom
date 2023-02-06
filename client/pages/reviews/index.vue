@@ -10,6 +10,8 @@ export default {
     const likesStore = useLikesStore()
     const authStore = useAuthStore()
 
+    const isLoading = ref(false)
+
     const meta = computed(() => {
       return reviewStore?.meta;
     })
@@ -43,7 +45,11 @@ export default {
     }
 
     const loadMoreHandler = async () => {
-      await getReviews({per_page: 12, page: meta.value.current_page + 1}, false)
+      isLoading.value = true
+
+      await getReviews({per_page: 12, page: meta.value.current_page + 1}, false).then(() => {
+        isLoading.value = false
+      })
     }
 
     getReviews({per_page: 12}, true)
@@ -55,12 +61,15 @@ export default {
       likesStore,
       authStore,
       meta,
-      loadMoreHandler
+      loadMoreHandler,
+      isLoading
     }
   },
 
   data() {
-    return {}
+    return {
+      createIsLoading: false
+    }
   },
 
   computed: {
@@ -84,15 +93,16 @@ export default {
 
   methods: {
     async addReview(data) {
-      const {setNoty} = useNoty()
+      this.createIsLoading = true
 
       await this.reviewStore?.create(data).then((res) => {
-        if(res.data) {
-          setNoty(this.$t('noty.add_review'), 3000)
-        }
+        if(res.data)
+          useNoty().setNoty(this.$t('noty.add_review'), 3000)
 
         if(res.error)
-          setNoty(this.$t('noty.add_review_fail'), 5000)
+          useNoty().setNoty(this.$t('noty.add_review_fail'), 5000)
+        
+        this.createIsLoading = false
       })
     },
 
@@ -135,13 +145,18 @@ export default {
                 </review-card>
               </ul>
 
-              <button v-if="meta && meta.current_page !== meta.last_page" @click="loadMoreHandler" class="main-button small loadmore-btn" >
+              <button
+                v-if="meta && meta.current_page !== meta.last_page"
+                @click="loadMoreHandler"
+                :class="{loading: isLoading}"
+                class="main-button small loadmore-btn" >
                 <span class="text">{{ $t('button.show_more') }}</span>
               </button>
 
               <!-- FORM -->
               <review-form
                 :user="authUser"
+                :is-loading="createIsLoading"
                 @create="createHandler"
                 class="form"
               >

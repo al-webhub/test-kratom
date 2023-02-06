@@ -37,8 +37,7 @@ export default {
     },
 
     balance() {
-      console.log(this.profile, this.profile?.balance)
-      return this.profile?.balance?.balance
+      return this.profile?.balance?.balance || 0
     },
 
     total() {
@@ -53,7 +52,7 @@ export default {
     },
 
     maxBonusesUsed() {
-      return 100
+      return this.balance
     },
 
     isAuth() {
@@ -123,7 +122,7 @@ export default {
               <p class="description">usd {{ total }}</p>
             </div>
 
-            <div v-if="isAuth" class="bonuses__container">
+            <div v-if="isAuth && maxBonusesUsed >= 1" class="bonuses__container">
               <div class="bonuses__wrapper">
                 <p v-html="t('how_much')"></p>
               </div>

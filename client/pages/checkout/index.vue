@@ -19,7 +19,9 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      isLoading: false
+    }
   },
 
   computed: {
@@ -93,9 +95,14 @@ export default {
     },
 
     async confirmHandler() {
+      this.isLoading = true
+      
       const provider = this.isAuth? 'auth': 'data'
-      await this.cartStore.createOrder(provider).then((res) => {
 
+      if(this.isAuth)
+        this.cartStore.setUser(this.user)
+
+      await this.cartStore.createOrder(provider).then((res) => {
         if(res.data._value) {
           useNoty().setNoty(this.$t('noty.order_success', {code: res.data._value.code}), 10000)
           this.cartStore.clearCart()
@@ -105,6 +112,8 @@ export default {
         if(res.error._value) {
           useNoty().setNoty(this.$t('noty.order_fail'), 5000)
         }
+
+        this.isLoading = false
       })
     }
   },
@@ -138,7 +147,7 @@ export default {
           
           <checkout-delivery :is-active="isUserSectionFilled" v-model:order="order" :errors="errors"></checkout-delivery>
           
-          <checkout-payment :is-active="isDeliverySectionFilled" v-model:order="order" :errors="errors" @confirm="confirmHandler"></checkout-payment>
+          <checkout-payment :is-active="isDeliverySectionFilled" :is-loading="isLoading" v-model:order="order" :errors="errors" @confirm="confirmHandler"></checkout-payment>
         </ul>
       </div>
 

@@ -15,42 +15,30 @@ export default {
   data() {
     return {
       currentTab: 0,
-
-      new_user: {
-        firstname: '',
-        lastname: '',
-        communication: null,
-        communication_number: '',
-      },
-
+      isLoading: false,
       login: null,
-      
       password: null,
-      
-      communications: [
-        'Viber',
-        'Telegram'
-      ]
     }
   },
 
   props: {
-
     order: {
       type: Object
     },
-
-    errors: {
-      type: Object
-    }
   },
 
   computed: {
     tabs() {
       if(this.isAuth)
-        return ['login']
+        return [
+          this.t('login'),
+        ]
       else
-        return ['guest', 'login', 'register']
+        return [
+          this.t('checkout_as_guest'),
+          this.t('login'),
+          this.t('register_account'),
+        ]
     },
 
     isAuth() {
@@ -68,15 +56,28 @@ export default {
 
   methods: {
     async loginHandler() {
-      useLogin()()
+      this.isLoading = true
+      useLogin()().finally(() => {
+        this.isLoading = false
+      })
     },
 
     async registerHandler() {
-      useRegister()()
+      this.isLoading = true
+      useRegister()().finally(() => {
+        this.isLoading = false
+      })
     },
 
     async logoutHandler() {
-      useLogout()()
+      this.isLoading = true
+      useLogout()().finally(() => {
+        this.isLoading = false
+      })
+    },
+
+    loginLinkHandler() {
+      this.currentTab = 1
     }
   }
 }
@@ -131,7 +132,7 @@ export default {
 
         <form-p-c
           :user="order.user"
-          :errors="[]"
+          :errors="errors"
         ></form-p-c>
       </div>
       
@@ -176,9 +177,11 @@ export default {
           >
           </form-password>
 
-          <button type="button" class="button-nav">{{ $t('button.Forgot_Password') }}</button>
+          <div class="forgot__wrapper">
+            <button class="forgot-btn">{{ $t('button.Forgot_Password') }}</button>
+          </div>
 
-          <button @click="loginHandler" type="button" class="main-button primary">
+          <button @click="loginHandler" :class="{loading: isLoading}" class="main-button primary">
             <span class="text">{{ $t('button.Log_In') }}</span>
           </button>
 
@@ -204,7 +207,6 @@ export default {
           class="form-component"
         >
         </form-text>
-
 
         <form-text
           v-model="user.email"
@@ -233,34 +235,23 @@ export default {
         >
         </form-password>
 
-        <form-select
-          v-model="user.communication"
-          :values="communications"
-          :placeholder="$t('form.Preferred_communication')"
-          :error="errors?.user?.communication"
-          class="form-component"
-        >
-        </form-select>
-
-        <form-text
-          v-model="user.communication_number"
-          :placeholder="$t('form.account')"
-          :error="errors?.user?.communication_number"
-          required
-          :is-disabled="order.user.communication"
-          class="form-component"
-        >
-        </form-text>
+        <form-p-c
+          :user="user"
+          :errors="errors"
+        ></form-p-c>
           
-        <button @click="registerHandler" class="main-button primary">
+        <button @click="registerHandler" :class="{loading: isLoading}" class="main-button primary">
           <span class="text">{{ $t('button.sign_up') }}</span>
         </button>
 
-        <div class="popup__footer">
-          <div class="popup__footer__sing-up">
-            <p>{{ t('Already_have_account') }}</p>
-            <button type="button" class="button-enter js-button" data-target="log-in">{{ $t('button.Log_In') }}</button>
-          </div>
+        <div class="already__wrapper">
+          <p>{{ t('Already_have_account') }}</p>
+          <button
+            @click="loginLinkHandler"
+            class="button-enter a-link"
+          >
+            {{ $t('button.Log_In') }}
+          </button>
         </div>
 
       </div>
@@ -270,12 +261,18 @@ export default {
 <i18n>
   {
     "en": {
+      "checkout_as_guest": "Checkout as guest", 
+      "login": "Login",
+      "register_account": "Register account",
       "Already_have_account": "Already have account?",
       "information" : "information",
       "Register_for_quicker" : "Register for quicker orders and get a bonus",
       "All_registered_users" : "All registered users get the compensation for their orders. The compensation is equal to 1% of the order amount. It is saved in your personal cabinet and may be spent on any goods in our e-shop at any time;",
     },
     "ru": {
+      "checkout_as_guest": "Как гость", 
+      "login": "Войти",
+      "register_account": "Зарегистрироваться",
       "Already_have_account": "Уже есть аккаунт?",
       "information" : "информация",
       "Register_for_quicker" : "Зарегистрируйтесь, чтобы делать заказы быстрее и получать бонусы",

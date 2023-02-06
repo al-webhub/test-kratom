@@ -5,4 +5,34 @@
 
 .user-tabs {
   margin: 30px 0 30px 0;
+
+  :deep(.item) {
+    margin-right: 20px;
+  }
+}
+
+.main-button {
+  max-width: 100%;
+}
+
+.forgot__wrapper {
+  margin: 0 0 25px auto;
+  font-size: 12px;
+
+  .forgot-btn {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.already__wrapper {
+  display: flex;
+  margin: 25px 0 0 auto;
+  font-size: 12px;
+
+  .button-enter {
+    margin-left: 5px;
+  }
 }

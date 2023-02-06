@@ -19,7 +19,9 @@ export default {
   },
 
   data(){
-    return {}
+    return {
+      isLoading: false
+    }
   },
 
 
@@ -51,12 +53,15 @@ export default {
     },
 
     async saveHandler() {
+      this.isLoading = true
       await this.profileStore?.updateProfile().then((res) => {
         if(res.data._value)
           useNoty().setNoty(this.$t('noty.update_success'))
         
         if(res.error._value)
           useNoty().setNoty(this.$t('noty.update_fail'))
+        
+        this.isLoading = false
       })
     },
 
@@ -119,7 +124,7 @@ export default {
             <span class="text">{{ $t('button.Change_password') }}</span>
         </button>
         
-        <button @click="saveHandler" class="main-button primary-color small bordered">
+        <button @click="saveHandler" :class="{loading: isLoading}" class="main-button primary-color small bordered">
             <span class="text">{{ $t('button.save') }}</span>
         </button>
     </div>

@@ -23,6 +23,13 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+
+  methods: {
+    copyHandler() {
+      navigator.clipboard.writeText(this.modelValue)
+      useNoty().setNoty(this.$t('noty.copied', {text: this.modelValue}))
+    }
   }
 }
 </script>
@@ -39,7 +46,7 @@ export default {
     readonly
   >
     <template v-slot:icon-right>
-      <button class="copy-referral-link">
+      <button @click="copyHandler" class="copy-referral-link">
         <img src="~assets/svg-icons/copy.svg" class="icon"/>
       </button>
     </template>

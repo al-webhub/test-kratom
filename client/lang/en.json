@@ -64,9 +64,12 @@
     "Account/full_number/link" : "Account/full number/link",
     "account" : "Account",
     "referral_link": "Referral link",
+    "full_name": "Full name",
+    "card_number": "Card number"
   },
 
   "button": {
+    "send_request": "Send request",
     "send_message": "Send message",
     "view_all_products": "view all products",
     "learn_more": "learn more",
@@ -135,6 +138,9 @@
     "message_fail": "An error has occurred. Your feedback has not been send 😓",
     "1click_success": "Thanks for your order! Our manager will contact you soon 👍",
     "1click_fail": "An error has occurred. Your order has not been create 👍",
+    "copied": "Link was copied: {text}",
+    "withdrawal_success": "You have successfully submitted a withdrawal request",
+    "withdrawal_fail": "An error has occurred. Withdrawal request has not been completed."
   },
 
   "messages": {

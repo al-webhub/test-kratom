@@ -1,0 +1,15 @@
+.parts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  grid-gap: 10px;
+  width: 100%;
+}
+
+.part-input {
+  border: 1px solid #fff;
+  border-radius: 20px;
+  height: 40px;
+  background: none;
+  text-align: center;
+  text-transform: uppercase;
+}

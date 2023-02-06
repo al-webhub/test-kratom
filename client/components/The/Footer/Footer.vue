@@ -64,8 +64,19 @@ export default {
 
     <!-- BODY -->
     <div class="body">
-        
-      <img src="~assets/images/logo.svg" alt="Kratom" class="logo">
+      
+      <nuxt-img
+        src="/images/logo.png"
+        alt="Kratomhelper.com logo"
+        title="Kratomhelper.com logo"
+        width="138"
+        height="31"
+        sizes = "mobile:138px tablet:138px desktop:138px"
+        format = "webp"
+        quality = "70"
+        loading = "lazy"
+        class="logo">
+      </nuxt-img>
 
       <nav
         v-for="nav in navs"

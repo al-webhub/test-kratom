@@ -15,7 +15,8 @@
         link: '/search'
       }
   ])
-  
+      
+  const isLoading = ref(false)
 
   const h1 = computed(() => {
     return t('messages.search_results', {search: search.value})
@@ -26,7 +27,10 @@
   const products = computed(() => productStore.found)
 
   async function getProducts() {
-    return await productStore?.search({q: search.value, per_page: 30})
+    isLoading.value = true
+    return await productStore?.search({q: search.value, per_page: 30}).then(() => {
+      isLoading.value = false
+    })
   }
 
   //await useAsyncData('search', () => getProducts())
@@ -45,7 +49,7 @@
 
 <template>
   <div>
-    <div class="container">
+    <div class="container search-container">
       <h1 class="main-caption main-caption-align">{{ h1 }}</h1>
 
       <div class="input-wrapper">
@@ -53,7 +57,7 @@
         
         <input v-model="search" @keypress.enter="getProducts" class="input"/>
 
-        <button @click="getProducts" class="main-button main-button-small">
+        <button @click="getProducts" :class="{loading: isLoading}" class="main-button main-button-small">
           <span class="text">{{ $t('button.search') }}</span>
         </button>
       </div>

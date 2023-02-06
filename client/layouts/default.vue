@@ -96,55 +96,56 @@ export default {
           <slot />
         </main>
 
-        <the-footer></the-footer>
+        <lazy-the-footer></lazy-the-footer>
 
-        <lazy-modal-noty></lazy-modal-noty>
+        <DelayHydration>
+          <lazy-modal-noty></lazy-modal-noty>
 
-        <!-- MODAL / shoping cart -->
-        <transition name="move-x-right">
-          <lazy-modal-cart v-if="isModalCartActive"></lazy-modal-cart>
-        </transition>
+          <!-- MODAL / shoping cart -->
+          <transition name="move-x-right">
+            <lazy-modal-cart v-if="isModalCartActive"></lazy-modal-cart>
+          </transition>
 
-        <!-- POPUP / has 18? -->
-        <transition name="fade-in">
-          <lazy-popup-adult v-if="isPopupAdultActive"></lazy-popup-adult>
-        </transition>
+          <!-- POPUP / has 18? -->
+          <transition name="fade-in">
+            <lazy-popup-adult v-if="isPopupAdultActive"></lazy-popup-adult>
+          </transition>
 
-        <!-- POPUP / main auth entry -->
-        <transition name="fade-in">
-          <lazy-popup-auth-sign-in-social v-if="isPopupAuthSignInSocialActive"></lazy-popup-auth-sign-in-social>
-        </transition>
+          <!-- POPUP / main auth entry -->
+          <transition name="fade-in">
+            <lazy-popup-auth-sign-in-social v-if="isPopupAuthSignInSocialActive"></lazy-popup-auth-sign-in-social>
+          </transition>
 
-        <!-- POPUP / registration -->
-        <transition name="fade-in">
-          <lazy-popup-auth-sign-in-email v-if="isPopupAuthSignInEmailActive"></lazy-popup-auth-sign-in-email>
-        </transition>
+          <!-- POPUP / registration -->
+          <transition name="fade-in">
+            <lazy-popup-auth-sign-in-email v-if="isPopupAuthSignInEmailActive"></lazy-popup-auth-sign-in-email>
+          </transition>
 
-        <!-- POPUP / change password -->
-        <transition name="fade-in">
-          <lazy-popup-auth-change-password v-if="isPopupAuthChangePasswordActive"></lazy-popup-auth-change-password>
-        </transition>
+          <!-- POPUP / change password -->
+          <transition name="fade-in">
+            <lazy-popup-auth-change-password v-if="isPopupAuthChangePasswordActive"></lazy-popup-auth-change-password>
+          </transition>
 
-        <!-- POPUP / log in 1 step -->
-        <transition name="fade-in">
-          <lazy-popup-auth-log-in-email v-if="isPopupAuthLogInEmailActive"></lazy-popup-auth-log-in-email>
-        </transition>
+          <!-- POPUP / log in 1 step -->
+          <transition name="fade-in">
+            <lazy-popup-auth-log-in-email v-if="isPopupAuthLogInEmailActive"></lazy-popup-auth-log-in-email>
+          </transition>
 
-        <!-- POPUP / log in 2 step -->
-        <transition name="fade-in">
-          <lazy-popup-auth-log-in-password v-if="isPopupAuthLogInPasswordActive"></lazy-popup-auth-log-in-password>
-        </transition>
+          <!-- POPUP / log in 2 step -->
+          <transition name="fade-in">
+            <lazy-popup-auth-log-in-password v-if="isPopupAuthLogInPasswordActive"></lazy-popup-auth-log-in-password>
+          </transition>
 
-        <!-- POPUP / log out -->
-        <transition name="fade-in">
-          <lazy-popup-auth-log-out v-if="isPopupAuthLogOutActive"></lazy-popup-auth-log-out>
-        </transition>
+          <!-- POPUP / log out -->
+          <transition name="fade-in">
+            <lazy-popup-auth-log-out v-if="isPopupAuthLogOutActive"></lazy-popup-auth-log-out>
+          </transition>
 
-        <!-- POPUP / check money -->
-        <transition name="fade-in">
-          <lazy-popup-check-money v-if="false"></lazy-popup-check-money>
-        </transition>
-
+          <!-- POPUP / check money -->
+          <transition name="fade-in">
+            <lazy-popup-check-money v-if="false"></lazy-popup-check-money>
+          </transition>
+        </DelayHydration>
       </Body>
     </Html>
   </div>

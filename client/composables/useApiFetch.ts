@@ -1,4 +1,5 @@
 export const useApiFetch = async (url: string, body: Object = null, method: string = 'GET') => {
+  
   const locale = useNuxtApp().$i18n.locale
 
   const headers = {
@@ -7,6 +8,7 @@ export const useApiFetch = async (url: string, body: Object = null, method: stri
     'X-Requested-With': 'XMLHttpRequest',
     'Accept-Language': locale.value
   };
+  
 
   let data = null;
   let error = null;

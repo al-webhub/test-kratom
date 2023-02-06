@@ -88,6 +88,11 @@ export const useCartStore = defineStore('cartStore', {
       return serialized
     },
 
+    setUser(user) {
+      const {id, firstname, lastname, communication, communication_number, email} = user
+      this.orderState.user = {id, firstname, lastname, communication, communication_number, email}
+    },
+
     async createOrder(provider: String = 'auth') {
       const runtimeConfig = useRuntimeConfig()
       const context = this
@@ -108,7 +113,6 @@ export const useCartStore = defineStore('cartStore', {
         credentials: 'include',
         body: dataPost,
         onResponse({ request, response, options }) {
-          console.info('order', response._data)
         },
         onResponseError({ request, response, options }) {
           context.errors = response._data

@@ -30,8 +30,10 @@ export default {
     },
 
     plusHandler() {
-      let value = this.modelValue
-      this.$emit('update:modelValue', ++value)
+      if(this.modelValue < this.max) {
+        let value = this.modelValue
+        this.$emit('update:modelValue', ++value)
+      }
     },
 
     updateHandler(event) {

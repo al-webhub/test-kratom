@@ -7,7 +7,12 @@ export default {
     const reviewStore = useReviewStore()
     const authStore = useAuthStore()
 
+    const isPopupFeedbackShow = computed(() => {
+      return reviewStore.isShow
+    })
+
     return {
+      isPopupFeedbackShow,
       reviewStore,
       authStore
     }
@@ -112,7 +117,9 @@ export default {
       </div>
     </div>
 
-    <popup-feedback></popup-feedback>
+    <transition name="fade-in">
+      <lazy-popup-feedback v-if="isPopupFeedbackShow"></lazy-popup-feedback>
+    </transition>
 
   </div>
 </template>
