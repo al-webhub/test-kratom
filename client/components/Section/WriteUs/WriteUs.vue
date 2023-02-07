@@ -1,13 +1,8 @@
 <script>
 export default {
   setup() {
-    const { t } = useI18n({
-      useScope: 'local'
-    }) 
-
-    return {
-      t
-    }
+    const { t } = useI18n({useScope: 'local'}) 
+    return {t}
   },
 
   computed: {

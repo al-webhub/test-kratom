@@ -1,4 +1,4 @@
-
+@import 'assets/scss/global/mixins';
 
 .form-component {
   margin-bottom: 20px;
@@ -11,7 +11,11 @@
   align-items: flex-start;
 }
 .profile__form__body .input__wrapper {
-  width: calc(50% - 10px);
+  width: 100%;
+  
+  @include _tablet {
+    width: calc(50% - 10px);
+  }
 }
 .profile__form__body .input__wrapper.input__wrapper100 {
   width: 100%;

@@ -10,6 +10,18 @@
   }
 }
 
-.cart__wrapper .main-caption-l {
+.checkout__wrapper {
   margin-top: 50px;
+
+  @include _tablet {
+    margin-top: 65px;
+  }
+}
+
+.hide-mobile {
+  display: none;
+
+  @include _tablet {
+    display: block;
+  }
 }

@@ -32,6 +32,10 @@ export default {
 
     address() {
       return this.profile?.addresses[0] || null
+    },
+
+    countries () {
+      return useCountries()
     }
   },
 
@@ -89,7 +93,7 @@ export default {
       <form-select
         v-model="address.country"
         :placeholder="$t('form.Country_Region')"
-        :values="['Ukraine', 'Russia']"
+        :values="countries"
         class="form-component"
       >
       </form-select>

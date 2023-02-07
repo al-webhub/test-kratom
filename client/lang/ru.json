@@ -31,7 +31,8 @@
     "order_history": "История заказов",
     "addresses": "Адресы",
     "edit_account": "Настройки аккаунта",
-    "referral_network": "Реферальная система"
+    "referral_network": "Реферальная система",
+    "our_advantages": "Наши преимущества"
   },
 
   "contacts": {
@@ -60,7 +61,7 @@
     "New_Password" : "Новый пароль",
     "Confirm_Password" : "Подтвердите пароль",
     "Last_name" : "Фамилия",
-    "Preferred_communication" : "Предпочтительный способ коммуникации",
+    "Preferred_communication" : "Cпособ коммуникации",
     "Account/full_number/link" : "Учетная запись/полный номер/ссылка",
     "account" : "Аккаунт",
     "referral_link": "Реферальная ссылка",

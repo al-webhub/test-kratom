@@ -1,3 +1,4 @@
+@import 'assets/scss/global/mixins';
 
 @media screen and (min-width: 1068px) {
   .referral-history-position-1-lvl {
@@ -35,18 +36,22 @@
 }
 
 .referral-history {
-margin-top: 25px;
+  margin-top: 25px;
 }
 .referral-history__header {
-display: flex;
-justify-content: space-between;
-padding-bottom: 10px;
-border-bottom: 1px solid #4F4F4F;
-font-size: 12px;
-line-height: 15px;
-letter-spacing: 0.05em;
-text-transform: uppercase;
-font-weight: 700;
+  display: none;
+  
+  @include _tablet {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #4F4F4F;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
 }
 .referra-empty {
   user-select: none;

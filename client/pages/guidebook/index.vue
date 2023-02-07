@@ -23,7 +23,9 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      isLoading: false
+    }
   },
 
   computed: {
@@ -57,11 +59,15 @@ export default {
     },
 
     async loadmoreHandler() {
+      this.isLoading = true
+
       const query = {
         ...this.query,
         page: this.meta.current_page + 1
       }
-      await this.articleStore?.getAll(query, false)
+      await this.articleStore?.getAll(query, false).finally(() => {
+        this.isLoading = false
+      })
     }
   },
 
@@ -89,7 +95,12 @@ export default {
           </guidebook-card>
         </ul>
 
-        <button class="main-button" @click="loadmoreHandler()" v-if="meta && meta.current_page !== meta.last_page">
+        <button
+          v-if="meta && meta.current_page !== meta.last_page"
+          @click="loadmoreHandler()"
+          :class="{loading: isLoading}"
+          class="main-button"
+        >
           <span class="text">{{ $t('button.show_more') }}</span>
         </button>
         

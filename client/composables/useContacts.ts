@@ -8,6 +8,7 @@ import viberIcon from '/assets/svg-icons/viber.svg';
 
 export const useContacts = () => {
   const { t } = useI18n({useScope: 'global'})
+  const { isMobile } = useDevice()
 
   const contacts = {
     address: {
@@ -27,22 +28,22 @@ export const useContacts = () => {
     },
     telegram: {
       icon: telegramIcon,
-      link: 'tg://resolve?domain=',
+      link: 'tg://resolve?domain=kratomhelper',
       text: 'telegram',
     },
     whatsapp: {
       icon: whatsappIcon,
-      link: 'https://wa.me/',
+      link: 'https://wa.me/420722133136',
       text: 'whatsapp',
     },
     skype: {
       icon: skypeIcon,
-      link: 'skype:?chat',
+      link: 'skype:live:.cid.408ed7c5750344f9?chat',
       text: 'skype',
     },
     viber: {
       icon: viberIcon,
-      link: 'viber://chat?number=+',
+      link: isMobile? 'viber://chat?number=+420722133136': 'viber://chat?number=420722133136',
       text: 'viber',
     }
   }

@@ -16,6 +16,7 @@ export default {
     return {
       search_q: '',
       searchTimeout: null,
+      isLoading: false
     }
   },
 
@@ -34,10 +35,18 @@ export default {
       handler(v) {
         clearTimeout(this.searchTimeout)
 
-        if(v && v.length > 2)
+        if(v && v.length > 2) {
+          this.isLoading = true
+          
           this.searchTimeout = setTimeout(() => {
-            this.productStore.search({q: v})
+            this.productStore.search({q: v}).finally(() => {
+              this.isLoading = false
+            })
+
           }, 1000)
+        }else {
+          this.isLoading = false
+        }
       },
       immediate: true
     }
@@ -67,7 +76,11 @@ export default {
     </button>
 
     <div class="search-form">
-                
+      
+      <transition name="scale-x">
+        <simple-loader v-if="isLoading"></simple-loader>
+      </transition>
+
       <input 
         :placeholder="t('search')"
         v-model="search_q"
@@ -81,6 +94,10 @@ export default {
         <img src="~assets/svg-icons/search.svg" class="icon"  />
       </NuxtLink>
 
+    </div>
+
+    <div v-if="search_q.length > 2 && !foundProducts.length && !isLoading" class="empty">
+      {{ $t('messages.no_results', {search: search_q}) }}
     </div>
 
     <div :class="{active: foundProducts.length}" class="livesearch">

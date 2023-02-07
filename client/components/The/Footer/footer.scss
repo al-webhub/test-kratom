@@ -157,7 +157,7 @@
 
   &-images {
     display: grid;
-    grid-template-columns: repeat(3, 65px);
+    grid-template-columns: repeat(4, minmax(0, 65px));
     grid-gap: 15px;
 
     @include _tablet {

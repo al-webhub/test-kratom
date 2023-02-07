@@ -1,6 +1,15 @@
 @import 'assets/scss/global/mixins';
 @import 'assets/scss/global/vars';
 
+:deep(.loader) {
+  position: absolute;
+  left: 5px;
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .search {
   position: fixed;
   top: 50px;
@@ -15,6 +24,7 @@
   }
 
   &-form {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -100,6 +110,13 @@
       padding-right: 10px;
       text-decoration: line-through;
     }
+  }
+
+  .empty {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 0 auto;
+    padding: 20px 30px;
   }
 
   .close-btn {

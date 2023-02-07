@@ -17,13 +17,10 @@ export default {
 
   computed: {
     photo() {
-      if(this.review.owner.photo) {
-        return '/server/' + this.review.owner.photo 
-      }
+      if(this.review.owner.photo)
+        return this.review.owner.photo.startsWith('http')? this.review.owner.photo :'/server/' + this.review.owner.photo
       else
-      {
         return '/images/photo-log-in.png'
-      }
     }
   },
 }

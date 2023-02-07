@@ -6,14 +6,17 @@
 
 <template>
   <NuxtLayout name="default">
-    <div class="container">
-      <SimpleDecorator is-figure>
-        <div class="error">
-          <h1 class="title">404</h1>
-          <p class="desc">{{ t('desc') }}</p>
-          <SimpleMoreBtn link="/" :text="t('go_to_home')" class="btn"></SimpleMoreBtn>
-        </div>
-      </SimpleDecorator>
+    <div>
+      <div class="container">
+        <SimpleDecorator is-figure>
+          <div class="error">
+            <h1 class="title">404</h1>
+            <p class="desc">{{ t('desc') }}</p>
+            <SimpleMoreBtn link="/" :text="t('go_to_home')" class="btn"></SimpleMoreBtn>
+          </div>
+        </SimpleDecorator>
+      </div>
+      <section-write-us></section-write-us>
     </div>
   </NuxtLayout>
 </template>

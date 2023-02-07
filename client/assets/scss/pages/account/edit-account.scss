@@ -1,7 +1,9 @@
-.form-component {
+@import 'assets/scss/global/mixins';
+
+.form-component,
+:deep(.form-component) {
   margin-bottom: 20px;
 }
-
 
 .profile__form__body {
   display: flex;
@@ -9,17 +11,17 @@
   flex-wrap: wrap;
   align-items: flex-start;
 
-  .input__wrapper,
-  :deep(.input__wrapper){
-    width: calc(50% - 10px);
+  @include _tablet {
+    .input__wrapper,
+    :deep(.input__wrapper){
+        width: calc(50% - 10px);
+    }
   }
 }
-
 
 .profile__form__body .input__wrapper.input__wrapper100 {
   width: 100%;
 }
-
 
 .profile__form__footer {
   display: flex;

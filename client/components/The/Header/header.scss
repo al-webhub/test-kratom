@@ -33,6 +33,7 @@
     max-width: 138px;
     height: 31px;
     flex-shrink: 0;
+    object-fit: contain;
 
     @include _767 {
       max-width: 119px;

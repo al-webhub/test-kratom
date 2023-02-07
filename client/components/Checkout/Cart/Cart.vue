@@ -86,10 +86,10 @@ export default {
 <style src="./cart.scss" lang="less" scoped />
 
 <template>
-  <div class="order__wrapper">
+  <div class="cart-wrapper">
 
       <div class="order__info">
-        <p class="main-caption-l">{{ $t('title.your_order') }}</p>
+        <p class="main-caption-l">{{ $t('title.cart') }}</p>
         
         <div class="order__info__header">
           <p class="order__info__name order-position-item">{{ t('item') }}</p>
@@ -99,7 +99,7 @@ export default {
           <p class="order__info__name order-position-last"></p>
         </div>
 
-        <ul class="order__info__list">
+        <ul class="list">
           <checkout-product-full
             v-for="(product, index) in cart"
             :key="product.id"
@@ -153,13 +153,6 @@ export default {
         </p>
       </div>
       
-      <button
-        v-if="cartLength"
-        class="main-button-color main-button-color-mobile"
-      >
-        <span class="text">{{ t('checkout') }}</span>
-      </button>
-
   </div>
 </template>
 

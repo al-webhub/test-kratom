@@ -132,10 +132,10 @@ export default {
     <div class="cart__wrapper container">
       
       <!-- <div class="general-decor-figure"></div> -->
-      <p class="main-caption main-caption-align">{{ $t('title.cart') }}</p>
+      <p class="main-caption main-caption-align">{{ $t('title.your_order') }}</p>
 
       <div class="checkout__wrapper">
-        <p class="main-caption-l">{{ $t('title.your_order') }}</p>
+        <p class="main-caption-l hide-mobile">{{ $t('title.cart') }}</p>
         <checkout-cart :cart="cart" :user="user" :profile="profile" @delete="deleteHandler" @update:bonus="bonusHandler"></checkout-cart>
       </div>
       

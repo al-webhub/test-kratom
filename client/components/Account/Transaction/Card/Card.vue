@@ -1,5 +1,10 @@
 <script>
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
+    return {t}
+  },
+
   data() {
     return {
       isActive: false
@@ -26,7 +31,7 @@ export default {
   <ul :class="{active: isActive}" class="referral-history__list referral-history__list-transactions">
     <li class="referral-history__item referral-history-position-data">
       <div class="main-wrapper">
-        <p class="main-type">{{ $t('text.Transaction_date') }}</p>
+        <p class="main-type">{{ t('Transaction_date') }}</p>
         <p class="text">{{ $d(transaction.created_at, 'long') }}</p>
       </div>
     </li>
@@ -34,7 +39,7 @@ export default {
       <p class="text" v-html="transaction.description"></p>
       <div class="referral-history__sub">
         <div class="wrapper">
-          <p class="type">{{ $t('text.description') }}</p>
+          <p class="type">{{ t('description') }}</p>
           <div class="description-text" v-html="transaction.description"></div>
         </div>
       </div>
@@ -43,7 +48,7 @@ export default {
       <p class="text" style="text-transform: uppercase">{{ transaction.status }}</p>
       <div class="referral-history__sub">
         <div class="wrapper">
-          <p class="type">{{ $t('text.Status') }}</p>
+          <p class="type">{{ t('Status') }}</p>
           <p class="description">{{ transaction.status }}</p>
         </div>
       </div>
@@ -52,7 +57,7 @@ export default {
       <p class="text">{{ transaction.value }}</p>
       <div class="referral-history__sub">
         <div class="wrapper">
-          <p class="type">{{ $t('text.Amount') }}</p>
+          <p class="type">{{ t('Amount') }}</p>
           <p class="description">{{ transaction.value }}</p>
         </div>
       </div>
@@ -66,7 +71,7 @@ export default {
       </template>
       <div class="referral-history__sub">
           <div class="wrapper">
-            <p class="type">{{ $t('text.Current_balance') }}</p>
+            <p class="type">{{ t('Current_balance') }}</p>
             <template v-if="transaction.balance">
               <p class="description">USD {{ transaction.balance }}</p>
             </template>
@@ -81,3 +86,21 @@ export default {
     </li>
   </ul>
 </template>
+<i18n>
+  {
+    "en": {
+      "Transaction_date": "Transaction date",
+      "description": "Description",
+      "Status": "Status",
+      "Amount": "Amount",
+      "Current_balance": "Current balance"
+    },
+    "ru": {
+      "Transaction_date": "Дата",
+      "description": "Описание",
+      "Status": "Статус",
+      "Amount": "Сумма",
+      "Current_balance": "Баланс"
+    }
+  }
+</i18n>

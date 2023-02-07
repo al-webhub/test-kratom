@@ -21,27 +21,21 @@
   }
 
   &__text {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    max-height: 90px;
+    max-height: 89px;
     margin: 20px 0 10px 0;
     overflow: hidden;
     font-size: 14px;
     line-height: 150%;
     text-align: center;
-    text-overflow: ellipsis;
 
 
     @include _tablet {
       margin: 10px 0;
       line-height: 130%;
-      -webkit-line-clamp: 5;
     }
 
     @include _desktop {
       margin: 20px 0 5px 0;
-      -webkit-line-clamp: 4;
       line-height: 150%;
     }
   }

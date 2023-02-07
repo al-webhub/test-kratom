@@ -1,5 +1,10 @@
 <script>
 export default {
+  setup() {
+    const { t } = useI18n({useScope: 'local'})
+    return {t}
+  },
+  
   data() {
     return {
       isActive: false
@@ -39,7 +44,7 @@ export default {
   <ul :class="{active: isActive}" class="referral-history__list">
     <li class="referral-history__item referral-history-position-1-lvl">
       <div class="main-wrapper">
-        <p class="main-type">{{ $t('text.My_referral') }} (1st lvl)</p>
+        <p class="main-type">{{ t('My_referral') }} (1st lvl)</p>
         <p class="text">{{ referral.fullname }}</p>
       </div>
     </li>
@@ -48,7 +53,7 @@ export default {
       <p class="text">{{ totalRefsLvl2 }}</p>
       <div class="referral-history__sub">
         <div class="wrapper">
-          <p class="type">{{ $t('text.Referral_partners') }} (2nd lvl)</p>
+          <p class="type">{{ t('Referral_partners') }} (2nd lvl)</p>
           <p class="description">{{ totalRefsLvl2 }}</p>
         </div>
 
@@ -68,7 +73,7 @@ export default {
       <p class="text">{{ totalRefsLvl3 }}</p>
       <div class="referral-history__sub">
         <div class="wrapper">
-          <p class="type">{{ $t('text.Referral_partners') }} (3rd lvl)</p>
+          <p class="type">{{ t('Referral_partners') }} (3rd lvl)</p>
           <p class="description">{{ totalRefsLvl3 }}</p>
         </div>
         <ul class="referral-history__sub-list">
@@ -89,14 +94,30 @@ export default {
       <p class="text">{{ $d(referral.created_at, 'long') }}</p>
       <div class="referral-history__sub">
         <div class="wrapper">
-          <p class="type">{{ $t('text.add_date') }}</p>
+          <p class="type">{{ t('add_date') }}</p>
           <p class="description">{{ $d(referral.created_at, 'long') }}</p>
         </div>
       </div>
     </li>
 
-    <li @click="toggleHandler" class="referral-history__item referral-history-position-last">
-      <img v-if="totalRefsLvl2"  src="~assets/svg-icons/arrow-simple.svg"  class="icon toggle-list-btn" />
+    <li @click="toggleHandler" :class="{hidden: !totalRefsLvl2}" class="referral-history__item referral-history-position-last">
+      <img src="~assets/svg-icons/arrow-simple.svg"  class="icon toggle-list-btn" />
     </li>
   </ul>
 </template>
+<i18n>
+  {
+    "en": {
+      "My_referral": "My referral",
+      "Referral_partners": "Referral partners",
+      "add_date": "add date",
+      "lvl": "{lvl} lvl"
+    },
+    "ru": {
+      "My_referral": "Реферал",
+      "Referral_partners": "Партнеры",
+      "add_date": "Дата добавления",
+      "lvl": "{lvl} урв."
+    }
+  }
+</i18n>

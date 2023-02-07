@@ -1,3 +1,5 @@
+@import 'assets/scss/global/mixins';
+
 @media screen and (min-width: 1201px) {
   .referral-history__list:hover .referral-history__item .text {
     color: #ACDA53;
@@ -94,7 +96,14 @@
 .referral-history__item {
   display: flex;
   flex-direction: column;
+
+  &.hidden {
+    @include _tablet {
+      display: none;
+    }
   }
+}
+
   .referral-history__item:first-child {
   font-weight: 700;
   }

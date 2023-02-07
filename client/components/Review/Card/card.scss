@@ -53,11 +53,13 @@
   margin-bottom: 20px;
 
   .name {
+    white-space: nowrap;
     text-transform: uppercase;
     font-weight: 700;
   }
   
   .date {
+    white-space: nowrap;
     color: #BDBDBD;
   }
 

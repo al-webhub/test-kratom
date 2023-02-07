@@ -14,7 +14,7 @@ export default defineNuxtConfig({
 
   app: {
     pageTransition: { name: 'page-tr', mode: 'out-in' },
-    layoutTransition: { name: 'page-tr', mode: 'out-in' },
+    layoutTransition: { name: 'layout-tr', mode: 'out-in' },
   },
   
   // webpack: {

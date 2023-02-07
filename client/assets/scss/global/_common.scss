@@ -4,7 +4,6 @@
 
 main {
   position: relative;
-  min-height: 90vh;
 }
 
 .container {
@@ -14,7 +13,6 @@ main {
   margin-left: auto;
   margin-right: auto;
 }
-
 
 .narrow {
   max-width: 630px;
@@ -334,7 +332,6 @@ img {
 .page-tr-enter-active {
   transition: opacity .3s, filter .3s;
 }
-
 .page-tr-leave-active{
   transition: none;
 }
@@ -346,13 +343,13 @@ img {
 }
 
 //
-.layout-tr-enter-active {
-  transition: transform .3s, opacity .3s;
+.layout-tr-enter-active,
+.layout-tr-leave-active {
+  transition: opacity .3s;
 }
 .layout-tr-enter-from,
 .layout-tr-leave-to {
   opacity: 0;
-  transform: translateY(-10%);
 }
 
 // move-x
@@ -398,4 +395,15 @@ img {
 .fade-in-leave-to {
   opacity: 0;
   filter: blur(1rem);
+}
+
+//scale-x
+.scale-x-enter-active,
+.scale-x-leave-active {
+  transition: all 0.3s;
+}
+.scale-x-enter-from,
+.scale-x-leave-to {
+  opacity: 0;
+  transform: scaleX(0);
 }

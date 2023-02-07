@@ -50,6 +50,10 @@ export default {
     cartLength() {
       return this.cartStore.cart.length
     },
+
+    photo() {
+      return this.user.photo.startsWith('http')? this.user.photo :'/server/' + this.user.photo
+    }
   },
 
   methods: {
@@ -129,7 +133,19 @@ export default {
   <header class="header">
     
     <NuxtLink :to="localePath('/')" class="logo">
-      <img src="~assets/images/logo.svg" alt="Kratom">
+      <nuxt-img
+        src="/images/logo.png"
+        alt="Kratomhelper.com logo"
+        title="Kratomhelper.com logo"
+        width="138"
+        height="31"
+        sizes = "mobile:138px tablet:138px desktop:138px"
+        format = "webp"
+        fit="contain"
+        quality = "70"
+        loading = "lazy"
+        class="logo">
+      </nuxt-img>
     </NuxtLink>
 
     <nav :class="{overflow: isMenuObserved}" class="nav">
@@ -200,9 +216,8 @@ export default {
             </button>
 
             <NuxtLink v-else-if="isAuth && user" :to="localePath('/account/order-history')">
-              <img :src="user.photo" class="photo" />
-              <!-- <nuxt-img
-                :src="'/server/'+user.photo"
+              <nuxt-img
+                :src="photo"
                 width="24"
                 height="24"
                 sizes = "mobile:24px"
@@ -212,7 +227,7 @@ export default {
                 loading = "lazy"
                 class="photo"
               >
-              </nuxt-img> -->
+              </nuxt-img>
             </NuxtLink>
         </div>
         

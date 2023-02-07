@@ -43,11 +43,7 @@ export default {
         street: null,
         apartment: null,
         zip: null
-      },
-      countries: [
-        'Украина',
-        'Чехия'
-      ]
+      }
     }
   },
 
@@ -63,6 +59,12 @@ export default {
       type: Object
     }
   },
+
+  computed: {
+    countries () {
+      return useCountries()
+    }
+  }
 }
 </script>
 
@@ -191,7 +193,7 @@ export default {
     "ru": {
       "shipping" : "Доставка",
       "desired_delivery" : "Выберите желаемое время доставки",
-      "Shipping_address": "Адреса доставки",
+      "Shipping_address": "Адрес доставки",
       "We_deliver" : "Мы доставляем",
     }
   }

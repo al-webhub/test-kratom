@@ -72,7 +72,11 @@ export default {
     },
 
     async toCartHandler() {
-      await this.cartStore.add(this.selectedModification).then(() => {
+      const productToCart = Object.assign({}, this.selectedModification)
+
+      productToCart.image || (productToCart.image = this.product.image)
+
+      await this.cartStore.add(productToCart).then(() => {
         useNoty().setNoty(this.$t('noty.product_to_cart', {product: this.selectedModification.name}), 3000)
       })
     },
