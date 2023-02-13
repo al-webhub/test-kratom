@@ -4169,28 +4169,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "cff4c43e87170c76e06b114b1d01a3ab4d86eecf"
+                "reference": "97644c48ad2917048719bdf380e0ed554faf9958"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/cff4c43e87170c76e06b114b1d01a3ab4d86eecf",
-                "reference": "cff4c43e87170c76e06b114b1d01a3ab4d86eecf",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/97644c48ad2917048719bdf380e0ed554faf9958",
+                "reference": "97644c48ad2917048719bdf380e0ed554faf9958",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "laravel/pint": "^1.0",
-                "nunomaduro/collision": "^6.0",
-                "nunomaduro/larastan": "^2.0.1",
-                "orchestra/testbench": "^7.0",
-                "pestphp/pest": "^1.21",
-                "pestphp/pest-plugin-laravel": "^1.1",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan-deprecation-rules": "^1.0",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^9.5"
+                "php": ">=7.4"
             },
             "default-branch": true,
             "type": "library",
@@ -4233,7 +4221,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/main"
             },
-            "time": "2023-01-20T18:59:29+00:00"
+            "time": "2023-02-11T16:00:19+00:00"
         },
         {
             "name": "parabellumkoval/backpack-transactions",

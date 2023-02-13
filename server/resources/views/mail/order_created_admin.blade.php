@@ -55,8 +55,16 @@
 					</tr>
 				@endforeach
 				<tr>
-					<th style="padding:15px; border-top:1px solid #ddd; text-align: right;" colspan="3">Итого</th>
+					<th style="padding:15px; border-top:1px solid #ddd; text-align: right;" colspan="3">Сумма</th>
 					<th style="padding:15px; border-top:1px solid #ddd" colspan="2">{{ $order->price }}USD</th>
+				</tr>
+				<tr>
+					<th style="padding:15px; border-top:1px solid #ddd; text-align: right;" colspan="3">Использовано бонусов</th>
+					<th style="padding:15px; border-top:1px solid #ddd" colspan="2">{{ $bonusesUsed }}USD</th>
+				</tr>
+				<tr>
+					<th style="padding:15px; border-top:1px solid #ddd; text-align: right;" colspan="3">Итого</th>
+					<th style="padding:15px; border-top:1px solid #ddd" colspan="2">{{ $order->price - $bonusesUsed }}USD</th>
 				</tr>
 			</table>
 		</td>

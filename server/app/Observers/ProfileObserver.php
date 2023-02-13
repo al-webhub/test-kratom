@@ -19,10 +19,10 @@ class ProfileObserver
      */
     public function created(Profile $profile)
     {
-      Mail::to($profile->email)->send(new UserRegistered($profile));
+      Mail::to($profile->email)->queue(new UserRegistered($profile));
 
       if($profile->referrer)
-        Mail::to($profile->referrer->email)->send(new ReferralRegistered($profile));
+        Mail::to($profile->referrer->email)->queue(new ReferralRegistered($profile));
     }
 
     /**

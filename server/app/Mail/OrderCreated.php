@@ -30,17 +30,16 @@ class OrderCreated extends Mailable
      */
     public function build()
     {
-      $bonuses_used = $this->order->transactions->where('type', 'bonuses_used')->first();
-      $bonuses_used = $bonuses_used? $bonuses_used->change: 0;
+      $bonusesUsed = isset($this->order->info['bonusesUsed']) && $this->order->info['bonusesUsed']? $this->order->info['bonusesUsed']: 0;
       
-        return $this->subject('New order created / KRATOMHELPER')
-                    ->markdown('mail.order_created')
-                    ->with([
-                      'order' => $this->order,
-                      'user' => $this->order->info['user'] ?? null,
-                      'products' => $this->order->info['products'] ?? null,
-                      'address' => $this->order->info['address'] ?? null,
-                      'bonuses_used' => $bonuses_used
-                    ]);
+      return $this->subject('New order created / KRATOMHELPER')
+                  ->markdown('mail.order_created')
+                  ->with([
+                    'order' => $this->order,
+                    'user' => $this->order->info['user'] ?? null,
+                    'products' => $this->order->info['products'] ?? null,
+                    'address' => $this->order->info['address'] ?? null,
+                    'bonusesUsed' => $bonusesUsed
+                  ]);
     }
 }

@@ -23,14 +23,14 @@ class OrderObserver
     {
 
       // SEND NOTY TO ADMIN EMAIL
-      Mail::to(env('ADMIN_MAIL', 'info@kratomhelper.com'))->send(new OrderCreatedAdmin($order));  
+      Mail::to(env('ADMIN_MAIL', 'info@kratomhelper.com'))->queue(new OrderCreatedAdmin($order));  
 
       // SEND NOTY TO CUSTOMER
       $email = $order->user->email ?? null;
       $email = $email? $email: ($order->info['user']['email'] ?? null);
 
       if($email)
-        Mail::to($email)->send(new OrderCreated($order));
+        Mail::to($email)->queue(new OrderCreated($order));
       
       // CREATE TRANSACTIONS
       if(!$order->user)
@@ -38,6 +38,7 @@ class OrderObserver
 
       $this->createCashbackTransactions($order);
       $this->createReferralTransactions($order);
+      $this->createBonusesUsedTransactions($order);
     }
 
     /**
@@ -131,5 +132,24 @@ class OrderObserver
       $order->createTransaction($data);
       
       //$order->user->notify(new CashbackBonus($transaction));
+    }
+
+    public function createBonusesUsedTransactions($order) {
+      
+      if(!isset($order->info['bonusesUsed']) || !$order->info['bonusesUsed'])
+        return;
+
+      $bonuses = $order->info['bonusesUsed'];
+
+      $data = [
+        'owner_id' => $order->user->id,
+        'value' => $bonuses * -1,
+        'currency' => 'USD',
+        'description' => '$' . $bonuses . ' bonuses were used to pay for the order ' . $order->code,
+        'type' => 'bonusesUsed',
+        'status' => 'complited',
+      ];
+
+      $order->createTransaction($data);
     }
 }

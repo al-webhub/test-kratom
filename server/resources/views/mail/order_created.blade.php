@@ -92,7 +92,7 @@
                 <tr>
                     <td style="padding: 0px 0px 10px; font: 14px Arial,sans-serif; line-height: 16px; Margin: 0;margin: 0; white-space: nowrap; text-transform: uppercase; color: #BDBDBD;">
                         <b style="-webkit-text-size-adjust:none; display: inline-block; width: 49%;">Bonuses used</b>
-                        <b style="-webkit-text-size-adjust:none; display: inline-block; width: 50%; text-align: right;">USD {{ $bonuses_used }}</b>
+                        <b style="-webkit-text-size-adjust:none; display: inline-block; width: 50%; text-align: right;">USD {{ $bonusesUsed }}</b>
                     </td>
                 </tr>
                 <tr>
@@ -104,7 +104,7 @@
                 <tr>
                     <td style="padding: 10px 0px 0px; font: 14px Arial,sans-serif; line-height: 16px; Margin: 0;margin: 0; white-space: nowrap; text-transform: uppercase; color: #ACDA53;;">
                         <b style="-webkit-text-size-adjust:none; display: inline-block; width: 49%;">total</b>
-                        <b style="-webkit-text-size-adjust:none; display: inline-block; width: 50%; text-align: right;">usd {{ $order->price + $bonuses_used }}</b>
+                        <b style="-webkit-text-size-adjust:none; display: inline-block; width: 50%; text-align: right;">usd {{ $order->price - $bonusesUsed }}</b>
                     </td>
                 </tr>
             </table>

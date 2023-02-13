@@ -24,13 +24,13 @@ class TransactionObserver
       $email = $transaction->owner->email;
 
       if($transaction->type === 'withdrawal'){
-        Mail::to($email)->send(new WithdrawalCompleted($transaction));
+        Mail::to($email)->queue(new WithdrawalCompleted($transaction));
       }elseif($transaction->type === 'cashback') {
-        Mail::to($email)->send(new CashbackBonus($transaction));
+        Mail::to($email)->queue(new CashbackBonus($transaction));
       }elseif($transaction->type === 'review') {
-        Mail::to($email)->send(new ReviewBonus($transaction));
+        Mail::to($email)->queue(new ReviewBonus($transaction));
       }elseif($transaction->type === 'bonus') {
-        Mail::to($email)->send(new ReferralBonus($transaction));
+        Mail::to($email)->queue(new ReferralBonus($transaction));
       }
     }
 }

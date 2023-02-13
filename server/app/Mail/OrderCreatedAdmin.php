@@ -30,13 +30,15 @@ class OrderCreatedAdmin extends Mailable
      */
     public function build()
     {
+      $bonusesUsed = isset($this->order->info['bonusesUsed']) && $this->order->info['bonusesUsed']? $this->order->info['bonusesUsed']: 0;
 
       return $this->markdown('mail.order_created_admin')
                   ->with([
                     'order' => $this->order,
                     'user' => $this->order->info['user'] ?? null,
                     'products' => $this->order->info['products'] ?? null,
-                    'address' => $this->order->info['address'] ?? null
+                    'address' => $this->order->info['address'] ?? null,
+                    'bonusesUsed' => $bonusesUsed
                   ]);
     }
 }
