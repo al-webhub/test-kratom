@@ -1,12 +1,3 @@
-type Profile = {
-  id: number | null,
-  email: string,
-  fullname: string,
-  firstname: string | null,
-  lastname: string | null,
-  photo: string | null
-};
-
 export const useAuthStore = defineStore('authStore', {
   persist: true,
 
@@ -95,49 +86,60 @@ export const useAuthStore = defineStore('authStore', {
 
     async login() {
       const runtimeConfig = useRuntimeConfig()
-      const context = this
-      const locale = useNuxtApp().$i18n.locale
+      const url = `${runtimeConfig.public.base}/login`
       
       await this.getToken()
 
-      return await useFetch(`${runtimeConfig.public.base}/login`,{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
-          'Accept-Language': locale.value
-        },
-        referrer: '',
-        credentials: 'include',
-        body: this.user,
-        onRequestError({ request, options, error }) {
-          // Handle the request errors
-          console.log('onRequestError', request, options, error)
-        },
-        onResponse({ request, response, options }) {
-          if(!response.ok || !response._data) {
-            context.authenticated = false
-            throw new Error('No user data')
+      return await useApiFetch(url, {...this.user}, 'POST')
+        .then(({data, error}) => {
+
+          if(data) {
+            this.authenticated = true
+            this.setProfileData(data)
+            return data
           }
 
-          context.setProfileData(response._data)
-          context.authenticated = true
-          context.errors = {}
-        },
-        onResponseError({ request, response, options }) {
-          context.authenticated = false
-          context.errors = response._data
-        }
-      })
+          if(error) {
+            this.authenticated = false
+            throw error
+          }
+        })
+      // return await useFetch(,{
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Accept': 'application/json',
+      //     'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
+      //     'Accept-Language': locale.value
+      //   },
+      //   referrer: '',
+      //   credentials: 'include',
+      //   body: this.user,
+      //   onRequestError({ request, options, error }) {
+      //     // Handle the request errors
+      //     console.log('onRequestError', request, options, error)
+      //   },
+      //   onResponse({ request, response, options }) {
+      //     if(!response.ok || !response._data) {
+      //       context.authenticated = false
+      //       throw new Error('No user data')
+      //     }
+
+      //     context.setProfileData(response._data)
+      //     context.authenticated = true
+      //     context.errors = {}
+      //   },
+      //   onResponseError({ request, response, options }) {
+      //     context.authenticated = false
+      //     context.errors = response._data
+      //   }
+      // })
 
     },
 
     async register(data: Auth) {
       const runtimeConfig = useRuntimeConfig()
-      const locale = useNuxtApp().$i18n.locale
       const url = `${runtimeConfig.public.base}/register`
-      const context = this
 
       await this.getToken()
 

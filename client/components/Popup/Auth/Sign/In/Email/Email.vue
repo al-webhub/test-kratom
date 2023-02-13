@@ -27,12 +27,13 @@
     useModalStore().open('logInEmail')
   }
 
-  const registerHandler = async () => {
+  const registerHandler = () => {
     isLoading.value = true
 
-    await useRegister()(user.value)
+    useRegister()(user.value)
       .then(() => {
         user.value = userDefault
+        closeHandler()
       })
       .catch((er) => {
         errors.value = er

@@ -6,9 +6,10 @@ export const useRegister = () => {
 
   return async (data: Auth, redirectTo: string | null = null) => {
     return await authStore.register(data)
-      .then((res) => {
-        if(res.data._value) {
+      .then((profile: Profile) => {
+        if(profile) {
           useNoty().setNoty(nuxtApp.$i18n.t('noty.registe_success'), 3000)
+          return profile
         }
 
         if(redirectTo)

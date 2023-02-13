@@ -26,10 +26,10 @@
     useModalStore().open('logInEmail')
   }
 
-  const loginHandler = async () => {
+  const loginHandler = () => {
     isLoading.value = true
 
-    await useLogin()().then(() => {
+    useLogin()().then(() => {
       closeHandler()
     }).finally(() => {
       isLoading.value = false

@@ -154,7 +154,6 @@
       description: product.value.content,
       sku: product.value.code,
       brand: 'Kratomhelper',
-      seller: 'Kratomhelper.com',
       offers: [
         { price: product.value.price },
       ],

@@ -20,5 +20,14 @@ declare global {
     lastname?: string | null,
   }
 
+  type Profile = {
+    id: number | null,
+    email: string,
+    fullname: string,
+    firstname: string | null,
+    lastname: string | null,
+    photo: string | null
+  };
+
   type Langs = "en" | "ru"
 }
