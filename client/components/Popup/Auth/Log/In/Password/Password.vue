@@ -1,53 +1,40 @@
-<script>
-import { useAuthStore } from '~/store/auth';
+<script setup>
+  import { useAuthStore } from '~/store/auth';
+  import { useModalStore } from '~/store/modal';
 
-export default {
-  setup() {
-    const authStore = useAuthStore()
+  const isLoading = ref(false)
 
-    return {
-      authStore,
-    }
-  },
+  // COMPUTED
+  const user = computed(() => {
+    return useAuthStore().getUser
+  })
 
-  data() {
-    return {
-      isLoading: false
-    }
-  },
+  const errors = computed(() =>{
+    return useAuthStore().getErrors
+  })
 
-  computed: {
-    user() {
-      return this.authStore.getUser
-    },
-
-    errors() {
-      return this.authStore.getErrors
-    }
-  },
-
-  methods: {
-    closeHandler() {
-      return this.authStore.close('logInPassword')
-    },
-
-    openChangePasswordHandler() {
-      return this.authStore.open('changePassword')
-    },
-
-    openLogInEmailHandler() {
-      return this.authStore.open('logInEmail')
-    },
-
-    async loginHandler() {
-      this.isLoading = true
-
-      await useLogin()().finally(() => {
-        this.isLoading = false
-      })
-    }
+  // HANDLERS
+  const closeHandler = () => {
+    useModalStore().close('logInPassword')
   }
-}
+
+  const openChangePasswordHandler = () => {
+    useModalStore().open('changePassword')
+  }
+
+  const openLogInEmailHandler = () => {
+    useModalStore().open('logInEmail')
+  }
+
+  const loginHandler = async () => {
+    isLoading.value = true
+
+    await useLogin()().then(() => {
+      closeHandler()
+    }).finally(() => {
+      isLoading.value = false
+    })
+  }
 </script>
 
 <style src="./password.scss" lang="sass" scoped />

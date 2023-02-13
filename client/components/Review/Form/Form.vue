@@ -1,11 +1,14 @@
 <script>
-import { useAuthStore } from '~/store/auth';
+import { useModalStore } from '~/store/modal';
+
 export default {
   setup() {
-    const authStore = useAuthStore()
+    const loginHandler = () => {
+      useModalStore().open('signInSocial')
+    }
 
     return {
-      authStore
+      loginHandler
     }
   },
 
@@ -39,10 +42,6 @@ export default {
       this.$emit('create', JSON.parse(JSON.stringify(this.comment)))
       this.comment.text = null
     },
-
-    loginHandler() {
-      this.authStore.open('signInSocial')
-    }
   }
 }
 </script>
@@ -62,9 +61,9 @@ export default {
       <p>{{ $t('messages.first_of_all') }}</p>
       
       <template v-if="user">
-        <p class="add-reviews__active">
+        <span class="checker">
           <img src="~assets/svg-icons/check.svg" class="icon" />
-        </p>
+        </span>
       </template>
       <template v-else>
         <button @click="loginHandler" class="button-enter a-link">{{ $t('button.Log_In') }}</button>

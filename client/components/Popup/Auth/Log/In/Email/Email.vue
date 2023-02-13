@@ -1,45 +1,30 @@
-<script>
-import { useAuthStore } from '~/store/auth';
+<script setup>
+  import { useAuthStore } from '~/store/auth';
+  import { useModalStore } from '~/store/modal';
 
-export default {
-  async setup() {
-    const { t } = useI18n({useScope: 'local'}) 
-    const authStore = useAuthStore()
+  const { t } = useI18n({useScope: 'local'})
 
-    return {
-      authStore,
-      t
-    }
-  },
+  // COMPUTED
+  const user = computed(() => {
+    return useAuthStore().getUser
+  })
 
-  data() {
-    return {}
-  },
+  const errors = computed(() =>{
+    return useAuthStore().getErrors
+  })
 
-  computed: {
-    user() {
-      return this.authStore.getUser
-    },
-
-    errors() {
-      return this.authStore.getErrors
-    }
-  },
-
-  methods: {
-    closeHandler() {
-      return this.authStore.close('logInEmail')
-    },
-
-    openLogInPasswordHandler() {
-      return this.authStore.open('logInPassword')
-    },
-
-    openSignInSocialHandler() {
-      return this.authStore.open('signInSocial')
-    },
+  // HANDLERS
+  const closeHandler = () => {
+    useModalStore().close('logInEmail')
   }
-}
+
+  const openLogInPasswordHandler = () => {
+    useModalStore().open('logInPassword')
+  }
+
+  const openSignInSocialHandler = () => {
+    useModalStore().open('signInSocial')
+  }
 </script>
 
 <style src="./email.scss" lang="sass" scoped />

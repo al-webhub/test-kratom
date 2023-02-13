@@ -20,6 +20,7 @@ export default {
 
   data() {
     return {
+      activeIndex: 0,
       arrayLength: 0,
       offset: 0,
       gap: 30,
@@ -89,8 +90,10 @@ export default {
 
       if(this.offset < 0) {
         this.offset = this.offset + cardWidth
+        this.activeIndex--
       }else {
         this.offset = maxWidth
+        this.activeIndex = this.arrayLength - 1
       }
     },
 
@@ -98,10 +101,12 @@ export default {
       const cardWidth = this.$refs?.card[0].offsetWidth + this.gap
       const maxWidth = (this.arrayLength - this.perPage) * cardWidth * -1;
 
-      if(this.offset > maxWidth)
+      if(this.offset > maxWidth){
         this.offset = this.offset - cardWidth
-      else {
+        this.activeIndex++
+      }else {
         this.offset = 0
+        this.activeIndex = 0
       }
     },
 
@@ -158,8 +163,9 @@ export default {
 
     <simple-slider-btns
       :title="allItemsLabel"
-      :items="values.length"
+      :items="slides.length"
       :link="allItemsLink"
+      :active-index="activeIndex"
       @prev="prevHandler"
       @next="nextHandler"
     >

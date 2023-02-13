@@ -1,6 +1,7 @@
 <script>
 import { useTransactionStore } from '~/store/transaction'
 import { useProfileStore } from '~/store/profile';
+import { useModalStore } from '~/store/modal';
 
 export default {
   setup() {
@@ -66,7 +67,7 @@ export default {
     },
 
     closeHandler() {
-      return this.transactionStore.toggle('withdrawal')
+      useModalStore().close('withdrawal')
     },
 
     async createHandler() {

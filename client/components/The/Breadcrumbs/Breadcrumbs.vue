@@ -1,6 +1,6 @@
 <script setup>
   const crumbs = computed(() => {
-    return useCrumbs()?.items?.value
+    return useCrumbs().items.value
   })
 </script>
 
@@ -15,7 +15,15 @@
           :key="crumb"
           class="item"
         >
-          <NuxtLink :to="localePath(crumb.link)" class="breadcrumbs__link">{{ crumb.name }}</NuxtLink>
+          <NuxtLink
+            v-if="index + 1 !== crumbs.length"
+            :to="crumb.item"
+            :prefetch="false"
+            class="breadcrumbs__link"
+          >
+            {{ crumb.name }}
+          </NuxtLink>
+          <span v-else class="breadcrumbs__link">{{ crumb.name }}</span>
         </li>
       </ul>
     </div>

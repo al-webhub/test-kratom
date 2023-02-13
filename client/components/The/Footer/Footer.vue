@@ -92,6 +92,7 @@ export default {
           >
             <NuxtLink
               :to="localePath(item.link)"
+              :prefetch="false"
               class="nav-link"
             >
               {{ item.name }}
@@ -140,11 +141,11 @@ export default {
         Copyright © {{ year }}
       </p>
 
-      <NuxtLink :to="localePath('terms')" class="sub-link">
+      <NuxtLink :to="localePath('terms')" :prefetch="false" class="sub-link">
         {{ $t('title.Terms_Conditions') }}
       </NuxtLink>
 
-      <NuxtLink :to="localePath('privacy')" class="sub-link">
+      <NuxtLink :to="localePath('privacy')" :prefetch="false" class="sub-link">
         {{ $t('title.Privacy_Policy') }}
       </NuxtLink>
     </div>

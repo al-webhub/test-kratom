@@ -1,34 +1,45 @@
-<script>
-export default {
-  setup() {
-    const { t } = useI18n({useScope: 'local'})
-    return {t}
-  },
+<script setup>
+  const { t } = useI18n({useScope: 'local'})
 
-  props: {
-    stimulation: {
-      type: Number
-    },
-    relaxation: {
-      type: Number
-    },
-    euphoria: {
-      type: Number
+  const props = defineProps({
+    product: {
+      type: Object
     }
-  },
+  })
 
-  methods: {
-    updateStimulationHandler(value) {
-      this.$emit('update:stimulation', value)
-    },
-    updateRelaxationHandler(value) {
-      this.$emit('update:relaxation', value)
-    },
-    updateEuphoriaHandler(value) {
-      this.$emit('update:euphoria', value)
-    }
+  // COMPUTED
+  const stimulation = computed(() => {
+    const attr = props.product.attrs.find(item => item.slug === 'stimulation')
+    return attr?.value && toHumanValue(attr.value) || null
+  })
+
+  const relaxation = computed(() => {
+    const attr = props.product.attrs.find(item => item.slug === 'relaxation')
+    return attr?.value && toHumanValue(attr.value) || null
+  })
+
+  const euphoria = computed(() => {
+    const attr = props.product.attrs.find(item => item.slug === 'euphoria')
+    return attr?.value && toHumanValue(attr.value) || null
+  })
+
+  // METHODS
+  const toHumanValue = (x) => {
+    return Math.floor(x / 20 * 2) / 2
   }
-}
+
+  // HANDLERS
+  const updateStimulationHandler = (value) => {
+    this.$emit('update:stimulation', value)
+  }
+
+  const updateRelaxationHandler = (value) => {
+    this.$emit('update:relaxation', value)
+  }
+
+  const updateEuphoriaHandler = (value) => {
+    this.$emit('update:euphoria', value)
+  }
 </script>
 
 <style src="./qualities.scss" lang="sass" scoped />

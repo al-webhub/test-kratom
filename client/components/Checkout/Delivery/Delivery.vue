@@ -127,6 +127,7 @@ export default {
               v-model="order.address.state"
               :placeholder="$t('form.State')"
               :error="errors?.address?.state"
+              required
               class="form-component"
             >
             </form-text>
@@ -135,6 +136,7 @@ export default {
               v-model="order.address.street"
               :placeholder="$t('form.Street_Number')"
               :error="errors?.address?.street"
+              required
               class="form-component"
             >
             </form-text>
@@ -143,6 +145,7 @@ export default {
               v-model="order.address.apartment"
               :placeholder="$t('form.Apartment_house_flat')"
               :error="errors?.address?.apartment"
+              required
               class="form-component"
             >
             </form-text>
@@ -151,6 +154,7 @@ export default {
               v-model="order.address.zip"
               :placeholder="$t('form.ZIP')"
               :error="errors?.address?.zip"
+              required
               class="form-component"
             >
             </form-text>

@@ -20,7 +20,8 @@ export default {
 
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      errors: {}
     }
   },
 
@@ -39,10 +40,6 @@ export default {
 
     order() {
       return this.cartStore?.order
-    },
-
-    errors() {
-      return this.cartStore?.errors
     },
 
     cart() {
@@ -84,8 +81,7 @@ export default {
     },
 
     bonusHandler(v) {
-      console.log('bonusesUsed', v)
-      this.order.bonusesUsed = v
+      this.cartStore.useBonuses(v)
     },
 
     async deleteHandler(product) {
@@ -100,21 +96,19 @@ export default {
       const provider = this.isAuth? 'auth': 'data'
 
       if(this.isAuth)
-        this.cartStore.setUser(this.user)
+        this.cartStore.setUser(this.profile)
 
-      await this.cartStore.createOrder(provider).then((res) => {
-        if(res.data._value) {
-          useNoty().setNoty(this.$t('noty.order_success', {code: res.data._value.code}), 10000)
+      await this.cartStore.createOrder(provider)
+        .then((order) => {
+          useNoty().setNoty(this.$t('noty.order_success', {code: order.code}), 10000)
           this.cartStore.clearCart()
           navigateTo('/')
-        }
-
-        if(res.error._value) {
+        }).catch((e) => {
+          this.errors = e
           useNoty().setNoty(this.$t('noty.order_fail'), 5000)
-        }
-
-        this.isLoading = false
-      })
+        }).finally(() => {
+          this.isLoading = false
+        })
     }
   },
 
@@ -124,7 +118,7 @@ export default {
 }
 </script>
 
-<style src="assets/scss/pages/checkout.scss" lang="sass" scoped />
+<style src="./checkout.scss" lang="sass" scoped />
 
 <template>
 <div>

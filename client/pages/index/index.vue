@@ -1,85 +1,68 @@
-<script>
-import { useProductStore } from '~/store/product';
-import { useReviewStore } from '~/store/review';
-import { useBannerStore } from '~/store/banner';
-import { useArticleStore } from '~/store/article';
+<script setup>
+  import { useModalStore } from '~/store/modal';
+  import { useProductStore } from '~/store/product';
+  import { useReviewStore } from '~/store/review';
+  import { useBannerStore } from '~/store/banner';
+  import { useArticleStore } from '~/store/article';
 
-export default {
-  async setup() {
-    definePageMeta({
-      breadcrumbsIsActive: false
-    })
+  definePageMeta({
+    breadcrumbsIsActive: false
+  })
 
-    const { t, locale } = useI18n({useScope: 'local'})
+  const { t, locale } = useI18n({useScope: 'local'})
 
-    const productStore = useProductStore()
-    const reviewStore = useReviewStore()
-    const bannerStore = useBannerStore()
-    const articleStore = useArticleStore()
+  // COMPUTED
+  const isModalChooseKratomActive = computed(() => {
+    return useModalStore().show('chooseKratom')
+  })
 
-    await useAsyncData('banners', () => bannerStore.getOne('main-banner'))
-    await useAsyncData('products', () => productStore.getAll({per_page: 8, category_slug: 'kratom'}))
-    await useAsyncData('reviews', () => reviewStore.getAll({per_page: 8}))
-    await useAsyncData('articles', () => articleStore.getAll({per_page: 4, lang: locale.value}))
-
-    const isModalChooseKratomActive = computed(() => {
-      return productStore.chooseKratomIsShow
-    })
-
-    const setSeo = () => {
-      useHead({
-        title: t('seo.title'),
-        meta: [
-          {
-            name: 'description',
-            content: t('seo.description')
-          },
-        ],
-      })
-    }
-
-    setSeo()
-
+  const page = computed(() => {
     return {
-      productStore,
-      reviewStore,
-      bannerStore,
-      articleStore,
-      isModalChooseKratomActive,
-      t
+      h1: t('h1'),
+      seo_text: t('seo_text')
     }
-  },
+  })
 
-  data() {
-    return {}
-  },
+  const banner = computed(() => {
+    return useBannerStore().banner
+  })
 
-  computed: {
-    page() {
-      return {
-        h1: this.t('h1'),
-        seo_text: this.t('seo_text')
-      }
-    },
+  const products = computed(() => {
+    return useProductStore().all
+  })
 
-    banner() {
-      return this.bannerStore?.banner;
-    },
+  const reviews = computed(() => {
+    return useReviewStore().all
+  })
 
-    products() {
-      return this.productStore?.all;
-    },
+  const articles = computed(() => {
+    return useArticleStore().all
+  })
 
-    reviews() {
-      return this.reviewStore?.all;
-    },
+  // METHODS
+  const setSeo = () => {
+    useHead({
+      title: t('seo.title'),
+      meta: [
+        {
+          name: 'description',
+          content: t('seo.description')
+        },
+      ],
+    })
+  }
 
-    articles() {
-      return this.articleStore?.all;
-    },
-  },
+  // await useBannerStore().getOne('main-banner')
+  // await useProductStore().getAll({per_page: 8, category_slug: 'kratom'})
+  // await useReviewStore().getAll({per_page: 8})
+  // await useArticleStore().getAll({per_page: 4, lang: locale.value})
 
-}
+  await useAsyncData('banners', () => useBannerStore().getOne('main-banner'))
+  await useAsyncData('products', () => useProductStore().getAll({per_page: 8, category_slug: 'kratom'}))
+  await useAsyncData('reviews', () => useReviewStore().getAll({per_page: 8}))
+  await useAsyncData('articles', () => useArticleStore().getAll({per_page: 4, lang: locale.value}))
+  
+  setSeo()
 </script>
 
 <style src="assets/scss/pages/home.scss" lang="sass" scoped />
@@ -111,7 +94,7 @@ export default {
   </DelayHydration>
 
   <DelayHydration>
-    <lazy-section-choose-kratom  class="section"></lazy-section-choose-kratom>
+    <lazy-section-choose-kratom v-if="!$device.isMobile"  class="section"></lazy-section-choose-kratom>
   </DelayHydration>
   
   <!-- OUR ADVANTAGES -->

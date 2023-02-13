@@ -1,45 +1,29 @@
-<script>
-import {useAppStore} from '~/store/app'
+<script setup>
+  import { useAppPersistStore } from '~/store/appPersist'
 
-export default {
-  setup() {
-    const appStore = useAppStore()
-    const { t, locale } = useI18n({useScope: 'local'})
-    
-    return {
-      appStore,
-      t,
-      locale
+  const { t, locale } = useI18n({useScope: 'local'})
+
+  const notHandler = () => {
+    let url = ''
+
+    switch(locale) {
+      case 'ru':
+        url = 'https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B0%D1%82%D0%BE%D0%BC'
+        break;
+      case 'en':
+        url = "https://en.wikipedia.org/wiki/Mitragyna_speciosa"
+        break;
+      default:
+        url = 'https://en.wikipedia.org/wiki/Mitragyna_speciosa'
+        break;
     }
-  },
 
-  methods: {
-    notHandler() {
-      let url = ''
-      switch(this.locale) {
-        case 'ru':
-          url = 'https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B0%D1%82%D0%BE%D0%BC'
-          break;
-        case 'en':
-          url = "https://en.wikipedia.org/wiki/Mitragyna_speciosa"
-          break;
-        default:
-          url = 'https://en.wikipedia.org/wiki/Mitragyna_speciosa'
-          break;
-      }
-
-      navigateTo(url, { external: true })
-    },
-
-    yesHandler() {
-      this.appStore.close('adult') 
-    },
-
-    closeHandler() {
-      //this.appStore.close('adult') 
-    }
+    navigateTo(url, { external: true })
   }
-}
+
+  const yesHandler = () => {
+    useAppPersistStore().close('adult') 
+  }
 </script>
 
 <style src="./adult.scss" lang="sass" scoped />

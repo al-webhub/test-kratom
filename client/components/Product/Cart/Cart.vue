@@ -1,19 +1,21 @@
 <script>
 import { useCartStore } from '~/store/cart';
+import { useModalStore } from '~/store/modal';
 
 export default {
   setup() {
     const cartStore = useCartStore()
 
+    // COMPUTED
     const isPopupBuy1ClickShow = computed(() => {
-      return cartStore.buy1IsShow
+      return useModalStore().show('buy1')
     })
 
     return {
-      cartStore,
       isPopupBuy1ClickShow
     }
   },
+
   props: {
     product: {
       type: Object
@@ -35,14 +37,17 @@ export default {
 
       productToCart.image || (productToCart.image = this.product.images[0])
 
-      await this.cartStore.add(productToCart).then(() => {
+      await useCartStore().add(productToCart).then(() => {
         useNoty().setNoty(this.$t('noty.product_to_cart', {product: this.selectedModification.name}), 3000)
       })
     },
 
     buyHandler() {
-      this.cartStore.setBuy1Product(this.selectedModification)
-      this.cartStore.toggleBuy1()
+      useModalStore().setData('buy1', this.selectedModification)
+      useModalStore().open('buy1')
+
+      // this.cartStore.setBuy1Product(this.selectedModification)
+      // this.cartStore.toggleBuy1()
     }
   }
 }

@@ -36,26 +36,26 @@ export default {
       await useAsyncData('category', () => categoryStore.getOne(realCategorySlug.value))
     }
 
-    const setCrumbs = () => {
-      const crumbs = [
-          {
-            name: t('crumbs.home'),
-            link: '/'
-          },{
-            name: t('crumbs.shop'),
-            link: '/shop'
-          }
-      ]
+    // const setCrumbs = () => {
+    //   const crumbs = [
+    //       {
+    //         name: t('crumbs.home'),
+    //         link: '/'
+    //       },{
+    //         name: t('crumbs.shop'),
+    //         link: '/shop'
+    //       }
+    //   ]
 
-      if(category.value && category.value.slug !== 'shop') {
-        crumbs.push({
-          name: category.value.seo.h1 || category.value.name,
-          link: category.value.slug
-        })
-      }
+    //   if(category.value && category.value.slug !== 'shop') {
+    //     crumbs.push({
+    //       name: category.value.seo.h1 || category.value.name,
+    //       link: category.value.slug
+    //     })
+    //   }
 
-      useCrumbs().setCrumbs(crumbs)
-    }
+    //   useCrumbs().setCrumbs(crumbs)
+    // }
 
     const setSeo = () => {
       useHead({
@@ -69,11 +69,39 @@ export default {
       })
     }
 
+    const setCrumbs = (article) => {
+      const breadcrumbs = [
+        {
+          name: t('crumbs.home'),
+          item: useToLocalePath()('/')
+        },{
+          name: t('crumbs.shop'),
+          item: useToLocalePath()('/shop')
+        }
+      ]
+
+      if(category.value && category.value.slug !== 'shop') {
+        breadcrumbs.push({
+          name: category.value.seo.h1 || category.value.name,
+          item: useToLocalePath()(`/shop/${category.value.slug}`)
+        })
+      }
+
+      useCrumbs().setCrumbs(breadcrumbs)
+
+      useSchemaOrg([
+        defineBreadcrumb({
+          itemListElement: breadcrumbs
+        }),
+      ])
+    }
+
     await getCategory().then(() => {
       //set meta after category fetch
       setSeo()
       setCrumbs()
     });
+    
 
 
     return {

@@ -1,13 +1,16 @@
 <script>
 import { useProductStore } from '~/store/product';
+import { useModalStore } from '~/store/modal';
 
 export default {
   setup() {
     const { t } = useI18n({useScope: 'local'})
     const productStore = useProductStore()
+    const modalStore = useModalStore()
 
     return {
       productStore,
+      modalStore,
       t
     }
   },
@@ -55,7 +58,7 @@ export default {
   methods: {
 
     toggleSearchHandler() {
-      this.productStore.toggleModal()
+      this.modalStore.toggle('search')
     },
     
     goSearchPageHandler() {
@@ -90,7 +93,7 @@ export default {
         autocomplete="off"
       />
 
-      <NuxtLink :to="localePath(searchPageLink)" @click="toggleSearchHandler" class="search-button">
+      <NuxtLink :to="localePath(searchPageLink)" @click="toggleSearchHandler" :prefetch="false" class="search-button">
         <img src="~assets/svg-icons/search.svg" class="icon"  />
       </NuxtLink>
 
@@ -107,6 +110,7 @@ export default {
             :to="localePath('/' + item.slug)"
             :title="item.name"
             @click="toggleSearchHandler"
+            :prefetch="false"
             class="livesearch__link"
           >
             {{ item.name }}

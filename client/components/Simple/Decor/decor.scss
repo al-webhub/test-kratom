@@ -1,0 +1,43 @@
+@import 'assets/scss/global/mixins';
+
+.decor-wrapper {
+  position: relative;
+  max-width: 1440px;
+  margin: 0px auto;
+}
+
+.decor-text {
+  position: absolute;
+
+  @include _tablet {
+    display: block;
+    position: absolute;
+    transform: none;
+    font-family: "Impact", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #2D2C2C;
+    z-index: -1;
+    line-height: 100%;
+    font-size: 72px;
+  }
+
+  @include _desktop {
+    font-size: 144px;
+  }
+}
+
+.decor-figure {
+  position: absolute;
+  width: 245px;
+  height: 245px;
+  border: 1px solid #ACDA53;
+  z-index: -1;
+  transform: rotate(60deg);
+
+  @include _desktop {
+    width: 340px;
+    height: 340px;
+  }
+}

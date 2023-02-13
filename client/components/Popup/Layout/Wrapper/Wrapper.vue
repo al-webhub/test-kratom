@@ -1,28 +1,16 @@
-<script>
-import { useAuthStore } from '~/store/auth';
+<script setup>
+  import { useModalStore } from '~/store/modal';
 
-export default {
-  async setup() {
-    const authStore = useAuthStore()
-
-    return {
-      authStore
-    }
-  },
-
-  props: {
+  defineProps({
     size: {
       type: String,
       default: 'small'
     }
-  },
+  })
 
-  methods: {
-    closeHandler() {
-      this.authStore.closeAll()
-    }
+  const closeHandler = () => {
+    useModalStore().closeAll()
   }
-}
 </script>
 
 <style src="./wrapper.scss" lang="sass" scoped />

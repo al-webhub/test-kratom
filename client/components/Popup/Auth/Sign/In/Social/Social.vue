@@ -1,41 +1,30 @@
-<script>
-import googleIcon from 'assets/images/google-icon.png';
-import { useAuthStore } from '~/store/auth';
+<script setup>
+  import googleIcon from 'assets/images/google-icon.png';
+  import { useModalStore } from '~/store/modal';
+  import { useAuthStore } from '~/store/auth';
 
-export default {
-  setup() {
-    const authStore = useAuthStore()
+  // COMPUTED
+  const googleImage = computed(() => {
+    return 'url(' + googleIcon + ')';
+  })
 
-    return {
-      authStore,
-    }
-  },
-
-  computed: {
-    googleImage() {
-      return 'url(' + googleIcon + ')';
-    }
-  },
-
-  methods: {
-    closeHandler() {
-      return this.authStore.close('signInSocial')
-    },
-
-    openSignInEmailHandler() {
-      return this.authStore.open('signInEmail')
-    },
-
-    openLogInEmailHandler() {
-      return this.authStore.open('logInEmail')
-    },
-
-    googleHandler() {
-      this.closeHandler()
-      this.authStore.google()
-    }
+  // HANDLERS
+  const closeHandler = () => {
+    useModalStore().close('signInSocial')
   }
-}
+
+  const openSignInEmailHandler = () => {
+    useModalStore().open('signInEmail')
+  }
+
+  const openLogInEmailHandler = () => {
+    useModalStore().open('logInEmail')
+  }
+
+  const googleHandler = () => {
+    closeHandler()
+    useAuthStore().google()
+  }
 </script>
 
 <style src="./social.scss" lang="sass" scoped />
@@ -49,7 +38,16 @@ export default {
     <template v-slot:content>
       <div>
         <button @click="googleHandler" class="main-button main-button-social-popup">
-          <span :style="{backgroundImage: googleImage }" class="google-icon"></span>
+          <nuxt-img
+            src="/images/google-icon.png"
+            sizes = "mobile:17px"
+            format = "webp"
+            quality = "80"
+            fit="contain"
+            loading = "lazy"
+            class="google-icon"
+          ></nuxt-img>
+          <!-- <span :style="{backgroundImage: googleImage }" class="google-icon"></span> -->
           <span class="text">{{ $t('button.continue_with_google') }}</span>
         </button>
         

@@ -5,6 +5,24 @@ export default {
       useScope: 'local'
     }) 
 
+    const breadcrumbs = [
+      {
+        name: t('crumbs.home'),
+        item: useToLocalePath()('/')
+      },{
+        name: t('crumbs.faq'),
+        item: useToLocalePath()('/faq')
+      }
+    ]
+
+    useCrumbs().setCrumbs(breadcrumbs)
+
+    useSchemaOrg([
+      defineBreadcrumb({
+        itemListElement: breadcrumbs
+      }),
+    ])
+
     return {
       t
     }
@@ -56,17 +74,6 @@ export default {
   },
 
   methods: {
-    setCrumbs() {
-      useCrumbs().setCrumbs([
-          {
-            name: this.$t('crumbs.home'),
-            link: '/'
-          },{
-            name: this.$t('crumbs.faq'),
-            link: '/faq'
-          }
-      ])
-    },
 
     toggleHandler(index) {
       if(this.activeIndex === index)
@@ -75,14 +82,10 @@ export default {
         this.activeIndex = index
     }
   },
-
-  created() {
-    this.setCrumbs()
-  }
 }
 </script>
 
-<style src="assets/scss/pages/faq.scss" lang="sass" scoped />
+<style src="./faq.scss" lang="sass" scoped />
 <style>
 .faq__item__body p {
   margin-bottom: 25px;
@@ -92,35 +95,36 @@ export default {
 <i18n src="./messages.json"></i18n>
 
 <template>
-<div>  
-  <section class="faq">
-    <div class="faq__wrapper container">
-      <!-- <div class="general-decor-figure"></div> -->
-      
-      <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
-      
-      <p class="faq__text">{{ page.content }}</p>
+<div>
+  <simple-decor :title-amount="0">
+    <section class="faq">
+      <div class="faq__wrapper container">
+        
+        <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
+        
+        <p class="faq__text">{{ page.content }}</p>
 
-      <div class="faq__container">
-        <ul class="faq__list">
-          <li
-            v-for="(faq, index) in faqs"
-            :key="faq.id"
-            @click="toggleHandler(index)"
-            :class="{active: index === activeIndex}"
-            class="faq__item"
-          >
-            <div class="faq__item__header">
-              <h2 class="name">{{ faq.title }}</h2>
-              <img src="~assets/svg-icons/arrow-simple.svg" class="icon" />
-            </div>
-            <div class="faq__item__body" v-html="faq.content"></div>
-          </li>
-        </ul>
+        <div class="faq__container">
+          <ul class="faq__list">
+            <li
+              v-for="(faq, index) in faqs"
+              :key="faq.id"
+              @click="toggleHandler(index)"
+              :class="{active: index === activeIndex}"
+              class="faq__item"
+            >
+              <div class="faq__item__header">
+                <h2 class="name">{{ faq.title }}</h2>
+                <img src="~assets/svg-icons/arrow-simple.svg" class="icon" />
+              </div>
+              <div class="faq__item__body" v-html="faq.content"></div>
+            </li>
+          </ul>
+        </div>
+
       </div>
-
-    </div>
-  </section>
+    </section>
+  </simple-decor>
 
   <section-write-us></section-write-us>
 </div>

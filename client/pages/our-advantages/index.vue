@@ -8,6 +8,25 @@ export default {
   setup() {
     const { t, locale } = useI18n({useScope: 'local'})
 
+
+    const breadcrumbs = [
+      {
+        name: t('crumbs.home'),
+        item: useToLocalePath()('/')
+      },{
+        name: t('crumbs.our_advantages'),
+        item: useToLocalePath()('/our-advantages')
+      }
+    ]
+
+    useCrumbs().setCrumbs(breadcrumbs)
+
+    useSchemaOrg([
+      defineBreadcrumb({
+        itemListElement: breadcrumbs
+      }),
+    ])
+
     return {
       t,
     }
@@ -43,26 +62,6 @@ export default {
       }
     }
   },
-
-  methods: {
-    setCrumbs() {
-      useCrumbs().setCrumbs([
-          {
-            name: this.$t('crumbs.home'),
-            link: '/'
-          },{
-            name: this.$t('crumbs.our_advantages'),
-            link: '/our-advantages'
-          }
-      ])
-    },
-
-  },
-
-  async created() {
-    this.setCrumbs()
-  }
-
 }
 </script>
 

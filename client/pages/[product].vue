@@ -1,227 +1,231 @@
-<script>
+<script setup>
+  import { useProductStore } from '~/store/product';
+  import { useReviewStore } from '~/store/review';
 
-import { useProductStore } from '~/store/product';
-import { useReviewStore } from '~/store/review';
-import { useOrderStore } from '~/store/order';
+  const { t } = useI18n({useScope: 'local'})
 
-export default {
-  async setup() {
-    const { t, locale } = useI18n({useScope: 'local'})
-    const productStore = useProductStore()
-    const reviewStore = useReviewStore()
-    const orderStore = useOrderStore()
+  // DATA
+  const activeTab = ref('description')
+  const selectedModification = ref({})
 
-    const route = useRoute()
+  // COMPUTED
+  const slug = computed(() => {
+    return useRoute().params.product
+  })
 
-    const slug = computed(() => {
-      return route.params.product
+  const product = computed(() => {
+    return useProductStore().product
+  })
+
+  const reviewsMeta = computed(() => {
+    return useReviewStore().meta;
+  })
+
+  const popularProducts = computed(() => {
+    return useProductStore().all;
+  })
+
+  const rating = computed(() => {
+    return product.value?.reviews_rating_detailes?.rating
+  })
+
+  const ratingAmount = computed(() => {
+    return product.value?.reviews_rating_detailes?.rating_count
+  })
+
+  const reviewsAmount = computed(() => {
+    return product.value?.reviews_rating_detailes?.reviews_count
+  })
+
+  const reviews = computed(() => {
+    return useReviewStore().all
+  })
+
+  const features = computed(() => {
+    if(!product.value.categories)
+      return null;
+    
+    let features = product.value.categories.map((item) => {
+      const params = item?.extras?.params
+      const nameParam = params && params.find((item) => item.key == 'name')
+      
+      if(nameParam && nameParam !== -1)
+        return {
+          name: nameParam.value,
+          value: item.name,
+          slug: item.slug
+        }
     })
+    
+    features = features.filter(item => item !== undefined)
+    
+    return features
+  })
 
-    const product = computed(() => {
-      return productStore.product
+  const tabs = computed(() => {
+    let tabs = {}
+
+    if(product.value.content)
+      tabs.description = t('label.description')
+    
+    tabs.reviews = t('label.reviews') + ` (${reviewsMeta.value?.total || 0})`
+
+    if(features.value && features.value.length)
+      tabs.features = t('label.features')
+
+    tabs = {
+      ...tabs,
+      delivery: t('label.delivery'),
+      payment: t('label.payment'),
+    }
+
+    return tabs
+  })
+
+  const reviewQuery = computed(() => {
+    const type = String.raw`Backpack\Store\app\Models\Product`;
+
+    return {
+      per_page: 6,
+      reviewable_slug: slug.value,
+      reviewable_type: type
+    }
+  })
+
+  // WATCHERS
+  watch(
+    () => selectedModification.amount,
+    (value) => {
+      selectedModification.value.amount = parseInt(value);
+    }
+  )
+
+  watch(
+    product, 
+    (value) => {
+      if(value) {
+        selectedModification.value = Object.assign({}, value.modifications[0])
+      }
+    }, 
+    { immediate: true}
+  )
+
+  // METHODS
+  const setSeo = () => {
+    useHead({
+      title: product.value && (product.value.seo.meta_title || product.value.seo.h1 || product.value.name),
+      meta: [
+        {
+          name: 'description',
+          content: product.value && product.value.seo.meta_description
+        },
+      ],
     })
+  }
 
-    const reviewQuery = computed(() => {
-      const type = String.raw`Backpack\Store\app\Models\Product`;
+  const setCrumbs = (product) => {
+    const breadcrumbs = [
+      {
+        name: t('crumbs.home'),
+        item: useToLocalePath()('/')
+      },{
+        name: t('crumbs.shop'),
+        item: useToLocalePath()('/shop')
+      }
+      ,{
+        name: product.value?.name,
+        item: useToLocalePath()(`/shop/${product.value?.slug}`)
+      }
+    ]
 
+    useCrumbs().setCrumbs(breadcrumbs)
+
+    useSchemaOrg([
+      defineBreadcrumb({
+        itemListElement: breadcrumbs
+      }),
+    ])
+  }
+
+  const setScheema = (product, reviews) => {
+    const scheema = {
+      name: product.value.name,
+      image: `${useRuntimeConfig().public.base}/${product.value.images[0]?.src}`,
+      description: product.value.content,
+      sku: product.value.code,
+      brand: 'Kratomhelper',
+      seller: 'Kratomhelper.com',
+      offers: [
+        { price: product.value.price },
+      ],
+      aggregateRating: {
+        ratingValue: rating.value,
+        bestRating: 5,
+        ratingCount: ratingAmount.value,
+      },
+      review: getReviewsScheema(reviews.value),
+    }
+
+    useSchemaOrg([
+      defineProduct(scheema),
+    ])
+  }
+
+  const getReviewsScheema = (reviews) => {
+    return reviews.map((item) => {
       return {
-        per_page: 6,
-        reviewable_slug: slug.value,
-        reviewable_type: type
+        comment: item.text,
+        author: {
+          name: item.owner?.fullname,
+        },
+        reviewRating: {
+          ratingValue: item.rating,
+        },
       }
     })
+  }
 
-    const reviewsMeta = computed(() => {
-      return reviewStore?.meta;
-    })
+  const getReviews = async (reviewQuery, refresh) => {
+    await useAsyncData('reviews', () => useReviewStore().getAll(reviewQuery, refresh))
+  }
 
-
-    const setSeo = () => {
-      useHead({
-        title: product.value && (product.value.seo.meta_title || product.value.seo.h1 || product.value.name),
-        meta: [
-          {
-            name: 'description',
-            content: product.value && product.value.seo.meta_description
-          },
-        ],
-      })
+  // HANDLERS
+  const loadmoreReviewsHandler = async () => {
+    const query = {
+      ...reviewQuery.value,
+      page: reviewsMeta.value.current_page + 1
     }
+    await getReviews(query, false)
+  }
 
-    const loadmoreReviewsHandler = async () => {
-      const query = {
-        ...reviewQuery.value,
-        page: reviewsMeta.value.current_page + 1
+  const changeTabHandler = (tab) => {
+    activeTab.value = tab
+  }
+
+  // HOOKES
+  await Promise.all([
+    await useAsyncData('product', () => useProductStore().getOne(slug.value)).then(({data: product, error}) => {
+      if(product.value) {
+        selectedModification.value = product.value.modifications[0]
+        setCrumbs(product)
+        setSeo()
       }
-      await getReviews(query, false)
-    }
 
-    const getReviews = async (reviewQuery, refresh) => {
-      await useAsyncData('reviews', () => reviewStore.getAll(reviewQuery, refresh))
-    }
-
-    await useAsyncData('product', () => productStore.getOne(route.params.product)).then((res) => {
-      if(res.error._value){
+      if(error.value){
         throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
       }
 
-      setSeo()
+      return product
+    }),
+    await useAsyncData('reviews', () => useReviewStore().getAll(reviewQuery.value, true)).then(({data: reviews, error}) => {
+      return reviews
     })
-    await useAsyncData('products', () => productStore.getAll({per_page: 4}))
-    await getReviews(reviewQuery.value, true)
-    
-    return {
-      orderStore,
-      productStore,
-      reviewStore,
-      reviewsMeta,
-      product,
-      loadmoreReviewsHandler,
-      t
-    }
-  },
-  
-  data() {
-    return {
-      selectedModification: {},
-      activeTab: 'description',
-      user: {
-        photo: '/images/ava1.jpg',
-      },
-    }
-  },
+  ]).then(([ product, reviews]) => {
+    setScheema(product, reviews)
+  })
 
-  computed: {
-    features() {
-      if(!this.product.categories)
-        return null;
-      
-      let features = this.product.categories.map((item) => {
-        const params = item?.extras?.params
-        const nameParam = params && params.find((item) => item.key == 'name')
-        
-        if(nameParam && nameParam !== -1)
-          return {
-            name: nameParam.value,
-            value: item.name,
-            slug: item.slug
-          }
-      })
-      
-      features = features.filter(item => item !== undefined)
-      
-      return features
-    },
 
-    popularProducts() {
-      return this.productStore?.all;
-    },
-
-    rating() {
-      return this.product?.reviews_rating_detailes?.rating
-    },
-
-    ratingAmount() {
-      return this.product?.reviews_rating_detailes?.rating_count
-    },
-
-    reviewsAmount() {
-      return this.product?.reviews_rating_detailes?.reviews_count
-    },
-
-    reviews() {
-      return this.reviewStore?.all;
-    },
-
-    tabs() {
-      let tabs = {}
-
-      if(this.product.content)
-        tabs.description = this.$t('label.description')
-      
-      tabs.reviews = this.$t('label.reviews') + ` (${this.reviewsMeta?.total || 0})`
-
-      if(this.features && this.features.length)
-        tabs.features = this.$t('label.features')
-
-      tabs = {
-        ...tabs,
-        delivery: this.$t('label.delivery'),
-        payment: this.$t('label.payment'),
-      }
-
-      return tabs
-    },
-
-    stimulation() {
-      const attr = this.product.attrs.find(item => item.slug === 'stimulation')
-      return attr?.value && this.toHumanValue(attr.value) || null
-    },
-
-    relaxation() {
-      const attr = this.product.attrs.find(item => item.slug === 'relaxation')
-      return attr?.value && this.toHumanValue(attr.value) || null
-    },
-
-    euphoria() {
-      const attr = this.product.attrs.find(item => item.slug === 'euphoria')
-      return attr?.value && this.toHumanValue(attr.value) || null
-    }
-  },
-
-  watch: {
-    'selectedModification.amount': {
-      handler: function(value) {
-        this.selectedModification.amount = parseInt(value);
-      },
-      deep: true
-    },
-    product: {
-      handler(value) {
-        if(value) {
-          this.selectedModification = Object.assign({}, value.modifications[0])
-        }
-      },
-      immediate: true
-    }
-  },
-
-  methods: {
-    toHumanValue(x) {
-      return Math.floor(x / 20 * 2) / 2;
-    },
-
-    setCrumbs() {
-      useCrumbs().setCrumbs([
-          {
-            name: this.$t('crumbs.home'),
-            link: '/'
-          },{
-            name: this.$t('crumbs.shop'),
-            link: '/shop'
-          },{
-            name: this.product?.name,
-            link: '/' + this.product?.slug
-          }
-      ])
-    },
-
-    changeTabHandler(tab) {
-      this.activeTab = tab
-    },
-
-    changeModification: function(modification) {
-      let amount = this.selectedModification.amount;
-      this.selectedModification = Object.assign({}, modification);
-      this.selectedModification.amount = amount;
-    },
-
-  },
-
-  async created() {
-    this.setCrumbs()
-  }
-}
+  await useAsyncData('products', () => useProductStore().getAll({per_page: 4}))
 </script>
 
 <style src="assets/scss/pages/product.scss" lang="sass" scoped />
@@ -272,9 +276,7 @@ export default {
             <!-- FOOTER -->
             <div class="qualities">
               <product-qualities
-                v-model:stimulation="stimulation"
-                v-model:relaxation="relaxation"
-                v-model:euphoria="euphoria"
+                :product="product"
               >
               </product-qualities>
             </div> 

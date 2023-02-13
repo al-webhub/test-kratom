@@ -1,6 +1,6 @@
 <script setup>
-  import { useCartStore } from '~/store/cart';
-  import { useAppStore } from '~/store/app'
+  import { useModalStore } from '~/store/modal';
+  import { useAppPersistStore } from '~/store/appPersist'
   import { useAuthStore } from '~/store/auth';
 
   const route = useRoute()
@@ -19,6 +19,40 @@
     breadcrumbsIsActive.value = route.meta.breadcrumbsIsActive === undefined? true: route.meta.breadcrumbsIsActive
   })
 
+  // COMPUTED
+  const isModalCartActive = computed(() => {
+    return useModalStore().show('cart')
+  })
+
+  const isPopupAdultActive = computed(() => {
+    return useAppPersistStore().adult
+  })
+
+  const isPopupAuthSignInSocialActive = computed(() => {
+    return useModalStore().show('signInSocial')
+  })
+
+  const isPopupAuthSignInEmailActive = computed(() => {
+    return useModalStore().show('signInEmail')
+  })
+
+  const isPopupAuthChangePasswordActive = computed(() => {
+    return useModalStore().show('changePassword')
+  })
+
+  const isPopupAuthLogInEmailActive = computed(() => {
+    return useModalStore().show('logInEmail')
+  })
+
+  const isPopupAuthLogInPasswordActive = computed(() => {
+    return useModalStore().show('logInPassword')
+  })
+
+  const isPopupAuthLogOutActive = computed(() => {
+    return useModalStore().show('logOut')
+  })
+  
+  // HOOKES
   onMounted(() => {
     // LOGIN USER BY TOKEN
     const token = route.query?.token
@@ -36,54 +70,12 @@
     }
   })
   
-
-  // COMPUTED
-  const isModalCartActive = computed(() => {
-    return useCartStore().show
-  })
-
-  const isPopupAdultActive = computed(() => {
-    return useAppStore().adult
-  })
-
-  const isPopupAuthSignInSocialActive = computed(() => {
-    return useAuthStore().showSignInSocial
-  })
-
-  const isPopupAuthSignInEmailActive = computed(() => {
-    return useAuthStore().showSignInEmail
-  })
-
-  const isPopupAuthChangePasswordActive = computed(() => {
-    return useAuthStore().showChangePassword
-  })
-
-  const isPopupAuthLogInEmailActive = computed(() => {
-    return useAuthStore().showLogInEmail
-  })
-
-  const isPopupAuthLogInPasswordActive = computed(() => {
-    return useAuthStore().showLogInPassword
-  })
-
-  const isPopupAuthLogOutActive = computed(() => {
-    return useAuthStore().showLogOut
-  })
-    
-
-    // return {
-    //   isModalCartActive,
-    //   isPopupAdultActive,
-    //   isPopupAuthSignInSocialActive,
-    //   isPopupAuthSignInEmailActive,
-    //   isPopupAuthChangePasswordActive,
-    //   isPopupAuthLogInEmailActive,
-    //   isPopupAuthLogInPasswordActive,
-    //   isPopupAuthLogOutActive,
-    //   head,
-    //   title,
-    //   breadcrumbsIsActive
-    // }
+  useSchemaOrg([
+    defineWebSite({
+      name: 'Kratomhelper.com',
+    }),
+    defineWebPage(),
+  ])
 </script>
 
 <template>

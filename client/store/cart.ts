@@ -1,20 +1,24 @@
+
+type Product = {
+  id: number,
+  name: string,
+  slug: string,
+  price: number,
+  amount: number,
+  image: string,
+  short_name: string
+};
+
 export const useCartStore = defineStore('cartStore', {
   persist: true,
 
-  state: () => ({ 
-    is_show: false,
-    buy_1: {
-      product: null,
-      is_show: false,
-    },
-    errors: {},
+  state: () => ({
     orderState: {
       bonusesUsed: 0,
       delivery: null,
       payment: null,
       user: {
-        id: 1,
-        name: 'User',
+        id: null,
         email: null,
         firstname: null,
         lastname: null,
@@ -30,40 +34,20 @@ export const useCartStore = defineStore('cartStore', {
         zip: null
       }
     },
-    data: []
+    
+    data: [] as Product[]
   }),
 
   getters: {
-    buy1IsShow: (state) => state.buy_1.is_show,
-    buy1Product: (state) => state.buy_1.product,
-    show: (state) => state.is_show,
     cart: (state) => state.data,
     order: (state) => state.orderState
   },
 
   actions: {
-    setBuy1Product(product) {
-      this.buy_1.product = product
-    },
-
-    toggleBuy1() {
-      this.buy_1.is_show = !this.buy_1.is_show
-    },
-
-    open() {
-      this.is_show = true
-    },
     
-    close() {
-      this.is_show = false
-    },
-    
-    toggle() {
-      this.is_show = !this.is_show
-    },
-    
-    add(data: Object) {
-      this.data.push(data)
+    add(data: Product) {
+      const product: Product = this.toProductType(data)
+      this.data.push(product)
       return Promise.resolve(true)
     },
     
@@ -77,6 +61,11 @@ export const useCartStore = defineStore('cartStore', {
       this.data = []
     },
 
+    toProductType(data: Product) {
+      const {id, name, slug, price, amount, image, short_name} = data
+      return {id, name, slug, price, amount, image, short_name} as Product
+    },
+
     serializeCart() {
       let serialized = {}
 
@@ -88,14 +77,34 @@ export const useCartStore = defineStore('cartStore', {
       return serialized
     },
 
+    useBonuses(value: number) {
+      this.orderState.bonusesUsed = value
+    },
+
     setUser(user) {
       const {id, firstname, lastname, communication, communication_number, email} = user
       this.orderState.user = {id, firstname, lastname, communication, communication_number, email}
     },
 
+    async copyOrder(id: number) {
+      const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.apiBase}/orders/copy`
+
+      return await useApiFetch(url, {id: id}, 'POST')
+        .then(({data, error}) => {
+          if(data) {
+            return data
+          }
+
+          if(error) {
+            throw error
+          }
+        })
+    },
+
     async createOrder(provider: String = 'auth') {
       const runtimeConfig = useRuntimeConfig()
-      const context = this
+      const url = `${runtimeConfig.public.apiBase}/orders`
 
       const dataPost = {
         ...this.orderState,
@@ -103,21 +112,18 @@ export const useCartStore = defineStore('cartStore', {
         provider: provider
       }
       
-      return await useFetch(`${runtimeConfig.public.apiBase}/orders`,{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        credentials: 'include',
-        body: dataPost,
-        onResponse({ request, response, options }) {
-        },
-        onResponseError({ request, response, options }) {
-          context.errors = response._data
-        }
-      })
+      return await useApiFetch(url, dataPost, 'POST')
+        .then(({data, error}) => {
+          
+          if(data) {
+            return data
+          }
+
+          if(error) {
+            throw error
+          }
+
+        })
     }
   },
 })

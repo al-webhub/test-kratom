@@ -3,13 +3,27 @@ import rewardsImg from 'assets/images/rewards.png'
 
 export default {
   setup() {
-    const { t } = useI18n({
-      useScope: 'local'
-    }) 
+    const { t } = useI18n({useScope: 'local'}) 
 
-    return {
-      t
-    }
+    const breadcrumbs = [
+        {
+          name: t('crumbs.home'),
+          item: useToLocalePath()('/')
+        },{
+          name: t('crumbs.rewards'),
+          item: useToLocalePath()('/rewards')
+        }
+    ]
+
+    useCrumbs().setCrumbs(breadcrumbs)
+
+    useSchemaOrg([
+      defineBreadcrumb({
+        itemListElement: breadcrumbs
+      }),
+    ])
+
+    return {t}
   },
 
   data() {
@@ -45,38 +59,18 @@ export default {
       }
     }
   },
-
-  methods: {
-    setCrumbs() {
-      useCrumbs().setCrumbs([
-          {
-            name: this.$t('crumbs.home'),
-            link: '/'
-          },{
-            name: this.$t('crumbs.rewards'),
-            link: '/rewards'
-          }
-      ])
-    },
-  },
-
-  created() {
-    this.setCrumbs()
-  }
 }
 </script>
 
-<style src="assets/scss/pages/rewards.scss" lang="sass" scoped />
+<style src="./rewards.scss" lang="sass" scoped />
 
 <i18n src="./messages.json"></i18n>
 
 <template>
 <div>
-  <section class="earn">
+  <simple-decor :figure-amount="2">
+    <section class="earn">
       <div class="earn__wrapper container">
-          <!-- <div class="general-decor-figure"></div>
-          <div class="general-decor-figure"></div>
-          <div class="general-decor-text">kratom helper</div> -->
           <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
           <div class="earn__compensation">
               
@@ -145,8 +139,8 @@ export default {
           <div class="earn__text" v-html="page.htw_info"> 
           </div>
       </div>
-  </section>
-
+    </section>
+  </simple-decor>
   <section-referral></section-referral>
 </div>
 </template>

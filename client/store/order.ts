@@ -19,26 +19,28 @@ export const useOrderStore = defineStore('orderStore', {
   },
 
   actions: {
+    unshiftOrder(order: Order) {
+      this.ordersState.data.unshift(order)
+    },
 
-    async getOrders(params = null) {
+    async getOrders(data = null, refresh = true) {
       const runtimeConfig = useRuntimeConfig()
-      const context = this
-      const query = params? '?' + new URLSearchParams(params).toString(): '';
+      const url = `${runtimeConfig.public.apiBase}/orders/get`
 
-      return await useFetch(`${runtimeConfig.public.apiBase}/orders/get`,{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        credentials: 'include',
-        onResponse({ request, response, options }) {
-          context.ordersState.data = context.ordersState.data.concat(response._data.data)
-          context.ordersState.meta = response._data.meta
-        },
-      });
+      return await useApiFetch(url, data, 'POST')
+        .then(({data, error}) => {
+          if(data) {
+            if(refresh)
+              this.ordersState.data = data.data
+            else
+              this.ordersState.data = this.ordersState.data.concat(data.data)
+          
+            this.ordersState.meta = data.meta
+          }
 
+          if(error)
+            throw error
+        })
     },
 
   },

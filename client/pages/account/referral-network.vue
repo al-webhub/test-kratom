@@ -1,6 +1,7 @@
 <script>
 import { useProfileStore } from '~/store/profile';
 import { useTransactionStore } from '~/store/transaction';
+import { useModalStore } from '~/store/modal';
 
 export default {
   setup() {
@@ -132,7 +133,7 @@ export default {
     },
 
     withdrawalHandler() {
-      this.transactionStore.toggle('withdrawal')
+      useModalStore().open('withdrawal')
     },
 
     async getReferrals() {

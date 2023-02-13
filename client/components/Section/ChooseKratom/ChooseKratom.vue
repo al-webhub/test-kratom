@@ -1,15 +1,11 @@
 <script>
-import { useProductStore } from '~/store/product';
+import { useModalStore } from '~/store/modal';
 
 export default {
   setup() {
-    const productStore = useProductStore()
     const { t } = useI18n({useScope: 'local'}) 
 
-    return {
-      productStore,
-      t
-    }
+    return { t }
   },
 
   data() {
@@ -43,7 +39,7 @@ export default {
 
   methods: {
     searchHandler() {
-      return this.productStore.toggleModal('chooseKratom')
+      return useModalStore().toggle('chooseKratom')
     },
 
   	calcMinus (param){

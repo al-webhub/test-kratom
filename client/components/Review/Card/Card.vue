@@ -40,14 +40,10 @@ export default {
 
   computed: {
     photo: function(){
-      const noAvatar = '/images/photo-log-in.png';
-      
-      if(this.isIncognito)
-        return '/images/incognito.png'
-
-      console.log(this.review?.owner?.photo)
-
-      return this.review?.owner?.photo? '/server/' + this.review?.owner?.photo: noAvatar
+      if(this.review.owner.photo)
+        return this.review.owner.photo.startsWith('http')? this.review.owner.photo: '/server/' + this.review.owner.photo
+      else
+        return this.isIncognito? '/images/incognito.png': '/images/photo-log-in.png'
     },
 
     name: function() {
@@ -201,7 +197,6 @@ export default {
 
         </div>
         
-        
         <div
           v-if="review.children.length"
           :class="{active: repliesIsActive}"
@@ -216,16 +211,18 @@ export default {
             <img src="~assets/svg-icons/arrow-simple.svg" class="icon" />
           </button>
 
-          <ul class="replies">
-            <review-card
-              v-for="subReview in review.children"
-              :key="subReview.id"
-              :review="subReview"
-              :user="user"
-              :is-reply-allowed="false"
-            >
-            </review-card>
-          </ul>
+          <transition name="fade-in">
+            <ul v-if="repliesIsActive" class="replies">
+              <review-card
+                v-for="subReview in review.children"
+                :key="subReview.id"
+                :review="subReview"
+                :user="user"
+                :is-reply-allowed="false"
+              >
+              </review-card>
+            </ul>
+          </transition>
         </div>
         
     </div>

@@ -118,7 +118,7 @@ export default {
       </div>
 
       <!-- PRODUCT IMAGE -->
-      <NuxtLink :to="localePath('/' + product.slug)" class="image">
+      <NuxtLink :to="localePath('/' + product.slug)" :prefetch="false" class="image">
         <nuxt-img
           v-if="photo"
           :src = "photo"
@@ -137,7 +137,7 @@ export default {
       </NuxtLink>
 
       <!-- PRODUCT NAME -->
-      <NuxtLink :to="localePath('/' + product.slug)" class="link">{{ product.name }}</NuxtLink>
+      <NuxtLink :to="localePath('/' + product.slug)" :prefetch="false" class="link">{{ product.name }}</NuxtLink>
       
       <div class="rating">
         <img v-for="i in 5" :key="i" src="~assets/svg-icons/star.svg" :class="{active: i <= rating}" class="icon" />

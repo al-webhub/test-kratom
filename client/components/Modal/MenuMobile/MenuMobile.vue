@@ -21,7 +21,7 @@ export default {
   <div class="menu-wrapper">
     <ul class="nav">
       <li v-for="li in menu" :key="li.id"  class="nav-item">
-        <NuxtLink :to="localePath(li.link)" @click="closeHandler" class="nav-link">{{ li.name }}</NuxtLink>
+        <NuxtLink :to="localePath(li.link)" @click="closeHandler" :prefetch="false" class="nav-link">{{ li.name }}</NuxtLink>
       </li>
     </ul>
   </div>

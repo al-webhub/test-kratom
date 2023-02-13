@@ -28,36 +28,32 @@
 
 }
 
-@media screen and (min-width: 1201px) {
 
-  .check-bonuse {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    line-height: 17px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: #FFFFFF;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .check-bonuse__button {
-    font-size: 12px;
-    line-height: 15px;
-    font-weight: 700;
-    color: #FFFFFF;
-    text-transform: uppercase;
-    margin-bottom: 45px;
-    transition: color .4s;
-  }
+.check-bonuse {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.check-bonuse__button {
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  margin-bottom: 45px;
+  transition: color .4s;
 }
 
 
 .input__wrapper:last-child {
   margin-bottom: 0px;
 }
-
-
 
 
 .footer {

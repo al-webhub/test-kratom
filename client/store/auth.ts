@@ -11,16 +11,6 @@ export const useAuthStore = defineStore('authStore', {
   persist: true,
 
   state: () => ({
-    isShow: {
-      logInEmail: false,
-      logInPassword: false,
-      logOut: false,
-      signInEmail: false,
-      signInSocial: false,
-      checkEmail: false,
-      changePassword: false,
-    },
-    
     user: {
       id: null,
       photo: '/images/photo-log-in.png',
@@ -44,13 +34,6 @@ export const useAuthStore = defineStore('authStore', {
   }),
 
   getters: {
-    showLogInEmail: (state) => state.isShow.logInEmail,
-    showLogInPassword: (state) => state.isShow.logInPassword,
-    showLogOut: (state) => state.isShow.logOut,
-    showSignInEmail: (state) => state.isShow.signInEmail,
-    showSignInSocial: (state) => state.isShow.signInSocial,
-    showCheckEmail: (state) => state.isShow.checkEmail,
-    showChangePassword: (state) => state.isShow.changePassword,
     getUser: (state) => state.user,
     getErrors: (state) => state.errors,
     isAuth: (state) => state.authenticated,
@@ -59,25 +42,7 @@ export const useAuthStore = defineStore('authStore', {
   },
 
   actions: {
-    open(target:string) {
-      this.closeAll()
-      this.isShow[target] = true
-    },
     
-    close(target:string) {
-      this.isShow[target] = false
-    },
-    
-    toggle(target:string) {
-      this.isShow[target] = !this[target]
-    },
-    
-    closeAll() {
-      for (const [key, value] of Object.entries(this.isShow)) {
-        this.isShow[key] = false
-      }
-    },
-
     setIsAuth(value: boolean) {
       this.authenticated = value
     },
@@ -168,38 +133,31 @@ export const useAuthStore = defineStore('authStore', {
 
     },
 
-    async register() {
+    async register(data: Auth) {
       const runtimeConfig = useRuntimeConfig()
       const locale = useNuxtApp().$i18n.locale
+      const url = `${runtimeConfig.public.base}/register`
       const context = this
 
       await this.getToken()
 
-      return await useFetch(`${runtimeConfig.public.base}/register`,{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
-          'Accept-Language': locale.value
-        },
-        credentials: 'include',
-        body: {
+      return await useApiFetch(url, {
           referrer_code: this.referrerCode,
-          ...this.user,
-        },
-        onResponse({ request, response, options }) {
-          if(!response.ok || !response._data) {
-            context.authenticated = false
-            context.errors = response._data
-            throw new Error('No user data')
+          ...data,
+        }, 'POST')
+        .then(({data, error}) => {
+
+          if(data) {
+            this.setProfileData(data)
+            this.authenticated = true
+            return data
           }
 
-          context.setProfileData(response._data)
-          context.authenticated = true
-          context.errors = {}
-        }
-      })
+          if(error) {
+            this.authenticated = false
+            throw error
+          }
+        })
 
     },
 

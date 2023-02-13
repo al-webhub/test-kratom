@@ -26,10 +26,15 @@
   overflow: hidden;
   margin-bottom: 10px;
   margin-right: 0px;
+  background: $color-dark-3;
 
   @include _tablet {
     margin-right: 20px;
     margin-bottom: 0;
+  }
+
+  &[alt]:after {
+    font-size: 20px;
   }
 }
 
@@ -50,7 +55,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 
   .name {
     white-space: nowrap;
@@ -61,6 +66,7 @@
   .date {
     white-space: nowrap;
     color: #BDBDBD;
+    font-size: 12px;
   }
 
   .rating {
@@ -91,7 +97,7 @@
 
 .footer {
   position: relative;
-  margin-top: 20px;
+  margin-top: 10px;
 
   &.active {
     .controls__button-reply {
@@ -127,6 +133,7 @@
     height: 18px;
     margin-left: 5px;
     transform: rotate(180deg);
+    transition: transform .3s;
   }
 }
 
@@ -138,15 +145,10 @@
     .more-btn .icon{
       transform: rotate(0deg);
     }
-
-    .replies {
-      display: block;
-      animation: opacity-reviews .6s;
-    }
   }
 
   .replies {
-    display: none;
+    display: block;
     margin: 20px 0 0;
   }
 }

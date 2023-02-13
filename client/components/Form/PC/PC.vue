@@ -41,7 +41,7 @@ export default {
     :values="communications"
     :placeholder="$t('form.Preferred_communication')"
     required
-    :error="errors.communication"
+    :error="errors?.communication"
     class="form-component"
   >
   </form-select>
@@ -49,7 +49,7 @@ export default {
   <form-text
     v-model="user.communication_number"
     :placeholder="accountPlaceholder"
-    :error="errors.communication_number"
+    :error="errors?.communication_number"
     required
     :is-disabled="!user.communication"
     class="form-component"

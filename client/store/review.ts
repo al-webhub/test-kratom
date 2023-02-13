@@ -60,6 +60,8 @@ export const useReviewStore = defineStore('reviewStore', {
         }
         
         this.allState.meta = meta
+
+        return data
       })
     },
 

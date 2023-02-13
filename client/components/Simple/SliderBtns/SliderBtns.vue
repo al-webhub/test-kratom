@@ -1,11 +1,5 @@
 <script>
 export default {
-  data() {
-    return {
-      activeIndex: 0
-    }
-  },
-
   props: {
     title: {
       type: String,
@@ -20,16 +14,19 @@ export default {
     items: {
       type: Number,
       required: true
+    },
+
+    activeIndex: {
+      type: Number,
+      default: 0
     }
   },
 
   methods: {
     prevHandler() {
-      this.activeIndex--
       this.$emit('prev')
     },
     nextHandler() {
-      this.activeIndex++
       this.$emit('next')
     }
   }
@@ -50,7 +47,6 @@ export default {
     <div class="dots__list">
       <template v-for="(item, key) in items" :key="key">
         <div
-          v-if="(key + 1) % 3 == 0"
           :class="{active: key === activeIndex}"
           class="dots__item" 
         >

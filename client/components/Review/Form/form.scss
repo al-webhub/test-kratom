@@ -18,12 +18,10 @@
 }
 
 .add-reviews__item {
-  display: flex;
-  align-items: center;
   color: #E0E0E0;
   font-size: 14px;
-  line-height: 17px;
-  margin-bottom: 30px;
+  line-height: 24px;
+  margin-bottom: 15px;
 
   &:last-child {
     margin-bottom: 0;
@@ -34,6 +32,10 @@
     filter: $filter-color-gray;
   }
   
+  p {
+    display: inline;
+  }
+
   p span {
     font-weight: 700;
   }
@@ -44,16 +46,17 @@
 }
 
 
-.add-reviews__active {
-  display: flex;
+.checker{
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
   width: 14px;
   height: 14px;
+  margin-left: 10px;
   border-radius: 50%;
   border: 1px solid $color-primary;
-  margin-left: 10px;
+  vertical-align: middle;
 
   .icon {
     margin-right: 0;
@@ -61,17 +64,19 @@
   }
 }
 
+.add-reviews__form {
+  margin-top: 30px;
+}
 
 .add-reviews__buttons {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   grid-gap: 10px;
   width: 100%;
   margin: 10px 0 0 0;
 
   @include _tablet {
-    width: fit-content;
-    grid-template-columns: repeat(2, max-content);
     margin: 10px 0 0 auto;
   }
 
@@ -81,37 +86,5 @@
 
   .btn {
     width: 100%;
-
-    @include _tablet {
-      width: 170px;
-    }
-  }
-}
-
-
-
-@media screen and (max-width: 1024px) {
-  .add-reviews__item:last-of-type {
-    margin-bottom: 50px;
-  }
-}
-
-@media screen and (max-width: 576px) {
-  .add-reviews__item:last-of-type {
-    margin-bottom: 20px;
-  }
-  
-  .add-reviews__buttons {
-    flex-direction: column;
-  }
-  
-  .add-reviews__buttons .main-button {
-    max-width: 100%;
-  }
-
-  .add-reviews__buttons .main-button-confirm {
-    order: -1;
-    margin-bottom: 10px;
-    margin-left: 0px;
   }
 }

@@ -1,130 +1,113 @@
-<script>
-import { useCartStore } from '~/store/cart';
-import { useAuthStore } from '~/store/auth';
-import { useProductStore } from '~/store/product';
+<script setup>
+  import { useCartStore } from '~/store/cart';
+  import { useModalStore } from '~/store/modal';
+  import { useAuthStore } from '~/store/auth';
 
-export default {
-  setup() {
-    const cartStore = useCartStore()
-    const authStore = useAuthStore()
-    const productStore = useProductStore()
+  const { t } = useI18n()
+  
+  // DATA
+  const isLanguagesActive = ref(false)
+  const isBurgerActive = ref(false)
+  const menu = ref(null)
+
+  // COMPUTED
+  const user = computed(() => {
+    return useAuthStore().getUser
+  })
+  
+  const isAuth = computed(() => {
+    return useAuthStore().isAuth
+  })
+
+  const cartLength = computed(() => {
+    return useCartStore().cart.length
+  })
+
+  const isMenuObserved = computed(() => {
+    if(!menu.value)
+      return false
+
+    const carry = Object.keys(menu.value).reduce((carry, key) => {
+      return carry + menu.value[key].observed
+    }, 0)
+
+    return  carry === Object.keys(menu.value).length
+  })
+
+  const photo = computed(() => {
+    return user.value.photo.startsWith('http')? user.value.photo :'/server/' + user.value.photo
+  })
+
+  const isModalLivesearchActive = computed(() => {
+    return useModalStore().show('search')
+  })
+
+  const isHomePage = computed(() => {
+    return useRoute().name.startsWith('index')
+  })
+
+  // HANDLER METHODS
+  const openModalCartHandler = () => {
+    useModalStore().open('cart')
+  }
+
+  const toggleModalSearchHandler = () => {
+    useModalStore().toggle('search')
+  }
+
+  const toggleModalLanguagesHandler = () => {
+    isLanguagesActive.value = !isLanguagesActive.value
+  }
+
+  const toggleModalBurgerHandler = () => {
+    isBurgerActive.value = !isBurgerActive.value
+  }
+
+  const closeModalMobileMenuHandler = () => {
+    isBurgerActive.value = false
+  }
+
+  const openModalSignInSocialHandler = () => {
+    useModalStore().open('signInSocial')
+  }
+
+  const languageSelectHandler = () => {
+    isLanguagesActive.value = false
+  }
+
+  // METHODS
+  const setMenu = () => {
+    const groups = useProductGroups()
+    const productGroups = groups.reduce((carry, item) => carry.concat(item.items), [])
     
-    const isModalLivesearchActive = computed(() => {
-      return productStore.livesearchIsShow
+    menu.value = useMenu().menu
+
+    menu.value.shop.items = productGroups
+    menu.value = Object.assign(menu.value, {
+      menu: {
+        id: 'menu',
+        link: null,
+        name: t('title.menu'),
+        items: [],
+        observed: false
+      },
     })
+  }
 
-    return {
-      cartStore,
-      authStore,
-      productStore,
-      isModalLivesearchActive
+  const observeCallback = (index, visible) => {
+    
+    menu.value[index].observed = true
+
+    if(!visible && index !== 'menu') {
+      const hiddenItem = menu.value[index]
+      delete menu.value[index]
+
+      menu.value.menu.items.push(hiddenItem)
     }
-  },
+  }
 
-  data() {
-    return {
-      isLanguagesActive: false,
-      isSubmenuActive: false,
-      menu: null,
-      burgerIsActive: false
-    }
-  },
-
-  computed: {
-    user() {
-      return this.authStore.getUser
-    },
-
-    isAuth() {
-      return this.authStore.isAuth
-    },
-
-    isMenuObserved() {
-      const carry = Object.keys(this.menu).reduce((carry, key) => {
-        return carry + this.menu[key].observed
-      }, 0)
-
-      return  carry === Object.keys(this.menu).length
-    },
-
-    cartLength() {
-      return this.cartStore.cart.length
-    },
-
-    photo() {
-      return this.user.photo.startsWith('http')? this.user.photo :'/server/' + this.user.photo
-    }
-  },
-
-  methods: {
-    setMenu() {
-      const groups = useProductGroups()
-      const productGroups = groups.reduce((carry, item) => carry.concat(item.items), [])
-      
-      this.menu = useMenu().menu
-
-      this.menu.shop.items = productGroups
-      this.menu = Object.assign(this.menu, {
-        menu: {
-          id: 'menu',
-          link: null,
-          name: this.$t('title.menu'),
-          items: [],
-          observed: false
-        },
-      })
-    },
-
-
-    observeCallback: function (index, visible) {
-      
-      this.menu[index].observed = true
-
-      if(!visible && index !== 'menu') {
-        const hiddenItem = this.menu[index]
-        delete this.menu[index]
-
-        this.menu.menu.items.push(hiddenItem)
-      }
-    },
-
-    toggleSearchHandler() {
-      this.productStore.toggleModal()
-    },
-
-    toggleLanguagesHandler() {
-      this.isLanguagesActive = !this.isLanguagesActive
-    },
-
-    languageSelectHandler() {
-      this.isLanguagesActive = false
-    },
-
-    openCartHandler() {
-      this.cartStore.open()
-    },
-
-    openSignInSocialHandler() {
-      this.authStore.open('signInSocial')
-    },
-
-    toggleSubmenuHandler() {
-      this.isSubmenuActive = !this.isSubmenuActive
-    },
-
-    toggleBurgerHandler() {
-      this.burgerIsActive = !this.burgerIsActive
-    },
-
-    closeMobileMenuHandler() {
-      this.burgerIsActive = false
-    }
-  },
-
-  created() {
-    this.setMenu()
-  },
-}
+  // HOOKS
+  setMenu()
 </script>
 
 <style src="./header.scss" lang="sass" scoped />
@@ -132,7 +115,7 @@ export default {
 <template>
   <header class="header">
     
-    <NuxtLink :to="localePath('/')" class="logo">
+    <NuxtLink v-if="!isHomePage" :to="localePath('/')" :prefetch="false" class="logo">
       <nuxt-img
         src="/images/logo.png"
         alt="Kratomhelper.com logo"
@@ -147,6 +130,23 @@ export default {
         class="logo">
       </nuxt-img>
     </NuxtLink>
+    <span v-else class="logo">
+      <nuxt-img
+        src="/images/logo.png"
+        alt="Kratomhelper.com logo"
+        title="Kratomhelper.com logo"
+        width="138"
+        height="31"
+        sizes = "mobile:138px tablet:138px desktop:138px"
+        format = "webp"
+        fit="contain"
+        quality = "70"
+        loading = "lazy"
+        class="logo">
+      </nuxt-img>
+    </span>
+
+
 
     <nav :class="{overflow: isMenuObserved}" class="nav">
         <span class="general-decor-elem"></span>
@@ -160,6 +160,7 @@ export default {
             >
                 <NuxtLink
                   :to="localePath(item.link)"
+                  :prefetch="false"
                   class="link"
                 >
                   {{ item.name }}
@@ -169,7 +170,7 @@ export default {
 
                 <ul v-if="item.items && item.items.length" class="submenu">
                   <li v-for="subitem in item.items" :key="subitem.id" class="submenu-item">
-                    <NuxtLink :to="subitem.link" class="submenu-link">
+                    <NuxtLink :to="subitem.link" :prefetch="false" class="submenu-link">
                       {{ subitem.name }}
                     </NuxtLink>
                   </li>
@@ -188,7 +189,7 @@ export default {
     <div class="btns-set">
         <!-- SEARCH BUTTON -->
         <div class="search-btn">
-          <button @click="toggleSearchHandler" class="header__search__button">
+          <button @click="toggleModalSearchHandler" class="header__search__button">
             <img src="~assets/svg-icons/search.svg" class="icon"  />
           </button>
         </div>
@@ -204,18 +205,18 @@ export default {
             </modal-lang-switcher>
           </transition>
 	        
-	        <button class="js-button js-drop-button" @click="toggleLanguagesHandler">
+	        <button class="js-button js-drop-button" @click="toggleModalLanguagesHandler">
             <img src="~assets/svg-icons/globe.svg" class="icon" />
           </button>
         </div>
 
         <!-- PROFILE BUTTON -->
         <div class="profile-btn">
-            <button v-if="!isAuth" @click="openSignInSocialHandler">
+            <button v-if="!isAuth" @click="openModalSignInSocialHandler">
               <img src="~assets/svg-icons/user.svg" class="icon" />
             </button>
 
-            <NuxtLink v-else-if="isAuth && user" :to="localePath('/account/order-history')">
+            <NuxtLink v-else-if="isAuth && user" :to="localePath('/account/order-history')" :prefetch="false">
               <nuxt-img
                 :src="photo"
                 width="24"
@@ -233,22 +234,22 @@ export default {
         
         <!-- CART BUTTON -->
         <div class="cart-btn">
-          <button class="js-button" @click="openCartHandler">
+          <button class="js-button" @click="openModalCartHandler">
             <img src="~assets/svg-icons/cart.svg" class="icon"  />
           </button>
           <span class="decor-cart" v-if="cartLength"></span>
         </div>
 
         <!-- MOBULE MENU BUTTON -->
-        <button @click="toggleBurgerHandler" :class="{active: burgerIsActive}" class="burger-btn">
+        <button @click="toggleModalBurgerHandler" :class="{active: isBurgerActive}" class="burger-btn">
           <span class="decor"></span>
         </button>
 
         <transition name="move-x-right">
           <modal-menu-mobile
-            v-if="burgerIsActive"
+            v-if="isBurgerActive"
             :menu="menu"
-            @close="closeMobileMenuHandler"
+            @close="closeModalMobileMenuHandler"
           ></modal-menu-mobile>
         </transition>
     </div>

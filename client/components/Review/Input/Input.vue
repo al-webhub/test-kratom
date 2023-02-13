@@ -1,10 +1,5 @@
-<script>
-export default {
-  data() {
-    return {}
-  },
-
-  props: {
+<script setup>
+  const props = defineProps({
     modelValue: {
       type: String
     },
@@ -12,14 +7,24 @@ export default {
     user: {
       type: Object
     }
-  },
+  })
 
-  methods: {
-    updateHandler(value) {
-      this.$emit('update:modelValue', value)
-    }
+  const emit = defineEmits([
+    'update:modelValue'
+  ])
+
+  // COMPUTED
+  const photo = computed(() => {
+    if(props?.user?.photo)
+      return props?.user?.photo.startsWith('http')? props?.user?.photo: '/server/' + props?.user?.photo
+    else
+      return '/images/photo-log-in.png'
+  })
+
+  // HANDLERS
+  const updateHandler = (value) => {
+    emit('update:modelValue', value)
   }
-}
 </script>
 
 
@@ -27,7 +32,21 @@ export default {
 
 <template>
   <div class="wrapper">
-    <div :style="{backgroundImage: 'url(' + user.photo + ')'}" class="reviews-img"></div>
+
+    <nuxt-img
+      v-if="photo"
+      :src = "photo"
+      alt="You avatar"
+      sizes = "mobile:40px"
+      width="40"
+      height="40"
+      format = "webp"
+      quality = "40"
+      loading = "lazy"
+      fit="cover"
+      class="avatar">
+    >
+    </nuxt-img>
     
     <!-- textarea -->
     <form-textarea

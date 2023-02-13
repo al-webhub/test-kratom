@@ -1,3 +1,38 @@
+@import 'assets/scss/global/mixins';
+
+
+:deep(.decor-text-1) {
+  visibility: hidden;
+
+  @include _tablet {
+    visibility: visible;
+    bottom: -10%;
+    right: 5%;
+  }
+}
+
+:deep(.decor-figure-1) {
+  visibility: hidden;
+
+  @include _tablet {
+    visibility: visible;
+    top: 35%;
+    right: -5%;
+    transform: scale(130%) rotate(60deg);
+  }
+}
+
+:deep(.decor-figure-2) {
+  visibility: hidden;
+
+  @include _tablet {
+    visibility: visible;
+    bottom: -20%;
+    right: 10%;
+  }
+}
+
+
 .earn__how-works__item {
   :deep(ul) {
     margin: 0 0 0 15px;

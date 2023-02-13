@@ -10,18 +10,15 @@
   }
 }
 
+.profile__sidebar-link {
+  &:hover,
+  &.router-link-exact-active {
+    span {
+      color: $color-primary;
+    }
 
-@media screen and (min-width: 1201px) {
-  .profile__sidebar-link {
-    &:hover,
-    &.router-link-exact-active {
-      span {
-        color: $color-primary;
-      }
-
-      img {
-        filter: $filter-color-primary;
-      }
+    img {
+      filter: $filter-color-primary;
     }
   }
 }

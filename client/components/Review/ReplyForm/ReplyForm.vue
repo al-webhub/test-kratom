@@ -12,17 +12,6 @@ export default {
     }
   },
 
-  computed: {
-    photo: function(){
-      let noAvatar = '/img/photo-log-in.png';
-      
-      if(this.user)
-        return this.user.usermeta.photo? this.user.usermeta.photo: noAvatar;
-      else
-        return noAvatar;
-    }  
-  },
-
   methods: {
     sendHandler() {
       this.$emit('reply', this.newComment)

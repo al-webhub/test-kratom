@@ -41,7 +41,7 @@ export default {
 <style src="../../card.scss" lang="sass" scoped />
 
 <template>
-  <ul :class="{active: isActive}" class="referral-history__list">
+  <ul @click="toggleHandler" :class="{active: isActive}" class="referral-history__list">
     <li class="referral-history__item referral-history-position-1-lvl">
       <div class="main-wrapper">
         <p class="main-type">{{ t('My_referral') }} (1st lvl)</p>
@@ -100,7 +100,7 @@ export default {
       </div>
     </li>
 
-    <li @click="toggleHandler" :class="{hidden: !totalRefsLvl2}" class="referral-history__item referral-history-position-last">
+    <li :class="{hidden: !totalRefsLvl2}" class="referral-history__item referral-history-position-last">
       <img src="~assets/svg-icons/arrow-simple.svg"  class="icon toggle-list-btn" />
     </li>
   </ul>

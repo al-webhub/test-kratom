@@ -75,6 +75,7 @@ export default defineNuxtConfig({
   ],
 
   modules: [
+    'nuxt-schema-org',
     '@nuxtjs/device',
     '@nuxtjs/fontaine',
     [

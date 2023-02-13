@@ -14,12 +14,28 @@ export default {
   props: {
     order: {
       type: Object
+    },
+
+    isLoading: {
+      type: Boolean,
+      default : false
     }
   },
 
   methods: {
     toggleHandler() {
       this.isActive = !this.isActive
+    },
+
+    repeatHandler() {
+      this.$emit('repeat', this.order.id)
+    },
+
+    getImageSrc(product) {
+      if(!product?.image?.src)
+        return '/';
+      
+      return `/server/${product.image.src}`;
     }
   },
 
@@ -66,7 +82,7 @@ export default {
             </button>
         </li>
         <li class="order-history__item order-history__item-general-button order-history-position-button">
-            <button class="main-button small primary-color">
+            <button @click="repeatHandler" :class="{loading: isLoading}" class="main-button small primary-color">
                 <span class="text">{{ $t('button.repeat_order') }}</span>
             </button>
             <button @click="toggleHandler"  class="button-details button-details-mobile">
@@ -85,7 +101,8 @@ export default {
                   <div class="order-details__preview__img">
                     <NuxtLink :to="localePath('/' + product.slug)">
                       <nuxt-img
-                        :src="product.image?.src"
+                        :src="getImageSrc(product)"
+                        :alt="product.name"
                         sizes = "mobile:70px"
                         format = "webp"
                         quality = "40"

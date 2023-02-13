@@ -1,50 +1,38 @@
-<script>
-import { useCartStore } from '~/store/cart';
+<script setup>
+  import { useCartStore } from '~/store/cart';
+  import { useModalStore } from '~/store/modal';
 
-export default {
-  setup() {
-    const cartStore = useCartStore()
+  const { t } = useI18n({useScope: 'local'})
 
-    return {
-      cartStore,
-    }
-  },
+  // COMPUTEDS
+  const cart = computed(() => {
+    return useCartStore().cart
+  })
+  
+  const cartLength = computed(() => {
+    return Object.keys(cart.value).length
+  })
 
-  computed: {
-    cart() {
-      return this.cartStore?.cart
-    },
+  const total = computed(() => {
+    return cart.value.reduce(
+      (carry, item) => carry + item.price * item.amount, 
+      0
+    ).toFixed(2)
+  })
 
-    total() {
-      return this.cart.reduce(
-        (carry, item) => carry + item.price * item.amount, 
-        0
-      ).toFixed(2)
-    },
-
-    cartLength() {
-      return Object.keys(this.cart).length
-    }
-  },
-
-  methods: {
-    async deleteHandler(product) {
-      const {setNoty} = useNoty()
-
-      await this.cartStore.remove(product.id).then(() => {
-        setNoty(this.$t('noty.product_remove_from_cart', {product: product.name}), 3000)
-
-        if(!this.cartLength)
-          this.cartStore.close()
-
-      })
-    },
-
-    closeHandler() {
-      this.cartStore.close()
-    }
+  // HANDLER METHODS
+  const closeHandler = () => {
+    useModalStore().close('cart')
   }
-}
+
+  const deleteHandler = async (product) => {
+    await useCartStore().remove(product.id).then(() => {
+      useNoty().setNoty(t('noty.product_remove_from_cart', {product: product.name}), 2000)
+    }).finally(() => {
+      if(!cartLength.value)
+        closeHandler()
+    })
+  }
 </script>
 
 <style src="../../Popup/popup.scss" lang="less" scoped />
@@ -63,7 +51,7 @@ export default {
       <div class="popup-noty-cart__body">
         <ul class="popup-noty-cart__list">
           <checkout-product-tiny
-            v-for="(product, key) in cart"
+            v-for="product in cart"
             :modification="product"
             :key="product.id"
             @delete="deleteHandler(product)"
@@ -81,11 +69,11 @@ export default {
           </div>
         </div>
         
-        <NuxtLink :to="localePath('/checkout')" @click="closeHandler" class="main-button primary btn">
+        <NuxtLink :to="localePath('/checkout')" :prefetch="false" @click="closeHandler" class="main-button primary btn">
           <span class="text">{{ $t('button.checkout') }}</span>
         </NuxtLink>
         
-        <NuxtLink :to="localePath('/shop')" @click="closeHandler" class="main-button btn">
+        <NuxtLink :to="localePath('/shop')" :prefetch="false" @click="closeHandler" class="main-button btn">
           <span class="text">{{ $t('button.edit') }}</span>
         </NuxtLink>
 

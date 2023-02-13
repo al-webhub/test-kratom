@@ -1,28 +1,17 @@
-<script>
-import { useAuthStore } from '~/store/auth';
+<script setup>
+  import { useModalStore } from '~/store/modal';
 
-export default {
-  async setup() {
-    const { t } = useI18n({useScope: 'local'}) 
-    const authStore = useAuthStore()
+  const { t } = useI18n({useScope: 'local'})
 
-    return {
-      authStore,
-      t
-    }
-  },
-
-  methods: {
-    closeHandler() {
-      this.authStore.close('logOut')
-    },
-
-    logoutHandler() {
-      useLogout()('/')
-      this.closeHandler()
-    }
+  const closeHandler = () => {
+    useModalStore().close('logOut')
   }
-}
+
+  const logoutHandler = () => {
+    useLogout()('/').finally(() => {
+      closeHandler()
+    })
+  }
 </script>
 
 <style src="./out.scss" lang="sass" scoped />

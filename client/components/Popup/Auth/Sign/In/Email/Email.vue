@@ -1,50 +1,45 @@
-<script>
-import { useAuthStore } from '~/store/auth';
+<script setup>
+  import { useAuthStore } from '~/store/auth';
+  import { useModalStore } from '~/store/modal';
 
-export default {
-  setup() {
-    const { t } = useI18n({useScope: 'local'}) 
-    const authStore = useAuthStore()
+  const { t } = useI18n({useScope: 'local'})
+  const isLoading = ref(false)
 
-    return {
-      authStore,
-      t
-    }
-  },
-
-  data() {
-    return {
-      isLoading: false
-    }
-  },
-
-  computed: {
-    user() {
-      return this.authStore.getUser
-    },
-
-    errors() {
-      return this.authStore.getErrors
-    }
-  },
-
-  methods: {
-    closeHandler() {
-      return this.authStore.close('signInEmail')
-    },
-
-    openLogInEmailHandler() {
-      return this.authStore.open('logInEmail')
-    },
-
-    async registerHandler() {
-      this.isLoading = true
-      await useRegister()().finally(() => {
-        this.isLoading = false
-      })
-    }
+  const userDefault = {
+    firstname: null,
+    lastname: null,
+    email: null,
+    password: '',
+    password_confirmation: '',
+    communication: null,
+    communication_number: null,
   }
-}
+
+  const user = ref({...userDefault})
+  const errors = ref(null)
+
+  // HANDLERS
+  const closeHandler = () => {
+    useModalStore().close('signInEmail')
+  }
+
+  const openLogInEmailHandler = () => {
+    useModalStore().open('logInEmail')
+  }
+
+  const registerHandler = async () => {
+    isLoading.value = true
+
+    await useRegister()(user.value)
+      .then(() => {
+        user.value = userDefault
+      })
+      .catch((er) => {
+        errors.value = er
+      }).finally(() => {
+        isLoading.value = false
+      })
+  }
 </script>
 
 <style src="./email.scss" lang="sass" scoped />
@@ -60,7 +55,7 @@ export default {
         <form-text
           v-model="user.firstname"
           :placeholder="$t('form.first_name')"
-          :error="errors.firstname"
+          :error="errors?.firstname"
           required
           class="form-component"
         >
@@ -69,7 +64,7 @@ export default {
         <form-text
           v-model="user.lastname"
           :placeholder="$t('form.Last_name')"
-          :error="errors.lastname"
+          :error="errors?.lastname"
           class="form-component"
         >
         </form-text>
@@ -78,7 +73,7 @@ export default {
         <form-text
           v-model="user.email"
           placeholder="Email"
-          :error="errors.email"
+          :error="errors?.email"
           required
           class="form-component"
         >
@@ -92,7 +87,7 @@ export default {
         <form-password
           v-model="user.password"
           :placeholder="$t('form.Password')"
-          :error="errors.password"
+          :error="errors?.password"
           required
           class="form-component"
         >
@@ -101,7 +96,7 @@ export default {
         <form-password
           v-model="user.password_confirmation"
           :placeholder="$t('form.Confirm_Password')"
-          :error="errors.password_confirmation"
+          :error="errors?.password_confirmation"
           required
           class="form-component"
         >

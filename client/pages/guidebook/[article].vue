@@ -1,14 +1,13 @@
-<script>
+<script setup>
 import { useArticleStore } from '~/store/article';
 
-export default {
-  async setup() {
     const { t, locale } = useI18n({useScope: 'local'})
     const route = useRoute()
     const slug = computed(() => route?.params?.article)
 
     const articleStore = useArticleStore()
 
+    // COMPUTED
     const article = computed(() => {
       return articleStore.article
     })
@@ -17,57 +16,48 @@ export default {
       return articleStore.all
     })
 
-    await useAsyncData('article', () => articleStore.getOne(slug.value).catch((e) => {
-      throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
-    }))
-
-    await useAsyncData('articles', () => articleStore.getAll({
-        per_page: 4, 
-        lang: locale.value
-    }, true))
-
-    return {
-      article,
-      articles,
-      t
-    }
-  },
-
-  data() {
-    return {
-    }
-  },
-
-  computed: {
-    photo() {
-      if(this.article.image) 
-        return '/server/' + this.article.image
+    const photo = computed(() => {
+      if(article.value.image) 
+        return '/server/' + article.value.image
       else
         return null
-    }
-  },
+    })
 
-  methods: {
-    setCrumbs() {
-      useCrumbs().setCrumbs([
-          {
-            name: this.$t('crumbs.home'),
-            link: '/'
-          },{
-            name: this.$t('crumbs.guidebook'),
-            link: '/guidebook'
-          },{
-            name: this.article?.title,
-            link: '/guidebook/' + this.article?.slug
-          }
+    // METHODS
+    const setCrumbs = (article) => {
+      const breadcrumbs = [
+        {
+          name: t('crumbs.home'),
+          item: useToLocalePath()('/')
+        },{
+          name: t('crumbs.guidebook'),
+          item: useToLocalePath()('/guidebook')
+        },{
+          name: article.value?.title,
+          item: useToLocalePath()('/guidebook/' + article.value?.slug)
+        }
+      ]
+
+      useCrumbs().setCrumbs(breadcrumbs)
+
+      useSchemaOrg([
+        defineBreadcrumb({
+          itemListElement: breadcrumbs
+        }),
       ])
-    },
-  },
+    }
 
-  created() {
-    this.setCrumbs()
-  }
-}
+    // HOOKES
+    await useAsyncData('article', () => articleStore.getOne(slug.value)).then(({data: article, error}) => {
+      if(article)
+        setCrumbs(article)
+      
+      if(error.value)
+        throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
+    })
+
+    await useAsyncData('articles', () => articleStore.getAll({per_page: 4, lang: locale.value}, true))
+
 </script>
 
 <style src="assets/scss/pages/article.scss" lang="sass" scoped />

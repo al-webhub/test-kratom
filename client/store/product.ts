@@ -39,15 +39,9 @@ export const useProductStore = defineStore('productStore', {
     productState: null as ProductLarge | null,
 
     searchState: {
-      isShow: false,
       data: [] as ProductSmall[],
       meta: Object
     },
-
-    chooseKratom: {
-      isShow: false,
-      data: [] as ProductSmall[],
-    }
   }),
   
   getters: {
@@ -55,18 +49,9 @@ export const useProductStore = defineStore('productStore', {
     meta: (state) => state.allState.meta,
     product: (state) => state.productState,
     found: (state) => state.searchState.data,
-    livesearchIsShow: (state) => state.searchState.isShow,
-    chooseKratomIsShow: (state) => state.chooseKratom.isShow
   },
 
   actions: {
-    toggleModal(name) {
-      if(name)
-        this[name].isShow = !this[name].isShow
-      else
-        this.searchState.isShow = !this.searchState.isShow
-    },
-
     async search(query: string) {
       await this.index(query).then(({ data }) => {
         this.searchState.data = data.data
@@ -97,16 +82,19 @@ export const useProductStore = defineStore('productStore', {
 
     async getOne(slug: string) {
       const runtimeConfig = useRuntimeConfig()
-
       const url = `${runtimeConfig.public.apiBase}/products/${slug}`;
 
-      await useApiFetch(url).then(({data: {data}}) => {
-        console.log('get one product', data)
-        if(data)
-          this.productState = data
+      return await useApiFetch(url).then(({data, error}) => {
+        if(data && data.data) {
+          this.productState = data.data
+          return data.data
+        }
+        
+        if(error)
+          throw new Error(error)
       })
 
-      return this.productState
+      // return this.productState
     },
 
     async getSimilar(params: Object) {

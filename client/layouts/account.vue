@@ -4,10 +4,9 @@ import homeIcon from 'assets/svg-icons/home.svg';
 import gearIcon from 'assets/svg-icons/gear.svg';
 import walletIcon from 'assets/svg-icons/wallet.svg';
 
+import { useModalStore } from '~/store/modal';
 import { useAuthStore } from '~/store/auth';
 import { useProfileStore } from '~/store/profile';
-import { useTransactionStore } from '~/store/transaction'
-import { useCartStore } from '~/store/cart'
 
 export default {
   setup() {
@@ -15,21 +14,28 @@ export default {
     const authStore = useAuthStore()
     const profileStore = useProfileStore()
 
+
+    // COMPUTED
     const isPopupAuthChangePasswordActive = computed(() => {
-      return useAuthStore().showChangePassword
+      return useModalStore().show('changePassword')
     })
 
     const isModalCartActive = computed(() => {
-      return useCartStore().show
+      return useModalStore().show('cart')
     })
 
     const isPopupAuthLogOutActive = computed(() => {
-      return useAuthStore().showLogOut
+      return useModalStore().show('logOut')
     })
 
     const isPopupWithdrawalShow = computed(() => {
-      return useTransactionStore().withdrawal.isShow
+      return useModalStore().show('withdrawal')
     })
+
+    // METHODS
+    const logoutHandler = async () => {
+      useModalStore().open('logOut')
+    }
 
     return {
       authStore,
@@ -38,6 +44,7 @@ export default {
       isPopupAuthLogOutActive,
       isModalCartActive,
       isPopupAuthChangePasswordActive,
+      logoutHandler,
       t
     }
   },
@@ -94,12 +101,6 @@ export default {
       ]
     },
   },
-
-  methods: {
-    async logoutHandler() {
-      this.authStore.open('logOut')
-    }
-  }
 }
 </script>
 

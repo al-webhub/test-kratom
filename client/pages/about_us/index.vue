@@ -1,9 +1,25 @@
 <script>
 export default {
   setup() {
-    const { t } = useI18n({
-      useScope: 'local'
-    }) 
+    const { t } = useI18n({useScope: 'local'}) 
+
+    const breadcrumbs = [
+      {
+        name: t('crumbs.home'),
+        item: useToLocalePath()('/')
+      },{
+        name: t('crumbs.about_us'),
+        item: useToLocalePath()('/about_us')
+      }
+    ]
+
+    useCrumbs().setCrumbs(breadcrumbs)
+
+    useSchemaOrg([
+      defineBreadcrumb({
+        itemListElement: breadcrumbs
+      }),
+    ])
 
     return {
       t
@@ -26,37 +42,17 @@ export default {
       }
     }
   },
-
-  methods: {
-    setCrumbs() {
-      useCrumbs().setCrumbs([
-          {
-            name: this.$t('crumbs.home'),
-            link: '/'
-          },{
-            name: this.$t('crumbs.about_us'),
-            link: '/about_us'
-          }
-      ])
-    },
-  },
-
-  created() {
-    this.setCrumbs()
-  }
 }
 </script>
 
-<style src="assets/scss/pages/about-us.scss" lang="sass" scoped />
-
+<style src="./about-us.scss" lang="sass" scoped />
 <i18n src="./messages.json"></i18n>
 
 <template>
   <div>
-    <section class="about-us-page">
+    <simple-decor :figure-amount="2">
+      <section class="about-us-page">
         <div class="about-us-page__wrapper container">
-            <!-- <div class="general-decor-figure"></div>
-            <div class="general-decor-text">about us</div> -->
             <h1 class="main-caption main-caption-align">{{ page.h1 || page.title }}</h1>
 
             <div class="about-us-page__container">
@@ -126,8 +122,8 @@ export default {
 
             </div>
         </div>
-    </section>
-
+      </section>
+    </simple-decor>
     <section-write-us></section-write-us>
   </div>
 </template>

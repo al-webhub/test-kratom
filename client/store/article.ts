@@ -46,8 +46,9 @@ export const useArticleStore = defineStore('articleStore', {
       const url = `${runtimeConfig.public.apiBase}/articles/${slug}`
 
       return await useApiFetch(url).then(({data, error}) => {
-        if(data)
+        if(data) {
           this.articleState = data
+        }
         
         if(error)
           throw new Error(error)  

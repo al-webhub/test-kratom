@@ -1,15 +1,6 @@
-type Popups = "adult"
-type Langs = "en" | "ru"
-
 export const useAppStore = defineStore('appStore', {
-  persist: true,
 
   state: () => ({ 
-    
-    popups: {
-      adult: true
-    },
-
     data: {
       payments: {
         en: {
@@ -111,8 +102,6 @@ export const useAppStore = defineStore('appStore', {
   }),
   
   getters: {
-    adult: (state) => state.popups.adult,
-
     payments: (state) => { 
       return (lang: Langs = 'en') => state.data.payments[lang]
     },
@@ -126,17 +115,5 @@ export const useAppStore = defineStore('appStore', {
     }
   },
 
-  actions: {
-    close(name: Popups) {
-      this.popups[name] = false
-    },
-
-    open(name: Popups) {
-      this.popups[name] = false
-    },
-
-    toggle(name: Popups) {
-      this.popups[name] = !this.popups[name]
-    }
-  },
+  actions: {},
 })

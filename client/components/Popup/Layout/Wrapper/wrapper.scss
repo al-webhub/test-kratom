@@ -12,10 +12,14 @@
   overflow: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding: 50px;
+  padding: 30px 20px;
   max-width: 460px;
   background-color: #333333;
   
+  @include _tablet {
+    padding: 50px;
+  }
+
   &::-webkit-scrollbar {
     display: none;
   }

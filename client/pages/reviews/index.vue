@@ -28,18 +28,6 @@ export default {
       })
     }
 
-    const setCrumbs = () => {
-      useCrumbs().setCrumbs([
-          {
-            name: t('crumbs.home'),
-            link: '/'
-          },{
-            name: t('crumbs.reviews'),
-            link: '/reviews'
-          }
-      ])
-    }
-
     const getReviews = async (query, refresh) => {
       await useAsyncData('reviews', () => reviewStore.getAll(query, refresh))
     }
@@ -54,7 +42,24 @@ export default {
 
     getReviews({per_page: 12}, true)
     setSeo()
-    setCrumbs()
+
+    const breadcrumbs = [
+        {
+          name: t('crumbs.home'),
+          link: useToLocalePath()('/')
+        },{
+          name: t('crumbs.reviews'),
+          link: useToLocalePath()('/reviews')
+        }
+    ]
+
+    useCrumbs().setCrumbs(breadcrumbs)
+
+    useSchemaOrg([
+      defineBreadcrumb({
+        itemListElement: breadcrumbs
+      }),
+    ])
 
     return {
       reviewStore,
@@ -149,7 +154,7 @@ export default {
                 v-if="meta && meta.current_page !== meta.last_page"
                 @click="loadMoreHandler"
                 :class="{loading: isLoading}"
-                class="main-button small loadmore-btn" >
+                class="main-button loadmore-btn" >
                 <span class="text">{{ $t('button.show_more') }}</span>
               </button>
 

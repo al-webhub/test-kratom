@@ -1,8 +1,17 @@
-.slider {
-  margin-top: 50px;
+@import 'assets/scss/global/mixins';
 
+.slider {
+  margin-top: 20px;
+
+  @include _desktop {
+    margin-top: 30px;
+  }
 }
 
 :deep(.slider > .list){
-  height: 460px;
+  height: 487px;
+
+  @include _desktop {
+    height: 460px;
+  }
 } 

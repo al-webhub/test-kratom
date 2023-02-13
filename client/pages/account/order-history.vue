@@ -1,93 +1,74 @@
-<script>
-import { useOrderStore } from '~/store/order';
+<script setup>
+  import { useOrderStore } from '~/store/order';
+  import { useCartStore } from '~/store/cart';
 
-export default {
-  setup() {
-    const { t } = useI18n({useScope: 'local'})
+  const { t } = useI18n({useScope: 'local'})
 
-    definePageMeta({
-      layout: 'account',
-      middleware: 'auth',
-    })
+  useAccount().setTitle(t('title.order_history'))
 
-    const orderStore = useOrderStore()
-    orderStore.$reset()
-
-    useAccount().setTitle(t('title.order_history'))
-
-    return {
-      orderStore,
-      t
-    }
-  },
-
-  data(){
-    return {
-      user: {
-        usermeta: {
-          address_details: {
-            is_default: true,
-            country: null,
-            street: null,
-            apartment: null,
-            city: null,
-            state: null,
-            zip: null,
-            comment: null
-          }
-        }
-      },
-    }
-  },
-
-  computed: {
-    
-    orders() {
-      return this.orderStore?.orders;
-    },
-
-    ordersMeta() {
-      return this.orderStore?.ordersMeta;
-    },
-  },
+  definePageMeta({
+    layout: 'account',
+    middleware: 'auth',
+  })
 
 
-  methods: {
+  // DATA
+  const isLoading = ref(false)
 
-    setCrumbs() {
-      useCrumbs().setCrumbs([
-          {
-            name: this.$t('crumbs.home'),
-            link: '/'
-          },{
-            name: this.$t('crumbs.account'),
-            link: '/account'
-          },{
-            name: this.$t('crumbs.order_history'),
-            link: '/account/order-history'
-          }
-      ])
-    },
+  // COMPUTED
+  const orders = computed(() => {
+    return useOrderStore().orders;
+  })
 
-    async getOrders() {
-      await this.orderStore?.getOrders()
-    },
-    
-    async loadmoreOrdersHandler() {
-      const params = {
-        page: this.ordersMeta.current_page + 1
-      }
+  const ordersMeta = computed(() => {
+    return useOrderStore().ordersMeta;
+  })
 
-      await this.orderStore?.getOrders(params)
-    },
-  },
-
-  async created() {
-    await useAsyncData('orders', () => this.getOrders())
-
-    this.setCrumbs()
+  // METHODS
+  const getOrders = async () => {
+    await useOrderStore().getOrders()
   }
-}
+
+  const setCrumbs = () => {
+    useCrumbs().setCrumbs([
+        {
+          name: t('crumbs.home'),
+          link: '/'
+        },{
+          name: t('crumbs.account'),
+          link: '/account'
+        },{
+          name: t('crumbs.order_history'),
+          link: '/account/order-history'
+        }
+    ])
+  }
+  
+  // HANDLERS
+  const loadmoreOrdersHandler = async() => {
+    const params = {
+      page: ordersMeta.value.current_page + 1
+    }
+
+    await useOrderStore().getOrders(params, false)
+  }
+
+  const repeatHandler = async(id) => {
+    isLoading.value = true
+
+    await useCartStore().copyOrder(id).then((order) => {
+      useOrderStore().unshiftOrder(order)
+      useNoty().setNoty(t('noty.order_success', {code: order.code}))
+    }).catch((e) => {
+      useNoty().setNoty(t('noty.order_fail'))
+    }).finally(() => {
+      isLoading.value = false
+    })
+  }
+
+  // HOOKES
+  await useAsyncData('orders', () => getOrders())
+  setCrumbs()
 </script>
 
 <style src="assets/scss/pages/account/order-history.scss" lang="sass" scoped />
@@ -111,10 +92,19 @@ export default {
           v-for="order in orders"
           :key="order.id"
           :order="order"
+          :is-loading="isLoading"
+          @repeat="repeatHandler"
         >
         </account-order-card>
       </template>
 
+      <div
+        v-if="ordersMeta.last_page != ordersMeta.current_page"
+        @click="loadmoreOrdersHandler"
+        style="text-align:center; cursor:pointer;padding:10px"
+      >
+        {{ $t('button.show_more') }}
+      </div>
     </div>
 
     <div v-if="!orders || !orders.length" class="profile__order-history">

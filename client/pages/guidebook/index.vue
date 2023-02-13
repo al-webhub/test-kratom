@@ -13,6 +13,25 @@ export default {
       }
     })
 
+
+    const breadcrumbs = [
+      {
+        name: t('crumbs.home'),
+        item: useToLocalePath()('/')
+      },{
+        name: t('crumbs.guidebook'),
+        item: useToLocalePath()('/guidebook')
+      }
+    ]
+
+    useCrumbs().setCrumbs(breadcrumbs)
+
+    useSchemaOrg([
+      defineBreadcrumb({
+        itemListElement: breadcrumbs
+      }),
+    ])
+
     await useAsyncData('articles', () => articleStore.getAll(query.value, true))
 
     return {
@@ -46,18 +65,6 @@ export default {
   },
 
   methods: {
-    setCrumbs() {
-      useCrumbs().setCrumbs([
-          {
-            name: this.$t('crumbs.home'),
-            link: '/'
-          },{
-            name: this.$t('crumbs.guidebook'),
-            link: '/guidebook'
-          }
-      ])
-    },
-
     async loadmoreHandler() {
       this.isLoading = true
 
@@ -70,10 +77,6 @@ export default {
       })
     }
   },
-
-  async created() {
-    this.setCrumbs()
-  }
 }
 </script>
 

@@ -1,6 +1,6 @@
 type Crumb = {
   name: String,
-  link: String
+  item: String
 }
 
 export const useCrumbs = () => {

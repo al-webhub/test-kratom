@@ -1,71 +1,51 @@
-<script>
-import { useAuthStore } from '~/store/auth';
+<script setup>
+  import { useAuthStore } from '~/store/auth';
+  import { useModalStore } from '~/store/modal';
 
-export default {
-  setup() {
-    const authStore = useAuthStore()
-    const { t } = useI18n({useScope: 'local'}) 
+  const { t } = useI18n({useScope: 'local'}) 
 
-    return {
-      authStore,
-      t
-    }
-  },
+  const password = ref('')
+  const password_confirmation = ref('')
 
-  data() {
-    return {
-      password: '',
-      password_confirmation: '',
-      errors: {
-        password: null,
-        password_confirmation: null
-      },
-    }
-  },
+  // COMPUTED
+  const user = computed(() => {
+    return useAuthStore().getUser
+  })
 
-  computed: {
-    user() {
-      return this.authStore.getUser
-    },
+  const errors = computed(() =>{
+    return useAuthStore().getErrors
+  })
 
-    errors() {
-      return this.authStore.getErrors
-    },
+  const rules = computed(() => { 
+    return [
+      {
+        uid: 1,
+        label: t('form.Min_8_characters'),
+        validated: password.value.length >= 8
+      },{
+        uid: 2,
+        label: t('form.1_Letter'),
+        validated:  /[a-zA-Z]+/.test(password.value) 
+      },{
+        uid: 3,
+        label: t('form.1_Number'),
+        validated: /[0-9]+/.test(password.value)
+      }
+    ]
+  })
 
-    rules() { 
-      return [
-        {
-          uid: 1,
-          label: this.$t('form.Min_8_characters'),
-          validated: this.password.length >= 8
-        },{
-          uid: 2,
-          label: this.$t('form.1_Letter'),
-          validated:  /[a-zA-Z]+/.test(this.password) 
-        },{
-          uid: 3,
-          label: this.$t('form.1_Number'),
-          validated: /[0-9]+/.test(this.password)
-        }
-      ]
-    },
+  const isDisabled = computed(() => {
+    return !password.value.length || !password_confirmation.value.length
+  })
 
-    isDisabled() {
-      return !this.password.length || !this.password_confirmation.length
-    }
-  },
-
-  methods: {
-    backHandler() {
-      this.closeHandler()
-      this.authStore.open('logInPassword')
-    },
-
-    closeHandler() {
-      return this.authStore.close('changePassword')
-    }
+  // HANDLERS
+  const backHandler = () => {
+    useModalStore().open('logInPassword')
   }
-}
+
+  const closeHandler = () => {
+    useModalStore().close('changePassword')
+  }
 </script>
 
 <style src="./password.scss" lang="sass" scoped />

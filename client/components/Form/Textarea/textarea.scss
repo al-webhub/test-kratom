@@ -3,7 +3,7 @@
   display: block;
   width: 100%;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 0;
 }
 
 .input__wrapper.disabled {
@@ -13,6 +13,7 @@
 .input__wrapper.error .input-error-text {
   display: block;
 }
+
 .input-error-text {
   display: none;
   position: absolute;
@@ -23,11 +24,11 @@
   color: #EB5757;
 }
 
-
 .main-textarea {
   width: 100%;
   padding: 10px 20px !important;
   border: none;
   background-color: transparent;
   resize: none;
+  line-height: 17px;
 }

@@ -1,25 +1,29 @@
 <script>
 import { useReviewStore } from '~/store/review';
 import { useAuthStore } from '~/store/auth';
+import { useModalStore } from '~/store/modal';
 
 export default {
   setup() {
     const reviewStore = useReviewStore()
     const authStore = useAuthStore()
 
+    // COMPUTED
     const isPopupFeedbackShow = computed(() => {
       return reviewStore.isShow
     })
 
+    // HANDLER
+    const loginHandler = () => {
+      useModalStore().open('signInSocial')
+    }
+
     return {
       isPopupFeedbackShow,
       reviewStore,
-      authStore
+      authStore,
+      loginHandler
     }
-  },
-
-  data() {
-    return {}
   },
 
   props: {
@@ -55,10 +59,6 @@ export default {
     loadmoreHandler() {
       this.$emit('loadmore')
     },
-
-    loginHandler() {
-      this.authStore.open('signInSocial')
-    }
   },
 
   computed: {

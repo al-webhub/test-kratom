@@ -1,22 +1,29 @@
+@import 'assets/scss/global/mixins';
+
 .wrapper {
   display: flex;
-}
+  align-items: flex-start;
+  flex-direction: column;
 
-@media screen and (max-width: 576px) {
-  .wrapper {
-    align-items: flex-start;
-    flex-direction: column;
+  @include _tablet {
+    flex-direction: row;
   }
 }
 
-.reviews-img {
+.avatar {
   width: 40px;
   height: 40px;
   flex-shrink: 0;
   border-radius: 50%;
+  object-fit: cover;
   overflow: hidden;
-  margin-right: 20px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  margin: 0 0 20px 0;
+
+  @include _tablet {
+    margin: 0 20px 0 0;
+  }
+
+  &[alt]:after {
+    font-size: 20px;
+  }
 }

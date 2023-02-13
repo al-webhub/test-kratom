@@ -2,20 +2,19 @@ import { useAuthStore } from '~/store/auth';
 
 export const useLogin = () => {
   const nuxtApp = useNuxtApp()
-  const authStore = useAuthStore()
 
   return async (redirectTo: string | null = null) => {
-    const {setNoty} = useNoty()
 
-    return await authStore.login().then((res) => {
+    return await useAuthStore().login().then((res) => {
 
       if(res.data._value) {
-        setNoty(nuxtApp.$i18n.t('noty.login_success'), 3000)
-        authStore.closeAll()
+        useNoty().setNoty(nuxtApp.$i18n.t('noty.login_success'), 3000)
       }
 
-      if(res.error._value)
-        setNoty(nuxtApp.$i18n.t('noty.login_failed'), 5000)
+      if(res.error._value) {
+        useNoty().setNoty(nuxtApp.$i18n.t('noty.login_failed'), 5000)
+        throw new Error(res.error._value)
+      }
 
       if(redirectTo)
         return navigateTo(redirectTo)

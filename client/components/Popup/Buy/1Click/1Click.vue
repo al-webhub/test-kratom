@@ -1,69 +1,52 @@
-<script>
-import { useCartStore } from '~/store/cart';
-import {useFeedbackStore} from '~/store/feedback'
+<script setup>
+    import { useFeedbackStore } from '~/store/feedback'
+    import { useModalStore } from '~/store/modal';
 
-export default {
-  setup() {
     const { t } = useI18n({useScope: 'local'})
-    const feedbackStore = useFeedbackStore()
-    const cartStore = useCartStore()
 
-    return {
-      cartStore,
-      feedbackStore,
-      t
+    const isLoading = ref(false)
+    const order = ref({
+      name: null,
+      phone: null,
+      text: null
+    })
+
+    // COMPUTED
+    const product = computed(() => {
+      return useModalStore().data('buy1')
+    })
+
+    const errors = computed(() => {
+      return useFeedbackStore().errors
+    })
+
+    // HANDLERS
+    const closeHandler = () => {
+      useModalStore().close('buy1')
     }
-  },
 
-  data() {
-    return {
-      isLoading: false,
-      order: {
-        name: null,
-        phone: null,
-        text: null
-      },
-    }
-  },
+    const createHandler = async () => {
+      isLoading.value = true
 
-  computed: {
-    errors() {
-      return this.feedbackStore.errors
-    },
-
-    product() {
-      return this.cartStore.buy1Product
-    }
-  },
-
-  methods: {
-    closeHandler() {
-      return this.cartStore.toggleBuy1()
-    },
-
-    async createHandler() {
-      this.isLoading = true
       try {
-        await this.feedbackStore.createFeedback({
-          ...this.order,
+        await useFeedbackStore().createFeedback({
+          ...order.value,
           extras: {
-            product: this.product
+            product: product.value
           }
         }).then((res) => {
-          useNoty().setNoty(this.$t('noty.1click_success'))
-          this.closeHandler()
-          this.order.name = null
-          this.order.phone = null
-          this.order.text = null
+          useNoty().setNoty(t('noty.1click_success'))
+          closeHandler()
+          order.value.name = null
+          order.value.phone = null
+          order.value.text = null
         })
       }catch(e) {
-          useNoty().setNoty(this.$t('noty.1click_fail'))
+        useNoty().setNoty(t('noty.1click_fail'))
       }finally {
-        this.isLoading = false
+        isLoading.value = false
       }   
-    },
-  }
-}
+    }
 </script>
 
 <style src="./1-click.scss" lang="sass" scoped />

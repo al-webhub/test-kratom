@@ -46,7 +46,6 @@ export const useIObserver = () => {
   }
 
   const callback = (v) => {
-    console.log('observ', v)
     if(!v.isIntersecting) {
       v.target.classList.add('not-visible')
     }

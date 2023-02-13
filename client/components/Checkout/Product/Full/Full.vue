@@ -54,7 +54,7 @@ export default {
         <NuxtLink :to="localePath('/' + modification.slug)" class="title">{{ modification.name }}</NuxtLink>
         
         <div class="mod">
-          {{ modification.short_name }} g.
+          {{ modification.short_name }}
           
           <div class="mod__price">
             USD <b>{{ modification.price }}</b>

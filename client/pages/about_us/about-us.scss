@@ -1,3 +1,36 @@
+@import 'assets/scss/global/mixins';
+
+
+:deep(.decor-text-1) {
+  visibility: hidden;
+
+  @include _tablet {
+    visibility: visible;
+    bottom: -10%;
+    left: 5%;
+  }
+}
+
+:deep(.decor-figure-1) {
+  visibility: hidden;
+
+  @include _tablet {
+    visibility: visible;
+    top: -10%;
+    right: 0%;
+  }
+}
+
+:deep(.decor-figure-2) {
+  visibility: hidden;
+
+  @include _tablet {
+    visibility: visible;
+    bottom: -10%;
+    left: -10%;
+    transform: scale(130%) rotate(60deg);
+  }
+}
 
 /* About us */
 .about-us-page__wrapper {

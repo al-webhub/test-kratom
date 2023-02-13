@@ -45,19 +45,18 @@ export const useMenu = () => {
       name: t('title.item_7'),
       observed: false
     },
-    faq: {
+    advantages: {
       id: 8,
+      link: '/our-advantages',
+      name: t('title.advantages'),
+      observed: false
+    },
+    faq: {
+      id: 9,
       link: '/faq',
       name: t('title.item_8'),
       observed: false
-    },
-    // menu: {
-    //   id: 'menu',
-    //   link: null,
-    //   name: t('title.menu'),
-    //   items: [],
-    //   observed: false
-    // },
+    }
   }
 
   return {

@@ -32,6 +32,7 @@
     }
   }
 }
+
 .custome-placeholder__text {
   height: 100%;
   width: auto;
@@ -40,6 +41,7 @@
   border-right: none;
   color: #828282;
 }
+
 .custome-placeholder__text .inner-text {
   display: inline-block;
   position: relative;
@@ -47,20 +49,23 @@
   transform: translateY(-50%);
   transition: transform .3s, font-size .3s;
 }
+
 .custome-placeholder__text .inner-text span {
   color: #ACDA53;
 }
+
 .custome-placeholder__before {
   width: 20px;
   border: 1px solid #FFFFFF;
   border-right: none;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
+
 .custome-placeholder__after {
   flex-grow: 1;
   border: 1px solid #FFFFFF;
   border-left: none;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
