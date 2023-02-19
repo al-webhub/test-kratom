@@ -170,7 +170,7 @@
 
                 <ul v-if="item.items && item.items.length" class="submenu">
                   <li v-for="subitem in item.items" :key="subitem.id" class="submenu-item">
-                    <NuxtLink :to="subitem.link" :prefetch="false" class="submenu-link">
+                    <NuxtLink :to="localePath(subitem.link)" :prefetch="false" class="submenu-link">
                       {{ subitem.name }}
                     </NuxtLink>
                   </li>

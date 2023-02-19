@@ -6,11 +6,13 @@
     "generate": "nuxi generate",
     "preview": "nuxi preview",
     "analyze": "nuxi analyze",
-    "start": "node .output/server/index.mjs"
+    "start": "node .output/server/index.mjs",
+    "static": "npx serve -s .output/public"
   },
   "dependencies": {
     "@nuxtjs/device": "^3.0.0",
     "@pinia/nuxt": "^0.4.6",
+    "node-fetch": "^3.3.0",
     "pinia": "^2.0.30"
   },
   "devDependencies": {
@@ -22,6 +24,7 @@
     "nuxt": "3.2.0",
     "nuxt-delay-hydration": "^1.1.0",
     "nuxt-schema-org": "^2.1.1",
+    "nuxt-simple-sitemap": "^1.0.7",
     "sass": "^1.55.0",
     "sass-loader": "^10.3.1"
   }

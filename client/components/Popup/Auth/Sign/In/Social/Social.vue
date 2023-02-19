@@ -1,5 +1,4 @@
 <script setup>
-  import googleIcon from 'assets/images/google-icon.png';
   import { useModalStore } from '~/store/modal';
   import { useAuthStore } from '~/store/auth';
 
@@ -47,7 +46,6 @@
             loading = "lazy"
             class="google-icon"
           ></nuxt-img>
-          <!-- <span :style="{backgroundImage: googleImage }" class="google-icon"></span> -->
           <span class="text">{{ $t('button.continue_with_google') }}</span>
         </button>
         

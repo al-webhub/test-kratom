@@ -1,4 +1,4 @@
-import { useApiFetch } from "~~/composables/useApiFetch";
+import { defineStore } from "pinia";
 
 type ProductSmall = {
   id: number,

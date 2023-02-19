@@ -1,12 +1,17 @@
+import dynamicRoutes from './helpers/dynamicRoutes'
+import { useProductStore } from './store/product'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  
+  ssr: true,
+
   appConfig: {
     SITE_URL: process.env.SITE_URL
   },
 
   runtimeConfig: {
     public: {
+      siteUrl: process.env.SITE_URL || 'https://kratomhelper.com',
       base: process.env.SERVER_URL,
       apiBase: process.env.API_SERVER_URL
     }
@@ -29,11 +34,12 @@ export default defineNuxtConfig({
   
   // sourcemap: false,
 
-  // experimental: {
-  //   asyncEntry: true,
-  //   viteServerDynamicImports: true
-  // },
-
+  experimental: {
+    // asyncEntry: true,
+    // viteServerDynamicImports: true
+    payloadExtraction: false
+  },
+  
   debug: false,
 
   nitro: {
@@ -43,10 +49,12 @@ export default defineNuxtConfig({
       brotli: true 
     },
     minify: true,
-    // prerender: {
-    //   crawlLinks: false,
-    //   routes: []
-    // },
+    prerender: {
+      crawlLinks: true,
+      routes: [
+        '/',
+      ]
+    },
     // preset: 'node-server',
     routeRules: {
       '/pages/**': { static: true, headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
@@ -64,17 +72,51 @@ export default defineNuxtConfig({
   
   // builder: 'webpack',
 
-  // vite: {
-  //   build: {
-  //     assetsInlineLimit: 0
-  //   }
-  // },
+  vite: {
+    // build: {
+    //   assetsInlineLimit: 0
+    // }
+    // optimizeDeps: {
+    //   exclude: ['@vue/server-renderer', '@vue/runtime-core']
+    // }
+  },
 
   css: [
     '@/assets/scss/global/main.scss'
   ],
 
   modules: [
+    [
+      'nuxt-simple-sitemap',
+      {
+        enabled: true,
+        exclude: [
+            '/account/**'
+        ],
+        defaults: {
+          changefreq: 'daily',
+          priority: 1,
+          lastmod: new Date().toISOString(),
+        },
+        urls: dynamicRoutes
+        // urls: async () => {
+        //   const {data: products} = await useProductStore().index({per_page: 500})
+        //   return products.map((product) => ({
+        //       url: `/blog/${product.slug}`,
+        //       changefreq: 'daily',
+        //       priority: 0.8,
+        //   }))
+        // }
+        // urls: async () => {
+        //   return await fetch('/api/sitemap_routes', {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //   })
+        // },
+      }
+    ],
     'nuxt-schema-org',
     '@nuxtjs/device',
     '@nuxtjs/fontaine',
@@ -179,6 +221,6 @@ export default defineNuxtConfig({
           },
         }
       }
-    ]
+    ],
   ],
 })
