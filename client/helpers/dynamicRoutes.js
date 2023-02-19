@@ -47,7 +47,7 @@ export default async () => {
   }
 
   const fetchProducts = async () => {
-    const response = await fetch('http://localhost:8888/api/products?per_page=5000', {
+    const response = await fetch(`${process.env.API_SERVER_URL}/products?per_page=5000`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ export default async () => {
   }
 
   const fetchArticles = async (lang) => {
-    const response = await fetch(`http://localhost:8888/api/articles?per_page=5000&lang=${lang}`, {
+    const response = await fetch(`${process.env.API_SERVER_URL}/articles?per_page=5000&lang=${lang}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ export default async () => {
   }
 
   const fetchCategories = async () => {
-    const response = await fetch('http://localhost:8888/api/categories?per_page=5000', {
+    const response = await fetch(`${process.env.API_SERVER_URL}/categories?per_page=5000`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
