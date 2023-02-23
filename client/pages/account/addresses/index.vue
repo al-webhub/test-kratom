@@ -21,7 +21,8 @@ export default {
 
   data(){
     return {
-      isLoading: false
+      isLoading: false,
+      errors: {}
     }
   },
 
@@ -58,15 +59,17 @@ export default {
     async saveHandler() {
       this.isLoading = true
       
-      await this.profileStore?.updateProfile().then((res) => {
-        if(res.data._value)
+      await this.profileStore?.updateProfile()
+        .then((profile) => {
+          this.errors = {}
           useNoty().setNoty(this.$t('noty.update_success'))
-        
-        if(res.error._value)
+        })
+        .catch((e) => {
+          this.errors = e
           useNoty().setNoty(this.$t('noty.update_fail'))
-
-        this.isLoading = false
-      })
+        }).finally(() => {
+          this.isLoading = false
+        }) 
     }
   },
 
@@ -76,7 +79,9 @@ export default {
 }
 </script>
 
-<style src="assets/scss/pages/account/addresess.scss" lang="sass" scoped />
+<style src="./addresess.scss" lang="sass" scoped />
+
+<i18n src="./messages.json"></i18n>
 
 <template>
   <div class="profile__address">
@@ -84,6 +89,7 @@ export default {
 
       <form-checkbox
         v-model="address.is_default"
+        :error="errors['addresses.0.is_default']"
         value="is_default"
         class="form-component input__wrapper100"
       >
@@ -94,6 +100,7 @@ export default {
         v-model="address.country"
         :placeholder="$t('form.Country_Region')"
         :values="countries"
+        :error="errors['addresses.0.country']"
         class="form-component"
       >
       </form-select>
@@ -101,6 +108,7 @@ export default {
       <form-text
         v-model="address.street"
         :placeholder="$t('form.Street_Number')"
+        :error="errors['addresses.0.street']"
         class="form-component"
       >
       </form-text>
@@ -108,6 +116,7 @@ export default {
       <form-text
         v-model="address.apartment"
         :placeholder="$t('form.Apartment_house_flat')"
+        :error="errors['addresses.0.apartment']"
         class="form-component"
       >
       </form-text>
@@ -115,6 +124,7 @@ export default {
       <form-text
         v-model="address.city"
         :placeholder="$t('form.Town_City')"
+        :error="errors['addresses.0.city']"
         class="form-component"
       >
       </form-text>
@@ -122,6 +132,7 @@ export default {
       <form-text
         v-model="address.state"
         :placeholder="$t('form.State')"
+        :error="errors['addresses.0.state']"
         class="form-component"
       >
       </form-text>
@@ -129,6 +140,7 @@ export default {
       <form-text
         v-model="address.zip"
         :placeholder="$t('form.ZIP')"
+        :error="errors['addresses.0.zip']"
         class="form-component"
       >
       </form-text>
@@ -136,6 +148,7 @@ export default {
       <form-textarea
         v-model="address.comment"
         :placeholder="t('Specify_or_write')"
+        :error="errors['addresses.0.comment']"
         class="form-component input__wrapper100"
       >
       </form-textarea>
@@ -150,16 +163,3 @@ export default {
 
   </div>
 </template>
-
-<i18n>
-  {
-    "en": {
-      "Use_the_addresses" : "Use the addresses on the default checkout page",
-      "Specify_or_write" : "Specify or write your full address here",
-    },
-    "ru": {
-      "Use_the_addresses" : "Использовать адрес на странице оформления заказа по умолчанию",
-      "Specify_or_write" : "Укажите детали или напишите свой полный адрес здесь",
-    }
-  }
-</i18n>

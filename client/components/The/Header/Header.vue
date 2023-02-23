@@ -8,7 +8,6 @@
   // DATA
   const isLanguagesActive = ref(false)
   const isBurgerActive = ref(false)
-  const menu = ref(null)
 
   // COMPUTED
   const user = computed(() => {
@@ -21,17 +20,6 @@
 
   const cartLength = computed(() => {
     return useCartStore().cart.length
-  })
-
-  const isMenuObserved = computed(() => {
-    if(!menu.value)
-      return false
-
-    const carry = Object.keys(menu.value).reduce((carry, key) => {
-      return carry + menu.value[key].observed
-    }, 0)
-
-    return  carry === Object.keys(menu.value).length
   })
 
   const photo = computed(() => {
@@ -74,40 +62,6 @@
   const languageSelectHandler = () => {
     isLanguagesActive.value = false
   }
-
-  // METHODS
-  const setMenu = () => {
-    const groups = useProductGroups()
-    const productGroups = groups.reduce((carry, item) => carry.concat(item.items), [])
-    
-    menu.value = useMenu().menu
-
-    menu.value.shop.items = productGroups
-    menu.value = Object.assign(menu.value, {
-      menu: {
-        id: 'menu',
-        link: null,
-        name: t('title.menu'),
-        items: [],
-        observed: false
-      },
-    })
-  }
-
-  const observeCallback = (index, visible) => {
-    
-    menu.value[index].observed = true
-
-    if(!visible && index !== 'menu') {
-      const hiddenItem = menu.value[index]
-      delete menu.value[index]
-
-      menu.value.menu.items.push(hiddenItem)
-    }
-  }
-
-  // HOOKS
-  setMenu()
 </script>
 
 <style src="./header.scss" lang="sass" scoped />
@@ -146,41 +100,7 @@
       </nuxt-img>
     </span>
 
-
-
-    <nav :class="{overflow: isMenuObserved}" class="nav">
-        <span class="general-decor-elem"></span>
-
-        <ul class="list">
-            <li
-              v-for="(item, key) in menu"
-              :key="item.id"
-              v-observe="{index: key, callback: observeCallback}"
-              class="item"
-            >
-                <NuxtLink
-                  :to="localePath(item.link)"
-                  :prefetch="false"
-                  class="link"
-                >
-                  {{ item.name }}
-                </NuxtLink>
-
-                <img v-if="item.items && item.items.length" src="~assets/svg-icons/arrow-simple.svg" class="icon" />
-
-                <ul v-if="item.items && item.items.length" class="submenu">
-                  <li v-for="subitem in item.items" :key="subitem.id" class="submenu-item">
-                    <NuxtLink :to="localePath(subitem.link)" :prefetch="false" class="submenu-link">
-                      {{ subitem.name }}
-                    </NuxtLink>
-                  </li>
-                </ul>
-            </li>
-        </ul>
-        <button class="header__close-nav">
-          <span class="icon-close"></span>
-        </button>
-    </nav>
+    <lazy-the-header-menu></lazy-the-header-menu>
 
     <div class="phone">
       <a href="tel:+420 722 133 136">+420 722 133 136</a>
@@ -198,7 +118,7 @@
         <div class="lang-btn">
           <transition name="fade-in">
             <modal-lang-switcher
-              v-if="isLanguagesActive"
+              v-show="isLanguagesActive"
               @select="languageSelectHandler"
               class="lang-popup"
             >
@@ -248,7 +168,6 @@
         <transition name="move-x-right">
           <modal-menu-mobile
             v-if="isBurgerActive"
-            :menu="menu"
             @close="closeModalMobileMenuHandler"
           ></modal-menu-mobile>
         </transition>

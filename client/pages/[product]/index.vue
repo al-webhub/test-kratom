@@ -155,7 +155,10 @@
       sku: product.value.code,
       brand: 'Kratomhelper',
       offers: [
-        { price: product.value.price },
+        { 
+          price: product.value.price,
+          priceCurrency: 'USD'
+        },
       ],
       aggregateRating: {
         ratingValue: rating.value,
@@ -227,7 +230,8 @@
   await useAsyncData('products', () => useProductStore().getAll({per_page: 4}))
 </script>
 
-<style src="assets/scss/pages/product.scss" lang="sass" scoped />
+<style src="./product.scss" lang="sass" scoped />
+<i18n src="./messages.json"></i18n>
 
 <template>
 <div>
@@ -327,17 +331,3 @@
 
 </div>
 </template>
-
-<i18n>
-  {
-    en: {
-      related_products: "Related products",
-      in_stock: "In stock",
-    },
-
-    ru: {
-      related_products: "Сопутствующие товары",
-      in_stock: "В наличии",
-    }
-  }
-</i18n>

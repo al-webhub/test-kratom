@@ -34,7 +34,7 @@ export const useApiFetch = async (url: string, body: Object = null, method: stri
     const params = body? '?' + new URLSearchParams(body).toString(): '';
     url = url + params
   }else if(method === 'POST' && body) {
-    options.body = body
+    options.body = JSON.parse(JSON.stringify(body))
   }
 
   await useFetch(url, options);

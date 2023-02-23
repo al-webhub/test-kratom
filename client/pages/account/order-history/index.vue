@@ -71,7 +71,8 @@
   setCrumbs()
 </script>
 
-<style src="assets/scss/pages/account/order-history.scss" lang="sass" scoped />
+<style src="./order-history.scss" lang="sass" scoped />
+<i18n src="./messages.json"></i18n>
 
 <template>
   <div>
@@ -112,26 +113,3 @@
     </div>
   </div>
 </template>
-
-<i18n>
-  {
-    "en": {
-      "order_history": "Order history",
-      "any_previous_orders" : "You have not made any previous orders!",
-      "Order_date" : "Order date",
-      "Recipient" : "Recipient",
-      "Total" : "Price",
-      "Status" : "Status",
-      "Details" : "Details",
-    },
-    "ru": {
-      "order_history": "Order history",
-      "any_previous_orders" : "Вы не сделали никаких предыдущих заказов!",
-      "Order_date" : "Дата заказа",
-      "Recipient" : "Получатель",
-      "Total" : "Сумма",
-      "Status" : "Статус",
-      "Details" : "Подробности",
-    }
-  }
-</i18n>

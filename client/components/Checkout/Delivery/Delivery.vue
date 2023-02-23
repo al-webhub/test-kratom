@@ -86,20 +86,30 @@ export default {
       <div class="checkout__item__body">
           <h6 class="checkout-caption">{{ t('desired_delivery') }}</h6>
           
-          <ul v-if="deliveryTimes" class="delivery__list fr1">
-            <li 
-              v-for="(method, index) in deliveryTimes"
-              :key="index"
-              class="delivery__item"
+          <div class="delivery__radio-wrapper">
+            <ul v-if="deliveryTimes" class="delivery__list fr1">
+              <li 
+                v-for="(method, index) in deliveryTimes"
+                :key="index"
+                class="delivery__item"
+              >
+                <form-radio
+                  v-model="order.delivery"
+                  :value="method"
+                  name="delivery"
+                >
+                  <p class="delivery__label">
+                    {{ method }}
+                  </p>
+                </form-radio>
+              </li>
+            </ul>
+
+            <form-error
+              :error="errors?.delivery"
             >
-              <form-radio v-model="order.delivery" :value="method" name="delivery">
-                <p class="delivery__label">
-                  {{ method }} 
-                  <!-- <span class="delivery__price">({{ $t('text.from') }} ${{ method.price }})</span> -->
-                </p>
-              </form-radio>
-            </li>
-          </ul>
+            </form-error>
+          </div>
 
           <h6 class="checkout-caption">{{ t('Shipping_address') }}</h6>
           

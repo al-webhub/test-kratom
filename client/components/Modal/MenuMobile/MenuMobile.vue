@@ -8,7 +8,6 @@ export default {
 
   methods: {
     closeHandler() {
-      console.log('CLOSE')
       this.$emit('close')
     }
   }

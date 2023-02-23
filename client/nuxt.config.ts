@@ -20,6 +20,12 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page-tr', mode: 'out-in' },
     layoutTransition: { name: 'layout-tr', mode: 'out-in' },
+    head: {
+      script: [
+        // Insert your Google Tag Manager Script here
+        { src: 'https://www.googletagmanager.com/gtm.js?id=GTM-NRHQJCB', async: true, type: 'text/partytown' },
+      ],
+    },
   },
   
   // webpack: {
@@ -87,6 +93,22 @@ export default defineNuxtConfig({
 
   modules: [
     [
+      '@nuxtjs/partytown',
+      {
+        debug: process.env.NODE_ENV === 'development',
+        forward: ['dataLayer.push']
+      }
+    ],
+    [
+      '@nuxtjs/web-vitals',
+      {
+        debug: process.env.NODE_ENV === 'development',
+        disabled: process.env.NODE_ENV === 'development',
+        ga: { id: 'UA-1149859259-1' }
+      }
+    ],
+    '@nuxtjs/html-validator',
+    [
       'nuxt-simple-sitemap',
       {
         enabled: true,
@@ -99,22 +121,6 @@ export default defineNuxtConfig({
           lastmod: new Date().toISOString(),
         },
         urls: dynamicRoutes
-        // urls: async () => {
-        //   const {data: products} = await useProductStore().index({per_page: 500})
-        //   return products.map((product) => ({
-        //       url: `/blog/${product.slug}`,
-        //       changefreq: 'daily',
-        //       priority: 0.8,
-        //   }))
-        // }
-        // urls: async () => {
-        //   return await fetch('/api/sitemap_routes', {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //     },
-        //   })
-        // },
       }
     ],
     'nuxt-schema-org',

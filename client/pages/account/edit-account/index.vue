@@ -20,19 +20,15 @@ export default {
 
   data(){
     return {
-      isLoading: false
+      isLoading: false,
+      errors: {}
     }
   },
 
 
   computed: {
-    
     profile() {
       return this.profileStore?.profile;
-    },
-
-    errors() {
-      return {}
     }
   },
 
@@ -54,15 +50,18 @@ export default {
 
     async saveHandler() {
       this.isLoading = true
-      await this.profileStore?.updateProfile().then((res) => {
-        if(res.data._value)
+      await this.profileStore?.updateProfile()
+        .then((profile) => {
+          this.errors = {}
           useNoty().setNoty(this.$t('noty.update_success'))
-        
-        if(res.error._value)
+        })
+        .catch((e) => {
+          this.errors = e
           useNoty().setNoty(this.$t('noty.update_fail'))
-        
-        this.isLoading = false
-      })
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
     },
 
     changePassHandler() {
@@ -76,7 +75,7 @@ export default {
 }
 </script>
 
-<style src="assets/scss/pages/account/edit-account.scss" lang="sass" scoped />
+<style src="./edit-account.scss" lang="sass" scoped />
 
 <template>
   <div class="profile__address">
@@ -85,6 +84,7 @@ export default {
       <form-text
         v-model="profile.firstname"
         :placeholder="$t('form.first_name')"
+        :error="errors?.firstname"
         class="form-component"
       >
       </form-text>
@@ -92,12 +92,14 @@ export default {
       <form-text
         v-model="profile.lastname"
         :placeholder="$t('form.Last_name')"
+        :error="errors?.lastname"
         class="form-component"
       >
       </form-text>
 
       <form-text
         v-model="profile.email"
+        :error="errors?.email"
         placeholder="Email"
         required
         class="form-component"
@@ -106,6 +108,7 @@ export default {
 
       <form-text
         v-model="profile.phone"
+        :error="errors?.phone"
         :placeholder="$t('form.International_phone')"
         required
         class="form-component"

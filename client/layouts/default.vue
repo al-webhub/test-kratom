@@ -113,9 +113,9 @@
           </transition>
 
           <!-- POPUP / has 18? -->
-          <!-- <transition name="fade-in">
+          <transition name="fade-in">
             <lazy-popup-adult v-if="isPopupAdultActive"></lazy-popup-adult>
-          </transition> -->
+          </transition>
 
           <!-- POPUP / main auth entry -->
           <transition name="fade-in">

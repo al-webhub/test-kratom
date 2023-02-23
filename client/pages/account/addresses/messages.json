@@ -1,0 +1,10 @@
+{
+  "en": {
+    "Use_the_addresses" : "Use the addresses on the default checkout page",
+    "Specify_or_write" : "Specify or write your full address here",
+  },
+  "ru": {
+    "Use_the_addresses" : "Использовать адрес на странице оформления заказа по умолчанию",
+    "Specify_or_write" : "Укажите детали или напишите свой полный адрес здесь",
+  }
+}

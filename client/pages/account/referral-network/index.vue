@@ -169,7 +169,8 @@ export default {
 }
 </script>
 
-<style src="assets/scss/pages/account/referral-network.scss" lang="sass" scoped />
+<style src="./referral-network.scss" lang="sass" scoped />
+<i18n src="./messages.json"></i18n>
 
 <template>
   <div>
@@ -239,44 +240,3 @@ export default {
     </div>
   </div>
 </template>
-
-<i18n>
-  {
-    "en": {
-      "Bonuses_earned_total" : "Bonuses earned total",
-      "cashback_for_purchases" : "cashback for purchases",
-      "earned_in_partner" : "earned in partner program",
-      "earned_for_reviews" : "earned for reviews",
-      "Your_current_balance" : "Your current balance",
-      "request_withdrawal" : "request withdrawal",
-      "available" : "available",
-      "once_a_day" : "once a day",
-      "balance_is_above" : "balance is above 10$",
-      "my_referral_network" : "my referral network",
-      "Copy_your_referral" : "Copy your referral link and send it to your friends to start build the network!",
-      "Friends_Network" : "Friends Network",
-      "transactions" : "transactions",
-      "My_referral" : "My referral",
-      "Referral_partners" : "Referral’s partners",
-      "add_date" : "add date",
-    },
-    "ru": {
-      "Bonuses_earned_total" : "Всего заработано бонусов",
-      "cashback_for_purchases" : "Кэшбек за покупки",
-      "earned_in_partner" : "Заработано в партнерке",
-      "earned_for_reviews" : "Заработано за отзывы",
-      "Your_current_balance" : "Ваш текущий баланс",
-      "request_withdrawal" : "Вывод средств",
-      "available" : "доступно",
-      "once_a_day" : "один раз в день",
-      "balance_is_above" : "баланс выше 10$",
-      "my_referral_network" : "моя реферальная сеть",
-      "Copy_your_referral" : "Скопируйте свою реферальную ссылку и отправьте ее своим друзьям, чтобы начать строить сеть!",
-      "Friends_Network" : "Сеть друзей",
-      "transactions" : "Транзакции",
-      "My_referral" : "Мой реферал",
-      "Referral_partners" : "Партнеры реферала",
-      "add_date" : "дата добавления",
-    }
-  }
-</i18n>

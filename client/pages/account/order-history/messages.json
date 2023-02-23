@@ -1,0 +1,20 @@
+{
+  "en": {
+    "order_history": "Order history",
+    "any_previous_orders" : "You have not made any previous orders!",
+    "Order_date" : "Order date",
+    "Recipient" : "Recipient",
+    "Total" : "Price",
+    "Status" : "Status",
+    "Details" : "Details"
+  },
+  "ru": {
+    "order_history": "История заказов",
+    "any_previous_orders" : "Вы не сделали никаких предыдущих заказов!",
+    "Order_date" : "Дата заказа",
+    "Recipient" : "Получатель",
+    "Total" : "Сумма",
+    "Status" : "Статус",
+    "Details" : "Подробности"
+  }
+}

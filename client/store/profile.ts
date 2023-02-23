@@ -96,24 +96,17 @@ export const useProfileStore = defineStore('profileStore', {
 
     async updateProfile() {
       const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.apiBase}/profile/update`
 
-      return await useFetch(`${runtimeConfig.public.apiBase}/profile/update`,{
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        credentials: 'include',
-        body: this.profileState,
-        onResponse({ request, response, options }) {
-          console.log('PROFILE RESP', response._data)
-        },
-        onResponseError({ request, response, options }) {
-          console.log('PROFILE RESP Error', response._data)
+      return await useApiFetch(url, {...this.profileState}, 'POST').then(({data, error}) => {
+        if(data) {
+          return data
         }
-      });
 
+        if(error) {
+          throw error
+        }
+      })
     },
   },
 })

@@ -1,0 +1,11 @@
+{
+  "en": {
+    "related_products": "Related products",
+    "in_stock": "In stock"
+  },
+
+  "ru": {
+    "related_products": "Сопутствующие товары",
+    "in_stock": "В наличии"
+  }
+}

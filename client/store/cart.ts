@@ -116,6 +116,7 @@ export const useCartStore = defineStore('cartStore', {
         .then(({data, error}) => {
           
           if(data) {
+            this.$reset()
             return data
           }
 
