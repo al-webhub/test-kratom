@@ -1,6 +1,7 @@
 <script>
 import { useCartStore } from '~/store/cart';
 import { useModalStore } from '~/store/modal';
+import _pick from 'lodash.pick';
 
 export default {
   setup() {
@@ -43,11 +44,10 @@ export default {
     },
 
     buyHandler() {
-      useModalStore().setData('buy1', this.selectedModification)
-      useModalStore().open('buy1')
+      const product = _pick(this.selectedModification, ['id', 'name', 'slug', 'price', 'amount', 'image', 'short_name'])
 
-      // this.cartStore.setBuy1Product(this.selectedModification)
-      // this.cartStore.toggleBuy1()
+      useModalStore().setData('buy1', product)
+      useModalStore().open('buy1')
     }
   }
 }

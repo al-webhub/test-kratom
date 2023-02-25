@@ -13,6 +13,7 @@
     "@nuxtjs/device": "^3.0.0",
     "@pinia/nuxt": "^0.4.6",
     "lodash.merge": "^4.6.2",
+    "lodash.pick": "^4.4.0",
     "node-fetch": "^3.3.0",
     "pinia": "^2.0.30"
   },
