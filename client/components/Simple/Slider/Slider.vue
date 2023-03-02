@@ -67,16 +67,18 @@ export default {
       return this.values
     },
 
-    cardWidth() {
-      if(this.$refs?.card && this.$refs?.card[0])
-        return this.$refs?.card[0].offsetWidth
-      else
-        return 0
-    },
+    // cardWidth() {
+    //   if(this.$refs?.card && this.$refs?.card[0])
+    //     return this.$refs?.card[0].offsetWidth
+    //   else
+    //     return 0
+    // },
 
     isOffset() {
       if(this.isMounted) {
-        const cardWidth = this.$refs?.card[0].offsetWidth + this.gap
+        //let cardWidth = this.$refs.card[0].offsetWidth + this.gap
+        let cardWidth = 300 + this.gap
+        // console.log('isMounted', this.$refs.card[0].offsetWidth, cardWidth, this.arrayLength, this.gap,  (cardWidth * this.arrayLength), window.innerWidth )
         return (cardWidth * this.arrayLength - window.innerWidth) > 0
       }
       else
@@ -85,6 +87,7 @@ export default {
   },
 
   methods: {
+
     prevHandler(){
       const cardWidth = this.$refs?.card[0].offsetWidth + this.gap
       const maxOffset = (cardWidth * this.arrayLength - window.innerWidth) * -1

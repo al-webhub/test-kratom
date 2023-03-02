@@ -100,7 +100,7 @@
       </nuxt-img>
     </span>
 
-    <lazy-the-header-menu></lazy-the-header-menu>
+    <lazy-the-header-menu v-if="$device.isDesktop"></lazy-the-header-menu>
 
     <div class="phone">
       <a href="tel:+420722133136">+420&nbsp;722&nbsp;133&nbsp;136</a>
