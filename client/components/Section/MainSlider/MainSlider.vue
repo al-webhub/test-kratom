@@ -105,7 +105,7 @@ export default {
 
             <div :class="{animated: canAnimate}" class="content container">
               <p class="content__line-1">{{ banner.caption }}</p>
-              <p class="content__line-2">{{ banner.excerpt }}</p>
+              <div class="content__line-2" v-html="banner.excerpt"></div>
               <NuxtLink :to="localePath(banner.link)" class="main-button primary">
                 <span class="text">{{ banner.title }}</span>
               </NuxtLink>
