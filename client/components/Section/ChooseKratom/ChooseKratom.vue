@@ -79,7 +79,7 @@ export default {
                   <simple-five-dots v-model="calc[effect.uid]"></simple-five-dots>
                 </div>
                 
-                <button @click="searchHandler()" class="main-button primary">
+                <button @click="searchHandler()" class="main-button primary" type="button" title="choose kratom">
                   <span class="text">{{ $t('button.choose_kratom') }}</span>
                 </button>
 

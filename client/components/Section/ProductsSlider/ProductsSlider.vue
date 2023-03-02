@@ -24,22 +24,22 @@ export default {
 
 <template>
   <section class="">
-      <div class="container">
-          
-        <h2 class="main-caption">{{ t('featured') }}</h2>
-        
-        <simple-slider
-          v-if="products && products.length"
-          :values="products"
-          target-component-name="productCard"
-          target-data-name="product"
-          :all-items-label="$t('button.view_all_products')"
-          all-items-link="shop"
-          class="slider"
-        >
-        </simple-slider>
-
-      </div>
+    <div class="container"> 
+      <h2 class="main-caption">{{ t('featured') }}</h2>
+    </div>
+      
+    <div class="slider-holder">
+      <simple-slider
+        v-if="products && products.length"
+        :values="products"
+        target-component-name="productCard"
+        target-data-name="product"
+        :all-items-label="$t('button.view_all_products')"
+        all-items-link="shop"
+        class="slider"
+      >
+      </simple-slider>
+    </div>
   </section>
 </template>
 

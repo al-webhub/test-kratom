@@ -19,6 +19,11 @@ export default {
     activeIndex: {
       type: Number,
       default: 0
+    },
+
+    isArrows: {
+      type: Boolean,
+      default: 0
     }
   },
 
@@ -38,11 +43,11 @@ export default {
 <template>
   <div class="general-slider__buttons">
 
-    <button @click="prevHandler" class="slider-button prev">
-      <img src="~assets/svg-icons/arrow.svg" class="icon" />
-    </button>
-    
-    <!-- Точки нужно выводить если они кратны 3 -->
+    <transition name="fade-in">
+      <button v-if="isArrows" @click="prevHandler" class="slider-button prev" type="button" title="prev">
+        <img src="~assets/svg-icons/arrow.svg" class="icon" alt="arrow icon" />
+      </button>
+    </transition>
     
     <div class="dots__list">
       <template v-for="(item, key) in items" :key="key">
@@ -54,14 +59,15 @@ export default {
       </template>
     </div>
     
-    <!-- //Точки нужно выводить если они кратны 3 -->
-    <NuxtLink :to="localePath(link)" class="main-button">
+    <NuxtLink :to="localePath(link)" :aria-label="title" class="main-button">
       <span class="text">{{ title }}</span>
     </NuxtLink>
 
-    <button @click="nextHandler" class="slider-button next">
-      <img src="~assets/svg-icons/arrow.svg" class="icon" />
-    </button>
+    <transition name="fade-in">
+      <button v-if="isArrows" @click="nextHandler" class="slider-button next" type="button" title="next">
+        <img src="~assets/svg-icons/arrow.svg" class="icon" alt="arrow icon" />
+      </button>
+    </transition>
 
   </div>
 </template>

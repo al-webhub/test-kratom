@@ -35,6 +35,7 @@ export default {
       quality = "20"
       loading = "lazy"
       class="bg-image"
+      alt="Kratomhelper forest"
     ></nuxt-img>
 
     <div class="wrapper container">
@@ -45,8 +46,8 @@ export default {
 
         <ul class="list">
           <li v-for="(item, key) in items" :key="key" :class="key + '-color'" class="item">
-            <a :href="item.link" class="link">
-              <img :src="item.icon" class="icon" />
+            <a :href="item.link" class="link" :aria-label="item.link">
+              <img :src="item.icon" class="icon" :alt="item.link" />
             </a>
           </li>
         </ul>

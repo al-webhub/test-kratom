@@ -58,7 +58,7 @@ export default {
         const pricePerGram = item.price / item.weight
 	 			return {
           id: item.id,
-          sale: Math.ceil(100 - pricePerGram * 100 / basePricePerGram)
+          sale: Math.floor(100 - pricePerGram * 100 / basePricePerGram)
         }
 			});
 		},

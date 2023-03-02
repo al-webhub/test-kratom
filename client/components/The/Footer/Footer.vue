@@ -75,7 +75,7 @@ export default {
         format = "webp"
         quality = "70"
         loading = "lazy"
-        class="logo">
+        class="logo contain">
       </nuxt-img>
 
       <nav
@@ -93,6 +93,7 @@ export default {
             <NuxtLink
               :to="localePath(item.link)"
               :prefetch="false"
+              :aria-label="item.name"
               class="nav-link"
             >
               {{ item.name }}
@@ -105,7 +106,7 @@ export default {
         <div class="contacts">
           <div class="footer-title">{{ t('contact_us') }}</div>
           <div v-for="(contact, index) in contacts" :key="index" class="contacts-item">
-            <img :src="contact.icon" class="icon" />
+            <img :src="contact.icon" class="icon" alt="contact" />
             <a :href="contact.link" class="contacts-link">{{ contact.text }}</a>
           </div>
         </div>

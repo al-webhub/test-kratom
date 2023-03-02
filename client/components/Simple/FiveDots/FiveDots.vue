@@ -43,6 +43,8 @@ export default {
       v-if="!isStatic"
       @click="minusHandler"
       class="button minus"
+      type="button"
+      title="minus"
     >
       -
     </button>
@@ -65,6 +67,8 @@ export default {
       v-if="!isStatic"
       @click="plusHandler"
       class="button plus"
+      type="button"
+      title="plus"
     >
       +
     </button>

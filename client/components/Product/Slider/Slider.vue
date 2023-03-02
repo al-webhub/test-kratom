@@ -52,9 +52,10 @@ export default {
       >
         <nuxt-img
           :src="getImageUrl(image.src)"
-          :title="image.title || image.alt || null"
-          :alt="image.alt || image.title || null"
+          :title="image.title || image.alt || 'kratom'"
+          :alt="image.alt || image.title || 'kratom'"
           sizes = "mobile:100vw tablet:450px desktop:470px"
+          provider="ipx"
           format = "webp"
           quality = "40"
           loading = "lazy"
@@ -69,11 +70,11 @@ export default {
       v-if="images.length > 1"
       class="product-page__img-arrows"
     >
-      <button @click="prevHandler" class="nav-button prev">
-        <img src="~assets/svg-icons/arrow.svg" class="icon" />
+      <button @click="prevHandler" type="button" class="nav-button prev" aria-label="prev image">
+        <img src="~assets/svg-icons/arrow.svg" class="icon" alt="arrow icon" />
       </button>
-      <button @click="nextHandler" class="nav-button next">
-        <img src="~assets/svg-icons/arrow.svg" class="icon" />
+      <button @click="nextHandler" type="button" class="nav-button next" aria-label="next image">
+        <img src="~assets/svg-icons/arrow.svg" class="icon" alt="arrow icon" />
       </button>
     </div>
 

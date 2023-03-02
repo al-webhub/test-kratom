@@ -74,7 +74,7 @@ export default {
         class="item"
       >
         <div class="img">
-          <img :src="advantage.image" class="icon" />
+          <img :src="advantage.image" class="icon" :alt="advantage.title" />
         </div>
         <p class="caption">{{ advantage.title }}</p>
 

@@ -39,12 +39,14 @@ export default {
           </div>
         </div>
         
-        <!-- <button class="info__more">{{ $t('text.read_more') }}</button> -->
+        <!-- <button class="info__more" type="button" title="read more">{{ $t('text.read_more') }}</button> -->
 	    </div>
 
 	    <div class="footer">
         <nuxt-img
           :src = "photo"
+          :alt="review.owner.fullname"
+          :title="review.owner.fullname"
           width="70"
           height="70"
           sizes = "mobile:70px desktop:70px"
@@ -55,7 +57,7 @@ export default {
           class="photo cover"
         >
         </nuxt-img> 
-	      <p class="name">{{ review.owner.name }}</p>
+	      <p class="name">{{ review.owner.fullname }}</p>
 	    </div>
 	</div>
 </template>

@@ -63,7 +63,7 @@
 
                 <li class="pay-delivery__item">
                     <div class="decor-rect">
-                      <img src="~assets/svg-icons/promo/wallet.svg" class="icon" />
+                      <img src="~assets/svg-icons/promo/wallet.svg" class="icon" alt="wallet icon" />
                     </div>
 
                     <h2 class="main-caption-l">{{ page.payment_info_title }}</h2>
@@ -94,7 +94,7 @@
 
                 <li class="pay-delivery__item">
                     <div class="decor-rect">
-                      <img src="~assets/svg-icons/promo/clock.svg" class="icon" />
+                      <img src="~assets/svg-icons/promo/clock.svg" class="icon" alt="clock icon" />
                     </div>
 
                     <h2 class="main-caption-l">{{ page.delivery_times_title }}</h2>
@@ -116,7 +116,7 @@
 
                 <li class="pay-delivery__item">
                     <div class="decor-rect">
-                      <img src="~assets/svg-icons/promo/track.svg" class="icon" />
+                      <img src="~assets/svg-icons/promo/track.svg" class="icon" alt="track icon" />
                     </div>
 
                     <h2 class="main-caption-l">{{ page.delivery_method_title }}</h2>

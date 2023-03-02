@@ -6,12 +6,14 @@
   z-index: 3;
   height: 100%;
   width: 100%;
-  // overflow: hidden;
 
   .list-ul {
-    display: flex;
-    width: 100%;
+    display: grid;
+    width: fit-content;
+    grid-auto-flow: column;
+    grid-auto-columns: 300px;
     grid-gap: 30px;
+    margin: 0 auto;
     transition: transform 0.5s cubic-bezier(0.31, 0.3, 0.38, 1.14);
   }
 
@@ -26,14 +28,8 @@
   width: 100%;
   flex-shrink: 0;
   opacity: 1;
-}
 
-.item > div {
-  width: 100%;
-}
-
-@media screen and (max-width: 576px) {
-  .item {
+  > div {
     width: 100%;
   }
 }

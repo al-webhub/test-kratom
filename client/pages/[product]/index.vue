@@ -7,6 +7,7 @@
   // DATA
   const activeTab = ref('description')
   const selectedModification = ref({})
+  const popularProducts = ref([])
 
   // COMPUTED
   const slug = computed(() => {
@@ -19,10 +20,6 @@
 
   const reviewsMeta = computed(() => {
     return useReviewStore().meta;
-  })
-
-  const popularProducts = computed(() => {
-    return useProductStore().all;
   })
 
   const rating = computed(() => {
@@ -191,6 +188,12 @@
     await useAsyncData('reviews', () => useReviewStore().getAll(reviewQuery, refresh))
   }
 
+  const getPopulars = (id) => {
+    useLazyAsyncData('random_products', () => useProductStore().getRandom(id)).then((r) => {
+      popularProducts.value = r.data.value
+    })   
+  }
+
   // HANDLERS
   const loadmoreReviewsHandler = async () => {
     const query = {
@@ -224,10 +227,8 @@
     })
   ]).then(([ product, reviews]) => {
     setScheema(product, reviews)
+    getPopulars(product.value.id)
   })
-
-
-  await useAsyncData('products', () => useProductStore().getAll({per_page: 4}))
 </script>
 
 <style src="./product.scss" lang="sass" scoped />
@@ -247,7 +248,7 @@
         </div>
         <div v-if="product.code" class="sup-delimiter"></div>
         <div v-if="rating" class="sup-rating">
-          <img src="~assets/svg-icons/star.svg" class="icon"/>
+          <img src="~assets/svg-icons/star.svg" class="icon" alt="star icon"/>
           <span class="sup-rating__value">{{ rating }}</span>
 
           <NuxtLink v-if="ratingAmount || reviewsAmount" :to="'/'" class="sup-reviews">

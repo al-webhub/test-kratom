@@ -11,7 +11,9 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      user: false
+    }
   },
 
   computed: {
@@ -33,12 +35,12 @@ export default {
 
               <p class="sub">{{ t('Bring_your_friends_to_us') }}</p>
               
-              <a v-if="user" href="transactions" class="main-button primary">
-                  <span class="text">{{ t('earn_with_us') }}</span>
+              <a v-if="user" href="transactions" class="main-button primary" :aria-label="t('earn_with_us')">
+                <span class="text">{{ t('earn_with_us') }}</span>
               </a>
               
-              <button v-else class="main-button primary">
-                  <span class="text">{{ t('earn_with_us') }}</span>
+              <button v-else class="main-button primary" :aria-label="t('earn_with_us')" type="button">
+                <span class="text">{{ t('earn_with_us') }}</span>
               </button>
           </div>
       </div>

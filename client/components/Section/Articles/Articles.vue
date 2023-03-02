@@ -38,7 +38,7 @@ export default {
         </guidebook-card>
     </ul>
     
-    <NuxtLink :to="localePath('/guidebook')" class="main-button">
+    <NuxtLink :to="localePath('/guidebook')" :aria-label="$t('button.go_guidebook')" class="main-button" >
       <span class="text">{{ $t('button.go_guidebook') }}</span>
     </NuxtLink>
   </section>

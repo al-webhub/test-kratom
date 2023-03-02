@@ -80,12 +80,22 @@ export default {
     </product-sale>
 
     <div class="btn-block">
-      <button @click="toCartHandler" class="main-button primary btn-item">
+      <button
+        @click="toCartHandler"
+        :aria-label="$t('button.add_to_cart')"
+        class="main-button primary btn-item"
+        type="button"
+      >
         <span class="text">{{ $t('button.add_to_cart') }}</span>
       </button>
 
-      <button @click="buyHandler" class="main-button primary-color btn-item">
-        <img src="~assets/svg-icons/flash.svg" class="icon" />
+      <button
+        @click="buyHandler"
+        :aria-label="$t('button.buy-1-click')"
+        class="main-button primary-color btn-item"
+        type="button"
+      >
+        <img src="~assets/svg-icons/flash.svg" class="icon" alt="flash icon" />
         <span class="text">{{ $t('button.buy-1-click') }}</span>
       </button>
     </div>

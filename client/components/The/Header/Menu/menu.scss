@@ -7,6 +7,8 @@
   align-items: center;
   overflow: hidden;
   width: calc(100% - 60px);
+  opacity: 0.05;
+  transition: opacity 0.6s, transform 0.3s;
 
   @include _767 {
     position: fixed;
@@ -27,6 +29,10 @@
 
   &.overflow {
     overflow: initial;
+    width: min-content;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 1;
   }
 
   &.active {

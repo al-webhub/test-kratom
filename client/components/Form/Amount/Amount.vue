@@ -52,7 +52,7 @@ export default {
       <span class="text">-</span>
     </button>
     
-    <input :value="modelValue" @change="updateHandler" :max="max" :min="min" type="text" class="calc-input">
+    <input :value="modelValue" @change="updateHandler" :max="max" :min="min" type="number" class="calc-input">
 
     <button @click="plusHandler" type="button" class="calc_button">
       <span class="text">+</span>

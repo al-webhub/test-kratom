@@ -115,7 +115,7 @@ export default {
             >
               <div class="faq__item__header">
                 <h2 class="name">{{ faq.title }}</h2>
-                <img src="~assets/svg-icons/arrow-simple.svg" class="icon" />
+                <img src="~assets/svg-icons/arrow-simple.svg" class="icon" alt="arrow icon" />
               </div>
               <div class="faq__item__body" v-html="faq.content"></div>
             </li>

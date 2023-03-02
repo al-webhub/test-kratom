@@ -9,11 +9,9 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 25px;
-  margin-right: 20px;
 
   @include _desktop {
     margin-top: 20px;
-    margin-right: 65px;
   }
 
   &__button {

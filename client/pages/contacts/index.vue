@@ -129,8 +129,8 @@ export default {
                       :key="index"
                       class="contacts-item"
                     >
-                      <img :src="contact.icon" class="icon" />
-                      <a :href="contact.link" class="contacts-link">{{ contact.text }}</a>
+                      <img :src="contact.icon" class="icon" alt="contact icon" />
+                      <a :href="contact.link" :aria-label="contact.text" class="contacts-link">{{ contact.text }}</a>
                     </li>
                   </ul>
                 </div>
@@ -140,8 +140,8 @@ export default {
 
                   <ul class="socials-list">
                     <li v-for="(item, key) in socials" :key="key" class="socials-item">
-                      <a :href="item.link" :class="key + '-color'" class="socials-link">
-                        <img :src="item.icon" class="icon" />
+                      <a :href="item.link" :class="key + '-color'" :aria-label="key" class="socials-link">
+                        <img :src="item.icon" :alt="key + ' icon'" class="icon" />
                       </a>
                     </li>
                   </ul>
@@ -173,7 +173,13 @@ export default {
                     class="form-item"
                   />
 
-                  <button @click="sendHandler" :class="{loading: isLoading}" class="main-button primary-color form-item btn">
+                  <button
+                    @click="sendHandler"
+                    :class="{loading: isLoading}"
+                    :aria-label="$t('button.send_message')"
+                    class="main-button primary-color form-item btn"
+                    type="button"
+                  >
                     <span class="text">{{ $t('button.send_message') }}</span>
                   </button>
                 </div>

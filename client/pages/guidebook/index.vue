@@ -102,7 +102,9 @@ export default {
           v-if="meta && meta.current_page !== meta.last_page"
           @click="loadmoreHandler()"
           :class="{loading: isLoading}"
+          :aria-label="$t('button.show_more')"
           class="main-button"
+          type="button"
         >
           <span class="text">{{ $t('button.show_more') }}</span>
         </button>

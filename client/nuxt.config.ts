@@ -1,10 +1,7 @@
 import dynamicRoutes from './helpers/dynamicRoutes'
-import { useProductStore } from './store/product'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: true,
-
   appConfig: {
     SITE_URL: process.env.SITE_URL
   },
@@ -22,11 +19,14 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'layout-tr', mode: 'out-in' },
     head: {
       script: [
-        // Insert your Google Tag Manager Script here
-        { src: 'https://www.googletagmanager.com/gtm.js?id=GTM-NRHQJCB', async: true, type: 'text/partytown' },
+        { src: `https://www.googletagmanager.com/gtm.js?id=${process.env.GTM}`, async: true, type: 'text/partytown' },
       ],
     },
   },
+
+  css: [
+    '@/assets/scss/global/main.scss'
+  ],
   
   // webpack: {
   //   analyze: true,
@@ -49,19 +49,24 @@ export default defineNuxtConfig({
   debug: false,
 
   nitro: {
+    // preset: 'node-server',
+
     // noPublicDir: true,
+    
     compressPublicAssets: { 
       gzip: true, 
       brotli: true 
     },
+
     minify: true,
+
     prerender: {
       crawlLinks: true,
       routes: [
         '/',
       ]
     },
-    // preset: 'node-server',
+
     routeRules: {
       '/pages/**': { static: true, headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
       '/assets/**': { headers: { 'Cache-Control': 'max-age=31536000, immutable' } },
@@ -76,20 +81,15 @@ export default defineNuxtConfig({
     }
   },
   
-  // builder: 'webpack',
 
-  vite: {
-    // build: {
-    //   assetsInlineLimit: 0
-    // }
-    // optimizeDeps: {
-    //   exclude: ['@vue/server-renderer', '@vue/runtime-core']
-    // }
-  },
-
-  css: [
-    '@/assets/scss/global/main.scss'
-  ],
+  // vite: {
+  //   build: {
+  //     assetsInlineLimit: 0
+  //   }
+  //   optimizeDeps: {
+  //     exclude: ['@vue/server-renderer', '@vue/runtime-core']
+  //   }
+  // },
 
   modules: [
     [
@@ -104,7 +104,7 @@ export default defineNuxtConfig({
       {
         debug: process.env.NODE_ENV === 'development',
         disabled: process.env.NODE_ENV === 'development',
-        ga: { id: 'UA-1149859259-1' }
+        ga: { id: process.env.GA }
       }
     ],
     '@nuxtjs/html-validator',
@@ -148,15 +148,31 @@ export default defineNuxtConfig({
     [
       '@nuxt/image-edge',
       {
+        provider: process.env.IMAGE_PROVIDER || "ipx",
+        
         screens: {
           mobile: 320,
           tablet: 768,
           desktop: 1024,
           large: 1440,
         },
+        
         domains: [process.env.DOMAIN],
+        
         alias: {
           server: process.env.SERVER_URL
+        },
+        
+        dir: process.env.IMAGE_DIR || "public",
+        
+        vercel: {
+          dirname: 'public'
+        },
+
+        ipx: {
+          domains: [
+            process.env.DOMAIN
+          ]
         }
       }
     ],

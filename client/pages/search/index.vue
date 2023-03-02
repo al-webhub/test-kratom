@@ -53,11 +53,17 @@
       <h1 class="main-caption main-caption-align">{{ h1 }}</h1>
 
       <div class="input-wrapper">
-        <img src="~assets/svg-icons/search.svg" class="icon" />
+        <img src="~assets/svg-icons/search.svg" class="icon" alt="search icon" />
         
         <input v-model="search" @keypress.enter="getProducts" class="input"/>
 
-        <button @click="getProducts" :class="{loading: isLoading}" class="main-button main-button-small">
+        <button
+          @click="getProducts"
+          :class="{loading: isLoading}"
+          class="main-button main-button-small"
+          type="button"
+          :aria-label="$t('button.search')"
+        >
           <span class="text">{{ $t('button.search') }}</span>
         </button>
       </div>

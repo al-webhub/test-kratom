@@ -37,7 +37,9 @@ export default {
       quality = "80"
       fit="cover"
       loading = "lazy"
-      class="bg-image">
+      class="bg-image"
+      alt="kratomhelper forest"
+    >
     </nuxt-img>
       
     <div class="wrapper container">
@@ -48,25 +50,26 @@ export default {
         <p class="caption">{{ t('leave_feedback_and_earn') }}</p>
 
         <div class="buttons">
-          <NuxtLink :to="localePath('/reviews')" class="main-button primary">
+          <NuxtLink :to="localePath('/reviews')" :aria-label="$t('button.leave_feedback')" class="main-button primary">
             <span class="text">{{ $t('button.leave_feedback') }}</span>
           </NuxtLink>
-          <NuxtLink :to="localePath('/rewards')" class="main-button transparent">
+          <NuxtLink :to="localePath('/rewards')" :aria-label="$t('button.learn_more')" class="main-button transparent">
             <span class="text">{{ $t('button.learn_more') }}</span>
           </NuxtLink>
         </div>
       </div>
+    </div>
 
+    <div class="slider-holder">
       <simple-slider
-        :values="reviews"
-        target-component-name="reviewHomeCard"
-        target-data-name="review"
-        :all-items-label="$t('button.read_all_reviews')"
-        all-items-link="reviews"
-        class="slider"
+          :values="reviews"
+          target-component-name="reviewHomeCard"
+          target-data-name="review"
+          :all-items-label="$t('button.read_all_reviews')"
+          all-items-link="reviews"
+          class="slider"
       >
       </simple-slider>
-      
     </div>
   </section>
 </template>

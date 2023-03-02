@@ -140,7 +140,7 @@ export default {
         <div class="header">
           <p class="name">{{ name }}</p>
           <div class="rating" v-if="review.rating">
-            <img src="~assets/svg-icons/star.svg" class="icon"/>
+            <img src="~assets/svg-icons/star.svg" class="icon" alt="star icon"/>
             <span class="rating__value">{{ review.rating }}</span>
           </div>
           <p class="date">{{ $d(review.created_at, 'long') }}</p>
@@ -157,8 +157,10 @@ export default {
                 @click="likeHandler"
                 :class="{active: isLiked}" 
                 class="controls__button"
+                type="button"
+                title="like"
               >
-                <img src="~assets/svg-icons/like.svg" class="icon" />
+                <img src="~assets/svg-icons/like.svg" class="icon" alt="like icon" />
                 <span class="text">{{ review.likes }}</span>
               </button>
               
@@ -167,8 +169,10 @@ export default {
                 @click="dislikeHandler"
                 :class="{active: isDisliked}"
                 class="controls__button"
+                type="button"
+                title="dislike"
               >
-                <img src="~assets/svg-icons/dislike.svg" class="icon" />
+                <img src="~assets/svg-icons/dislike.svg" class="icon" alt="dislike icon" />
                 <span class="text">{{ review.dislikes }}</span>
               </button>
               
@@ -177,8 +181,10 @@ export default {
                 v-if="user && isReplyAllowed"
                 @click="toggleReplyFormHandler"
                 class="controls__button controls__button-reply"
+                type="button"
+                title="reply"
               >
-                <img src="~assets/svg-icons/reply.svg" class="icon" />
+                <img src="~assets/svg-icons/reply.svg" class="icon" alt="reply icon" />
                 <span class="text">{{ $t('button.reply') }}</span>
               </button>
 
@@ -206,9 +212,11 @@ export default {
           <button
             @click="toggleRepliesHandler"
             class="more-btn"
+            type="button"
+            title="replies"
           >
             <span class="text">{{ $t('button.show_x_replies', {replies: review.children.length}) }}</span>
-            <img src="~assets/svg-icons/arrow-simple.svg" class="icon" />
+            <img src="~assets/svg-icons/arrow-simple.svg" class="icon" alt="arrow icon" />
           </button>
 
           <transition name="fade-in">

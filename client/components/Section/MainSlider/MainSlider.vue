@@ -99,6 +99,7 @@ export default {
               fit="cover"
               :loading = "index === 0? null: 'lazy'"
               class="image"
+              provider="ipx"
             >
             </nuxt-img> 
 
@@ -114,27 +115,31 @@ export default {
 
 	    </ul>
 
-	    <div class="nav">
-        <button @click="prevHandler" class="nav__button prev">
-          <img src="~assets/svg-icons/arrow.svg" class="icon" />
-	      </button>
+      <div class="container">
+        <div class="nav">
+          <button @click="prevHandler" class="nav__button prev" type="button" title="prev">
+            <img src="~assets/svg-icons/arrow.svg" class="icon" alt="arrow icon" />
+          </button>
 
-        <div class="numbers">
-          <button
-            v-for="(number, index) in bannersAmount"
-            :key="index"
-            @click="currentIndex = index"
-            :class="{active: index == currentIndex}"
-            class="numbers__button" 
-          >
-            0{{ number }}
+          <div class="numbers">
+            <button
+              v-for="(number, index) in bannersAmount"
+              :key="index"
+              @click="currentIndex = index"
+              :class="{active: index == currentIndex}"
+              class="numbers__button"
+              type="button"
+              title="pagination"
+            >
+              0{{ number }}
+            </button>
+          </div>
+          
+          <button @click="nextHandler" class="nav__button next" type="button" title="next">
+            <img src="~assets/svg-icons/arrow.svg" class="icon" alt="arrow icon" />
           </button>
         </div>
-        
-        <button @click="nextHandler" class="nav__button next">
-          <img src="~assets/svg-icons/arrow.svg" class="icon" />
-        </button>
-	    </div>
+      </div>
 
 	</div>
 </template>

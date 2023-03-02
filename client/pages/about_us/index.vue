@@ -59,6 +59,8 @@ export default {
                 
                 <nuxt-img
                   src = "/images/about-1.jpg"
+                  alt="kratomhelper image"
+                  title="kratomhelper image"
                   sizes = "mobile:100vw tablet:322px"
                   quality = "100"
                   fit="cover"
@@ -82,6 +84,8 @@ export default {
                   <div class="about-us-page__img-group about-us-page__img-group-tablet">
                     <nuxt-img
                       src = "/images/about-2.jpg"
+                      alt="kratomhelper image"
+                      title="kratomhelper image"
                       sizes = "mobile:100vw tablet:238px"
                       quality = "25"
                       fit="cover"
@@ -90,6 +94,8 @@ export default {
                     </nuxt-img>
                     <nuxt-img
                       src = "/images/about-3.jpg"
+                      alt="kratomhelper image"
+                      title="kratomhelper image"
                       sizes = "mobile:100vw tablet:238px"
                       quality = "25"
                       fit="cover"
@@ -104,6 +110,8 @@ export default {
                 <div class="about-us-page__img-group">
                     <nuxt-img
                       src = "/images/about-2.jpg"
+                      alt="kratomhelper image"
+                      title="kratomhelper image"
                       sizes = "mobile:100vw tablet:238px"
                       quality = "25"
                       fit="cover"
@@ -112,6 +120,8 @@ export default {
                     </nuxt-img>
                     <nuxt-img
                       src = "/images/about-3.jpg"
+                      alt="kratomhelper image"
+                      title="kratomhelper image"
                       sizes = "mobile:100vw tablet:238px"
                       quality = "25"
                       fit="cover"

@@ -27,7 +27,8 @@
   }
 
   @include _desktop {
-    grid-template-columns: 140px repeat(2, min-content) minmax(0, 1fr);
+    //grid-template-columns: 140px repeat(2, min-content) minmax(0, 1fr);
+    grid-template-columns: repeat(4, minmax(min-content, 1fr));
     grid-gap: 100px;
   }
 }

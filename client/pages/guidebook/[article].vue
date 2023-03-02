@@ -3,17 +3,15 @@ import { useArticleStore } from '~/store/article';
 
     const { t, locale } = useI18n({useScope: 'local'})
     const route = useRoute()
-    const slug = computed(() => route?.params?.article)
-
     const articleStore = useArticleStore()
 
+    const articles = ref([])
+
     // COMPUTED
+    const slug = computed(() => route?.params?.article)
+
     const article = computed(() => {
       return articleStore.article
-    })
- 
-    const articles = computed(() => {
-      return articleStore.all
     })
 
     const photo = computed(() => {
@@ -47,16 +45,29 @@ import { useArticleStore } from '~/store/article';
       ])
     }
 
+    const getRelatives = (id) => {
+      useLazyAsyncData('articles', () => articleStore.getRandom({
+          id: id, 
+          lang: locale.value
+        })
+      ).then((res) => {
+        if(res.data.value)
+          articles.value = res.data.value
+      })
+    }
+
     // HOOKES
     await useAsyncData('article', () => articleStore.getOne(slug.value)).then(({data: article, error}) => {
-      if(article)
+      if(article) {
         setCrumbs(article)
+        getRelatives(article.value.id)
+      }
       
       if(error.value)
         throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
     })
 
-    await useAsyncData('articles', () => articleStore.getAll({per_page: 4, lang: locale.value}, true))
+   
 
 </script>
 

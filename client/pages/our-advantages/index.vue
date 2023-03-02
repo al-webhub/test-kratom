@@ -70,25 +70,25 @@ export default {
 <template>
   <section class="our-advantages-page">
     <div class="our-advantages-page__wrapper container">
-        
+
       <h1 class="main-caption main-caption-align">{{ page.h1 }}</h1>
         
-        <ul class="our-advantages__list">
-            
-            <li
-              v-for="(adv, index) in page.adv"
-              :key="index"
-              class="our-advantages__item"
-              id="consultation"
-            >
-                <div class="img">
-                    <img :src="adv.image" class="icon" />
-                </div>
+      <ul class="our-advantages__list">
+        <li
+          v-for="(adv, index) in page.adv"
+          :key="index"
+          :id="'adv-' + index"
+          class="our-advantages__item"
+        >
+          <div class="img">
+            <img :src="adv.image" class="icon" :alt="adv.title + ' icon'" />
+          </div>
 
-                <h2 class="caption">{{ adv.title }}</h2>
-                <div class="text">{{ adv.content }}</div>
-            </li>
-        </ul>
+          <h2 class="caption">{{ adv.title }}</h2>
+          <div class="text">{{ adv.content }}</div>
+        </li>
+      </ul>
+
     </div>
     
     <section-write-us></section-write-us>

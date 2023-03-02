@@ -35,6 +35,10 @@ export default {
     isActive() {
       return this.onFocus || this.modelValue?.length
     },
+
+    id() {
+      return 'input-' + (Math.random() + 1).toString(36).substring(7);
+    }
   },
 
   methods: {
@@ -59,12 +63,13 @@ export default {
   <div :class="{error: error, disabled: isDisabled}" class="input__wrapper">
     <input
       :value="modelValue"
+      :id="id"
       @input="changeHandler"
       @focus="focusHandler"
       @blur="blurHandler"
+      :readonly="readonly"
       type="text"
       class="main-input"
-      :readonly="readonly"
     >
     
     <form-placeholder
@@ -73,6 +78,7 @@ export default {
       :placeholder="placeholder"
       :is-required="required"
       :is-disabled="isDisabled"
+      :target-id="id"
     >
     </form-placeholder>
 

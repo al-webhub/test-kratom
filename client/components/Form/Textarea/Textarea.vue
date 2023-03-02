@@ -30,6 +30,10 @@ export default {
   computed: {
     isPlaceholderActive() {
       return this.isActive || this.modelValue && this.modelValue.length
+    },
+
+    id() {
+      return 'input-' + (Math.random() + 1).toString(36).substring(7);
     }
   },
 
@@ -61,6 +65,7 @@ export default {
       :min-height="40"
       :max-height="350"
       :rows="1"
+      :id="id"
       @focus="focusHandler"
       @blur="blurHandler"
       class="main-textarea"
@@ -72,6 +77,7 @@ export default {
       :is-active="isPlaceholderActive"
       :placeholder="placeholder"
       :is-required="required"
+      :target-id="id"
     >
     </form-placeholder>
 

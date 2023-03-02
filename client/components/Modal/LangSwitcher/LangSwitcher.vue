@@ -37,12 +37,12 @@ export default {
       :class="{selected: selectedIndex}"
       @click="selectHandler"
     >
-      <nuxt-link :to="switchLocalePath(locale.code)">
+      <nuxt-link :to="switchLocalePath(locale.code)" :aria-label="locale.name">
         <span class="footer__lang_language">
           {{ locale.name }}
         </span>
         
-        <img v-if="$i18n.locale === locale.code" src="~assets/svg-icons/check.svg" class="icon" />
+        <img v-if="$i18n.locale === locale.code" src="~assets/svg-icons/check.svg" class="icon" alt="check icon" />
     	</nuxt-link>
     </li>
 </ul>

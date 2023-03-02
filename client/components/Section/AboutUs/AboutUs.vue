@@ -57,6 +57,7 @@ export default {
         <div class="row-1">
           <nuxt-img
             src = "/images/about-us-block-img-1.png"
+            alt="About out kratom"
             width="570"
             height="342"
             sizes = "mobile:100vw tablet:360px desktop:580px"
@@ -75,7 +76,7 @@ export default {
             </div>
             
             <NuxtLink :to="localePath('/about_us')" class="main-button">
-                <span class="text">{{ $t('button.learn_more') }}</span>
+              <span class="text">{{ $t('button.learn_more') }}</span>
             </NuxtLink>
           </div>
         </div>

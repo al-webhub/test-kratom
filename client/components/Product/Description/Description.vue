@@ -25,9 +25,9 @@ export default {
     <div v-if="$device.isDesktop" class="reviews">
       <product-review-block :reviews="reviews" :product="product" :slice="3" :allow-loadmore="false" class="vertical"></product-review-block>
       <div v-if="reviews && reviews.length > 3" class="see-more">
-        <button @click="seeMoreHandler" class="see-more__btn">
+        <button @click="seeMoreHandler" type="button" class="see-more__btn">
           {{ $t('button.see_more') }}
-          <img src="~assets/svg-icons/arrow.svg" class="icon"/>
+          <img src="~assets/svg-icons/arrow.svg" class="icon" alt="arrow icon"/>
         </button>
       </div>
     </div>

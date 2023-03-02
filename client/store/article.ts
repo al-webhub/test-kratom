@@ -56,5 +56,24 @@ export const useArticleStore = defineStore('articleStore', {
         return data
       })
     },
+
+    async getRandom(id: Number, lang: Langs = 'en') {
+      const runtimeConfig = useRuntimeConfig()
+      const params = {
+        not_id: id,
+        lang: lang
+      }
+      const url = `${runtimeConfig.public.apiBase}/articles/random`
+
+      return await useApiFetch(url, params).then(({data, error}) => {
+        
+        if(data && data.data) {
+          return data.data
+        }
+        
+        if(error)
+          throw new Error(error)
+      })
+    },
   },
 })

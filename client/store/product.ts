@@ -80,6 +80,20 @@ export const useProductStore = defineStore('productStore', {
       })
     },
 
+    async getRandom(id: Number) {
+      const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.apiBase}/products/random?not_id=${id}`;
+
+      return await useApiFetch(url).then(({data, error}) => {
+        if(data && data.data){
+          return data.data
+        }
+
+        if(error)
+          throw new Error(error)
+      })
+    },
+
     async getOne(slug: string) {
       const runtimeConfig = useRuntimeConfig()
       const url = `${runtimeConfig.public.apiBase}/products/${slug}`;
@@ -93,8 +107,6 @@ export const useProductStore = defineStore('productStore', {
         if(error)
           throw new Error(error)
       })
-
-      // return this.productState
     },
 
     async getSimilar(params: Object) {

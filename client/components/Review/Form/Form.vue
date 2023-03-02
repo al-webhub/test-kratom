@@ -57,22 +57,29 @@ export default {
 
     <!-- CONDITIONS INFO 1 -->
     <div class="add-reviews__item">
-      <img src="~assets/svg-icons/promo/user-filled.svg" class="icon" />
+      <img src="~assets/svg-icons/promo/user-filled.svg" class="icon" alt="user icon" />
       <p>{{ $t('messages.first_of_all') }}</p>
       
       <template v-if="user">
         <span class="checker">
-          <img src="~assets/svg-icons/check.svg" class="icon" />
+          <img src="~assets/svg-icons/check.svg" class="icon" alt="check icon" />
         </span>
       </template>
       <template v-else>
-        <button @click="loginHandler" class="button-enter a-link">{{ $t('button.Log_In') }}</button>
+        <button
+          @click="loginHandler"
+          :aria-label="$t('button.Log_In')"
+          class="button-enter a-link"
+          type="button"
+        >
+          {{ $t('button.Log_In') }}
+        </button>
       </template>
     </div>
     
     <!-- CONDITIONS INFO 2 -->
     <div class="add-reviews__item">
-      <img src="~assets/svg-icons/promo/dollar-filled.svg" class="icon" />
+      <img src="~assets/svg-icons/promo/dollar-filled.svg" class="icon" alt="dollar icon" />
       <p v-html="$t('messages.leave_incognito_for', {first: '$1', second: '$2'})"></p>
     </div>
 
@@ -88,10 +95,22 @@ export default {
 
       <!-- COMMENT BUTTONS -->
       <div class="add-reviews__buttons">
-        <button @click="createHandler('incognito')" :class="{loading: isLoading}" class="main-button primary-color btn">
+        <button
+          @click="createHandler('incognito')"
+          :class="{loading: isLoading}"
+          :aria-label="$t('button.post_incognito')"
+          class="main-button primary-color btn"
+          type="button"
+        >
           <span class="text">{{ $t('button.post_incognito') }}</span>
         </button>
-        <button @click="createHandler('common')" :class="{loading: isLoading}" class="main-button primary btn">
+        <button
+          @click="createHandler('common')"
+          :class="{loading: isLoading}"
+          :aria-label="$t('button.post')"
+          class="main-button primary btn"
+          type="button"
+        >
           <span class="text">{{ $t('button.post') }}</span>
         </button>
       </div>

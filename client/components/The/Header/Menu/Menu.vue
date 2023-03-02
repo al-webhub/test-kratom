@@ -83,38 +83,41 @@
             <NuxtLink
               :to="localePath(item.link)"
               :prefetch="false"
+              :aria-label="item.name"
               class="link"
             >
               {{ item.name }}
             </NuxtLink>
 
-            <img v-if="item.items && item.items.length" src="~assets/svg-icons/arrow-simple.svg" class="icon" />
+            <img v-if="item.items && item.items.length" src="~assets/svg-icons/arrow-simple.svg" class="icon" alt="arrow icon" />
 
             <ul v-if="item.items && item.items.length" class="submenu">
               <li v-for="subitem in item.items" :key="subitem.id" class="submenu-item">
-                <NuxtLink :to="localePath(subitem.link)" :prefetch="false" class="submenu-link">
+                <NuxtLink :to="localePath(subitem.link)" :prefetch="false" :aria-label="item.name" class="submenu-link">
                   {{ subitem.name }}
                 </NuxtLink>
               </li>
             </ul>
         </li>
 
-        <li v-if="menuGroups.invisible && Object.keys(menuGroups.invisible).length !== 0" class="item">
-          <span class="link">{{ $t('title.menu') }}</span>
-          <img src="~assets/svg-icons/arrow-simple.svg" class="icon" />
+        <transition name="fade-in">
+          <li v-if="menuGroups.invisible && Object.keys(menuGroups.invisible).length !== 0" class="item">
+            <span class="link">{{ $t('title.menu') }}</span>
+            <img src="~assets/svg-icons/arrow-simple.svg" class="icon" alt="arrow icon" />
 
-          <ul class="submenu">
-            <li
-              v-for="(item, key) in menuGroups.invisible"
-              :key="key"
-              class="submenu-item"
-            >
-              <NuxtLink :to="localePath(item.link)" :prefetch="false" class="submenu-link">
-                {{ item.name }}
-              </NuxtLink>
-            </li>
-          </ul>
-        </li>
+            <ul class="submenu">
+              <li
+                v-for="(item, key) in menuGroups.invisible"
+                :key="key"
+                class="submenu-item"
+              >
+                <NuxtLink :to="localePath(item.link)" :prefetch="false" :aria-label="item.name" class="submenu-link">
+                  {{ item.name }}
+                </NuxtLink>
+              </li>
+            </ul>
+          </li>
+        </transition>
     </ul>
   </nav>
 </template>

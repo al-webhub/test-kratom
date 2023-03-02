@@ -103,14 +103,14 @@
     <lazy-the-header-menu></lazy-the-header-menu>
 
     <div class="phone">
-      <a href="tel:+420 722 133 136">+420 722 133 136</a>
+      <a href="tel:+420722133136">+420&nbsp;722&nbsp;133&nbsp;136</a>
     </div>
 
     <div class="btns-set">
         <!-- SEARCH BUTTON -->
         <div class="search-btn">
-          <button @click="toggleModalSearchHandler" class="header__search__button">
-            <img src="~assets/svg-icons/search.svg" class="icon"  />
+          <button @click="toggleModalSearchHandler" class="header__search__button" type="button" aria-label="Search">
+            <img src="~assets/svg-icons/search.svg" class="icon" alt="search-icon"  />
           </button>
         </div>
 
@@ -125,15 +125,15 @@
             </modal-lang-switcher>
           </transition>
 	        
-	        <button class="js-button js-drop-button" @click="toggleModalLanguagesHandler">
-            <img src="~assets/svg-icons/globe.svg" class="icon" />
+	        <button class="js-button js-drop-button" @click="toggleModalLanguagesHandler" type="button" aria-label="Change Language">
+            <img src="~assets/svg-icons/globe.svg" class="icon" alt="globe-icon" />
           </button>
         </div>
 
         <!-- PROFILE BUTTON -->
         <div class="profile-btn">
-            <button v-if="!isAuth" @click="openModalSignInSocialHandler">
-              <img src="~assets/svg-icons/user.svg" class="icon" />
+            <button v-if="!isAuth" @click="openModalSignInSocialHandler" type="button" aria-label="To Account">
+              <img src="~assets/svg-icons/user.svg" class="icon" alt="user-icon"/>
             </button>
 
             <NuxtLink v-else-if="isAuth && user" :to="localePath('/account/order-history')" :prefetch="false">
@@ -154,14 +154,14 @@
         
         <!-- CART BUTTON -->
         <div class="cart-btn">
-          <button class="js-button" @click="openModalCartHandler">
-            <img src="~assets/svg-icons/cart.svg" class="icon"  />
+          <button class="js-button" @click="openModalCartHandler" type="button" aria-label="cart">
+            <img src="~assets/svg-icons/cart.svg" class="icon" alt="cart-icon" />
           </button>
           <span class="decor-cart" v-if="cartLength"></span>
         </div>
 
         <!-- MOBULE MENU BUTTON -->
-        <button @click="toggleModalBurgerHandler" :class="{active: isBurgerActive}" class="burger-btn">
+        <button @click="toggleModalBurgerHandler" :class="{active: isBurgerActive}" class="burger-btn" type="button" aria-label="menu">
           <span class="decor"></span>
         </button>
 

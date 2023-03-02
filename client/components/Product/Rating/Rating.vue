@@ -56,7 +56,7 @@ export default {
         <div class="rating__out-of">{{ t('out_of', {value: 5}) }}</div>
       </div>
       <div class="stars">
-        <img v-for="key in 5" :key="key" src="~assets/svg-icons/star.svg" :class="{active: key <= roundValue }" class="icon" />
+        <img v-for="key in 5" :key="key" src="~assets/svg-icons/star.svg" :class="{active: key <= roundValue }" class="icon" alt="star" />
       </div>
       <div class="reviews">
         {{ $t('label.rating_reviews', {rating: ratingCount, reviews: reviewsCount})}}
@@ -69,7 +69,7 @@ export default {
         class="scale"
       >
         <div class="scale__stars">
-          <img v-for="key in 5 - index" :key="key" src="~assets/svg-icons/star.svg" class="icon" />
+          <img v-for="key in 5 - index" :key="key" src="~assets/svg-icons/star.svg" class="icon" alt="star" />
         </div>
         <div class="scale__line">
           <div class="scale__line-fill" :style="getLineStyle(point)"></div>

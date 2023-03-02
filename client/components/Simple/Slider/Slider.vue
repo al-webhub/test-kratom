@@ -24,6 +24,7 @@ export default {
       arrayLength: 0,
       offset: 0,
       gap: 30,
+      isMounted: false,
       touch: {
         from: null,
         to: null
@@ -55,15 +56,6 @@ export default {
   },
 
   computed: {
-    perPage() {
-      if(this.$device.isDesktop)
-        return 4;
-
-      if(this.$device.isTablet)
-        return 2
-      
-      return 1;
-    },
 
     listStyleValue() {
       return {
@@ -80,33 +72,50 @@ export default {
         return this.$refs?.card[0].offsetWidth
       else
         return 0
+    },
+
+    isOffset() {
+      if(this.isMounted) {
+        const cardWidth = this.$refs?.card[0].offsetWidth + this.gap
+        return (cardWidth * this.arrayLength - window.innerWidth) > 0
+      }
+      else
+        return false
     }
   },
 
   methods: {
     prevHandler(){
       const cardWidth = this.$refs?.card[0].offsetWidth + this.gap
-      const maxWidth = (this.arrayLength - this.perPage) * cardWidth * -1;
+      const maxOffset = (cardWidth * this.arrayLength - window.innerWidth) * -1
+      const emptySpace = Math.abs(this.offset)
 
-      if(this.offset < 0) {
+      if(emptySpace >= cardWidth) {
         this.offset = this.offset + cardWidth
         this.activeIndex--
-      }else {
-        this.offset = maxWidth
+      } else if(emptySpace === 0) {
+        this.offset = maxOffset
         this.activeIndex = this.arrayLength - 1
+      } else {
+        this.offset = this.offset + emptySpace
+        this.activeIndex--
       }
     },
 
     nextHandler() {
       const cardWidth = this.$refs?.card[0].offsetWidth + this.gap
-      const maxWidth = (this.arrayLength - this.perPage) * cardWidth * -1;
+      const maxOffset = (cardWidth * this.arrayLength - window.innerWidth) * -1
+      const emptySpace = Math.abs(maxOffset - this.offset)
 
-      if(this.offset > maxWidth){
+      if(emptySpace >= cardWidth) {
         this.offset = this.offset - cardWidth
         this.activeIndex++
-      }else {
+      } else if(emptySpace === 0) {
         this.offset = 0
         this.activeIndex = 0
+      } else {
+        this.offset = this.offset - emptySpace
+        this.activeIndex++
       }
     },
 
@@ -135,6 +144,7 @@ export default {
 
   mounted() {
     this.arrayLength = this.values.length
+    this.isMounted = true
   }
 }
 </script>
@@ -148,8 +158,9 @@ export default {
       @touchstart="touchStartHandler"
       @touchend="touchEndHandler"
       :class="initOn"
+      ref="wrapper"
     >
-      <ul :style="listStyleValue" class="list-ul">
+      <ul :style="listStyleValue" class="list-ul" ref="list">
         <li
           v-for="(item, index) in slides"
           :key="item.id"
@@ -166,6 +177,7 @@ export default {
       :items="slides.length"
       :link="allItemsLink"
       :active-index="activeIndex"
+      :is-arrows="isOffset"
       @prev="prevHandler"
       @next="nextHandler"
     >

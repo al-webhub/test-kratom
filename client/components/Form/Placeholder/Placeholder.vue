@@ -20,6 +20,10 @@ export default {
     isDisabled: {
       type: Boolean,
       default: false
+    },
+    targetId: {
+      type: String,
+      default: false
     }
   }
 }
@@ -28,7 +32,7 @@ export default {
 <style src="./placeholder.scss" lang="sass" scoped />
 
 <template>
-  <span :class="[{active: isActive}, {disabled: isDisabled}]" class="custome-placeholder__wrapper">
+  <label :class="[{active: isActive}, {disabled: isDisabled}]" :for="targetId" class="custome-placeholder__wrapper">
     <span class="custome-placeholder__before"></span>
     <span class="custome-placeholder__text">
       <span class="inner-text">
@@ -37,5 +41,5 @@ export default {
       </span>
     </span>
     <span class="custome-placeholder__after"></span>
-  </span>
+  </label>
 </template>
