@@ -1,0 +1,11 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "deploy": false,
+      "dev_cz": false,
+      "dev": false,
+      "dev-vercel": false
+    }
+  }
+}
