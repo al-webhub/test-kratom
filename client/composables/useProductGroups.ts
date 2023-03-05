@@ -19,7 +19,8 @@ export const useProductGroups = () => {
           link: '/shop/malay-kratom'
         }
       ]
-    },{
+    },
+    {
       name: t('filter.color'),
       items: [
         {
@@ -33,7 +34,8 @@ export const useProductGroups = () => {
           link: '/shop/green-kratom'
         }
       ]
-    },{
+    },
+    {
       name: t('filter.type'),
       items: [
         {

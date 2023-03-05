@@ -210,8 +210,6 @@ const redirects = [
 export default defineEventHandler((event) => {
 
   const req = event.node.req
-  const host = req.headers.host;
-  const fullUrl = req.url;
 
   var url = req.url.split('?')[0];
   

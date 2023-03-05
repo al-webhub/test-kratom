@@ -1,4 +1,8 @@
 <script setup>
+  const props = defineProps({
+    error: Object
+  })
+
   const {t} = useI18n({useScope: 'local'})
 </script>
 

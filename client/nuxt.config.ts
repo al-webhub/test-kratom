@@ -40,13 +40,13 @@ export default defineNuxtConfig({
   
   // sourcemap: false,
 
-  experimental: {
-    // asyncEntry: true,
-    // viteServerDynamicImports: true
-    payloadExtraction: false
-  },
+  // experimental: {
+  //   // asyncEntry: true,
+  //   // viteServerDynamicImports: true
+  //   payloadExtraction: false
+  // },
   
-  debug: false,
+  debug: true,
 
   nitro: {
     // preset: 'node-server',

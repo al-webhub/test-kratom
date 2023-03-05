@@ -216,8 +216,10 @@
         setSeo()
       }
 
+      console.log('Error', error);
+
       if(error.value){
-        throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
+        //throw createError({ statusCode: 404, message: 'Page Not Found' })
       }
 
       return product
@@ -229,6 +231,9 @@
     setScheema(product, reviews)
     getPopulars(product.value.id)
   })
+
+
+  //throw createError({ statusCode: 404, message: 'Page Not Found' })
 </script>
 
 <style src="./product.scss" lang="sass" scoped />
