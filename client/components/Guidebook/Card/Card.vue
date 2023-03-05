@@ -37,7 +37,6 @@ export default {
           quality = "30"
           loading = "lazy"
           class="cover"
-          provider="ipx"
         >
         </nuxt-img>
     </div>

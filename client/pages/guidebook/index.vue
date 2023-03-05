@@ -89,8 +89,6 @@ export default {
           
         <h1 class="main-caption main-caption-align">{{ page.title }}</h1>
 
-        <nuxt-link to="/guidebook/gdfgdfg">Error Error</nuxt-link>
-
         <ul v-if="articles && articles.length" class="article__list">
           <guidebook-card
             v-for="(article, index) in articles"
