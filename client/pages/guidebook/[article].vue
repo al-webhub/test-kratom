@@ -46,11 +46,8 @@
   }
 
   const getRelatives = (id) => {
-    useLazyAsyncData('articles', () => articleStore.getRandom({
-        id: id, 
-        lang: locale.value
-      })
-    ).then((res) => {
+    useLazyAsyncData('articles', () => articleStore.getRandom(id, locale.value))
+    .then((res) => {
       if(res.data.value)
         articles.value = res.data.value
     })

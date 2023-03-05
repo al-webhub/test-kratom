@@ -132,7 +132,6 @@ export default {
           quality = "40"
           loading = "lazy"
           fit="outside"
-          provider="ipx"
         >
         </nuxt-img> 
       </NuxtLink>
