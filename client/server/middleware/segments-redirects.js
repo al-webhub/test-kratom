@@ -7,7 +7,8 @@ export default defineEventHandler((event) => {
 
   if(from.match(findSegments)) {
     const to = from.replace(findSegments, '')
-    const url = host + to
+    const url = 'https://' + host + to
+
     return sendRedirect(event, url, 301)
   }
 })

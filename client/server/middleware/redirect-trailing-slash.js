@@ -11,7 +11,7 @@ export default defineEventHandler((event) => {
 
   if (fromPath !== '/' && fromPath.endsWith('/')) {
     const toPath = fromPath.replace(/\/+$/, '') || '/'
-    const toRoute = toPath + fromQuery
+    const toRoute = 'https://' + toPath + fromQuery
 
     return sendRedirect(event, toRoute, 301)
   }
