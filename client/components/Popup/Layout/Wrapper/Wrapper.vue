@@ -22,7 +22,7 @@
 
 <template>
   <div @click.self="closeHandler" clickable class="popup-wrapper">
-    <section :class="size" class="popup">
+    <section :class="size" class="popup" scrollable>
       <slot />
     </section>
   </div>
