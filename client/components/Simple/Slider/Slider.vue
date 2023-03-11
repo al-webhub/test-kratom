@@ -162,6 +162,7 @@ export default {
       @touchend="touchEndHandler"
       :class="initOn"
       ref="wrapper"
+      scrollable
     >
       <ul :style="listStyleValue" class="list-ul" ref="list">
         <li

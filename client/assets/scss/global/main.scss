@@ -13,9 +13,9 @@
   -o-appearance: none;
   appearance: none;
 
-  // touch-action: manipulation;
-  touch-action: none;
+  //touch-action: none;
   pointer-events: none;
+  touch-action: pan-left, pan-right, pan-up, pan-down, pan-x, pan-y;
 }
 
 input,
@@ -29,8 +29,11 @@ label,
 }
 
 *[scrollable] {
-  touch-action: manipulation;
-  pointer-events: auto; 
+  pointer-events: auto;
+
+  * {
+    pointer-events: auto;
+  }
 }
 
 ul {
@@ -107,17 +110,22 @@ body {
   color: #FFFFFF;
   background-color: #2e2e2e;
   background: url(~/assets/images/main-background.png) repeat center;
-  
+  overflow-x: hidden;
+
   @include _tablet {
     padding-top: 70px;
   }
+
+  @include _desktop {
+    overflow-x: initial;
+  }
 }
+
 #app {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
-
 
 //  DECORE
 .general-decor-elem {
@@ -126,7 +134,6 @@ body {
   height: 21px;
   background: url(assets/images/general-decor.svg) center / contain no-repeat;
 }
-
 
 // CAPTION
 .main-caption {
