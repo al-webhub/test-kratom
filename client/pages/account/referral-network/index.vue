@@ -189,7 +189,7 @@ export default {
 
       <!-- HEADER RIGHT SIDE -->
       <div class="referral-withdrawal">
-        <button @click="withdrawalHandler" :class="{disabled: balance.balance < 10}" class="main-button primary">
+        <button @click="withdrawalHandler" :class="{disabled: balance.balance < 10}" clickable class="main-button primary">
           <span class="text">{{ t('request_withdrawal') }}</span>
         </button>
         <p>{{ t('available') }}:</p>

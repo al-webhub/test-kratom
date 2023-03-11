@@ -92,7 +92,7 @@
           >
           </form-password>
 
-          <button :class="{disabled: isDisabled}" class="main-button primary small">
+          <button :class="{disabled: isDisabled}" clickable class="main-button primary small">
               <span class="text">{{ $t('button.set_new_password') }}</span>
           </button>
         </div>
@@ -100,7 +100,7 @@
     </template>
     <template v-slot:footer>
       <div class="footer">
-        <button @click="backHandler" type="button" class="back-btn">{{ $t('button.Back') }}</button>
+        <button @click="backHandler" clickable type="button" class="back-btn">{{ $t('button.Back') }}</button>
       </div>
     </template>
   </popup-layout-simple>

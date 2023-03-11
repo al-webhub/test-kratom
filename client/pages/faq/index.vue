@@ -112,6 +112,7 @@ export default {
               @click="toggleHandler(index)"
               :class="{active: index === activeIndex}"
               class="faq__item"
+              clickable
             >
               <div class="faq__item__header">
                 <h2 class="name">{{ faq.title }}</h2>

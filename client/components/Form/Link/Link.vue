@@ -46,7 +46,7 @@ export default {
     readonly
   >
     <template v-slot:icon-right>
-      <button @click="copyHandler" class="copy-referral-link">
+      <button @click="copyHandler" clickable class="copy-referral-link">
         <img src="~assets/svg-icons/copy.svg" class="icon"/>
       </button>
     </template>

@@ -48,13 +48,13 @@ export default {
 
 <template>
   <div class="product__calc">
-    <button @click="minusHandler" type="button" class="calc_button">
+    <button @click="minusHandler" clickable type="button" class="calc_button">
       <span class="text">-</span>
     </button>
     
     <input :value="modelValue" @change="updateHandler" :max="max" :min="min" type="number" class="calc-input">
 
-    <button @click="plusHandler" type="button" class="calc_button">
+    <button @click="plusHandler" clickable type="button" class="calc_button">
       <span class="text">+</span>
     </button>
   </div>

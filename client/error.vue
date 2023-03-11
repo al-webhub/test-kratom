@@ -3,6 +3,8 @@
     error: Object
   })
 
+  console.log('props error', props.error)
+
   const {t} = useI18n({useScope: 'local'})
 </script>
 

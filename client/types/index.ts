@@ -3,7 +3,7 @@
 export { };
 
 declare global {
-  type Modal = "chooseKratom" | "buy1" | "withdrawal" | "search" | "cart" | "signInSocial" | "signInEmail" | "changePassword" | "logInEmail" | "logInPassword" | "logOut"
+  type Modal = "pc" | "chooseKratom" | "buy1" | "withdrawal" | "search" | "cart" | "signInSocial" | "signInEmail" | "changePassword" | "logInEmail" | "logInPassword" | "logOut"
 
   type ModalObject = {
     isShow: Boolean,

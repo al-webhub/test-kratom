@@ -36,7 +36,7 @@ export default {
 <style src="./checkbox.scss" lang="sass" scoped />
 
 <template>
-  <label class="input__wrapper input__wrapper-checkbox">
+  <label clickable class="input__wrapper input__wrapper-checkbox">
     <input
       :checked="modelValue === value"
       :value="value"

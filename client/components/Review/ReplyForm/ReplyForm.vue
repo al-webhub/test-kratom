@@ -38,10 +38,10 @@ export default {
     </review-input>
 
     <div class="buttons">
-      <button @click="closeHandler" type="button" class="button-only-text btn">
+      <button @click="closeHandler" clickable type="button" class="button-only-text btn">
         <span class="text">{{ $t('button.cancel') }}</span>
       </button>
-      <button @click="sendHandler" class="main-button small primary-color btn">
+      <button @click="sendHandler" clickable class="main-button small primary-color btn">
         <span class="text">{{ $t('button.reply') }}</span>
       </button>
     </div>

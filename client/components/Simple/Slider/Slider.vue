@@ -23,7 +23,7 @@ export default {
       activeIndex: 0,
       arrayLength: 0,
       offset: 0,
-      gap: 30,
+      gap: 20,
       isMounted: false,
       touch: {
         from: null,
@@ -97,7 +97,7 @@ export default {
         this.offset = this.offset + cardWidth
         this.activeIndex--
       } else if(emptySpace === 0) {
-        this.offset = maxOffset
+        this.offset = maxOffset - this.gap
         this.activeIndex = this.arrayLength - 1
       } else {
         this.offset = this.offset + emptySpace
@@ -108,7 +108,7 @@ export default {
     nextHandler() {
       const cardWidth = this.$refs?.card[0].offsetWidth + this.gap
       const maxOffset = (cardWidth * this.arrayLength - window.innerWidth) * -1
-      const emptySpace = Math.abs(maxOffset - this.offset)
+      const emptySpace = Math.abs(maxOffset - this.offset - this.gap)
 
       if(emptySpace >= cardWidth) {
         this.offset = this.offset - cardWidth

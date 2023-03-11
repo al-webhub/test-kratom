@@ -9,16 +9,19 @@
 <template>
   <section class="breadcrumbs">
     <div class="container">
-      <ul class="list">
+      <ul class="list" scrollable>
         <li
           v-for="(crumb, index) in crumbs"
           :key="crumb"
           class="item"
+          scrollable
         >
           <NuxtLink
             v-if="index + 1 !== crumbs.length"
             :to="crumb.item"
             :prefetch="false"
+            clickable
+            scrollable
             class="breadcrumbs__link"
           >
             {{ crumb.name }}

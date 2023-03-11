@@ -71,6 +71,7 @@ export default {
           :aria-label="$t('button.Log_In')"
           class="button-enter a-link"
           type="button"
+          clickable
         >
           {{ $t('button.Log_In') }}
         </button>
@@ -101,6 +102,7 @@ export default {
           :aria-label="$t('button.post_incognito')"
           class="main-button primary-color btn"
           type="button"
+          clickable
         >
           <span class="text">{{ $t('button.post_incognito') }}</span>
         </button>
@@ -110,6 +112,7 @@ export default {
           :aria-label="$t('button.post')"
           class="main-button primary btn"
           type="button"
+          clickable
         >
           <span class="text">{{ $t('button.post') }}</span>
         </button>

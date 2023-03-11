@@ -44,6 +44,7 @@ export default {
         <div
           v-if="meta.last_page != meta.current_page"
           @click="loadmoreHandler()"
+          clickable
           style="text-align:center; cursor:pointer;padding:10px"
         >
           {{ $t('button.show_more') }}

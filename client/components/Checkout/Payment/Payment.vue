@@ -111,7 +111,7 @@ export default {
           <p class="type">{{ $t('payment.bonuses_used') }}</p>
           <p class="description">USD {{ bonuses }}</p>
         </div>
-        <button class="check-bonuse__button js-button" data-target="bonuses">{{ $t('payment.change_bonus_amount') }}</button>
+        <button class="check-bonuse__button" clickable>{{ $t('payment.change_bonus_amount') }}</button>
       </template>
     </div>
 
@@ -119,11 +119,11 @@ export default {
       <form-checkbox v-model="privatePolicy" value="privatePolicy" class="policy">
         <p class="privat-policy-text">
           {{ $t('messages.i_agreed_with') }} 
-          <NuxtLink :to="localePath('/privacy')">{{ $t('title.Privacy_Policy') }}</NuxtLink>
+          <NuxtLink :to="localePath('/privacy')" clickable>{{ $t('title.Privacy_Policy') }}</NuxtLink>
         </p>
       </form-checkbox>
       
-      <button @click="confirmHandler" :class="{disabled: !canConfirm, loading: isLoading}" class="main-button primary">
+      <button @click="confirmHandler" :class="{disabled: !canConfirm, loading: isLoading}" clickable class="main-button primary">
         <span class="text">{{ $t('button.confirm_order') }}</span>
       </button>
     </div>

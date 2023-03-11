@@ -256,7 +256,7 @@
           <img src="~assets/svg-icons/star.svg" class="icon" alt="star icon"/>
           <span class="sup-rating__value">{{ rating }}</span>
 
-          <NuxtLink v-if="ratingAmount || reviewsAmount" :to="'/'" class="sup-reviews">
+          <NuxtLink v-if="ratingAmount || reviewsAmount" :to="'/'" clickable class="sup-reviews">
             {{ $t('label.rating_reviews', {rating: ratingAmount, reviews: reviewsAmount}) }}
           </NuxtLink>
         </div>

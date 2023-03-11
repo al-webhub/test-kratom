@@ -8,7 +8,7 @@
 
   definePageMeta({
     layout: 'account',
-    middleware: 'auth',
+    middleware: ['auth', 'profile-pc-data'],
   })
 
 
@@ -103,6 +103,7 @@
         v-if="ordersMeta.last_page != ordersMeta.current_page"
         @click="loadmoreOrdersHandler"
         style="text-align:center; cursor:pointer;padding:10px"
+        clickable
       >
         {{ $t('button.show_more') }}
       </div>

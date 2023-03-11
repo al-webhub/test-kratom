@@ -134,21 +134,21 @@ export default {
             </div>
 
             <div :class="{active: hintIsOpen, extra: !isAuth}" class="total-info">
-                <p class="total-info__caption">+{{ t('delivery_cost') }}</p>
-                <button @click="openHintHandler" type="button" class="info-button"></button>
-                <div class="info-drop"><p>{{ $t('delivery.The_Dispatch_takes') }}</p></div>
+              <p class="total-info__caption">+{{ t('delivery_cost') }}</p>
+              <button @click="openHintHandler" clickable type="button" class="info-button"></button>
+              <div class="info-drop"><p>{{ $t('delivery.The_Dispatch_takes') }}</p></div>
             </div>
 
             <div class="total__item total__item-general">
-                <p class="type">{{ $t('label.subtotal') }}</p>
-                <p class="description">usd {{ total - bonusesUsed }}</p>
+              <p class="type">{{ $t('label.subtotal') }}</p>
+              <p class="description">usd {{ total - bonusesUsed }}</p>
             </div>
 
           </div>
         </div>
 
         <p class="order__info-bar__text">
-          <a href="/contacts">{{ t('Сontact_us') }}</a>&nbsp;
+          <NuxtLink to="/contacts" clickable>{{ t('Сontact_us') }}</NuxtLink>&nbsp;
           <span>{{ t('have_questions') }}</span>
         </p>
       </div>

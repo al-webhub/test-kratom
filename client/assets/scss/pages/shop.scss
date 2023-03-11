@@ -10,7 +10,7 @@
   grid-template-columns: 100%;
   grid-gap: 15px;
   align-items: start;
-  margin: 40px 0 0 0;
+  margin: 30px 0 0 0;
 
   @include _tablet {
     grid-template-columns: 30% minmax(0, 1fr);
@@ -39,8 +39,12 @@
 
 .attribute {
   margin-bottom: 35px;
-  font-size: 12px;
+  font-size: 16px;
   text-transform: uppercase;
+
+  @include _desktop {
+    font-size: 12px;
+  }
 
   &:last-child {
     margin-bottom: 0;

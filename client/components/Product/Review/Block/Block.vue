@@ -93,6 +93,7 @@ export default {
         @click="loadmoreHandler"
         class="loadmore-btn"
         type="button"
+        clickable
       >
         {{ $t('button.load_more') }}
         <img src="~assets/svg-icons/arrow-simple.svg" class="icon" alt="arrow icon" />
@@ -108,11 +109,11 @@ export default {
           <p class="add-reviews__title">{{ $t('messages.feedback_and_earn') }}</p>
           <div v-if="!isAuth" class="add-reviews__desc-0">
             <p v-html="$t('messages.first_of_all')"></p>
-            <button @click="loginHandler" type="button" class="button-enter a-link">{{ $t('button.Log_In') }}</button>
+            <button @click="loginHandler" clickable type="button" class="button-enter a-link">{{ $t('button.Log_In') }}</button>
           </div>
           <p class="add-reviews__desc" v-html="$t('messages.leave_incognito_for', {first: '$1', second: '$2'})"></p>
         </div>
-        <button v-if="isAuth" @click="addHandler" type="button" class="main-button primary btn-item">
+        <button v-if="isAuth" @click="addHandler" clickable type="button" class="main-button primary btn-item">
           <span class="text">{{ $t('button.leave_feedback') }}</span>
         </button>
       </div>

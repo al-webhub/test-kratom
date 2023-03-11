@@ -69,7 +69,7 @@
 <template>
   <header class="header">
     
-    <NuxtLink v-if="!isHomePage" :to="localePath('/')" :prefetch="false" class="logo">
+    <NuxtLink v-if="!isHomePage" :to="localePath('/')" clickable :prefetch="false" class="logo">
       <nuxt-img
         src="/images/logo.png"
         alt="Kratomhelper.com logo"
@@ -81,7 +81,8 @@
         fit="contain"
         quality = "70"
         loading = "lazy"
-        class="logo">
+        class="logo"
+      >
       </nuxt-img>
     </NuxtLink>
     <span v-else class="logo">
@@ -96,7 +97,8 @@
         fit="contain"
         quality = "70"
         loading = "lazy"
-        class="logo">
+        class="logo"
+      >
       </nuxt-img>
     </span>
 
@@ -109,7 +111,7 @@
     <div class="btns-set">
         <!-- SEARCH BUTTON -->
         <div class="search-btn">
-          <button @click="toggleModalSearchHandler" class="header__search__button" type="button" aria-label="Search">
+          <button @click="toggleModalSearchHandler" clickable class="header__search__button" type="button" aria-label="Search">
             <img src="~assets/svg-icons/search.svg" class="icon" alt="search-icon"  />
           </button>
         </div>
@@ -125,14 +127,14 @@
             </modal-lang-switcher>
           </transition>
 	        
-	        <button class="js-button js-drop-button" @click="toggleModalLanguagesHandler" type="button" aria-label="Change Language">
+	        <button @click="toggleModalLanguagesHandler" clickable type="button" aria-label="Change Language">
             <img src="~assets/svg-icons/globe.svg" class="icon" alt="globe-icon" />
           </button>
         </div>
 
         <!-- PROFILE BUTTON -->
         <div class="profile-btn">
-            <button v-if="!isAuth" @click="openModalSignInSocialHandler" type="button" aria-label="To Account">
+            <button v-if="!isAuth" @click="openModalSignInSocialHandler" clickable type="button" aria-label="To Account">
               <img src="~assets/svg-icons/user.svg" class="icon" alt="user-icon"/>
             </button>
 
@@ -154,14 +156,14 @@
         
         <!-- CART BUTTON -->
         <div class="cart-btn">
-          <button class="js-button" @click="openModalCartHandler" type="button" aria-label="cart">
+          <button @click="openModalCartHandler" clickable type="button" aria-label="cart">
             <img src="~assets/svg-icons/cart.svg" class="icon" alt="cart-icon" />
           </button>
           <span class="decor-cart" v-if="cartLength"></span>
         </div>
 
         <!-- MOBULE MENU BUTTON -->
-        <button @click="toggleModalBurgerHandler" :class="{active: isBurgerActive}" class="burger-btn" type="button" aria-label="menu">
+        <button @click="toggleModalBurgerHandler" :class="{active: isBurgerActive}" clickable class="burger-btn" type="button" aria-label="menu">
           <span class="decor"></span>
         </button>
 

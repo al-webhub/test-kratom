@@ -109,13 +109,13 @@
             <span class="custome-checkbox"><span class="icon-active"></span></span> 
             <span>
               {{ $t('messages.i_agreed_with') }}&nbsp;
-              <NuxtLink :to="localePath('/privacy')" class="a-link" target="_blade">{{ $t('title.Privacy_Policy') }}</NuxtLink>
+              <NuxtLink :to="localePath('/privacy')" clickable class="a-link" target="_blade">{{ $t('title.Privacy_Policy') }}</NuxtLink>
             </span>
           </label>
         </div>
             
         <!-- //Добавил пароль, в макете его небыло -->
-        <button @click="registerHandler" :class="{loading: isLoading}" class="main-button primary small">
+        <button @click="registerHandler" :class="{loading: isLoading}" clickable class="main-button primary small">
             <span class="text">{{ $t('button.sign_up') }}</span>
         </button>
 
@@ -123,7 +123,7 @@
             <div class="popup__footer__sing-up">
                 <p>{{ t('Already_have_account') }}</p>
                 &nbsp;
-                <button @click="openLogInEmailHandler" type="button" class="a-link">{{ $t('button.Log_In') }}</button>
+                <button @click="openLogInEmailHandler" clickable type="button" class="a-link">{{ $t('button.Log_In') }}</button>
             </div>
         </div>
 

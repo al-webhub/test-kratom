@@ -14,6 +14,11 @@
 
   &:last-child {
     margin-bottom: 0px;
+
+    :deep(.body) {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
   }
 }
 
@@ -149,7 +154,7 @@
 
   .replies {
     display: block;
-    margin: 20px 0 0;
+    margin: 20px 0 0 20px;
   }
 }
 

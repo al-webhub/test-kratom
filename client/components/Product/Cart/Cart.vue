@@ -85,6 +85,7 @@ export default {
         :aria-label="$t('button.add_to_cart')"
         class="main-button primary btn-item"
         type="button"
+        clickable
       >
         <span class="text">{{ $t('button.add_to_cart') }}</span>
       </button>
@@ -94,6 +95,7 @@ export default {
         :aria-label="$t('button.buy-1-click')"
         class="main-button primary-color btn-item"
         type="button"
+        clickable
       >
         <img src="~assets/svg-icons/flash.svg" class="icon" alt="flash icon" />
         <span class="text">{{ $t('button.buy-1-click') }}</span>

@@ -36,6 +36,7 @@ export default {
       :key="locale.code"
       :class="{selected: selectedIndex}"
       @click="selectHandler"
+      clickable
     >
       <nuxt-link :to="switchLocalePath(locale.code)" :aria-label="locale.name">
         <span class="footer__lang_language">

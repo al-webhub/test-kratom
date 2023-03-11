@@ -124,14 +124,10 @@ export default {
 }
 </script>
 
-<style src="assets/scss/pages/reviews.scss" lang="sass" scoped />
+<style src="./reviews.scss" lang="sass" scoped />
 
 <template>
   <div>
-    <simple-decorator
-      :is-figure="true"
-      :settings="{title: {posX: 'left', posY: 'bottom'}, figure: {posX:'left', posY: 'bottom', showTill: 'desktop'}}"
-    >
     <section class="wrapper">
         <div class="container">
             
@@ -174,7 +170,6 @@ export default {
 
         </div>
     </section>
-    </simple-decorator>
 
     <section-write-us></section-write-us>
   </div>

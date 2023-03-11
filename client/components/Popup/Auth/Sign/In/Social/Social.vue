@@ -36,7 +36,7 @@
     
     <template v-slot:content>
       <div>
-        <button @click="googleHandler" class="main-button main-button-social-popup">
+        <button @click="googleHandler" clickable class="main-button main-button-social-popup">
           <nuxt-img
             src="/images/google-icon.png"
             sizes = "mobile:17px"
@@ -49,7 +49,7 @@
           <span class="text">{{ $t('button.continue_with_google') }}</span>
         </button>
         
-        <button @click="openSignInEmailHandler" class="main-button main-button-social-popup">
+        <button @click="openSignInEmailHandler" clickable class="main-button main-button-social-popup">
           <img src="~assets/svg-icons/mail.svg" class="icon"/>
           <span class="text">{{ $t('button.sign_up_with_email') }}</span>
         </button>
@@ -57,7 +57,7 @@
     </template>
 
     <template v-slot:footer>
-      <button @click="openLogInEmailHandler" type="button" class="a-link">{{ $t('button.Log_In') }}</button>
+      <button @click="openLogInEmailHandler" clickable type="button" class="a-link">{{ $t('button.Log_In') }}</button>
     </template>
   </popup-layout-simple>
 </template>

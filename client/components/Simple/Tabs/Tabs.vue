@@ -43,13 +43,15 @@ export default {
 <style src="./tabs.scss" lang="sass" scoped />
 
 <template>
-  <ul class="list">
+  <ul class="list" scrollable>
     <li
       v-for="(tab, index) in values"
       :key="index"
       @click="selectHandler(index)"
       :class="{active: isTabActive(index)}"
       class="item"
+      clickable
+      scrollable
     >
       {{ tab[value] || tab }}
     </li>

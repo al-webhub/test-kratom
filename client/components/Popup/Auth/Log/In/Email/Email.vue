@@ -45,7 +45,7 @@
         >
         </form-text>
 
-        <button @click="openLogInPasswordHandler" type="button" class="main-button primary-color small">
+        <button @click="openLogInPasswordHandler" clickable type="button" class="main-button primary-color small">
             <span class="text">{{ $t('button.next') }}</span>
         </button>
       </div>
@@ -54,7 +54,7 @@
     <template v-slot:footer>
       <div class="popup__footer__sing-up">
         <p>{{ t('Don_have_any_account') }}</p>&nbsp;
-        <button @click="openSignInSocialHandler" type="button" class="a-link">{{ $t('button.sign_up') }}</button>
+        <button @click="openSignInSocialHandler" clickable type="button" class="a-link">{{ $t('button.sign_up') }}</button>
       </div>
     </template>
 

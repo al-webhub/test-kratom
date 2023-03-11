@@ -50,10 +50,10 @@ export default {
         <p class="caption">{{ t('leave_feedback_and_earn') }}</p>
 
         <div class="buttons">
-          <NuxtLink :to="localePath('/reviews')" :aria-label="$t('button.leave_feedback')" class="main-button primary">
+          <NuxtLink :to="localePath('/reviews')" :aria-label="$t('button.leave_feedback')" clickable class="main-button primary">
             <span class="text">{{ $t('button.leave_feedback') }}</span>
           </NuxtLink>
-          <NuxtLink :to="localePath('/rewards')" :aria-label="$t('button.learn_more')" class="main-button transparent">
+          <NuxtLink :to="localePath('/rewards')" :aria-label="$t('button.learn_more')" clickable class="main-button transparent">
             <span class="text">{{ $t('button.learn_more') }}</span>
           </NuxtLink>
         </div>

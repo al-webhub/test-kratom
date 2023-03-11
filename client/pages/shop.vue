@@ -199,7 +199,7 @@ export default {
                 <div class="attribute-title">{{ filter.name }}</div>
                 <ul>
                   <li v-for="(item, key) in filter.items" :key="key">
-                    <NuxtLink :to="localePath(item.link)">{{ item.name }}</NuxtLink>
+                    <NuxtLink :to="localePath(item.link)" clickable>{{ item.name }}</NuxtLink>
                   </li>
                 </ul>
               </div>

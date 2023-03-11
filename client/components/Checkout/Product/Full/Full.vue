@@ -34,7 +34,7 @@ export default {
 <template>
   <li class="wrapper">
     <div class="header">
-      <NuxtLink :to="localePath('/' + modification.slug)" class="header__image">
+      <NuxtLink :to="localePath('/' + modification.slug)" clickable class="header__image">
         <nuxt-img
           v-if="photo"
           :src="photo"
@@ -51,7 +51,7 @@ export default {
       </NuxtLink>
       
       <div class="header__content">
-        <NuxtLink :to="localePath('/' + modification.slug)" class="title">{{ modification.name }}</NuxtLink>
+        <NuxtLink :to="localePath('/' + modification.slug)" clickable class="title">{{ modification.name }}</NuxtLink>
         
         <div class="mod">
           {{ modification.short_name }}
@@ -79,7 +79,7 @@ export default {
     </div>
 
     <div class="delete">
-      <button type="button" class="delete-btn" @click="deleteHandler" title="Remove">
+      <button @click="deleteHandler" clickable type="button" class="delete-btn" title="Remove">
         <img src="~assets/svg-icons/delete.svg" class="icon" />
       </button>
     </div>

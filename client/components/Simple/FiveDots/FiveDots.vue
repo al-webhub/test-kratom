@@ -45,8 +45,9 @@ export default {
       class="button minus"
       type="button"
       title="minus"
+      clickable
     >
-      -
+      –
     </button>
     
     <div
@@ -69,6 +70,7 @@ export default {
       class="button plus"
       type="button"
       title="plus"
+      clickable
     >
       +
     </button>

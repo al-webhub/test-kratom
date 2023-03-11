@@ -1,6 +1,7 @@
 @import './common';
 @import './mixins';
 
+
 /* General */
 * {
   margin: 0;
@@ -11,7 +12,27 @@
   -ms-appearance: none;
   -o-appearance: none;
   appearance: none;
+
+  // touch-action: manipulation;
+  touch-action: none;
+  pointer-events: none;
 }
+
+input,
+button,
+a,
+textarea,
+label,
+*[clickable] { 
+  touch-action: manipulation;
+  pointer-events: auto; 
+}
+
+*[scrollable] {
+  touch-action: manipulation;
+  pointer-events: auto; 
+}
+
 ul {
   list-style: none;
 }

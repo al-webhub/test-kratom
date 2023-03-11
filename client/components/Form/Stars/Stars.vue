@@ -47,6 +47,7 @@ export default {
       :key="i"
       @click="setHandler(i)"
       :class="{active: i <= modelValue}"
+      clickable
       class="item"
     >
       <img src="~assets/svg-icons/star.svg" class="icon" />

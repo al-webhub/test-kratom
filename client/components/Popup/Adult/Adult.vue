@@ -37,10 +37,10 @@
       {{ t('you_must_2') }}
     </template>
     <template v-slot:footer>
-      <button @click="notHandler" class="button-only-text btn">
+      <button @click="notHandler" clickable class="button-only-text btn">
         <span class="text">{{ t('no') }}</span>
       </button>
-      <button @click="yesHandler" class="main-button small btn">
+      <button @click="yesHandler" clickable class="main-button small btn">
         <span class="text">{{ t('i_am_18') }}</span>
       </button>    
     </template>

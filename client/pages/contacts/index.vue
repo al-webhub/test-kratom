@@ -179,6 +179,7 @@ export default {
                     :aria-label="$t('button.send_message')"
                     class="main-button primary-color form-item btn"
                     type="button"
+                    clickable
                   >
                     <span class="text">{{ $t('button.send_message') }}</span>
                   </button>

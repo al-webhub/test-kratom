@@ -88,7 +88,7 @@
     </template>
 
     <template v-slot:footer>
-      <button @click="createHandler()" :class="{loading: isLoading}" class="main-button primary small btn">
+      <button @click="createHandler()" :class="{loading: isLoading}" clickable class="main-button primary small btn">
         <span class="text">{{ $t('button.post') }}</span>
       </button>
     </template>

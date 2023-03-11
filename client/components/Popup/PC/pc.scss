@@ -1,0 +1,13 @@
+.desc {
+  margin-bottom: 25px;
+}
+
+:deep(.form-component) {
+  margin-bottom: 25px;
+}
+
+.btn {
+  &:first-child {
+    margin-right: 15px;
+  }
+}

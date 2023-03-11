@@ -135,7 +135,6 @@
 .button {
   width: 48px;
   height: 48px;
-  padding-bottom: 3px;
   color: $color-gray-3;
   transition: color 0.4s;
   line-height: 0;
@@ -147,11 +146,10 @@
 
   &:first-child {
     margin-right: 20px;
+    padding-bottom: 3px;
   }
 
   &:last-child {
-    margin-left: 10px;
-
     @include _desktop {
       margin-left: 0;
     }

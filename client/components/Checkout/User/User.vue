@@ -150,7 +150,7 @@ export default {
               </p>
             </div>
 
-            <button @click="logoutHandler" type="button" class="checkout-user__logout">
+            <button @click="logoutHandler" clickable type="button" class="checkout-user__logout">
               <span class="text">{{ $t('button.logout') }}</span>
             </button>
 
@@ -178,10 +178,10 @@ export default {
           </form-password>
 
           <div class="forgot__wrapper">
-            <button class="forgot-btn">{{ $t('button.Forgot_Password') }}</button>
+            <button clickable class="forgot-btn">{{ $t('button.Forgot_Password') }}</button>
           </div>
 
-          <button @click="loginHandler" :class="{loading: isLoading}" class="main-button primary">
+          <button @click="loginHandler" :class="{loading: isLoading}" clickable class="main-button primary">
             <span class="text">{{ $t('button.Log_In') }}</span>
           </button>
 
@@ -240,7 +240,7 @@ export default {
           :errors="errors"
         ></form-p-c>
           
-        <button @click="registerHandler" :class="{loading: isLoading}" class="main-button primary">
+        <button @click="registerHandler" :class="{loading: isLoading}" clickable class="main-button primary">
           <span class="text">{{ $t('button.sign_up') }}</span>
         </button>
 
@@ -248,6 +248,7 @@ export default {
           <p>{{ t('Already_have_account') }}</p>
           <button
             @click="loginLinkHandler"
+            clickable
             class="button-enter a-link"
           >
             {{ $t('button.Log_In') }}

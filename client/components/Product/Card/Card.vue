@@ -111,14 +111,14 @@ export default {
       
       <!-- PRODUCT INFO -->
       <div class="info">
-        <button @click="closeInfoHandler" class="info--close-btn" type="button" title="close info">
+        <button @click="closeInfoHandler" clickable class="info--close-btn" type="button" title="close info">
           <img src="~assets/svg-icons/close.svg" class="icon" alt="close icon" />
         </button>
         <div class="wrapper" v-html="product.excerpt"></div>
       </div>
 
       <!-- PRODUCT IMAGE -->
-      <NuxtLink :to="localePath('/' + product.slug)" :prefetch="false" :aria-label="product.name" class="image">
+      <NuxtLink :to="localePath('/' + product.slug)" :prefetch="false" :aria-label="product.name" clickable class="image">
         <nuxt-img
           v-if="photo"
           :src = "photo"
@@ -137,14 +137,14 @@ export default {
       </NuxtLink>
 
       <!-- PRODUCT NAME -->
-      <NuxtLink :to="localePath('/' + product.slug)" :prefetch="false" class="link">{{ product.name }}</NuxtLink>
+      <NuxtLink :to="localePath('/' + product.slug)" clickable :prefetch="false" class="link">{{ product.name }}</NuxtLink>
       
       <div class="rating">
         <img v-for="i in 5" :key="i" src="~assets/svg-icons/star.svg" :class="{active: i <= rating}" class="icon" alt="star icon" />
       </div>
 
       <!-- PRODUCT SHOW INFO BUTTON -->
-      <button @click="openInfoHandler" class="info-btn" type="button" title="show info">
+      <button @click="openInfoHandler" clickable class="info-btn" type="button" title="show info">
         <span class="text">{{ t('info') }}</span>
         <img src="~assets/svg-icons/arrow-45deg.svg" class="icon" alt="arrow-45deg icon" />
       </button>
@@ -175,7 +175,7 @@ export default {
       <!-- PRODUCT FOOTER -->
       <div class="footer">
         <p class="price">USD <span>{{ selectedModification.price }}</span></p>
-        <button @click="toCartHandler" class="main-button primary small" type="button" title="add to cart">
+        <button @click="toCartHandler" clickable class="main-button primary small" type="button" title="add to cart">
             <span class="text">{{ $t('button.add_to_cart') }}</span>
         </button>
       </div>

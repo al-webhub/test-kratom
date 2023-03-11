@@ -30,7 +30,7 @@ export default {
 <style src="./more-btn.scss" lang="sass" scoped />
 
 <template>
-  <NuxtLink :to="localePath(link)" :class="{reverse: isReverse}" :prefetch="false" :aria-label="label" class="general-more" >
+  <NuxtLink :to="localePath(link)" :class="{reverse: isReverse}" :prefetch="false" :aria-label="label" clickable class="general-more" >
       <span class="text">{{ label }}</span>
       <span class="circle">
         <img src="~assets/svg-icons/arrow.svg" class="icon" alt="arrow icon" /> 

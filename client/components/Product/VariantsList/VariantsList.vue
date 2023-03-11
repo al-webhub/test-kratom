@@ -26,6 +26,7 @@ export default {
       :key="value.id"
       @click="changeHandler(value)"
       :class="{active: value.id === modelValue.id}"
+      clickable
       class="item"
     >
       {{ value.short_name }}

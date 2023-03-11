@@ -75,7 +75,7 @@ export default {
               <p>{{ page.text }}</p>
             </div>
             
-            <NuxtLink :to="localePath('/about_us')" class="main-button">
+            <NuxtLink :to="localePath('/about_us')" clickable class="main-button">
               <span class="text">{{ $t('button.learn_more') }}</span>
             </NuxtLink>
           </div>

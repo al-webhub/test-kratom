@@ -159,14 +159,14 @@ export default {
                   :key="item.uid"
                   class="profile__sidebar-item"
                 >
-                  <NuxtLink :to="localePath(item.url)" class="profile__sidebar-link">
+                  <NuxtLink :to="localePath(item.url)" clickable class="profile__sidebar-link">
                     <img :src="item.icon" class="icon" />
                     <span class="text">{{ item.title }}</span>
                   </NuxtLink>
                 </li>
 
                 <li class="profile__sidebar-item">
-                  <button @click="logoutHandler" class="profile__sidebar-link">
+                  <button @click="logoutHandler" clickable class="profile__sidebar-link">
                     <img src="~assets/svg-icons/logout.svg" class="icon" />
                     <span class="text">{{ $t('title.logout') }}</span>
                   </button>
@@ -186,7 +186,9 @@ export default {
 
     <section-write-us></section-write-us>
 
-    <the-footer></the-footer>
+    <lazy-the-footer></lazy-the-footer>
+
+    <simple-clicker></simple-clicker>
 
     <!-- MODAL / shoping cart -->
     <transition name="move-x-right">

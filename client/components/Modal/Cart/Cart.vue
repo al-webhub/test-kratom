@@ -69,11 +69,11 @@
           </div>
         </div>
         
-        <NuxtLink :to="localePath('/checkout')" :prefetch="false" @click="closeHandler" class="main-button primary btn">
+        <NuxtLink :to="localePath('/checkout')" :prefetch="false" @click="closeHandler" clickable class="main-button primary btn">
           <span class="text">{{ $t('button.checkout') }}</span>
         </NuxtLink>
         
-        <NuxtLink :to="localePath('/shop')" :prefetch="false" @click="closeHandler" class="main-button btn">
+        <NuxtLink :to="localePath('/shop')" :prefetch="false" @click="closeHandler" clickable class="main-button btn">
           <span class="text">{{ $t('button.edit') }}</span>
         </NuxtLink>
 

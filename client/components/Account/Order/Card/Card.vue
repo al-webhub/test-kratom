@@ -77,15 +77,15 @@ export default {
         </li>
         <li class="order-history__item order-history__button order-history-position-details">
             <p class="type">{{ t('Details') }}</p>
-            <button @click="toggleHandler" class="button-details">
+            <button @click="toggleHandler" clickable class="button-details">
               <img src="~assets/svg-icons/arrow-simple.svg" class="icon icon-drop" />
             </button>
         </li>
         <li class="order-history__item order-history__item-general-button order-history-position-button">
-            <button @click="repeatHandler" :class="{loading: isLoading}" class="main-button small primary-color">
+            <button @click="repeatHandler" :class="{loading: isLoading}" clickable class="main-button small primary-color">
                 <span class="text">{{ $t('button.repeat_order') }}</span>
             </button>
-            <button @click="toggleHandler"  class="button-details button-details-mobile">
+            <button @click="toggleHandler" clickable  class="button-details button-details-mobile">
               <img src="~assets/svg-icons/arrow-simple.svg" class="icon icon-drop" />
             </button>
         </li>
@@ -99,7 +99,7 @@ export default {
               <li v-for="product in order.info.products" :key="product.id" class="order-details__order__item">
                 <div class="order-details__preview">
                   <div class="order-details__preview__img">
-                    <NuxtLink :to="localePath('/' + product.slug)">
+                    <NuxtLink :to="localePath('/' + product.slug)" clickable>
                       <nuxt-img
                         :src="getImageSrc(product)"
                         :alt="product.name"
@@ -114,7 +114,7 @@ export default {
                   </div>
                   <div class="order-details__preview__descrip">
                     <p class="order-details__preview__name">
-                      <NuxtLink :to="localePath('/' + product.slug)">
+                      <NuxtLink :to="localePath('/' + product.slug)" clickable>
                         {{ product.name }}
                       </NuxtLink>
                     </p>

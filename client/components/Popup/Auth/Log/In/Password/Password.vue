@@ -54,7 +54,7 @@
         >
         </form-password>
 
-        <button @click="loginHandler" :class="{loading: isLoading}" class="main-button primary small">
+        <button @click="loginHandler" :class="{loading: isLoading}" clickable class="main-button primary small">
           <span class="text">{{ $t('button.Log_In') }}</span>
         </button>
 
@@ -63,8 +63,8 @@
 
     <template v-slot:footer>
       <div class="popup__footer__navigation">
-        <button @click="openLogInEmailHandler" type="button" class="button-nav">{{ $t('button.Back') }}</button>
-        <button @click="openChangePasswordHandler" type="button" class="button-nav">{{ $t('button.Forgot_Password') }}</button>
+        <button @click="openLogInEmailHandler" clickable type="button" class="button-nav">{{ $t('button.Back') }}</button>
+        <button @click="openChangePasswordHandler" clickable type="button" class="button-nav">{{ $t('button.Forgot_Password') }}</button>
       </div>
     </template>
 

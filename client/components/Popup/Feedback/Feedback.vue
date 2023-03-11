@@ -73,10 +73,10 @@ export default {
 
     <template v-slot:footer>
         <div class="buttons">
-          <button @click="createHandler('incognito')" :class="{loading: isLoading}" class="main-button small">
+          <button @click="createHandler('incognito')" :class="{loading: isLoading}" clickable class="main-button small">
             <span class="text">{{ $t('button.post_incognito') }}</span>
           </button>
-          <button @click="createHandler('common')" :class="{loading: isLoading}" class="main-button small primary">
+          <button @click="createHandler('common')" :class="{loading: isLoading}" clickable class="main-button small primary">
             <span class="text">{{ $t('button.post') }}</span>
           </button>
         </div>

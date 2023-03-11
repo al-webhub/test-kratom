@@ -84,7 +84,7 @@ export default {
     :is-disabled="isDisabled"
   >
     <template v-slot:icon-right>
-      <button @click="showHandler"  :class="{active: isVisible}" class="show-password">
+      <button @click="showHandler" :class="{active: isVisible}" clickable class="show-password">
         <img src="~assets/svg-icons/eye.svg" class="icon"/>
       </button>
     </template>

@@ -47,6 +47,11 @@ export const useModalStore = defineStore('modalStore', {
       isShow: false
     } as ModalObject,
 
+    pc: {
+      isShow: false,
+      data: null
+    } as ModalObject,
+
   }),
   
   getters: {
@@ -79,7 +84,7 @@ export const useModalStore = defineStore('modalStore', {
       }
     },
 
-    setData(name: Modal, data: Object) {
+    setData(name: Modal, data: Object | String) {
       this[name].data = data
     }
   },

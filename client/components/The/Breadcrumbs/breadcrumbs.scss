@@ -3,10 +3,6 @@
 .breadcrumbs {
   margin: 30px 0px;
 
-  @include _1024 {
-    margin: 20px 0px 30px;
-  }
-
   .list {
     display: flex;
     font-size: 14px;
@@ -14,11 +10,19 @@
     min-height: 14px;
     width: 100%;
     overflow-x: scroll;
+    overflow-y: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    margin: 0 -20px;
+    padding: 0 20px;
+    width: calc(100% + 40px);
 
     @include _desktop {
       overflow-x: visible;
+      overflow-y: visible;
+      margin: 0;
+      padding: 0;
+      width: 100%;
     }
 
     &::-webkit-scrollbar {

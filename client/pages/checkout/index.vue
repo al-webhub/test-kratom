@@ -11,6 +11,11 @@ export default {
     
     await useAsyncData('profile', () => profileStore.getProfile())
 
+
+    definePageMeta({
+      middleware: 'profile-pc-data',
+    })
+
     return {
       cartStore,
       authStore,

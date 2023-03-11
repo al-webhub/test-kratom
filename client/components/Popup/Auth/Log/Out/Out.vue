@@ -26,10 +26,10 @@
     </template>
     <template v-slot:footer>
       <div class="footer-inner">
-        <button @click="closeHandler" class="button-only-text">
+        <button @click="closeHandler" clickable class="button-only-text">
             <span class="text">{{ $t('button.cancel') }}</span>
         </button>
-        <button @click="logoutHandler" class="main-button small">
+        <button @click="logoutHandler" clickable class="main-button small">
           <span class="text">{{ $t('button.yes') }}</span>
         </button> 
       </div>

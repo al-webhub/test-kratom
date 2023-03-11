@@ -237,12 +237,16 @@
 
 
 .qualities {
-  height: 66px;
+  height: initial;
   margin-top: 20px;
   font-size: 12px;
   line-height: 100%;
   text-transform: uppercase;
   font-weight: 700;
+
+  @include _tablet {
+    height: 66px;
+  }
 }
 
 .quality {

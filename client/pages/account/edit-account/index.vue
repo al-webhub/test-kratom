@@ -123,11 +123,11 @@ export default {
     </div>
 
     <div class="profile__form__footer">
-        <button @click="changePassHandler" type="button" class="button-only-text">
+        <button @click="changePassHandler" clickable type="button" class="button-only-text">
             <span class="text">{{ $t('button.Change_password') }}</span>
         </button>
         
-        <button @click="saveHandler" :class="{loading: isLoading}" class="main-button primary-color small bordered">
+        <button @click="saveHandler" :class="{loading: isLoading}" clickable class="main-button primary-color small bordered">
             <span class="text">{{ $t('button.save') }}</span>
         </button>
     </div>

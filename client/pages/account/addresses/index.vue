@@ -156,7 +156,7 @@ export default {
     </div>
     
     <div class="profile__form__footer">
-      <button @click="saveHandler" :class="{loading: isLoading}" class="main-button primary-color bordered small">
+      <button @click="saveHandler" :class="{loading: isLoading}" clickable class="main-button primary-color bordered small">
         <span class="text">{{ $t('button.save_address') }}</span>
       </button>
     </div>

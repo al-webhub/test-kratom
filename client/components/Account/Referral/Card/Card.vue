@@ -41,7 +41,7 @@ export default {
 <style src="../../card.scss" lang="sass" scoped />
 
 <template>
-  <ul @click="toggleHandler" :class="{active: isActive}" class="referral-history__list">
+  <ul @click="toggleHandler" :class="{active: isActive}" clickable class="referral-history__list">
     <li class="referral-history__item referral-history-position-1-lvl">
       <div class="main-wrapper">
         <p class="main-type">{{ t('My_referral') }} (1st lvl)</p>

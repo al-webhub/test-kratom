@@ -84,6 +84,7 @@ export default {
         <div
           v-if="nullable"
           @click="selectHandler(null)"
+          clickable
           class="general-drop__item"
         >
           <div class="text">{{ t('Please_select') }}</div>
@@ -94,6 +95,7 @@ export default {
           :key="index"
           @click="selectHandler(value)"
           :class="{active: modelValue === value}"
+          clickable
           class="general-drop__item"
         >
           <span class="icon-active"></span>

@@ -13,8 +13,13 @@
 }
 
 :deep(.decor-figure-1) {
-  top: -20%;
-  right: -10%;
+  display: none;
+
+  @include _tablet {
+    display: block;
+    top: -20%;
+    right: -10%;
+  }
   
   @include _desktop {
     top: -50%;

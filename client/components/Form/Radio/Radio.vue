@@ -23,7 +23,7 @@ export default {
 <style src="./radio.scss" lang="sass" scoped />
 
 <template>
-  <label class="input__wrapper-radio">
+  <label clickable class="input__wrapper-radio">
     <input :value="value" @change="changeHandler" :name="name" :checked="value === modelValue" type="radio" class="input-radio" >
     <span class="custome-radio"></span>
 

@@ -106,7 +106,7 @@ export default {
             <div :class="{animated: canAnimate}" class="content container">
               <p class="content__line-1">{{ banner.caption }}</p>
               <div class="content__line-2" v-html="banner.excerpt"></div>
-              <NuxtLink :to="localePath(banner.link)" class="main-button primary">
+              <NuxtLink :to="localePath(banner.link)" clickable class="main-button primary">
                 <span class="text">{{ banner.title }}</span>
               </NuxtLink>
             </div>
@@ -130,6 +130,7 @@ export default {
               class="numbers__button"
               type="button"
               title="pagination"
+              clickable
             >
               0{{ number }}
             </button>

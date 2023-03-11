@@ -131,7 +131,7 @@ export default {
       quality = "40"
       loading = "lazy"
       fit="cover"
-      class="avatar">
+      class="avatar"
     >
     </nuxt-img> 
 
@@ -159,6 +159,7 @@ export default {
                 class="controls__button"
                 type="button"
                 title="like"
+                v-clickable
               >
                 <img src="~assets/svg-icons/like.svg" class="icon" alt="like icon" />
                 <span class="text">{{ review.likes }}</span>
@@ -171,6 +172,7 @@ export default {
                 class="controls__button"
                 type="button"
                 title="dislike"
+                v-clickable
               >
                 <img src="~assets/svg-icons/dislike.svg" class="icon" alt="dislike icon" />
                 <span class="text">{{ review.dislikes }}</span>
@@ -183,6 +185,7 @@ export default {
                 class="controls__button controls__button-reply"
                 type="button"
                 title="reply"
+                clickable
               >
                 <img src="~assets/svg-icons/reply.svg" class="icon" alt="reply icon" />
                 <span class="text">{{ $t('button.reply') }}</span>
@@ -214,6 +217,7 @@ export default {
             class="more-btn"
             type="button"
             title="replies"
+            clickable
           >
             <span class="text">{{ $t('button.show_x_replies', {replies: review.children.length}) }}</span>
             <img src="~assets/svg-icons/arrow-simple.svg" class="icon" alt="arrow icon" />

@@ -59,8 +59,12 @@
   }
    
   & > h2 {
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 20px;
+
+    @include _tablet {
+      margin-top: 45px;
+    }
 
     @include _desktop {
       margin-top: 60px;

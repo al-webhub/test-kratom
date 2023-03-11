@@ -30,9 +30,9 @@ export default {
 <style src="./simple.scss" lang="sass" scoped />
 
 <template>
-  <popup-layout-wrapper :size="size">
+  <popup-layout-wrapper :size="size" :can-close="canClose">
     <div>
-      <button v-if="canClose" @click="closeHandler" type="button" class="close__popup">
+      <button v-if="canClose" @click="closeHandler" clickable type="button" class="close__popup">
         <img src="~assets/svg-icons/close.svg" class="icon" />
       </button>
 

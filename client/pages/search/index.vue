@@ -63,6 +63,7 @@
           class="main-button main-button-small"
           type="button"
           :aria-label="$t('button.search')"
+          clickable
         >
           <span class="text">{{ $t('button.search') }}</span>
         </button>

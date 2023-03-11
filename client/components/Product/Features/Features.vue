@@ -17,7 +17,7 @@ export default {
       <div class="name">{{ feature.name }}</div>
       <div class="line"></div>
       <div class="value">
-        <NuxtLink :to="localePath(`/shop/${feature.slug}`)" class="link">{{ feature.value }}</NuxtLink>
+        <NuxtLink :to="localePath(`/shop/${feature.slug}`)" clickable class="link">{{ feature.value }}</NuxtLink>
       </div>
     </li>
   </ul>

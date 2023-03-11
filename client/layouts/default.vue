@@ -52,6 +52,10 @@
     return useModalStore().show('logOut')
   })
   
+  const isPopupPcActive = computed(() => {
+    return useModalStore().show('pc')
+  })
+
   // HOOKES
   onMounted(() => {
     // LOGIN USER BY TOKEN
@@ -89,7 +93,7 @@
         <template v-for="meta in head.meta" :key="meta.id">
           <Meta :id="meta.id" :property="meta.property" :content="meta.content" />
         </template>
-        <Meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <Meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
       </Head>
       <Body>
         <the-header></the-header>
@@ -104,8 +108,16 @@
 
         <lazy-the-footer></lazy-the-footer>
 
+        <!-- Clicker show ellipse were mouse have been clicked -->
+        <simple-clicker></simple-clicker>
+
         <DelayHydration>
           <lazy-modal-noty></lazy-modal-noty>
+
+          <!-- POPUP / Fill in the key data -->
+          <transition name="fade-in">
+            <lazy-popup-p-c v-if="isPopupPcActive"></lazy-popup-p-c>
+          </transition>
 
           <!-- MODAL / shoping cart -->
           <transition name="move-x-right">

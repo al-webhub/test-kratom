@@ -75,12 +75,12 @@ export default {
   <li class="checkout__item" :class="{active:isActive}">
       
       <div class="checkout__item__noty">
-          <p>{{ $t('text.Please_complete') }}</p>
+        <p>{{ $t('text.Please_complete') }}</p>
       </div>
       
       <div class="checkout__item__header">
-          <p class="calc">2/3</p>
-          <p class="caption">{{ t('shipping') }}</p>
+        <p class="calc">2/3</p>
+        <p class="caption">{{ t('shipping') }}</p>
       </div>
 
       <div class="checkout__item__body">
@@ -97,6 +97,7 @@ export default {
                   v-model="order.delivery"
                   :value="method"
                   name="delivery"
+                  clickable
                 >
                   <p class="delivery__label">
                     {{ method }}

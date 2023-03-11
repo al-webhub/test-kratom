@@ -183,7 +183,7 @@ export default {
     </template>
 
     <template v-slot:footer>
-      <button @click.once="createHandler()" :class="{loading: isLoading}" class="main-button primary small btn">
+      <button @click.once="createHandler()" :class="{loading: isLoading}" clickable class="main-button primary small btn">
         <span class="text">{{ $t('button.send_request') }}</span>
       </button>
     </template>

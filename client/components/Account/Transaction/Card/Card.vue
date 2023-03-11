@@ -28,7 +28,7 @@ export default {
 <style src="../../card.scss" lang="sass" scoped />
 
 <template>
-  <ul @click="toggleHandler" :class="{active: isActive}" class="referral-history__list referral-history__list-transactions">
+  <ul @click="toggleHandler" :class="{active: isActive}" clickable class="referral-history__list referral-history__list-transactions">
     <li class="referral-history__item referral-history-position-data">
       <div class="main-wrapper">
         <p class="main-type">{{ t('Transaction_date') }}</p>
