@@ -79,6 +79,7 @@
           :key="item.id"
           v-observe="{index: key, callback: observeCallback}"
           class="item"
+          pointer
         >
             <NuxtLink
               :to="localePath(item.link)"
@@ -101,7 +102,10 @@
         </li>
 
         <transition name="fade-in">
-          <li v-if="menuGroups.invisible && Object.keys(menuGroups.invisible).length !== 0" class="item">
+          <li
+            v-if="menuGroups.invisible && Object.keys(menuGroups.invisible).length !== 0" 
+            pointer class="item"
+          >
             <span class="link">{{ $t('title.menu') }}</span>
             <img src="~assets/svg-icons/arrow-simple.svg" class="icon" alt="arrow icon" />
 

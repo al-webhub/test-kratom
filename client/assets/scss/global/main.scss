@@ -28,7 +28,8 @@ label,
   pointer-events: auto; 
 }
 
-*[scrollable] {
+*[scrollable],
+*[pointer] {
   pointer-events: auto;
 
   * {

@@ -107,7 +107,7 @@ export default {
 <style src="./card.scss" lang="sass" scoped />
 
 <template>
-  <div class="box" :class="{active: isInfoOpen}">
+  <div class="box" :class="{active: isInfoOpen}" pointer>
       
       <!-- PRODUCT INFO -->
       <div class="info">
