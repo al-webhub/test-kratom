@@ -79,7 +79,7 @@ export default {
 
       <form-error :error="error"></form-error>
 
-      <div class="general-drop__list">
+      <div class="general-drop__list" scrollable>
         
         <div
           v-if="nullable"
