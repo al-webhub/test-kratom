@@ -14,8 +14,17 @@ export default {
       return appStore.deliveryMethods(locale.value)
     })
 
+
+    const countries = computed(() => {
+      if(locale && locale.value === 'ru')
+        return useCountriesRus()
+      else
+        return useCountries()
+    })
+
     return {
       t,
+      countries,
       deliveryTimes,
       deliveryMethods
     }
@@ -59,12 +68,6 @@ export default {
       type: Object
     }
   },
-
-  computed: {
-    countries () {
-      return useCountries()
-    }
-  }
 }
 </script>
 
