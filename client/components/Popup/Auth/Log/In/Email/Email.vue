@@ -6,11 +6,11 @@
 
   // COMPUTED
   const user = computed(() => {
-    return useAuthStore().getUser
+    return useAuthStore().getLogin
   })
 
-  const errors = computed(() =>{
-    return useAuthStore().getErrors
+  const canNext = computed(() => {
+    return user && user.value && user.value.email && user.value.email.length > 5 
   })
 
   // HANDLERS
@@ -41,12 +41,17 @@
         <form-text
           v-model="user.email"
           :placeholder="$t('form.email')"
-          :errors="errors.email"
         >
         </form-text>
 
-        <button @click="openLogInPasswordHandler" clickable type="button" class="main-button primary-color small">
-            <span class="text">{{ $t('button.next') }}</span>
+        <button
+          @click="openLogInPasswordHandler"
+          :class="{disabled: !canNext}"
+          clickable
+          type="button"
+          class="main-button primary-color small"
+        >
+          <span class="text">{{ $t('button.next') }}</span>
         </button>
       </div>
     </template>
@@ -54,7 +59,14 @@
     <template v-slot:footer>
       <div class="popup__footer__sing-up">
         <p>{{ t('Don_have_any_account') }}</p>&nbsp;
-        <button @click="openSignInSocialHandler" clickable type="button" class="a-link">{{ $t('button.sign_up') }}</button>
+        <button
+          @click="openSignInSocialHandler"
+          clickable
+          type="button"
+          class="a-link"
+        >
+          {{ $t('button.sign_up') }}
+        </button>
       </div>
     </template>
 

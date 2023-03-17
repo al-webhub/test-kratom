@@ -1,0 +1,32 @@
+/* Popup bonuses */
+.bonuses__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    line-height: 17px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #BDBDBD;
+}
+.bonuses__wrapper .sub-text {
+    font-size: 11px;
+    line-height: 13px;
+    align-self: flex-end;
+    color: #828282;
+    margin-right: 5px;
+}
+.bonuses__wrapper .sub-text span {
+    color:#BDBDBD;
+}
+.bonuses__wrapper:last-of-type {
+    margin-bottom: 30px;
+}
+.bonuses__wrapper .product__calc {
+    font-weight: 400;
+}
+.popup-bonuses .popup-caption {
+    margin-bottom: 30px;
+}
+/* //Popup bonuses */

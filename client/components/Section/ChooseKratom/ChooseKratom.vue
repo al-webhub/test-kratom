@@ -11,9 +11,9 @@ export default {
   data() {
     return {
       calc: {
-        stimulation: 4,
-        relaxation: 1,
-        euphoria: 3
+        stimulation: 5,
+        relaxation: 3,
+        euphoria: 4
       }
     }
   },
@@ -39,7 +39,8 @@ export default {
 
   methods: {
     searchHandler() {
-      return useModalStore().toggle('chooseKratom')
+      useModalStore().setData('chooseKratom', this.calc)
+      useModalStore().open('chooseKratom')
     },
 
   	calcMinus (param){

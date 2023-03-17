@@ -80,7 +80,7 @@ export default {
 
                   <li class="earn__compensation__item">
                       <div class="general-decor-caption">
-                          <div :style="{backgroundImage: iconImg}" class="img orders js-img-bg"></div>
+                        <img src="~assets/svg-icons/promo/cart.svg" class="icon" alt="cart icon" />
                       </div>
                       <h3 class="main-caption-s">{{ page.compensation_t_1 }}</h3>
                       <div v-html="page.compensation_c_1"></div>
@@ -88,7 +88,7 @@ export default {
 
                   <li class="earn__compensation__item">
                       <div class="general-decor-caption">
-                          <div :style="{backgroundImage: iconImg}" class="img discounts js-img-bg"></div>
+                        <img src="~assets/svg-icons/promo/percent.svg" class="icon" alt="percent icon" />
                       </div>
                       <h3 class="main-caption-s">{{ page.compensation_t_2 }}</h3>
                       <div v-html="page.compensation_c_2"></div>
@@ -96,7 +96,7 @@ export default {
 
                   <li class="earn__compensation__item">
                       <div class="general-decor-caption">
-                          <div :style="{backgroundImage: iconImg}" class="img money js-img-bg"></div>
+                        <img src="~assets/svg-icons/promo/dollar.svg" class="icon" alt="dollar icon" /> 
                       </div>
                       <h3 class="main-caption-s">{{ page.compensation_t_3 }}</h3>
                       <div v-html="page.compensation_c_3"></div>

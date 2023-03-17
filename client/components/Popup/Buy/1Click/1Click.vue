@@ -8,7 +8,8 @@
     const order = ref({
       name: null,
       phone: null,
-      text: null
+      text: null,
+      type: 'Buy 1 Click'
     })
 
     // COMPUTED

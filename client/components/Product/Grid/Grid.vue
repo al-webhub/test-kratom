@@ -17,7 +17,7 @@ export default {
   <section class="container">
     <div class="header">
       <p class="main-caption">{{ title }}</p>
-      <simple-more-btn :text="$t('button.shop')" class="btn"></simple-more-btn>
+      <simple-more-btn :text="$t('button.shop')" :link="localePath('/shop')" class="btn"></simple-more-btn>
     </div>
     <div class="grid">
       <product-card 

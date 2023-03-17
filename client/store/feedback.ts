@@ -1,11 +1,3 @@
-type Feedback = {
-  name: string,
-  phone: string,
-  email: string,
-  text: string,
-  type: string,
-};
-
 export const useFeedbackStore = defineStore('feedbackStore', {
   state: () => ({
     feedback: null as Feedback | null,

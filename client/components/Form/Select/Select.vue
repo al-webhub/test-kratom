@@ -41,6 +41,10 @@ export default {
     placeholderIsActive() {
       return this.isActive || this.modelValue?.length
     },
+
+    id() {
+      return 'select-' + (Math.random() + 1).toString(36).substring(7);
+    }
   },
 
   methods: {
@@ -64,14 +68,22 @@ export default {
       <input
         :value="modelValue"
         @focus="focusHandler"
-        @blur="blurHandler" 
+        @blur="blurHandler"
+        :id="id"
         type="text"
         class="main-input"
         readonly 
         required
       > 
       
-      <form-placeholder v-if="placeholder" :is-active="placeholderIsActive" :placeholder="placeholder" :is-required="required"></form-placeholder>
+      <form-placeholder
+        v-if="placeholder"
+        :is-active="placeholderIsActive"
+        :placeholder="placeholder"
+        :is-required="required"
+        :target-id="id"
+      >
+      </form-placeholder>
 
       <span class="icon-drop">
         <img src="~assets/svg-icons/arrow-simple.svg" class="icon" />

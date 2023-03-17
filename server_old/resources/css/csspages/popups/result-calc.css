@@ -1,0 +1,21 @@
+/* Popup result-calc */
+.popup-result-calc {
+  max-width: 735px;
+  max-height: 650px;
+}
+.popup-result-calc__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* //Popup result-calc */
+
+@media screen and (max-width: 1024px) {
+  /* Popup result-calc */
+  .popup-result-calc {
+    max-width: 543px;
+    max-height: 100%;
+    padding: 50px 30px;
+  }
+  /* //Popup result-calc */
+}

@@ -1,21 +1,11 @@
 <script setup>
-  import { useAuthStore } from '~/store/auth';
   import { useModalStore } from '~/store/modal';
+  import { useRegisterMock } from '~/composables/mockups/useRegisterMock';
 
   const { t } = useI18n({useScope: 'local'})
   const isLoading = ref(false)
 
-  const userDefault = {
-    firstname: null,
-    lastname: null,
-    email: null,
-    password: '',
-    password_confirmation: '',
-    communication: null,
-    communication_number: null,
-  }
-
-  const user = ref({...userDefault})
+  const user = ref({...useRegisterMock()})
   const errors = ref(null)
 
   // HANDLERS
@@ -32,7 +22,7 @@
 
     useRegister()(user.value)
       .then(() => {
-        user.value = userDefault
+        user.value = useRegisterMock()
         closeHandler()
       })
       .catch((er) => {

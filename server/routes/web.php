@@ -18,6 +18,9 @@ use App\Http\Controllers\MigrateDbController;
 //Route::get('/migr', [MigrateDbController::class, 'all']);
 
 Route::get('/mailable', function () {
+  $feedback = Backpack\Feedback\app\Models\Feedback::find(40);
+  return new App\Mail\Buy1ClickCreatedAdmin($feedback);
+
   // $order = App\Models\Override\Order::find(24);
   // return new App\Mail\OrderCreatedAdmin($order);
 

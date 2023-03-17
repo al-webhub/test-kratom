@@ -4,10 +4,14 @@
   width: 100%;
   font-size: 14px;
   line-height: 17px;
-}
 
-.input__wrapper.disabled {
+  &.disabled {
     pointer-events: none;
+
+    input {
+      pointer-events: none;
+    }
+  }
 }
 
 // .input__wrapper.error .input-error-text {

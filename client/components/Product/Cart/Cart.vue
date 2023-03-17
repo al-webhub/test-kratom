@@ -61,7 +61,6 @@ export default {
       :model-value="selectedModification"
       :values="product.modifications"
       @update:modelValue="updateVariantHandler"
-      size="large"
       class="variants-item"
     >
     </product-variants-list>

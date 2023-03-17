@@ -37,6 +37,7 @@ export default {
         name: null,
         email: null,
         text: null,
+        type: 'Contact page'
       },
     }
   },
@@ -83,18 +84,19 @@ export default {
     async sendHandler() {
       this.isLoading = true
       try {
-        await this.feedbackStore.createFeedback(this.feedback).then((res) => {
-          useNoty().setNoty(this.$t('noty.message_success'))
-          
-          this.feedback.name = null
-          this.feedback.email = null
-          this.feedback.text = null
-        })
-      }catch(e) {
-          useNoty().setNoty(this.$t('noty.message_fail'))
-      }finally {
-        this.isLoading = false
-      }
+        await this.feedbackStore.createFeedback(this.feedback)
+          .then((res) => {
+              useNoty().setNoty(this.$t('noty.message_success'))
+              
+              this.feedback.name = null
+              this.feedback.email = null
+              this.feedback.text = null
+            })
+        }catch(e) {
+            useNoty().setNoty(this.$t('noty.message_fail'))
+        }finally {
+          this.isLoading = false
+        }
     }
   },
 }

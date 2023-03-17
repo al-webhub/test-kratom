@@ -1,0 +1,26 @@
+/* Gidebook */
+.gidebook__wrapper {
+  position: relative;
+}
+.gidebook__wrapper .main-button {
+  margin: 30px auto 0px;
+}
+.gidebook__wrapper .general-decor-figure {
+  width: 315px;
+  height: 315px;
+  transform: rotate(139.28deg);
+  bottom: -160px;
+  right: -60px;
+}
+.article__list-gidebook {
+  margin-bottom: -50px;
+}
+.article__list-gidebook .article__item {
+  margin-bottom: 50px;
+}
+.gidebook__text {
+  font-size: 16px;
+  line-height: 150%;
+  margin-top: 100px;
+}
+/* //Gidebook */

@@ -7,7 +7,7 @@
   grid-gap: 15px;
   justify-items: flex-start;
   max-width: 500px;
-  margin: 0 auto;
+  margin: 30px auto 0 auto;
 
   @include _tablet {
     grid-template-columns: minmax(0, 1fr) 37%;

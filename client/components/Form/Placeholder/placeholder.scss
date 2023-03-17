@@ -6,9 +6,14 @@
   width: 100%;
   height: 100%;
   border-radius: 30px;
-  pointer-events: none;
 
   &.disabled {
+    pointer-events: none;
+
+    * {
+      pointer-events: none;
+    }
+
     .custome-placeholder__before,
     .custome-placeholder__text,
     .custome-placeholder__after {

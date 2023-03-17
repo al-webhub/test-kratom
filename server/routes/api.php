@@ -22,18 +22,10 @@ use Backpack\Profile\app\Http\Controllers\Api\ProfileController;
 |
 */
 
-// Route::prefix('auth')->group(function() {
-// 	Route::get('/{provider}', 'App\Http\Controllers\Auth\OAuthController@redirect')->where('provider', 'google|facebook');
-// 	Route::post('/{provider}/callback', 'App\Http\Controllers\Auth\OAuthController@callback')->where('provider', 'google|facebook');
-	
-// 	Route::middleware('auth:sanctum')->get('/getUser', 'App\Http\Controllers\Auth\OAuthController@getUser');
-// });
-
-//Route::middleware('auth:profile')->get('/profile', [LoginController::class, 'profile']);
-//Route::middleware('auth:profile')->get('/profile', [ProfileController::class, 'show']);
 
 Route::controller(ProductController::class)->group(function () {
   Route::post('/products/{id}/updateQualities', 'updateQualities');
+  Route::post('/products/similar', 'similar')->middleware('api');
 });
 
 Route::controller(GuidebookController::class)->group(function () {

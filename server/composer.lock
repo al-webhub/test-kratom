@@ -3835,16 +3835,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-articles.git",
-                "reference": "bcd7e3a9646d6e910a316e364fa095c5bf0f562d"
+                "reference": "017073256bc172bc8eeb58765bfed60d6a8a8bd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/bcd7e3a9646d6e910a316e364fa095c5bf0f562d",
-                "reference": "bcd7e3a9646d6e910a316e364fa095c5bf0f562d",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-articles/zipball/017073256bc172bc8eeb58765bfed60d6a8a8bd8",
+                "reference": "017073256bc172bc8eeb58765bfed60d6a8a8bd8",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.0"
+                "php": ">=7.4"
             },
             "require-dev": {
                 "laravel/pint": "^1.0",
@@ -3899,7 +3899,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-articles/issues",
                 "source": "https://github.com/parabellumKoval/backpack-articles/tree/main"
             },
-            "time": "2023-01-15T17:10:59+00:00"
+            "time": "2023-03-01T11:06:50+00:00"
         },
         {
             "name": "parabellumkoval/backpack-banners",
@@ -3907,16 +3907,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-banners.git",
-                "reference": "49308cfa98255f4bab5d0f35f2fcbe82e39cbaaa"
+                "reference": "1cd812b8fe53f32e9eabddfe580b635bcd723528"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-banners/zipball/49308cfa98255f4bab5d0f35f2fcbe82e39cbaaa",
-                "reference": "49308cfa98255f4bab5d0f35f2fcbe82e39cbaaa",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-banners/zipball/1cd812b8fe53f32e9eabddfe580b635bcd723528",
+                "reference": "1cd812b8fe53f32e9eabddfe580b635bcd723528",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.0"
+                "php": ">=7.4"
             },
             "require-dev": {
                 "laravel/pint": "^1.0",
@@ -3971,7 +3971,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-banners/issues",
                 "source": "https://github.com/parabellumKoval/backpack-banners/tree/main"
             },
-            "time": "2022-12-21T12:49:28+00:00"
+            "time": "2023-03-13T15:33:38+00:00"
         },
         {
             "name": "parabellumkoval/backpack-feedback",
@@ -3979,12 +3979,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-feedback.git",
-                "reference": "ba749c16ff4110c5de2aacf1607bca6ffe5ebfd3"
+                "reference": "5645bbd4d91de9f297d6ff9a1145abe6e6114142"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-feedback/zipball/ba749c16ff4110c5de2aacf1607bca6ffe5ebfd3",
-                "reference": "ba749c16ff4110c5de2aacf1607bca6ffe5ebfd3",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-feedback/zipball/5645bbd4d91de9f297d6ff9a1145abe6e6114142",
+                "reference": "5645bbd4d91de9f297d6ff9a1145abe6e6114142",
                 "shasum": ""
             },
             "require": {
@@ -4029,7 +4029,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-feedback/issues",
                 "source": "https://github.com/parabellumKoval/backpack-feedback/tree/main"
             },
-            "time": "2023-01-30T11:48:48+00:00"
+            "time": "2023-03-16T16:48:51+00:00"
         },
         {
             "name": "parabellumkoval/backpack-profile",
@@ -4097,16 +4097,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-reviews.git",
-                "reference": "3ff6af3e39595bba5c54b78ae5ee563f72ccdfe9"
+                "reference": "2319293b1942c71a4dc74d7d92e794d758575128"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/3ff6af3e39595bba5c54b78ae5ee563f72ccdfe9",
-                "reference": "3ff6af3e39595bba5c54b78ae5ee563f72ccdfe9",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-reviews/zipball/2319293b1942c71a4dc74d7d92e794d758575128",
+                "reference": "2319293b1942c71a4dc74d7d92e794d758575128",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.0"
+                "php": ">=7.4"
             },
             "require-dev": {
                 "laravel/pint": "^1.0",
@@ -4161,7 +4161,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-reviews/issues",
                 "source": "https://github.com/parabellumKoval/backpack-reviews/tree/main"
             },
-            "time": "2023-01-20T14:45:17+00:00"
+            "time": "2023-03-13T15:34:36+00:00"
         },
         {
             "name": "parabellumkoval/backpack-store",
@@ -4169,12 +4169,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-store.git",
-                "reference": "97644c48ad2917048719bdf380e0ed554faf9958"
+                "reference": "794df535ce23b7017ebd430074e79b295985f651"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/97644c48ad2917048719bdf380e0ed554faf9958",
-                "reference": "97644c48ad2917048719bdf380e0ed554faf9958",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-store/zipball/794df535ce23b7017ebd430074e79b295985f651",
+                "reference": "794df535ce23b7017ebd430074e79b295985f651",
                 "shasum": ""
             },
             "require": {
@@ -4221,7 +4221,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-store/issues",
                 "source": "https://github.com/parabellumKoval/backpack-store/tree/main"
             },
-            "time": "2023-02-11T16:00:19+00:00"
+            "time": "2023-03-13T15:35:09+00:00"
         },
         {
             "name": "parabellumkoval/backpack-transactions",

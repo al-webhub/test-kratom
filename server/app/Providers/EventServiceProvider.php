@@ -17,6 +17,9 @@ use \App\Observers\OrderObserver;
 use \App\Models\Override\Profile;
 use \App\Observers\ProfileObserver;
 
+use \Backpack\Feedback\app\Models\Feedback;
+use \App\Observers\FeedbackObserver;
+
 use \Backpack\Transactions\app\Models\Transaction;
 use \App\Observers\TransactionObserver;
 
@@ -44,5 +47,6 @@ class EventServiceProvider extends ServiceProvider
       Order::observe(OrderObserver::class);
       Profile::observe(ProfileObserver::class);
       Transaction::observe(TransactionObserver::class);
+      Feedback::observe(FeedbackObserver::class);
     }
 }

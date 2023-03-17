@@ -1,0 +1,16 @@
+User-agent: *
+Disallow: /logout
+Disallow: /checkout
+Disallow: /account
+Disallow: /password
+Disallow: /login
+Disallow: /register
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.png
+Allow: *.js
+Allow: *.css
+
+Host: https://kratomhelper.com/
+Sitemap: https://kratomhelper.com/sitemap.xml

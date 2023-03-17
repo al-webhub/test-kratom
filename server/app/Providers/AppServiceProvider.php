@@ -31,8 +31,7 @@ class AppServiceProvider extends ServiceProvider
       \View::composer('backpack::inc.topbar_left_content', function ($view) {
 		    $orders = Order::where('status','new')->count();
 		    $reviews = Review::where('is_moderated', 0)->count();
-		    //$feedback = Feedback::all()->count();
-        $feedback = 0;
+		    $feedback = Feedback::where('status', 'new')->count();
 		    
         $view->with('orders', $orders)->with('reviews', $reviews)->with('feedback', $feedback);
       });

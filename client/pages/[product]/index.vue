@@ -7,7 +7,7 @@
   // DATA
   const activeTab = ref('description')
   const selectedModification = ref({})
-  const popularProducts = ref([])
+  //const popularProductsData = ref([])
 
   // COMPUTED
   const slug = computed(() => {
@@ -20,6 +20,11 @@
 
   const reviewsMeta = computed(() => {
     return useReviewStore().meta;
+  })
+
+  const popularProducts = computed(() => {
+    console.log('popularProductsData', useProductStore().grid)
+    return useProductStore().grid
   })
 
   const rating = computed(() => {
@@ -189,9 +194,28 @@
   }
 
   const getPopulars = (id) => {
-    useLazyAsyncData('random_products', () => useProductStore().getRandom(id)).then((r) => {
-      popularProducts.value = r.data.value
-    })   
+
+    // useProductStore().getRandom(id).then((res) => {
+    //   console.log('useProductStore', res)
+    //     // if(data)
+    //     //   popularProductsData.value = data.value
+    //   })
+
+
+    useLazyAsyncData('random_products', () => useProductStore().getRandom(id))
+  //popularProductsData.value = productsArray.value
+      // .then(({data, error}) => {
+      //   console.log('random_products', data)
+      //   // if(data)
+      //   //   popularProductsData.value = data.value
+      // })
+
+    // console.log('productsArray', productsArray)
+
+    // watch(productsArray, (arr) => {
+    //   console.log('watch', arr)
+    //   popularProducts.value = arr
+    // })
   }
 
   // HANDLERS
@@ -216,15 +240,13 @@
         setSeo()
       }
 
-      console.log('Error', error);
-
       if(error.value){
-        //throw createError({ statusCode: 404, message: 'Page Not Found' })
+        throw createError({ statusCode: 404, message: 'Page Not Found' })
       }
 
       return product
     }),
-    await useAsyncData('reviews', () => useReviewStore().getAll(reviewQuery.value, true)).then(({data: reviews, error}) => {
+    await useLazyAsyncData('reviews', () => useReviewStore().getAll(reviewQuery.value, true)).then(({data: reviews, error}) => {
       return reviews
     })
   ]).then(([ product, reviews]) => {

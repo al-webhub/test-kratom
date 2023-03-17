@@ -20,6 +20,11 @@ declare global {
     lastname?: string | null,
   }
 
+  type LoginForm = {
+    email: string | null,
+    password: string | null,
+  }
+
   type Profile = {
     id: number | null,
     email: string,
@@ -27,6 +32,14 @@ declare global {
     firstname: string | null,
     lastname: string | null,
     photo: string | null
+  };
+
+  type Feedback = {
+    name: string,
+    phone: string,
+    email: string,
+    text: string,
+    type: string,
   };
 
   type Langs = "en" | "ru"

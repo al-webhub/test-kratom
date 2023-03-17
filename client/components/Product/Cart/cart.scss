@@ -1,5 +1,9 @@
 @import 'assets/scss/global/mixins';
 
+:deep(.variants-item.list) {
+  font-size: 16px;
+}
+
 .buy-item {
   display: flex;
   align-items: center;
@@ -21,6 +25,7 @@
 
   @include _desktop {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
   }
 }
 

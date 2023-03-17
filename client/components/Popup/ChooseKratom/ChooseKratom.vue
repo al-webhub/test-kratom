@@ -1,25 +1,26 @@
-<script>
-import { useProductStore } from '~/store/product';
-import { useModalStore } from '~/store/modal';
+<script setup>
+  import { useProductStore } from '~/store/product';
+  import { useModalStore } from '~/store/modal';
 
-export default {
-  setup() {
-    const { t } = useI18n({useScope: 'local'}) 
-    return { t }
-  },
+  const { t } = useI18n({useScope: 'local'}) 
 
-  computed: {
-    products() {
-      return useProductStore().all.slice(0,4)
-    },
-  },
+  const products = ref([])
 
-  methods: {
-    closeHandler() {
-      useModalStore().close('chooseKratom')
-    },
+  const calc = computed(() => {
+    return useModalStore().data('chooseKratom')
+  })
+
+  // METHODS
+  const closeHandler = () => {
+    useModalStore().close('chooseKratom')
   }
-}
+
+  // HOOKS
+  useAsyncData('random', () => {return useProductStore().getSimilar(calc.value)})
+    .then(({data, error}) => {
+      if(data)
+        products.value = data.value
+    })
 </script>
 
 <style src="./choose-kratom.scss" lang="sass" scoped />

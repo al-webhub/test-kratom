@@ -138,7 +138,7 @@
     "message_success": "Thank you, your message was sent successfully 😉",
     "message_fail": "An error has occurred. Your feedback has not been send 😓",
     "1click_success": "Thanks for your order! Our manager will contact you soon 👍",
-    "1click_fail": "An error has occurred. Your order has not been create 👍",
+    "1click_fail": "An error has occurred. Your order has not been create 😔",
     "copied": "Link was copied: {text}",
     "withdrawal_success": "You have successfully submitted a withdrawal request",
     "withdrawal_fail": "An error has occurred. Withdrawal request has not been completed."

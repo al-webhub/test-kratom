@@ -28,8 +28,8 @@ export default {
       })
     }
 
-    const getReviews = async (query, refresh) => {
-      await useAsyncData('reviews', () => reviewStore.getAll(query, refresh))
+    const getReviews = (query, refresh) => {
+      return useLazyAsyncData('reviews', () => reviewStore.getAll(query, refresh))
     }
 
     const loadMoreHandler = async () => {

@@ -159,7 +159,7 @@ export default {
                 class="controls__button"
                 type="button"
                 title="like"
-                v-clickable
+                clickable
               >
                 <img src="~assets/svg-icons/like.svg" class="icon" alt="like icon" />
                 <span class="text">{{ review.likes }}</span>
@@ -172,7 +172,7 @@ export default {
                 class="controls__button"
                 type="button"
                 title="dislike"
-                v-clickable
+                clickable
               >
                 <img src="~assets/svg-icons/dislike.svg" class="icon" alt="dislike icon" />
                 <span class="text">{{ review.dislikes }}</span>

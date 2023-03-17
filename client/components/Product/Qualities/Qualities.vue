@@ -1,4 +1,7 @@
 <script setup>
+  import { useProductStore } from '~/store/product';
+  import { useQualitiesStore } from '~/store/qualities';
+
   const { t } = useI18n({useScope: 'local'})
 
   const props = defineProps({
@@ -23,22 +26,19 @@
     return attr?.value && toHumanValue(attr.value) || null
   })
 
+  const userMarks = computed(() => {
+    return useQualitiesStore().getMarks(props.product.id) || {}
+  })
+
   // METHODS
   const toHumanValue = (x) => {
     return Math.floor(x / 20 * 2) / 2
   }
 
   // HANDLERS
-  const updateStimulationHandler = (value) => {
-    this.$emit('update:stimulation', value)
-  }
-
-  const updateRelaxationHandler = (value) => {
-    this.$emit('update:relaxation', value)
-  }
-
-  const updateEuphoriaHandler = (value) => {
-    this.$emit('update:euphoria', value)
+  const updateQualityHandler = (name,value) => {
+    useQualitiesStore().setMark(props.product.id, name, value)
+    useProductStore().updateQualities(props.product.id, {[name]: value})
   }
 </script>
 
@@ -59,7 +59,9 @@
         <div class="line"></div>
         <simple-five-dots
           :model-value="stimulation"
-          @update:modelValue="updateStimulationHandler"
+          :user-mark="userMarks['stimulation']"
+          @update:modelValue="(value) => updateQualityHandler('stimulation', value)"
+          get="relative"
           size="medium"
         >
         </simple-five-dots>
@@ -70,7 +72,9 @@
         <div class="line"></div>
         <simple-five-dots
           :model-value="relaxation"
-          @update:modelValue="updateRelaxationHandler"
+          :user-mark="userMarks['relaxation']"
+          @update:modelValue="(value) => updateQualityHandler('relaxation', value)"
+          get="relative"
           size="medium"
         >
         </simple-five-dots>
@@ -81,7 +85,9 @@
         <div class="line"></div>
         <simple-five-dots
           :model-value="euphoria"
-          @update:modelValue="updateEuphoriaHandler"
+          :user-mark="userMarks['euphoria']"
+          @update:modelValue="(value) => updateQualityHandler('euphoria', value)"
+          get="relative"
           size="medium"
         >
         </simple-five-dots>

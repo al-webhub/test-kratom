@@ -14,6 +14,18 @@ class Profile extends BaseProfile
   use HasTransactions;
   use HasApiTokens;
 
+  public function getInfoDataAttribute() {
+    return [
+      "id" => $this->id,
+      "email" => $this->email,
+      "phone" => $this->phone,
+      "lastname" => $this->lastname,
+      "firstname" => $this->firstname,
+      "communication" => $this->extras['communication'] ?? '',
+      "communication_number" => $this->extras['communication_number'] ?? ''
+    ];
+  }
+
   public function getBalanceDataAttribute() {
     return [
       'balance' => $this->getBalance(),

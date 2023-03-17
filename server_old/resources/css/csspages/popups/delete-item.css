@@ -1,0 +1,16 @@
+/* Popup delete item */
+.popup-delete-cart-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px 20px;
+}
+.popup-delete-cart-item .main-button-color {
+  max-width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+}
+.popup-delete-cart-item .button-only-text {
+  width: 100%;
+  height: 20px;
+}

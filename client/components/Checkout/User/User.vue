@@ -1,86 +1,51 @@
-<script>
-import { useAuthStore } from '~/store/auth';
+<script setup>
+  import { useAuthStore } from '~/store/auth';
+  const { t } = useI18n({useScope: 'local'})
 
-export default {
-  setup() {
-    const { t } = useI18n({useScope: 'local'}) 
-    const authStore = useAuthStore()
+  const errors = ref(null)
+  const isLoading = ref(false)
+  const currentTab = ref(0)
 
-    return {
-      authStore,
-      t
-    }
-  },
-
-  data() {
-    return {
-      currentTab: 0,
-      isLoading: false,
-      login: null,
-      password: null,
-    }
-  },
-
-  props: {
+  // PROPS
+  const props = defineProps({
     order: {
       type: Object
     },
-  },
+  })
 
-  computed: {
-    tabs() {
-      if(this.isAuth)
-        return [
-          this.t('login'),
-        ]
-      else
-        return [
-          this.t('checkout_as_guest'),
-          this.t('login'),
-          this.t('register_account'),
-        ]
-    },
+  // COMPUTED
+  const tabs = computed(() => {
+    if(isAuth.value)
+      return [
+        t('login'),
+      ]
+    else
+      return [
+        t('checkout_as_guest'),
+        t('login'),
+        t('register_account'),
+      ]
+  })
 
-    isAuth() {
-      return this.authStore.isAuth
-    },
+  const isAuth = computed(() => {
+    return useAuthStore().isAuth
+  })
 
-    user() {
-      return this.authStore?.getUser
-    },
+  const user = computed(() => {
+    return useAuthStore().getUser
+  })
 
-    errors() {
-      return this.authStore.getErrors
-    }
-  },
-
-  methods: {
-    async loginHandler() {
-      this.isLoading = true
-      useLogin()().finally(() => {
-        this.isLoading = false
-      })
-    },
-
-    async registerHandler() {
-      this.isLoading = true
-      useRegister()().finally(() => {
-        this.isLoading = false
-      })
-    },
-
-    async logoutHandler() {
-      this.isLoading = true
-      useLogout()().finally(() => {
-        this.isLoading = false
-      })
-    },
-
-    loginLinkHandler() {
-      this.currentTab = 1
-    }
+  // METHODS
+  const logoutHandler = async () => {
+    isLoading.value = true
+    useLogout()().finally(() => {
+      isLoading.value = false
+    })
   }
-}
+
+  const loginLinkHandler = () => {
+    currentTab.value = 1
+  }
 </script>
 
 <style src="./../checkout.scss" lang="sass" scoped />
@@ -158,103 +123,14 @@ export default {
         </template>
 
         <template v-else>
-
-          <form-text
-            v-model="user.email"
-            placeholder="Email"
-            :error="errors?.user?.email"
-            required
-            class="form-component"
-          >
-          </form-text>
-
-          <form-password
-            v-model="user.password"
-            :placeholder="$t('form.Password')"
-            :error="errors?.user?.password"
-            required
-            class="form-component"
-          >
-          </form-password>
-
-          <div class="forgot__wrapper">
-            <button clickable class="forgot-btn">{{ $t('button.Forgot_Password') }}</button>
-          </div>
-
-          <button @click="loginHandler" :class="{loading: isLoading}" clickable class="main-button primary">
-            <span class="text">{{ $t('button.Log_In') }}</span>
-          </button>
-
+          <!-- login form -->
+          <checkout-user-login></checkout-user-login>
         </template>
       </div>
       
       <!-- REGISTER TAB -->
       <div class="checkout_form__wrapper" v-else-if="currentTab === 2 && !isAuth">
-
-        <form-text
-          v-model="user.firstname"
-          :placeholder="$t('form.first_name')"
-          :error="errors?.firstname"
-          required
-          class="form-component"
-        >
-        </form-text>
-
-        <form-text
-          v-model="user.lastname"
-          :placeholder="$t('form.Last_name')"
-          :error="errors?.lastname"
-          class="form-component"
-        >
-        </form-text>
-
-        <form-text
-          v-model="user.email"
-          placeholder="Email"
-          :error="errors?.email"
-          required
-          class="form-component"
-        >
-        </form-text>
-
-        <form-password
-          v-model="user.password"
-          :placeholder="$t('form.Password')"
-          :error="errors?.password"
-          required
-          class="form-component"
-        >
-        </form-password>
-
-        <form-password
-          v-model="user.password_confirmation"
-          :placeholder="$t('form.Confirm_Password')"
-          :error="errors?.password_confirmation"
-          required
-          class="form-component"
-        >
-        </form-password>
-
-        <form-p-c
-          :user="user"
-          :errors="errors"
-        ></form-p-c>
-          
-        <button @click="registerHandler" :class="{loading: isLoading}" clickable class="main-button primary">
-          <span class="text">{{ $t('button.sign_up') }}</span>
-        </button>
-
-        <div class="already__wrapper">
-          <p>{{ t('Already_have_account') }}</p>
-          <button
-            @click="loginLinkHandler"
-            clickable
-            class="button-enter a-link"
-          >
-            {{ $t('button.Log_In') }}
-          </button>
-        </div>
-
+        <checkout-user-register @loginLinkHandler="loginLinkHandler"></checkout-user-register>
       </div>
   </li>
 </template>

@@ -2,7 +2,7 @@
 import { useProductStore } from '~/store/product';
 
 export default {
-  async setup() {
+  setup() {
     const route = useRoute()
     const productStore = useProductStore()
 
@@ -25,7 +25,7 @@ export default {
     })
 
 
-    await useAsyncData('products', () => productStore.getAll(query.value))
+    useLazyAsyncData('products', () => productStore.getAll(query.value))
 
     return {
       productStore,

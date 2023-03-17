@@ -42,6 +42,8 @@ export const useProductStore = defineStore('productStore', {
       data: [] as ProductSmall[],
       meta: Object
     },
+
+    gridData: [] as ProductSmall[]
   }),
   
   getters: {
@@ -49,6 +51,7 @@ export const useProductStore = defineStore('productStore', {
     meta: (state) => state.allState.meta,
     product: (state) => state.productState,
     found: (state) => state.searchState.data,
+    grid: (state) => state.gridData,
   },
 
   actions: {
@@ -84,14 +87,17 @@ export const useProductStore = defineStore('productStore', {
       const runtimeConfig = useRuntimeConfig()
       const url = `${runtimeConfig.public.apiBase}/products/random?not_id=${id}`;
 
-      return await useApiFetch(url).then(({data, error}) => {
-        if(data && data.data){
-          return data.data
-        }
+      return await useApiFetch(url)
+        .then(({data, error}) => {
 
-        if(error)
-          throw new Error(error)
-      })
+          if(data && data.data) {
+            this.gridData = data.data
+            return data.data
+          }
+
+          if(error)
+            throw new Error(error)
+        })
     },
 
     async getOne(slug: string) {
@@ -113,21 +119,28 @@ export const useProductStore = defineStore('productStore', {
       const runtimeConfig = useRuntimeConfig()
       const url = `${runtimeConfig.public.apiBase}/products/similar`;
 
-      await useApiFetch(url, params).then(({data: {data}}) => {
-        console.log('get one product', data)
+      return await useApiFetch(url, params, 'POST').then(({data, error}) => {
+        
+        if(data && data.data){
+          return data.data
+        }
+
+        if(error)
+          throw new Error(error)
       })
     },
 
-    updateQualities(id: number, data: object) {
+    async updateQualities(id: number, data: object) {
       const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.apiBase}/products/${id}/updateQualities`;
 
-      $fetch(`${runtimeConfig.public.apiBase}/products/${id}/updateQualities`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      }).catch((error) => console.log(error));
+      return await useApiFetch(url, data, 'POST').then(({data, error}) => {
+        if(data)
+          return data
+
+        if(error)
+          throw Error(error)
+      })
     }
   },
 })

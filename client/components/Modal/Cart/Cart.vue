@@ -48,7 +48,7 @@
 
     <template v-if="cartLength">
       
-      <div class="popup-noty-cart__body">
+      <div class="popup-noty-cart__body" scrollable>
         <ul class="popup-noty-cart__list">
           <checkout-product-tiny
             v-for="product in cart"

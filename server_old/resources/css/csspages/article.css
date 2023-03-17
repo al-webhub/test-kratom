@@ -1,0 +1,214 @@
+/* //Articel */
+.article-page__wrapper {
+  position: relative;
+  margin-bottom: 100px;
+}
+.article-page__wrapper .general-decor-figure {
+  top: 390px;
+  right: -150px;
+  width: 405px;
+  height: 405px;
+  transform: rotate(126.53deg);
+}
+.article-page__wrapper .general-decor-figure:nth-child(2) {
+  right: auto;
+  left: -130px;
+  top: auto;
+  bottom: 0px;
+  width: 315px;
+  height: 315px;
+  transform: rotate(147.77deg);
+}
+.article-page__wrapper .general-decor-text {
+  top: auto;
+  bottom: -100px;
+  white-space: nowrap;
+}
+.article-page__img img{
+  width: 100%;
+  height: 400px;
+  margin-bottom: 30px;
+  object-fit: cover;
+}
+.article-page__content {
+  font-size: 14px;
+  line-height: 150%;
+  color: #E0E0E0;
+}
+.article-page__content .main-caption {
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+.article-page__content>h6 {
+  font-size: 14px;
+  line-height: 150%;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+}
+.article-page__content>ul {
+  margin-bottom: 20px;
+}
+.article-page__content>ol {
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+.article-page__content>h2 {
+    margin-bottom: 20px;
+}
+.article-page__content>ul li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+.article-page__content>ul li:last-child {
+  margin-bottom: 0px;
+}
+.article-page__content>ul li::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #E0E0E0;
+}
+.article-page__content>p {
+  margin-bottom: 20px;
+}
+.article-page__content>p,
+.article-page__content>h1,
+.article-page__content>h2,
+.article-page__content>h3,
+.article-page__content>h4,
+.article-page__content>h5,
+.article-page__content>h6,
+.article-page__content>ul,
+.article-page__content>ol {
+  max-width: 630px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.article-page__content>p:last-of-type {
+  margin-bottom: 0px;
+}
+.article-page__content .date {
+  font-family: "Impact", sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.article-page__content .general-more {
+  margin-top: 30px;
+}
+.articel-page__similar {
+  margin-bottom: 100px;
+}
+.articel-page__caption {
+  font-family: "Impact", sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 37px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+/* //Article */
+
+@media screen and (max-width: 1330px) {
+    /* Article */
+  .article__position {
+    display: flex;
+    justify-content: center;
+  }
+  .article__position .article__list {
+    max-width: 990px;
+  }
+  /* //Article */
+}
+
+@media screen and (max-width: 1200px) {
+    /* Article */
+  .article__position .article__list {
+    max-width: 747px;
+    margin-bottom: -20px;
+  }
+  .article__position .article__item {
+    margin-bottom: 20px;
+  }
+  
+  /* //Article */
+}
+
+@media screen and (max-width: 1024px) {
+  /* Article */
+  .article-page__wrapper {
+    margin-bottom: 80px;
+  }
+  .article-page__wrapper .general-decor-text {
+    display: none;
+  }
+  .article-page__wrapper .general-decor-figure {
+    width: 245px;
+    height: 245px;
+    transform: rotate(-58.95deg);
+    right: -75px;
+    top: auto;
+    bottom: -150px;
+  }
+  .article-page__wrapper .general-decor-figure:nth-child(2) {
+    display: none;
+  }
+  .article-page__img {
+    height: 224px;
+    margin-bottom: 20px;
+  }
+  .article-page__content {
+    max-width: 100%;
+  }
+  .article-page__content .main-caption {
+    margin-bottom: 10px;
+  }
+  .articel-page__similar {
+    margin-bottom: 80px;
+  }
+  .articel-page__similar .article__list {
+    margin-top: 20px;
+  }
+  .articel-page__caption {
+    font-size: 24px;
+    line-height: 29px;
+  }
+  /* //Article */
+}
+
+@media screen and (max-width: 576px) {
+      /* Articel */
+  .article-page {
+    margin-top: -20px;
+  }
+  .article-page__wrapper {
+    margin-bottom: 50px;
+  }
+  .article-page__wrapper .general-decor-figure {
+    width: 188px;
+    height: 188px;
+    transform: rotate(124.8deg);
+    bottom: -170px;
+  }
+  .article-page__img {
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    height: 100px;
+  }
+  .articel-page__similar {
+    margin-bottom: 50px;
+  }
+  .articel-page__caption {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  
+  /* //Articel */
+}

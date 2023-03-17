@@ -57,10 +57,10 @@
   // await useReviewStore().getAll({per_page: 8})
   // await useArticleStore().getAll({per_page: 4, lang: locale.value})
 
-  await useAsyncData('banners', () => useBannerStore().getOne('main-banner'))
-  await useAsyncData('products', () => useProductStore().getAll({per_page: 8, category_slug: 'kratom'}))
-  await useAsyncData('reviews', () => useReviewStore().getAll({per_page: 8}))
-  await useAsyncData('articles', () => useArticleStore().getAll({per_page: 4, lang: locale.value}))
+  await useLazyAsyncData('banners', () => useBannerStore().getOne('main-banner'))
+  await useLazyAsyncData('products', () => useProductStore().getAll({per_page: 8, category_slug: 'kratom'}))
+  await useLazyAsyncData('reviews', () => useReviewStore().getAll({per_page: 8}))
+  await useLazyAsyncData('articles', () => useArticleStore().getAll({per_page: 4, lang: locale.value}))
   
   setSeo()
 </script>
@@ -76,7 +76,7 @@
     :settings="{title: {posX: 'right', posY: 'bottom'}, figure: {posX: 'right', showTill: 'desktop'}}"
     :is-figure="true"
   >
-    <section-main-slider :banners="banner.items"></section-main-slider>
+    <section-main-slider v-if="banner && banner.items && banner.items.length" :banners="banner.items"></section-main-slider>
   </simple-decorator> 
 
   <DelayHydration>

@@ -82,6 +82,7 @@
   }
   @include _desktop {
     flex-direction: row;
+    align-items: stretch;
     margin-bottom: 100px;
   }
 }
@@ -89,6 +90,7 @@
 .meta {
   display: flex;
   flex-direction: column;
+  align-self: center;
   width: 100%;
 
   @include _desktop {
@@ -125,7 +127,6 @@
     position: relative;
     display: flex;
     max-width: initial;
-    margin-bottom: 30px;
   }
 }
 
@@ -134,14 +135,9 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-top: 30px;
 
   @include _tablet {
     flex-direction: row;
-  }
-
-  @include _desktop {
-    margin-top: 0;
   }
 }
 

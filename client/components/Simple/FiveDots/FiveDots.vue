@@ -5,19 +5,36 @@ export default {
       type: Boolean,
       default: false
     },
+    
     size: {
       type: String,
       default: 'large'
     },
+
     modelValue: {
       type: Number,
       default: 0
+    },
+
+    userMark: {
+      type: Number,
+      default: 0
+    },
+
+    get: {
+      type: String,
+      default: 'absolute'
     }
   },
 
   methods: {
 
   	minusHandler: function(){
+      if(this.get === 'relative') {
+        this.$emit('update:modelValue', -1)
+        return
+      }
+
       const value = this.modelValue - 0.5
 
 	  	if(this.modelValue > 0)
@@ -25,6 +42,11 @@ export default {
   	},
 
   	plusHandler: function(){
+      if(this.get === 'relative') {
+        this.$emit('update:modelValue', 1)
+        return
+      }
+
       const value = this.modelValue + 0.5
 
 	  	if(this.modelValue < 5)
@@ -42,6 +64,7 @@ export default {
     <button
       v-if="!isStatic"
       @click="minusHandler"
+      :class="{disabled: userMark === -1}"
       class="button minus"
       type="button"
       title="minus"
@@ -67,6 +90,7 @@ export default {
     <button
       v-if="!isStatic"
       @click="plusHandler"
+      :class="{disabled: userMark === 1}"
       class="button plus"
       type="button"
       title="plus"

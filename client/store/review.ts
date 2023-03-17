@@ -92,20 +92,43 @@ export const useReviewStore = defineStore('reviewStore', {
 
     async like(id: number, data: object) {
       const runtimeConfig = useRuntimeConfig()
-      const context = this
       const url = `${runtimeConfig.public.apiBase}/reviews/${id}/like`;
 
-      return await useApiFetch(url, data, 'POST').then((response) => {
-        const likes = response.data.likes
-        const dislikes = response.data.dislikes
+      return await useApiFetch(url, data, 'POST').then(({data, error}) => {
 
-        const index = context.allState.data.findIndex((item) => item.id === id)
-        
-        if(likes !== undefined && likes !== null)
-         context.allState.data[index].likes = likes
+        if(data) {
+          const likes = data.likes
+          const dislikes = data.dislikes
 
-        if(dislikes !== undefined && dislikes !== null)
-          context.allState.data[index].dislikes = dislikes
+          this.allState.data.map((item) => {
+
+            if(item.id === id){
+              if(likes !== undefined && likes !== null)
+                item.likes = likes
+
+              if(dislikes !== undefined && dislikes !== null)
+                item.dislikes = dislikes
+            }else {
+              item.children && item.children.map((ch) => {
+                if(ch.id === id){
+                  if(likes !== undefined && likes !== null)
+                    ch.likes = likes
+  
+                  if(dislikes !== undefined && dislikes !== null)
+                    ch.dislikes = dislikes
+                }
+    
+                return ch
+              })
+            }
+    
+            return item
+          })
+        }
+
+        if(error) {
+          throw error
+        }
       })
     }
   },

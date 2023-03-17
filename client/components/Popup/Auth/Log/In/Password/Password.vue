@@ -6,11 +6,11 @@
 
   // COMPUTED
   const user = computed(() => {
-    return useAuthStore().getUser
+    return useAuthStore().getLogin
   })
 
-  const errors = computed(() =>{
-    return useAuthStore().getErrors
+  const canNext = computed(() => {
+    return user && user.value && user.value.password && user.value.password.length > 5 
   })
 
   // HANDLERS
@@ -29,11 +29,13 @@
   const loginHandler = () => {
     isLoading.value = true
 
-    useLogin()().then(() => {
-      closeHandler()
-    }).finally(() => {
-      isLoading.value = false
-    })
+    useLogin()(user.value)
+      .then(() => {
+        useAuthStore().resetLoginForm()
+        closeHandler()
+      }).finally(() => {
+        isLoading.value = false
+      })
   }
 </script>
 
@@ -50,11 +52,15 @@
         <form-password
           v-model="user.password"
           :placeholder="$t('form.Password')"
-          :errors="errors.password"
         >
         </form-password>
 
-        <button @click="loginHandler" :class="{loading: isLoading}" clickable class="main-button primary small">
+        <button
+          @click="loginHandler"
+          :class="{loading: isLoading, disabled: !canNext}"
+          clickable
+          class="main-button primary small"
+        >
           <span class="text">{{ $t('button.Log_In') }}</span>
         </button>
 

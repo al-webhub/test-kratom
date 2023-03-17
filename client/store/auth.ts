@@ -1,7 +1,11 @@
+import { useLoginMock } from '~/composables/mockups/useLoginMock';
+
 export const useAuthStore = defineStore('authStore', {
   persist: true,
 
   state: () => ({
+    loginForm: {...useLoginMock()} as LoginForm,
+
     user: {
       id: null,
       photo: '/images/photo-log-in.png',
@@ -25,6 +29,7 @@ export const useAuthStore = defineStore('authStore', {
   }),
 
   getters: {
+    getLogin: (state) => state.loginForm,
     getUser: (state) => state.user,
     getErrors: (state) => state.errors,
     isAuth: (state) => state.authenticated,
@@ -34,6 +39,10 @@ export const useAuthStore = defineStore('authStore', {
 
   actions: {
     
+    resetLoginForm() {
+      this.loginForm = {...useLoginMock()}
+    },
+
     setIsAuth(value: boolean) {
       this.authenticated = value
     },
@@ -84,15 +93,14 @@ export const useAuthStore = defineStore('authStore', {
       });
     },
 
-    async login() {
+    async login(data: LoginForm) {
       const runtimeConfig = useRuntimeConfig()
       const url = `${runtimeConfig.public.base}/login`
       
       await this.getToken()
 
-      return await useApiFetch(url, {...this.user}, 'POST')
+      return await useApiFetch(url, {...data}, 'POST')
         .then(({data, error}) => {
-
           if(data) {
             this.authenticated = true
             this.setProfileData(data)
@@ -104,37 +112,6 @@ export const useAuthStore = defineStore('authStore', {
             throw error
           }
         })
-      // return await useFetch(,{
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Accept': 'application/json',
-      //     'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
-      //     'Accept-Language': locale.value
-      //   },
-      //   referrer: '',
-      //   credentials: 'include',
-      //   body: this.user,
-      //   onRequestError({ request, options, error }) {
-      //     // Handle the request errors
-      //     console.log('onRequestError', request, options, error)
-      //   },
-      //   onResponse({ request, response, options }) {
-      //     if(!response.ok || !response._data) {
-      //       context.authenticated = false
-      //       throw new Error('No user data')
-      //     }
-
-      //     context.setProfileData(response._data)
-      //     context.authenticated = true
-      //     context.errors = {}
-      //   },
-      //   onResponseError({ request, response, options }) {
-      //     context.authenticated = false
-      //     context.errors = response._data
-      //   }
-      // })
-
     },
 
     async register(data: Auth) {
