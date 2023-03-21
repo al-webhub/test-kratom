@@ -67,13 +67,15 @@
 
     if(token){
       nextTick(() => {
-        useAuthStore().getUserByToken(token).then(() => {
-          useNoty().setNoty(nuxtApp.$i18n.t('noty.login_success'), 3000)
-        }).catch(() => {
-          useNoty().setNoty(nuxtApp.$i18n.t('noty.login_failed'), 5000)
-        }).finally(() => {
-          navigateTo('/')
-        })
+        useAuthStore().getUserByToken(token)
+          .then((data) => {
+            console.log('USER LOGIN', data)
+            useNoty().setNoty(t('noty.login_success'), 3000)
+          }).catch(() => {
+            useNoty().setNoty(t('noty.login_failed'), 5000)
+          }).finally(() => {
+            navigateTo('/')
+          })
       })
     }
 
