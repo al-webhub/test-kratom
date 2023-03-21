@@ -37,7 +37,11 @@ export default {
     },
 
     updateHandler(event) {
-      let value = event.target.value
+      let value = 1
+      
+      if(event.target.value > 0)
+        value = event.target.value
+      
       this.$emit('update:modelValue', value)
     }
   }

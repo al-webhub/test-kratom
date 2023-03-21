@@ -60,6 +60,12 @@
     return useModalStore().show('pc')
   })
 
+  // METHODS
+  const showAdultModal = () => {
+    if(useAppPersistStore().adultIsNew)
+      useAppPersistStore().open('adult')
+  }
+
   // HOOKES
   onMounted(() => {
     // LOGIN USER BY TOKEN
@@ -82,6 +88,9 @@
     if(route.query?.newpassword && route.query?.email && route.query?.t) {
       useModalStore().open('changePassword')
     }
+
+    // show adult modal
+    showAdultModal()
   })
   
   useSchemaOrg([

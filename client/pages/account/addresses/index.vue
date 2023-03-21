@@ -45,13 +45,13 @@ export default {
       useCrumbs().setCrumbs([
           {
             name: this.$t('crumbs.home'),
-            link: '/'
+            item: '/'
           },{
             name: this.$t('crumbs.account'),
-            link: '/account'
+            item: '/account/order-history'
           },{
             name: this.$t('crumbs.addresses'),
-            link: '/account/addresses'
+            item: '/account/addresses'
           }
       ])
     },

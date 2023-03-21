@@ -121,13 +121,13 @@ export default {
       useCrumbs().setCrumbs([
           {
             name: this.$t('crumbs.home'),
-            link: '/'
+            item: '/'
           },{
             name: this.$t('crumbs.account'),
-            link: '/account'
+            item: '/account/order-history'
           },{
             name: this.$t('crumbs.referral_network'),
-            link: '/account/referral_network'
+            item: '/account/referral_network'
           }
       ])
     },

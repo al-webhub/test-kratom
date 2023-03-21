@@ -22,6 +22,7 @@
   }
 
   const yesHandler = () => {
+    useAppPersistStore().setData('adult', false) 
     useAppPersistStore().close('adult') 
   }
 </script>

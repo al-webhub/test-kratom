@@ -33,13 +33,13 @@
     useCrumbs().setCrumbs([
         {
           name: t('crumbs.home'),
-          link: '/'
+          item: '/'
         },{
           name: t('crumbs.account'),
-          link: '/account'
+          item: '/account/order-history'
         },{
           name: t('crumbs.order_history'),
-          link: '/account/order-history'
+          item: '/account/order-history'
         }
     ])
   }

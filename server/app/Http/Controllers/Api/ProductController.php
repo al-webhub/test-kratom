@@ -68,8 +68,10 @@ class ProductController extends \App\Http\Controllers\Controller
   public function updateQualities(Request $request, $id) {
     $data = $request->only(['stimulation', 'relaxation', 'euphoria']);
 
-    if(empty($data))
-      return throw new \Exception('No parameter in request.');
+    if(empty($data)) {
+      throw new \Exception('No parameter in request.');
+      return;
+    }
 
     try{
       $product = Product::findOrFail($id);

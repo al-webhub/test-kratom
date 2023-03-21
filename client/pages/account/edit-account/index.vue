@@ -41,13 +41,13 @@ export default {
       useCrumbs().setCrumbs([
           {
             name: this.$t('crumbs.home'),
-            link: '/'
+            item: '/'
           },{
             name: this.$t('crumbs.account'),
-            link: '/account'
+            item: '/account/order-history'
           },{
             name: this.$t('crumbs.edit_account'),
-            link: '/account/edit_account'
+            item: '/account/edit_account'
           }
       ])
     },

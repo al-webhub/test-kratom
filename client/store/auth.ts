@@ -180,7 +180,9 @@ export const useAuthStore = defineStore('authStore', {
       const runtimeConfig = useRuntimeConfig()
       const url = `${runtimeConfig.public.base}/auth/google`
 
-      return await useApiFetch(url, null, 'POST').then(({data}) => {
+      return await useApiFetch(url, {
+        referrer_code: this.referrerCode,
+      }, 'POST').then(({data}) => {
         if(data){
           navigateTo(data, {external: true})
         }
