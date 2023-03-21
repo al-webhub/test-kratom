@@ -138,7 +138,7 @@
               <img src="~assets/svg-icons/user.svg" class="icon" alt="user-icon"/>
             </button>
 
-            <NuxtLink v-else-if="isAuth && user" :to="localePath('/account/order-history')" :prefetch="false">
+            <NuxtLink v-else-if="isAuth && user" :to="localePath('/account/order-history')" clickable >
               <nuxt-img
                 :src="photo"
                 width="24"

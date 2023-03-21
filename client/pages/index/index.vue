@@ -100,7 +100,7 @@
   </DelayHydration>
 
   <DelayHydration>
-    <lazy-section-choose-kratom v-if="!$device.isMobile"  class="section"></lazy-section-choose-kratom>
+    <lazy-section-choose-kratom v-if="!$device.isMobile"  class="section choose-kratom-section"></lazy-section-choose-kratom>
   </DelayHydration>
   
   <!-- OUR ADVANTAGES -->

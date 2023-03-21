@@ -4,3 +4,11 @@
   width: 100%;
   overflow: hidden;
 }
+
+.choose-kratom-section {
+  display: none;
+
+  @include _tablet {
+    display: block;
+  }
+}

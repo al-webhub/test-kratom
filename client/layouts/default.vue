@@ -69,7 +69,6 @@
       nextTick(() => {
         useAuthStore().getUserByToken(token)
           .then((data) => {
-            console.log('USER LOGIN', data)
             useNoty().setNoty(t('noty.login_success'), 3000)
           }).catch(() => {
             useNoty().setNoty(t('noty.login_failed'), 5000)
@@ -81,7 +80,6 @@
 
     // Change password
     if(route.query?.newpassword && route.query?.email && route.query?.t) {
-      console.log('changePassword on Mou')
       useModalStore().open('changePassword')
     }
   })
