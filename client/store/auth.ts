@@ -114,6 +114,42 @@ export const useAuthStore = defineStore('authStore', {
         })
     },
 
+    async sendPasswordResetLink(email: string) {
+      const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.base}/forgot-password`
+      
+      await this.getToken()
+
+      return await useApiFetch(url, {email: email}, 'POST')
+        .then(({data, error}) => {
+          if(data) {
+            return data
+          }
+
+          if(error) {
+            throw error
+          }
+        })
+    },
+
+    async changePassword(data: changePassword) {
+      const runtimeConfig = useRuntimeConfig()
+      const url = `${runtimeConfig.public.base}/change-password`
+      
+      await this.getToken()
+
+      return await useApiFetch(url, {...data}, 'POST')
+        .then(({data, error}) => {
+          if(data) {
+            return data
+          }
+
+          if(error) {
+            throw error
+          }
+        })
+    },
+
     async register(data: Auth) {
       const runtimeConfig = useRuntimeConfig()
       const url = `${runtimeConfig.public.base}/register`

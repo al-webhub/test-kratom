@@ -3,7 +3,7 @@
   $email = 'info@kratomhelper.com';
   $address = 'Na Hřebenech II 1718/8, 14000 Praha 4-Nusle, Czech Republic';
 @endphp
-<tr>
+<tr style="padding: 50px 0 0 0;">
     <td style="padding: 0px 50px 15px; font: 14px Arial,sans-serif; line-height: 14px; Margin: 0;margin: 0;">
         <b style="color: #333333; -webkit-text-size-adjust:none; text-transform: uppercase; font-size: 12px; line-height: 14px;">contact to us</b>
     </td>

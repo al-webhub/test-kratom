@@ -4,6 +4,19 @@
   const { t, locale } = useI18n({useScope: 'local'})
   const appStore = useAppStore()
 
+  // METHODS
+  const setSeo = () => {
+    useHead({
+      title: t('seo_title'),
+      meta: [
+        {
+          name: 'description',
+          content: t('seo_desc')
+        },
+      ],
+    })
+  }
+
   //  COMPUTED
   const payments = computed(() => {
     return appStore.payments(locale.value)
@@ -47,6 +60,9 @@
       itemListElement: breadcrumbs
     }),
   ])
+
+  setSeo()
+  
 </script>
 
 <style src="./pay-delivery.scss" lang="sass" scoped />
@@ -143,6 +159,8 @@
   {
     "en": {
       "pay_delivery_info": "pay/delivery information",
+      seo_title: "Payment and delivery options at kratom online-shop kratomhelper.com",
+      seo_desc: "Looking for how to pay and receive your Kratom order? Visit our online shop at kratomhelper.com to learn about our payment and delivery options."
     },
     "ru": {
       "pay_delivery_info": "Информация об оплате/доставке",

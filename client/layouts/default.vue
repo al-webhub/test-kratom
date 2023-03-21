@@ -36,6 +36,10 @@
     return useModalStore().show('signInEmail')
   })
 
+  const isPopupAuthPasswordResetActive = computed(() => {
+    return useModalStore().show('resetPassword')
+  })
+
   const isPopupAuthChangePasswordActive = computed(() => {
     return useModalStore().show('changePassword')
   })
@@ -71,6 +75,12 @@
           navigateTo('/')
         })
       })
+    }
+
+    // Change password
+    if(route.query?.newpassword && route.query?.email && route.query?.t) {
+      console.log('changePassword on Mou')
+      useModalStore().open('changePassword')
     }
   })
   
@@ -137,6 +147,11 @@
           <!-- POPUP / registration -->
           <transition name="fade-in">
             <lazy-popup-auth-sign-in-email v-if="isPopupAuthSignInEmailActive"></lazy-popup-auth-sign-in-email>
+          </transition>
+
+          <!-- POPUP / reset password -->
+          <transition name="fade-in">
+            <lazy-popup-auth-password-reset v-if="isPopupAuthPasswordResetActive"></lazy-popup-auth-password-reset>
           </transition>
 
           <!-- POPUP / change password -->

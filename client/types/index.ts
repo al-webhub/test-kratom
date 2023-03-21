@@ -3,7 +3,7 @@
 export { };
 
 declare global {
-  type Modal = "pc" | "chooseKratom" | "buy1" | "withdrawal" | "search" | "cart" | "signInSocial" | "signInEmail" | "changePassword" | "logInEmail" | "logInPassword" | "logOut"
+  type Modal = "pc" | "chooseKratom" | "buy1" | "withdrawal" | "search" | "cart" | "signInSocial" | "signInEmail" | "resetPassword" | "changePassword" | "logInEmail" | "logInPassword" | "logOut"
 
   type ModalObject = {
     isShow: Boolean,
@@ -41,6 +41,13 @@ declare global {
     text: string,
     type: string,
   };
+
+  type changePassword = {
+    token: string,
+    email: string,
+    password: string,
+    password_confirmation: string
+  }
 
   type Langs = "en" | "ru"
 }

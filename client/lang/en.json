@@ -12,7 +12,8 @@
     "green": "Green kratom",
     "seed": "Kratom in seeds",
     "pills": "Kratom in pills",
-    "powder": "Kratom powder"
+    "powder": "Kratom powder",
+    "leaves": "Crushed Kratom Leaves"
   },
 
   "crumbs": {
@@ -32,7 +33,8 @@
     "addresses": "Addresses",
     "edit_account": "Account settings",
     "referral_network": "Referral network",
-    "our_advantages": "Our advantages"
+    "our_advantages": "Our advantages",
+    "new_password": "Set new password"
   },
 
   "contacts": {
@@ -70,6 +72,7 @@
   },
 
   "button": {
+    "get_reset_link": "Get reset link",
     "send_request": "Send request",
     "send_message": "Send message",
     "view_all_products": "view all products",
@@ -141,7 +144,9 @@
     "1click_fail": "An error has occurred. Your order has not been create 😔",
     "copied": "Link was copied: {text}",
     "withdrawal_success": "You have successfully submitted a withdrawal request",
-    "withdrawal_fail": "An error has occurred. Withdrawal request has not been completed."
+    "withdrawal_fail": "An error has occurred. Withdrawal request has not been completed.",
+    "send_reset_link_success": "A password reset link has been sent to your email: {email}",
+    "password_changed_success": "Password changed successfully. You can login using the new password 🔑."
   },
 
   "messages": {
@@ -155,7 +160,9 @@
     "products_no_found": "No products found for this query",
     "search_results": "Search results for {search}",
     "network_is_empty" : "Your referral network is empty!",
-    "have_any_transactions" : "You do not have any transactions!"
+    "have_any_transactions" : "You do not have any transactions!",
+    "reset_password": "We will send a password reset link to your email. Follow the link and enter a new password.",
+    "check_email": "The link has been sent to <b>{email}</b>. Check your email and follow the link. If the letter did not arrive, try to receive the link again after <b>{sec} sec.</b>"
   },
 
   "payment": {
@@ -192,6 +199,7 @@
     "item_9": "Contacts",
     "menu" : "Menu",
     "advantages": "Advantages",
+    "send_password_reset": "Reset password link",
     "set_new_password" : "Set new password",
     "password": "Password",
     "log_in" : "Log In",

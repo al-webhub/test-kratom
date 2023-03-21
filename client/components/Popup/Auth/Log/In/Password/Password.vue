@@ -18,8 +18,9 @@
     useModalStore().close('logInPassword')
   }
 
-  const openChangePasswordHandler = () => {
-    useModalStore().open('changePassword')
+  const openResetPasswordHandler = () => {
+    useModalStore().setData('resetPassword', user.value.email)
+    useModalStore().open('resetPassword')
   }
 
   const openLogInEmailHandler = () => {
@@ -70,7 +71,7 @@
     <template v-slot:footer>
       <div class="popup__footer__navigation">
         <button @click="openLogInEmailHandler" clickable type="button" class="button-nav">{{ $t('button.Back') }}</button>
-        <button @click="openChangePasswordHandler" clickable type="button" class="button-nav">{{ $t('button.Forgot_Password') }}</button>
+        <button @click="openResetPasswordHandler" clickable type="button" class="button-nav">{{ $t('button.Forgot_Password') }}</button>
       </div>
     </template>
 

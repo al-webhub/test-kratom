@@ -2,24 +2,24 @@ export const useProductGroups = () => {
   const { t } = useI18n({useScope: 'global'})
 
   const groups = [
-    {
-      name: t('filter.region'),
-      items: [
-        {
-          name: t('filter.thai'),
-          link: '/shop/thai-kratom'
-        },{
-          name: t('filter.borneo'),
-          link: '/shop/borneo-kratom'
-        },{
-          name: t('filter.sumatra'),
-          link: '/shop/sumatra-kratom'
-        },{
-          name: t('filter.malay'),
-          link: '/shop/malay-kratom'
-        }
-      ]
-    },
+    // {
+    //   name: t('filter.region'),
+    //   items: [
+    //     {
+    //       name: t('filter.thai'),
+    //       link: '/shop/thai-kratom'
+    //     },{
+    //       name: t('filter.borneo'),
+    //       link: '/shop/borneo-kratom'
+    //     },{
+    //       name: t('filter.sumatra'),
+    //       link: '/shop/sumatra-kratom'
+    //     },{
+    //       name: t('filter.malay'),
+    //       link: '/shop/malay-kratom'
+    //     }
+    //   ]
+    // },
     {
       name: t('filter.color'),
       items: [
@@ -47,6 +47,9 @@ export const useProductGroups = () => {
         },{
           name: t('filter.powder'),
           link: '/shop/kratom-powder'
+        },{
+          name: t('filter.leaves'),
+          link: '/shop/crushed-kratom-leaves'
         }
       ]
     }

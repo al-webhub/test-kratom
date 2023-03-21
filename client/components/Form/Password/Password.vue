@@ -19,7 +19,7 @@ export default {
       default: false
     },
     error: {
-      type: [Object, Boolean],
+      type: [Object, Array, String, Boolean],
       default: false
     },
     isDisabled: {

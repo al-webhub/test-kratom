@@ -4037,12 +4037,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/parabellumKoval/backpack-profile.git",
-                "reference": "9a2352c892e5fc6b7f385ca91a9c6da99a889f6f"
+                "reference": "a64c86696832965dfa18647b4dca41290d0414e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/parabellumKoval/backpack-profile/zipball/9a2352c892e5fc6b7f385ca91a9c6da99a889f6f",
-                "reference": "9a2352c892e5fc6b7f385ca91a9c6da99a889f6f",
+                "url": "https://api.github.com/repos/parabellumKoval/backpack-profile/zipball/a64c86696832965dfa18647b4dca41290d0414e7",
+                "reference": "a64c86696832965dfa18647b4dca41290d0414e7",
                 "shasum": ""
             },
             "require": {
@@ -4089,7 +4089,7 @@
                 "issues": "https://github.com/parabellumKoval/backpack-profile/issues",
                 "source": "https://github.com/parabellumKoval/backpack-profile/tree/main"
             },
-            "time": "2023-02-04T15:37:45+00:00"
+            "time": "2023-03-20T20:16:45+00:00"
         },
         {
             "name": "parabellumkoval/backpack-reviews",

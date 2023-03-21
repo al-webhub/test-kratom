@@ -70,7 +70,7 @@ export const useProductStore = defineStore('productStore', {
     },
 
     async getAll(query: string, refresh: boolean = true) {
-      await this.index(query).then(({ data }) => {
+      return await this.index(query).then(({ data }) => {
         if(!data)
           return
 
@@ -80,6 +80,8 @@ export const useProductStore = defineStore('productStore', {
           this.allState.data = this.allState.data.concat(data.data)
 
         this.allState.meta = data.meta
+
+        return data.data
       })
     },
 

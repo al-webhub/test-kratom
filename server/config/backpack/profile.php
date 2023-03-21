@@ -21,4 +21,6 @@ return [
   'full_resource' => 'App\Http\Resources\ProfileFullResource',
 
   'tiny_resource' => 'Backpack\Profile\app\Http\Resources\ProfileTinyResource',
+
+  'reset_password_redirect' => env('FRONT_URL') . '/'
 ];

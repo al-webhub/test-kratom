@@ -72,11 +72,11 @@ export const useProfileStore = defineStore('profileStore', {
       })
     },
 
-    async getReferrals(params = null) {
+    async getReferrals(params = null, refresh = true) {
       const runtimeConfig = useRuntimeConfig()
       const query = params? '?' + new URLSearchParams(params).toString(): '';
 
-      const { data, pending, error, refresh } = await useFetch(`${runtimeConfig.public.apiBase}/profile/referrals${query}`,{
+      const { data, pending, error } = await useFetch(`${runtimeConfig.public.apiBase}/profile/referrals${query}`,{
         headers: {
           'Accept': 'application/json',
           'X-XSRF-TOKEN': useCookie('XSRF-TOKEN').value,
@@ -90,7 +90,12 @@ export const useProfileStore = defineStore('profileStore', {
         },
       });
 
-      this.referralsState.data = this.referralsState.data.concat(data?.value?.data)
+      if(refresh) {
+        this.referralsState.data = data?.value?.data
+      }else {
+        this.referralsState.data = this.referralsState.data.concat(data?.value?.data)
+      }
+
       this.referralsState.meta = data?.value?.meta
     },
 

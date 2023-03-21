@@ -52,7 +52,7 @@ export default {
     },
 
     maxBonusesUsed() {
-      return this.balance
+      return Math.floor(this.balance)
     },
 
     isAuth() {

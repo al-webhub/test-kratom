@@ -145,7 +145,7 @@ export default {
         page: this.referralsMeta.current_page + 1
       }
 
-      await this.profileStore?.getReferrals(params)
+      await this.profileStore?.getReferrals(params, false)
     },
 
     async getTransactions() {

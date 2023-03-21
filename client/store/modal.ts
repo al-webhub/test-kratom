@@ -31,6 +31,11 @@ export const useModalStore = defineStore('modalStore', {
       isShow: false
     } as ModalObject,
 
+    resetPassword: {
+      isShow: false,
+      data: null
+    } as ModalObject,
+
     changePassword: {
       isShow: false
     } as ModalObject,

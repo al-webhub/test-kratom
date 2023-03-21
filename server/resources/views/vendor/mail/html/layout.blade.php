@@ -27,7 +27,7 @@ width: 100% !important;
 	@component('mail::header')
 		{!! $header ?? '' !!}
 	@endcomponent
-	
+  
 	{{ $slot }}
 	
 	@component('mail::footer')

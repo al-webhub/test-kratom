@@ -16,10 +16,6 @@ export default {
 
 
     // COMPUTED
-    const isPopupAuthChangePasswordActive = computed(() => {
-      return useModalStore().show('changePassword')
-    })
-
     const isModalCartActive = computed(() => {
       return useModalStore().show('cart')
     })
@@ -30,6 +26,10 @@ export default {
 
     const isPopupWithdrawalShow = computed(() => {
       return useModalStore().show('withdrawal')
+    })
+
+    const isPopupAuthPasswordResetActive = computed(() => {
+      return useModalStore().show('resetPassword')
     })
 
     // METHODS
@@ -43,7 +43,7 @@ export default {
       isPopupWithdrawalShow,
       isPopupAuthLogOutActive,
       isModalCartActive,
-      isPopupAuthChangePasswordActive,
+      isPopupAuthPasswordResetActive,
       logoutHandler,
       t
     }
@@ -195,14 +195,14 @@ export default {
       <lazy-modal-cart v-if="isModalCartActive"></lazy-modal-cart>
     </transition>
 
+    <!-- POPUP / reset password -->
+    <transition name="fade-in">
+      <lazy-popup-auth-password-reset v-if="isPopupAuthPasswordResetActive"></lazy-popup-auth-password-reset>
+    </transition>
+
     <!-- POPUP / log out -->
     <transition name="fade-in">
       <lazy-popup-auth-log-out v-if="isPopupAuthLogOutActive"></lazy-popup-auth-log-out>
-    </transition>
-
-    <!-- POPUP / change password -->
-    <transition name="fade-in">
-      <popup-auth-change-password v-if="isPopupAuthChangePasswordActive"></popup-auth-change-password>
     </transition>
 
     <!-- POPUP / withdrawal -->

@@ -10,6 +10,7 @@ use App\Mail\CashbackBonus;
 use App\Mail\ReferralBonus;
 use App\Mail\WithdrawalCompleted;
 use App\Mail\ReviewBonus;
+use App\Mail\WithdrawalCompletedAdmin;
 
 class TransactionObserver
 {
@@ -25,6 +26,7 @@ class TransactionObserver
 
       if($transaction->type === 'withdrawal'){
         Mail::to($email)->queue(new WithdrawalCompleted($transaction));
+        Mail::to(env('ADMIN_MAIL', 'info@kratomhelper.com'))->queue(new WithdrawalCompletedAdmin($transaction));
       }elseif($transaction->type === 'cashback') {
         Mail::to($email)->queue(new CashbackBonus($transaction));
       }elseif($transaction->type === 'review') {

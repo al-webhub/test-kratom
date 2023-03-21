@@ -11,6 +11,10 @@
 
   const { t, locale } = useI18n({useScope: 'local'})
 
+  // DATA
+  const products = ref([])
+  const reviews = ref([])
+
   // COMPUTED
   const isModalChooseKratomActive = computed(() => {
     return useModalStore().show('chooseKratom')
@@ -27,13 +31,9 @@
     return useBannerStore().banner
   })
 
-  const products = computed(() => {
-    return useProductStore().all
-  })
-
-  const reviews = computed(() => {
-    return useReviewStore().all
-  })
+  // const reviews = computed(() => {
+  //   return useReviewStore().all
+  // })
 
   const articles = computed(() => {
     return useArticleStore().all
@@ -52,17 +52,23 @@
     })
   }
 
-  // await useBannerStore().getOne('main-banner')
-  // await useProductStore().getAll({per_page: 8, category_slug: 'kratom'})
-  // await useReviewStore().getAll({per_page: 8})
-  // await useArticleStore().getAll({per_page: 4, lang: locale.value})
-
   await useLazyAsyncData('banners', () => useBannerStore().getOne('main-banner'))
-  await useLazyAsyncData('products', () => useProductStore().getAll({per_page: 8, category_slug: 'kratom'}))
-  await useLazyAsyncData('reviews', () => useReviewStore().getAll({per_page: 8}))
+  const { pending: productsPending, data: productsData } = useLazyAsyncData('home_products', () => useProductStore().getAll({per_page: 8, category_slug: 'kratom'}))
+  const { pending: reviewsPending, data: reviewsData } =  useLazyAsyncData('home_reviews', () => useReviewStore().getAll({per_page: 8}))
   await useLazyAsyncData('articles', () => useArticleStore().getAll({per_page: 4, lang: locale.value}))
   
   setSeo()
+
+  watch(productsData, (data) => {
+    if(data && data.length)
+      products.value = data
+  }, { immediate: true })
+
+  watch(reviewsData, (data) => {
+    if(data && data.length)
+      reviews.value = data
+  }, { immediate: true })
+
 </script>
 
 <style src="assets/scss/pages/home.scss" lang="sass" scoped />
@@ -80,7 +86,7 @@
   </simple-decorator> 
 
   <DelayHydration>
-    <lazy-section-products-slider :products="products" class="section"></lazy-section-products-slider>
+    <lazy-section-products-slider v-if="!productsPending" :products="products" class="section"></lazy-section-products-slider>
   </DelayHydration>
   
   <!-- ABOUT US -->
@@ -111,7 +117,7 @@
   </DelayHydration>
 
   <DelayHydration>
-    <lazy-section-client-reviews v-if="reviews && reviews.length" :reviews="reviews" class="section"></lazy-section-client-reviews>
+    <lazy-section-client-reviews v-if="!reviewsPending" :reviews="reviews" class="section"></lazy-section-client-reviews>
   </DelayHydration>
 
   <section-seo :title="page.h1" :text="page.seo_text" class="section"></section-seo>

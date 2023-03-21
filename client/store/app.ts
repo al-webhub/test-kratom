@@ -69,10 +69,10 @@ export const useAppStore = defineStore('appStore', {
         en: [
           "3 to 28 days (anywhere in the world)",
           "2 to 12 days (Europe)",
-          "1-2 days (Czech Republic)"
+          // "1-2 days (Czech Republic)"
         ],
         ru: [
-          "1-2 дня (Чехия)",
+          // "1-2 дня (Чехия)",
           "от 2х до 12 дней (Европа)",
           "от 3 до 28 дней (в любую точку СНГ, ближний и дальний восток, даем гарантию на успешное получение)"
         ]

@@ -176,6 +176,9 @@
   }
 
   const getReviewsScheema = (reviews) => {
+    if(!reviews)
+      return null;
+      
     return reviews.map((item) => {
       return {
         comment: item.text,
@@ -246,7 +249,7 @@
 
       return product
     }),
-    await useLazyAsyncData('reviews', () => useReviewStore().getAll(reviewQuery.value, true)).then(({data: reviews, error}) => {
+    await useAsyncData('reviews', () => useReviewStore().getAll(reviewQuery.value, true)).then(({data: reviews, error}) => {
       return reviews
     })
   ]).then(([ product, reviews]) => {

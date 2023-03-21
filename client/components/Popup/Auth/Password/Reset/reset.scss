@@ -1,0 +1,27 @@
+@import 'assets/scss/global/vars';
+
+.form-component {
+  &:first-child {
+    margin-bottom: 20px;
+  }
+}
+
+.main-button {
+  max-width: 100%;
+  margin-top: 20px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+
+  .back-btn {
+    text-decoration: underline;
+    font-size: 14px;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

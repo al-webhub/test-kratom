@@ -1,6 +1,7 @@
 <script>
 import { useProfileStore } from '~/store/profile';
 import { useAuthStore } from '~/store/auth';
+import { useModalStore } from '~/store/modal';
 
 export default {
   setup() {
@@ -29,6 +30,9 @@ export default {
   computed: {
     profile() {
       return this.profileStore?.profile;
+    },
+    user() {
+      return this.authStore?.getUser;
     }
   },
 
@@ -64,8 +68,9 @@ export default {
         })
     },
 
-    changePassHandler() {
-      this.authStore.open('changePassword')
+    resetPassHandler() {
+      useModalStore().setData('resetPassword', this.user?.email)
+      useModalStore().open('resetPassword')
     }
   },
 
@@ -123,7 +128,7 @@ export default {
     </div>
 
     <div class="profile__form__footer">
-        <button @click="changePassHandler" clickable type="button" class="button-only-text">
+        <button @click="resetPassHandler" clickable type="button" class="button-only-text">
             <span class="text">{{ $t('button.Change_password') }}</span>
         </button>
         
