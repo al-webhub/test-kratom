@@ -55,7 +55,6 @@ export default {
           :title="image.title || image.alt || 'kratom'"
           :alt="image.alt || image.title || 'kratom'"
           sizes = "mobile:100vw tablet:450px desktop:470px"
-          provider="ipx"
           format = "webp"
           quality = "40"
           loading = "lazy"

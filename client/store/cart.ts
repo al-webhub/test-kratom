@@ -47,7 +47,13 @@ export const useCartStore = defineStore('cartStore', {
     
     add(data: Product) {
       const product: Product = this.toProductType(data)
-      this.data.push(product)
+      const issetProduct = this.data.find((item) => item.id === product.id)
+
+      if(!issetProduct)
+        this.data.push(product)
+      else
+        issetProduct.amount += product.amount
+        
       return Promise.resolve(true)
     },
     
