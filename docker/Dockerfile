@@ -10,8 +10,11 @@ ARG uid=1000
 ARG gid=1000
 RUN grep ":${gid}:" /etc/group || addgroup -g ${gid} frontend
 RUN grep ":${uid}:" /etc/passwd || adduser -u ${uid} frontend -G $(getent group ${gid} | cut -d: -f1)
+COPY ./package*.json /app/
+RUN npm install && npm cache clean --force
 # You only need to copy next.config.js if you are NOT using the default configuration
 COPY ./. ./
 USER ${uid}:${gid}
 EXPOSE 3000
+ENV PATH ./node_modules/.bin/:$PATH
 CMD ["npm", "run", "build"]
