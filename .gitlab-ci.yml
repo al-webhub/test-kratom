@@ -19,7 +19,7 @@ stages:
 
 install-packages:
   stage: packages
-  image: node:hydrogen-alpine
+  image: node:gallium-alpine
   script:
     - apk add --no-cache libc6-compat
     - npm install --frozen-lockfile
@@ -36,7 +36,7 @@ install-packages:
 
 lint:
   stage: lint
-  image: node:hydrogen-alpine
+  image: node:gallium-alpine
   dependencies:
     - install-packages
   script:
@@ -46,7 +46,7 @@ lint:
 
 test:
   stage: test
-  image: node:hydrogen-alpine
+  image: node:gallium-alpine
   dependencies:
     - install-packages
     - lint
@@ -59,7 +59,7 @@ test:
 
 build:node-dev:
   stage: build
-  image: node:hydrogen-alpine
+  image: node:gallium-alpine
   needs:
     - job: install-packages
       artifacts: true
@@ -79,7 +79,7 @@ build:node-dev:
 
 build:node-prod:
   stage: build
-  image: node:hydrogen-alpine
+  image: node:gallium-alpine
   needs:
     - job: install-packages
       artifacts: true
