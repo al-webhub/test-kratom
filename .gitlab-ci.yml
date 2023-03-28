@@ -64,7 +64,7 @@ build:node-dev:
     - job: install-packages
       artifacts: true
   script:
-    - npm run build && yarn install --production --ignore-scripts --prefer-offline
+    - yarn install --production --ignore-scripts --prefer-offline && npm run build
   artifacts:
     name: '$CI_JOB_NAME-$CI_COMMIT_REF_NAME'
     expire_in: 2 hour
