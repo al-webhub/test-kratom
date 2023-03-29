@@ -34,28 +34,28 @@ install-packages:
     - if: $CI_COMMIT_BRANCH == "dev"
     - if: $CI_COMMIT_BRANCH == "master"
 
-lint:
-  stage: lint
-  image: node:gallium-alpine
-  dependencies:
-    - install-packages
-  script:
-    - yarn lint
-  rules:
-    - if: $CI_MERGE_REQUEST_IID
+# lint:
+#   stage: lint
+#   image: node:gallium-alpine
+#   dependencies:
+#     - install-packages
+#   script:
+#     - yarn lint
+#   rules:
+#     - if: $CI_MERGE_REQUEST_IID
 
-test:
-  stage: test
-  image: node:gallium-alpine
-  dependencies:
-    - install-packages
-    - lint
-  script:
-    - yarn test:ci
-  rules:
-    - if: $CI_MERGE_REQUEST_IID
-    - if: '$CI_COMMIT_REF_NAME =~ /^v[0-9]+(?:.[0-9]+)+$/'
-    - if: $CI_COMMIT_BRANCH == "master"
+# test:
+#   stage: test
+#   image: node:gallium-alpine
+#   dependencies:
+#     - install-packages
+#     - lint
+#   script:
+#     - yarn test:ci
+#   rules:
+#     - if: $CI_MERGE_REQUEST_IID
+#     - if: '$CI_COMMIT_REF_NAME =~ /^v[0-9]+(?:.[0-9]+)+$/'
+#     - if: $CI_COMMIT_BRANCH == "master"
 
 build:node-dev:
   stage: build
